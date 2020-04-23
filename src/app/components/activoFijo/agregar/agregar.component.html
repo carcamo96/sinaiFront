@@ -1,4 +1,4 @@
- <!--<div class="center">
+<!--<div class="center">
   <section class="content">
     <div class="row mb-2">
     <h1 class="subheader">Agregar activo fijo</h1>
@@ -104,90 +104,132 @@
 </div>
 -->
 
-<div class="right_col" role="main">
-  <div class="">
+<!-- Header de la página -->
+<app-page-header></app-page-header>
+
+
+<!-- Contenedor de página -->
+<section class="content">
+  <div class="container-fluid">
+
+
+    <div class="right_col" role="main">
+      <div class="">
+        <div class="clearfix"></div>
     
-    <div class="clearfix"></div>
-
-    <div class="row">
-      <div class="col-md-6 col-sm-12 col-xs-12">
-        <div class="x_panel">
-          <div class="x_title">
-            
-            <ul class="nav navbar-right panel_toolbox">
-            </ul>
-            <div class="clearfix"></div>
-          </div>
-          <div class="x_content">
-            <br />
-            <form id="frmvis" name="frmvis" class="form-horizontal form-label-left input_mask">
-              <div class="form-group">
-              <div class="col-sm-6 col-xs-12 form-group has-feedback">
-                <input class="form-control" rows="3" placeholder="Código" id="codigo" name="codigo">
-              </div>               
-</div>
-
-              <div class="form-group">
-                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                  <input class="form-control" rows="3" placeholder="Descripción" id="Descripcion" name="Descripcion">
-              </div>
-              </div>
-              <div class="form-group">
-                <div class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback">
-                  <input class="form-control" rows="3" placeholder="Número de serie" id="num_serie" name="num_serie">
-              </div>
-              </div>
-              
-              
-              <div class="row mb-2">
-                <div class="col-md-6 col-sm-6 col-xs-12 float-sm-right">
-                <select  id="ubicacion" name="ubicacion" class="form-control SEstacion">
-                  <option value="ubicacion" selected="selected">Ubicación</option>
-                  
-                </select>
-              </div>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                  <select  id="responsable" name="responsable" class="form-control SEstacion">
-                    <option value="responsable" selected="selected">Responsable</option>
-                    
-                  </select>
-                </div>
-                
-              </div><!-- /.row -->
-
-              <div class="form-group">
-                <!--Este div es para que agarre la linea que separa los botones.-->
-              </div>
-
-
-
-            <div class="ln_solid"></div>
-              <div class="form-group">
-                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                <button type="button" onclick="" class="btn btn-success">Guardar</button>
-                  <button type="button" onclick="" class="btn btn-warning">Cancelar</button>
-
-                </div>
-              </div>
-
-            </form>
-          </div>
-          </div>
-        </div>
-        
-        
-    </div>
-
-      <div class="row">
-          <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="row">
+          <div class="col-md-6 col-sm-12 col-xs-12">
             <div class="x_panel">
               <div class="x_title">
-                <h2>Activos </h2>
-
+                <ul class="nav navbar-right panel_toolbox"></ul>
                 <div class="clearfix"></div>
               </div>
               <div class="x_content">
-                <table id="datatable-fixed-header" class="table table-striped table-bordered">
+                <br />
+                <form
+                  id="frmvis"
+                  name="frmvis"
+                  class="form-horizontal form-label-left input_mask"
+                >
+                  <div class="form-group">
+                    <div class="col-sm-6 col-xs-12 form-group has-feedback">
+                      <input
+                        class="form-control"
+                        rows="3"
+                        placeholder="Código"
+                        id="codigo"
+                        name="codigo"
+                      />
+                    </div>
+                  </div>
+    
+                  <div class="form-group">
+                    <div
+                      class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"
+                    >
+                      <input
+                        class="form-control"
+                        rows="3"
+                        placeholder="Descripción"
+                        id="Descripcion"
+                        name="Descripcion"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div
+                      class="col-md-12 col-sm-12 col-xs-12 form-group has-feedback"
+                    >
+                      <input
+                        class="form-control"
+                        rows="3"
+                        placeholder="Número de serie"
+                        id="num_serie"
+                        name="num_serie"
+                      />
+                    </div>
+                  </div>
+    
+                  <div class="row mb-2">
+                    <div class="col-md-6 col-sm-6 col-xs-12 float-sm-right">
+                      <select
+                        id="ubicacion"
+                        name="ubicacion"
+                        class="form-control SEstacion"
+                      >
+                        <option value="ubicacion" selected="selected"
+                          >Ubicación</option
+                        >
+                      </select>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                      <select
+                        id="responsable"
+                        name="responsable"
+                        class="form-control SEstacion"
+                      >
+                        <option value="responsable" selected="selected"
+                          >Responsable</option
+                        >
+                      </select>
+                    </div>
+                  </div>
+                  <!-- /.row -->
+    
+                  <div class="form-group">
+                    <!--Este div es para que agarre la linea que separa los botones.-->
+                  </div>
+    
+                  <div class="ln_solid"></div>
+                  <div class="form-group">
+                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
+                      <button type="button" onclick="" class="btn btn-success">
+                        Guardar
+                      </button>
+                      <button type="button" onclick="" class="btn btn-warning">
+                        Cancelar
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+              <div class="x_title">
+                <h2>Activos</h2>
+    
+                <div class="clearfix"></div>
+              </div>
+              <div class="x_content">
+                <table
+                  id="datatable-fixed-header"
+                  class="table table-striped table-bordered"
+                >
                   <thead>
                     <tr>
                       <th>Código</th>
@@ -197,32 +239,42 @@
                       <th>Ubicación</th>
                     </tr>
                   </thead>
-
-
+    
                   <tbody id="imprimir">
-                    
-                            <tr>
-                              <td></td>
-
-                              <td class="text-center">
-                                <button class="btn btn-success btn-icon left-icon" data-toggle="modal"  data-target="#detalle" onclick="verMas('', '<?php echo $fila->idhojavisitaestaciones; ?>')">
-                                  <i class="fa fa-search"></i>
-                                  <span></span>
-                                </button>
-                                <!--<button class="btn btn-info btn-icon left-icon"  onClick="">
-                                  <i class="fa fa-pencil"></i>
-                                  <span></span>
-                                </button> -->
-                                <button class="btn btn-info btn-icon left-icon"  onClick="">
-                                  <i class="fa fa-check"></i> <span></span>
-                                </button>
-                              </td>
-                            </tr>
-                          
+                    <tr>
+                      <td></td>
+    
+                      <td class="text-center">
+                        <button
+                          class="btn btn-success btn-icon left-icon"
+                          data-toggle="modal"
+                          data-target="#detalle"
+                          onclick="verMas('', '<?php echo $fila->idhojavisitaestaciones; ?>')"
+                        >
+                          <i class="fa fa-search"></i>
+                          <span></span>
+                        </button>
+                        <!--<button class="btn btn-info btn-icon left-icon"  onClick="">
+                                      <i class="fa fa-pencil"></i>
+                                      <span></span>
+                                    </button> -->
+                        <button class="btn btn-info btn-icon left-icon" onClick="">
+                          <i class="fa fa-check"></i> <span></span>
+                        </button>
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
             </div>
+          </div>
         </div>
-  </div>
-</div>
+      </div>
+    </div>
+
+
+    
+  </div><!-- /.container-fluid -->
+</section>
+<!-- /.Contenedor de página -->
+

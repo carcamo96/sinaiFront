@@ -1,39 +1,17 @@
 <app-header></app-header>
 <app-sidemenu></app-sidemenu>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6"> 
-            <h3 >Registro de activo fijo.</h3>
-          </div><!-- /.col -->
-         
-          
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-          
-        <router-outlet></router-outlet>
-        
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    
+    <!-- Aqui se cargan todas las paginas  -->
+    <router-outlet></router-outlet>
+
+    
   </div>
   <!-- /.content-wrapper -->
+
 
 <app-footer></app-footer>
 

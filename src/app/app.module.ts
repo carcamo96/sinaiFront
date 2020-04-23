@@ -9,6 +9,9 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { SidemenuComponent } from './components/sidemenu/sidemenu.component';
 import { AgregarComponent } from './components/activoFijo/agregar/agregar.component';
+import { PageHeaderComponent } from './components/page-header/page-header.component';
+import { HomeComponent } from './pages/home/home.component';
+import { FormularioPacienteComponent } from './pages/formulario-paciente/formulario-paciente.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { AgregarComponent } from './components/activoFijo/agregar/agregar.compon
     HeaderComponent,
     FooterComponent,
     SidemenuComponent,
-    AgregarComponent
+    AgregarComponent,
+    PageHeaderComponent,
+    HomeComponent,
+    FormularioPacienteComponent
   ],
   imports: [
     BrowserModule,
