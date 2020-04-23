@@ -8,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 export class PageHeaderComponent implements OnInit {
 
   @Input() titulo: string;
+  @Input() icono: string;
   @Input() breadcrumbs: any[];
 
 

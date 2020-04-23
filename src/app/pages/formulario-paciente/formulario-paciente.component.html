@@ -1,5 +1,6 @@
 <app-page-header
                  [titulo]="'Nuevo expediente'"
+                 [icono]="'fas fa-folder-open'"
                  [breadcrumbs]="breads">
 
 </app-page-header>
@@ -9,7 +10,73 @@
 <section class="content">
     <div class="container-fluid">
 
-        <h1>Registro de paciente</h1>
+        <div class="col-md-12">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Datos personales</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form">
+                  <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6">
+    
+                            <div class="form-group">
+                              <label for="nombrePaciente">Nombre</label>
+                              <input type="text" class="form-control" id="nombrePaciente" placeholder="Nombre del paciente">
+                            </div>
+        
+                            <div class="form-group">
+                              <label for="exampleInputPassword1">Edad</label>
+                              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Edad">
+                            </div>
+    
+                        </div>
+            
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <label for="apellidosPaciente">Apellidos</label>
+                                <input type="text" class="form-control" id="apellidosPaciente" placeholder="Nombre del paciente">
+                              </div>
+        
+                              <div class="form-group">
+                                <label for="nombrePaciente">Teléfono</label>
+                                <input type="text" class="form-control" id="nombrePaciente" placeholder="Teléfono del paciente">
+                              </div>
+    
+                        </div>
+
+                    </div><!-- Fin del primer row -->
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <!-- textarea -->
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <textarea class="form-control" rows="3" placeholder="Dirección ..."></textarea>
+                            </div>
+                        </div>
+
+                    </div><!-- Fin del segundo row -->
+
+
+                  </div>
+                  <!-- /.card-body -->
+  
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Crear expediente</button>
+                  </div>
+                </form>
+            </div><!-- Fin del card -->
+
+
+
+        </div><!-- Fin del div de las doce columnas -->
 
     </div><!-- /.container-fluid -->
 </section>
