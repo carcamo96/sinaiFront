@@ -63,6 +63,9 @@
   </script>
   <!-- Bootstrap 4 -->
   <script src="assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- InputMask -->
+  <script src="assets/plugins/moment/moment.min.js"></script>
+  <script src="assets/plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
   <!-- ChartJS -->
   <script src="assets/plugins/chart.js/Chart.min.js"></script>
   <!-- Sparkline -->
@@ -87,4 +90,14 @@
   <script src="assets/dist/js/pages/dashboard.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="assets/dist/js/demo.js"></script>
+
+  <script>
+    $( function (){
+    
+      $('[data-mask]').inputmask();
+    
+    
+    })
+  </script>
+  
 </html>
