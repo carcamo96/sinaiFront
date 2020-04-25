@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-formulario-paciente',
@@ -12,9 +12,37 @@ export class FormularioPacienteComponent implements OnInit {
     {titulo: 'Home', link: '/home'}
   ];
 
-  constructor() { }
+  public paciente: any;
+
+  constructor(private cdRef:ChangeDetectorRef) {
+
+        this.paciente = {
+
+          nombre: '',
+          apellidos: '',
+          fechaNac: '',
+          edad: '',
+          gen: 'M',
+          telefono: '',
+          encargado: '',
+          parentesco: '',
+          faContacto: '',
+          telFaContacto: '',
+          direccion: '',
+          otrosDatos: ''
+
+        };
+  }
 
   ngOnInit(): void {
+  }
+
+  onSubmit(){
+      console.log(this.paciente);
+  }
+
+  actualizar(event){
+    this.cdRef.detectChanges();
   }
 
 }
