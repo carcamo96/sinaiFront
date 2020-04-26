@@ -7,6 +7,7 @@ import { AgregarComponent } from './components/activoFijo/agregar/agregar.compon
 import { HomeComponent } from './pages/home/home.component';
 import { FormularioPacienteComponent } from './pages/formulario-paciente/formulario-paciente.component';
 import { MostrarPacienteComponent } from './pages/mostrar-paciente/mostrar-paciente.component';
+import { ExpedienteComponent } from './pages/expediente/expediente.component';
 
 
 
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'registrarPaciente', component: FormularioPacienteComponent},
     {path: 'mostrarPaciente', component: MostrarPacienteComponent},
+    {path: 'expediente', component: ExpedienteComponent},
     {path: 'agregar', component: AgregarComponent}
    
 ];

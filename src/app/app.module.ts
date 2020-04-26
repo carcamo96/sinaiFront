@@ -12,6 +12,8 @@ import { AgregarComponent } from './components/activoFijo/agregar/agregar.compon
 import { PageHeaderComponent } from './components/page-header/page-header.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FormularioPacienteComponent } from './pages/formulario-paciente/formulario-paciente.component';
+import { MostrarPacienteComponent } from './pages/mostrar-paciente/mostrar-paciente.component';
+import { ExpedienteComponent } from './pages/expediente/expediente.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { FormularioPacienteComponent } from './pages/formulario-paciente/formula
     AgregarComponent,
     PageHeaderComponent,
     HomeComponent,
-    FormularioPacienteComponent
+    FormularioPacienteComponent,
+    MostrarPacienteComponent,
+    ExpedienteComponent
   ],
   imports: [
     BrowserModule,
