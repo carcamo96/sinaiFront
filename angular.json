@@ -27,7 +27,15 @@
               "src/styles.css",
               "src/assets/dist/css/adminlte.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/dist/js/adminlte.js",
+              "src/assets/dist/js/adminlte.js.map",
+              "src/assets/dist/js/adminlte.min.js",
+              "src/assets/dist/js/adminlte.min.js.map",
+              "src/assets/dist/js/demo.js",
+              "src/assets/plugins/jquery/jquery.js",
+              "src/assets/plugins/jquery/jquery.min.js"
+            ]
           },
           "configurations": {
             "production": {
