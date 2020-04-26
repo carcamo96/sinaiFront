@@ -1,0 +1,205 @@
+<!-- Contenedor de página -->
+<section class="content">
+    <div class="container-fluid">
+
+        <div class="col-md-12">
+
+            <div class="card card-primary">
+                <!-- form start -->
+               
+                  <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6">
+    
+                            <div class="form-group">
+                              <label for="nombrePaciente">Nombre</label>
+                              <input type="text" class="form-control" name="nombrePaciente"
+                                     placeholder="Nombre del paciente">
+                            </div>
+    
+                        </div>
+            
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <label for="apellidosPaciente">Apellidos</label>
+                                <input type="text" class="form-control" name="apellidoPaciente" 
+                                       placeholder="Apellidos del paciente">
+                            </div>
+    
+                        </div>
+
+                    </div><!-- Fin del primer row -->
+
+                    <div class="row">
+                      <div class="col-md-6">
+
+                          <div class="form-group">
+                            <label>Fecha de nacimiento:</label>
+                              <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                  <div class="input-group-prepend" data-target="#reservationdate" data-toggle="datetimepicker">
+                                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                  </div>
+                                  <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"
+                                         name="fechaNac">
+                              </div>
+                          </div>
+
+                      </div>
+                      <div class="col-md-6">
+
+                          <div class="form-group">
+                            <label for="edad">Edad</label>
+                            <input type="text" class="form-control" placeholder="Edad"
+                                   name="edad">
+                          </div>
+
+                      </div>
+
+                    </div> <!-- Fin del segundo row -->
+
+
+                    <div class="row">
+
+                          <div class="col-md-6">
+                              <div class="row">
+                                  <label>Género: </label>
+                              </div>
+                              <div class="row">
+
+                                <div class="col-md-2">
+                                        
+                                  <div class="form-group clearfix">
+                                    <div class="icheck-primary d-inline">
+                                      <input type="radio" value="M" id="radioPrimary1" name="r1">
+                                      <label for="radioPrimary1">
+                                        Masculino
+                                      </label>
+                                    </div>
+                                  </div>
+          
+                                </div>
+                                <div class="col-md-2"></div>
+                                <div class="col-md-2">
+          
+                                  <div class="icheck-primary d-inline">
+                                    <input type="radio" value="F" id="radioPrimary2" name="r1"
+                                    >
+                                    <label for="radioPrimary2">
+                                      Femenino
+                                    </label>
+                                  </div>
+          
+                                </div>
+                              </div>
+                          </div>
+
+
+                          <div class="col-md-6">
+                                <div class="form-group">
+                                  <label>Teléfono:</label>
+                
+                                  <div class="input-group">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control"
+                                           name="telefono">
+                                  </div>
+                                  <!-- /.input group -->
+                                </div>
+                                
+                          </div>
+
+                    </div><!--  Fin del tercer row -->
+             
+                    
+                    <div class="row"> <!-- Aqui van los campos adicionales para un menor de edad -->
+                        
+                      <div class="col-md-6">
+
+                        <div class="form-group">
+                          <label for="nombreEncargado">Nombre del padre o encargado</label>
+                          <input type="text" class="form-control"
+                                 placeholder="Padre o encargado" name="nombreEncargado">
+                        </div>
+
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="parentesco">Parentesco</label>
+                          <input type="text" class="form-control" id="parentesco" 
+                                 placeholder="Parentesco" name="parentesco">
+                        </div>
+                      </div>
+
+                    </div> <!-- Fin del cuarto row -->
+                
+
+                    <div class="row">
+
+                      <div class="col-md-6">
+
+                        <div class="form-group">
+                          <label for="faContacto">Familiar de contacto (*):</label>
+                          <input type="text" class="form-control"
+                                 placeholder="Familiar de contacto" name="faContacto">
+                        </div>
+
+                      </div>
+                      <div class="col-md-6">
+
+                        <div class="form-group">
+                          <label>Teléfono del familiar de contacto (*):</label>
+        
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                            </div>
+                            <input type="text" class="form-control" name="telFaContacto">
+                          </div>
+                          <!-- /.input group -->
+                        </div>
+
+                      </div>
+
+                    </div> <!-- Fin del quinto row -->
+
+                    <div class="row">
+
+                        <div class="col-md-12">
+                            <!-- textarea -->
+                            <div class="form-group">
+                                <label>Dirección</label>
+                                <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..."
+                                          name="direccion">
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                          <!-- textarea -->
+                          <div class="form-group">
+                              <label>Datos adicionales (*):</label>
+                              <textarea class="form-control" rows="3" placeholder="Otros datos ..."
+                                        name="otrosDatos">
+
+                              </textarea>
+                          </div>
+                        </div>
+
+                    </div><!-- Fin del sexto row -->
+                  </div>
+                  <!-- /.card-body -->
+  
+                
+            </div><!-- Fin del card -->
+
+
+
+        </div><!-- Fin del div de las doce columnas -->
+
+    </div><!-- /.container-fluid -->
+</section>
