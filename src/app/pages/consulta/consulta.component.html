@@ -1,0 +1,119 @@
+<app-page-header
+                 [titulo]="'Realizar consulta'"
+                 [icono]="'fas fa-notes-medical'"
+                 [breadcrumbs]="breads">
+
+</app-page-header>
+
+<!-- Contenedor de página -->
+<section class="content clearfix">
+    <div class="container-fluid">
+
+        <div class="col-md-12">
+
+            <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Datos de consulta</h3>
+                </div>
+                <!-- /.card-header -->
+                <!-- form start -->
+                <form role="form" #consultaForm="ngForm" (ngSubmit)="onSubmit()">
+                  <div class="card-body">
+                    <div class="row">
+
+                        <div class="col-md-6">
+    
+                            <div class="form-group">
+                              <label for="motivo">Motivo de consulta</label>
+                              <input type="text" class="form-control" name="motivo"
+                                     placeholder="Motivo de consulta"
+                                     #motivo="ngModel" [(ngModel)]="consulta.motivo">
+                            </div>
+    
+                        </div>
+            
+                        <div class="col-md-6">
+                            
+                            <div class="form-group">
+                                <label for="tiempoSintoma">Tiempo de evolución de los síntomas</label>
+                                <input type="text" class="form-control" name="tiempoSintoma" 
+                                       placeholder="Tiempo de evolución de los síntomas"
+                                       #tiempoSintoma="ngModel" [(ngModel)]="consulta.tiemSintoma">
+                            </div>
+    
+                        </div>
+
+                    </div><!-- Fin del primer row -->
+
+                    <div class="row">
+                      <div class="col-md-6">
+
+                          <div class="form-group">
+                            <label>Fecha de consulta:</label>
+                              <div class="input-group date" id="consultadate" data-target-input="nearest">
+                                  <div class="input-group-prepend" data-target="#consultadate" data-toggle="datetimepicker">
+                                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                  </div>
+                                  <input type="text" class="form-control datetimepicker-input" data-target="#consultadate"
+                                         name="fechaConsul" #fechaConsul="ngModel" [(ngModel)]="consulta.fechaConsul">
+                              </div>
+                          </div>
+
+                      </div>
+                      <div class="col-md-6">
+
+                          <div class="form-group">
+                            <label for="historia">Historia de la enfermedad</label>
+                            <input type="text" class="form-control" placeholder="Historia de la enfermedad"
+                                   name="historia" #historia="ngModel" [(ngModel)]="consulta.historia">
+                          </div>
+
+                      </div>
+
+                    </div> <!-- Fin del segundo row -->
+
+                    <div class="row">
+                        <div class="col-md-12">
+                          <!-- textarea -->
+                          <div class="form-group">
+                              <label>Antecedentes patológicos personales o de enfermedades crónicas</label>
+                              <textarea class="form-control" rows="3" placeholder="Antecedentes patológicos ..."
+                                        name="antePatol" #antePatol="ngModel" [(ngModel)]="consulta.antePatol">
+
+                              </textarea>
+                          </div>
+                        </div>
+
+                    </div><!-- Fin del sexto row -->
+                    <div class="row">
+                        <div class="col-md-12">
+                          <!-- textarea -->
+                          <div class="form-group">
+                              <label>Alergias</label>
+                              <textarea class="form-control" rows="3" placeholder="Alergias"
+                                        name="alergias" #alergias="ngModel" [(ngModel)]="consulta.alergias">
+
+                              </textarea>
+                          </div>
+                        </div>
+
+                    </div>
+                    
+
+                    <div class="card-footer">
+
+                      <button type="submit" id="crear" class="btn btn-primary">Guardar consulta</button>
+
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+  
+                </form>
+            </div><!-- Fin del card -->
+
+
+
+        </div><!-- Fin del div de las doce columnas -->
+
+    </div><!-- /.container-fluid -->
+</section>
