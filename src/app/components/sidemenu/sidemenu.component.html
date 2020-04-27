@@ -38,7 +38,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link" [routerLinkActive]="['active']">
+                <a [routerLink]="['/consulta']" [routerLinkActive]="['active']" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Realizar consulta</p>
                 </a>
@@ -54,7 +54,7 @@
                       <!-- Nivel 3 -->
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a href="#" class="nav-link">
+                          <a href="./index2.html" class="nav-link" [routerLinkActive]="['active']">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>Expedientes</p>
                           </a>
@@ -67,6 +67,12 @@
                         </li>
                       </ul>
                       <!-- Nivel 3 -->
+              </li>
+              <li class="nav-item">
+                <a [routerLink]="['/expediente']" [routerLinkActive]="['active']" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Expediente</p>
+                </a>
               </li>
               <li class="nav-item">
                 <a href="./index3.html" class="nav-link">
@@ -301,7 +307,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a [routerLink]="['/agregar']" [routerLinkActive]="['active']" class="nav-link">
+                <a [routerLink]="['/agregar']" [routerLinkActive]="['active']" [routerLinkActive]="['active']" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agregar activo</p>
                 </a>

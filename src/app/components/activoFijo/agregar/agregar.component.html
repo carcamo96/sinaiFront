@@ -1,122 +1,23 @@
-<!--<div class="center">
-  <section class="content">
-    <div class="row mb-2">
-    <h1 class="subheader">Agregar activo fijo</h1>
-  </div>
-   
-    <div id="datos-al-vuelo" *ngIf="user.nombre">
-      
-      <h2 class="subheader">Datos al vuelo</h2>
-      <ul>
-        <li>
-            {{user.nombre}}
-        </li>
-        <li>
-            {{user.apellidos}}
-        </li>
-        <li>
-            {{user.bio}}
-        </li>
-        <li>
-            {{user.genero}}
-        </li>
-      </ul>
-    </div>
 
-    <form class="mid-form" #userForm="ngForm">
-      <div class="form-group">
-          <label for="nombre">Nombre</label>
-          <input type="text" name="nombre"   required pattern="[a-zA-Z]+" />
-      
-          
-        </div>
+<app-page-header
+[titulo]="'Agregar activo'"
+[icono]="'fas fa-folder-open'"
+[breadcrumbs]="breads">
 
-      <div class="form-group">
-          <label for="apellidos">Apellidos</label>
-          <input type="text" name="apellidos"   required pattern="[a-zA-Z]+" />
-      
-          
-        </div>
-
-      <div class="form-group">
-          <label for="bio">Biografia</label>
-          <textarea name="bio"   required></textarea>
-      
-         
-        </div>
-
-      <div class="form-group radibuttons">
-          <input type="radio" name="genero" value="hombre"  required/> Hombre 
-          <input type="radio" name="genero" value="mujer"  /> Mujer 
-          <input type="radio" name="genero" value="otro"   /> Otro
-      
-          
-        </div>
-
-      <div class="clearfix"></div>
-
-      <input type="submit" value="Enviar" class="btn btn-success" />
-
- </form>
-    <form class="form-inline ml-3" #userForm="ngForm">
-      <div class="input-group input-group-sm">
-        <div class="box box-info">
-           
-          <div class="box-body">
-             
-            <div class="form-group">
-              <input type=" text " class="form-control my-colorpicker1" placeholder="Código"/>
-            </div>
-             
-            <div class="form-group">
-              <div class="input-group my-colorpicker2">
-                <input type=" text " class="form-control" placeholder="Descripción"/>
-
-                <div class="input-group-addon">
-                  <i> </i>
-                </div>
-              </div>
-             
-            </div>
-          
-
-            
-            <div class="bootstrap-timepicker">
-              <div class="form-group">
-
-                <div class="input-group">
-                  <input type=" text " class="form-control timepicker" placeholder="Ubicación"/>
-
-                  <div class="input-group-addon">
-                    <i class="fa fa-clock-o"> </i>
-                  </div>
-                </div>
-                 
-              </div>
-               
-            </div>
-          </div>
-           
-        </div>
-      </div>
-    </form>
-  </section>
-</div>
--->
-
-<!-- Header de la página -->
-<app-page-header></app-page-header>
-
+</app-page-header>
 
 <!-- Contenedor de página -->
 <section class="content">
   <div class="container-fluid">
 
 
-    <div class="right_col" role="main">
+    
       <div class="">
         <div class="clearfix"></div>
-    
+    <div class="card card-primary">
+      <div class="card-header">
+        <h3 class="card-title">Datos del activo</h3>
+      </div>
         <div class="row">
           <div class="col-md-6 col-sm-12 col-xs-12">
             <div class="x_panel">
@@ -203,7 +104,7 @@
                   <div class="ln_solid"></div>
                   <div class="form-group">
                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                      <button type="button" onclick="" class="btn btn-success">
+                      <button type="button" onclick="" class="btn btn-primary">
                         Guardar
                       </button>
                       <button type="button" onclick="" class="btn btn-warning">
@@ -215,16 +116,21 @@
               </div>
             </div>
           </div>
+          <div class="col-md-6 col-sm-12 col-xs-12">
+            <br />
+            
+          </div>
         </div>
-    
+    </div>
+    <div class="card card-primary"></div>
         <div class="row">
           <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
-              <div class="x_title">
-                <h2>Activos</h2>
-    
+              <div class="card-header">
+                <h3 class="card-title">Datos</h3>
                 <div class="clearfix"></div>
               </div>
+              
               <div class="x_content">
                 <table
                   id="datatable-fixed-header"
@@ -270,7 +176,7 @@
           </div>
         </div>
       </div>
-    </div>
+    
 
 
     

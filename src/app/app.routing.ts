@@ -6,6 +6,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AgregarComponent } from './components/activoFijo/agregar/agregar.component';
 import { HomeComponent } from './pages/home/home.component';
 import { FormularioPacienteComponent } from './pages/formulario-paciente/formulario-paciente.component';
+import { MostrarPacienteComponent } from './pages/mostrar-paciente/mostrar-paciente.component';
+import { ExpedienteComponent } from './pages/expediente/expediente.component';
+import { ConsultaComponent } from './pages/consulta/consulta.component';
 
 
 
@@ -15,6 +18,9 @@ const appRoutes: Routes = [
     {path: '', component: HomeComponent},
     {path: 'home', component: HomeComponent},
     {path: 'registrarPaciente', component: FormularioPacienteComponent},
+    {path: 'mostrarPaciente', component: MostrarPacienteComponent},
+    {path: 'expediente', component: ExpedienteComponent},
+    {path: 'consulta', component: ConsultaComponent},
     {path: 'agregar', component: AgregarComponent}
    
 ];
