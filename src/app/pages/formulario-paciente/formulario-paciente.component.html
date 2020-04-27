@@ -18,7 +18,7 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" #pacienteForm="ngForm" (ngSubmit)="onSubmit()">
+                <form role="form" #pacienteForm="ngForm" (ngSubmit)="onSubmit(pacienteForm)">
                   <div class="card-body">
                     <div class="row">
 
@@ -51,13 +51,13 @@
 
                           <div class="form-group">
                             <label>Fecha de nacimiento:</label>
-                              <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                  <div class="input-group-prepend" data-target="#reservationdate" data-toggle="datetimepicker"
-                                    (click)="actualizar($event)">
+                              <div class="input-group date">
+                                  <div class="input-group-prepend">
                                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                   </div>
-                                  <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"
-                                         name="fechaNac" #fechaNac="ngModel" [(ngModel)]="paciente.fechaNac">
+                                  <input type="date" class="form-control" min="1995-01-01" max="2030-12-31" 
+                                         name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
+                                         (ngModelChange)="cambioFecha($event)">
                               </div>
                           </div>
 
@@ -66,10 +66,11 @@
 
                           <div class="form-group">
                             <label for="edad">Edad</label>
-                            <input type="text" class="form-control" placeholder="Edad"
-                                   name="edad" #edad="ngModel" [(ngModel)]="paciente.edad">
+                            <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad }}"
+                                   name="edad">
                           </div>
-
+                          
+                            
                       </div>
 
                     </div> <!-- Fin del segundo row -->
@@ -114,13 +115,13 @@
 
                           <div class="col-md-6">
                                 <div class="form-group">
-                                  <label>Teléfono:</label>
-                
+                                  <label *ngIf="edad >= 18 || !edad || edad == 0 ">Teléfono:</label>
+                                  <label *ngIf="edad < 18 && edad != 0 ">Teléfono del encargado: </label>
                                   <div class="input-group">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input type="text" class="form-control"
+                                    <input type="text" class="form-control" placeholder="Teléfono"
                                            name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono">
                                   </div>
                                   <!-- /.input group -->
@@ -131,7 +132,7 @@
                     </div><!--  Fin del tercer row -->
              
 
-                    <div class="row"> <!-- Aqui van los campos adicionales para un menor de edad -->
+                    <div class="row" *ngIf="edad < 18 && edad!=0 "> <!-- Aqui van los campos adicionales para un menor de edad -->
 
                       <div class="col-md-6">
 
@@ -177,7 +178,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text" class="form-control" name="telFaContacto"
+                            <input type="text" class="form-control" name="telFaContacto" placeholder="Teléfono"
                                    #telFaContacto="ngModel" [(ngModel)]="paciente.telFaContacto">
                           </div>
                           <!-- /.input group -->

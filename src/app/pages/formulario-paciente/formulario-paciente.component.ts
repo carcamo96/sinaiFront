@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'app-formulario-paciente',
@@ -13,15 +14,16 @@ export class FormularioPacienteComponent implements OnInit {
   ];
 
   public paciente: any;
+  public form: NgForm;
+  public edad: number;
 
-  constructor(private cdRef:ChangeDetectorRef) {
+  constructor() {
 
         this.paciente = {
 
           nombre: '',
           apellidos: '',
           fechaNac: '',
-          edad: '',
           gen: 'M',
           telefono: '',
           encargado: '',
@@ -31,18 +33,33 @@ export class FormularioPacienteComponent implements OnInit {
           direccion: '',
           otrosDatos: ''
 
-        };
+        };  
+
   }
 
   ngOnInit(): void {
+    
   }
 
-  onSubmit(){
-      console.log(this.paciente);
+  onSubmit(f:NgForm){
+      //console.log(this.paciente);
+      console.log(f.value);
   }
 
-  actualizar(event){
-    this.cdRef.detectChanges();
+  cambioFecha(event){
+     
+      this.paciente.fechaNac = event;
+
+      let anioActual = new Date();
+      let fechaNac = new Date(event);
+
+      //Arreglar calculo con fecha completa
+      let edad = anioActual.getFullYear() - fechaNac.getFullYear();
+
+      this.edad = edad;
+
   }
+
+ 
 
 }
