@@ -1,5 +1,6 @@
 import { Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import { Paciente } from '../../models/paciente';
 
 @Component({
   selector: 'app-formulario-paciente',
@@ -18,23 +19,19 @@ export class FormularioPacienteComponent implements OnInit {
   public edad: number;
 
   constructor() {
-
-        this.paciente = {
-
-          nombre: '',
-          apellidos: '',
-          fechaNac: '',
-          gen: 'M',
-          telefono: '',
-          encargado: '',
-          parentesco: '',
-          faContacto: '',
-          telFaContacto: '',
-          direccion: '',
-          otrosDatos: ''
-
-        };  
-
+    this.paciente = {
+      nombre: '',
+      apellidos: '',
+      fechaNac: '',
+      gen: 'M',
+      telefono: '',
+      encargado: '',
+      parentesco: '',
+      faContacto: '',
+      telFaContacto: '',
+      direccion: '',
+      otrosDatos: ''
+    }
   }
 
   ngOnInit(): void {
@@ -48,12 +45,12 @@ export class FormularioPacienteComponent implements OnInit {
 
   cambioFecha(event){
      
-      this.paciente.fechaNac = event;
-
       let anioActual = new Date();
       let fechaNac = new Date(event);
 
-      //Arreglar calculo con fecha completa
+      this.paciente.fechaNac = fechaNac;
+
+      //Arreglar calculo con fecha completa con moment js
       let edad = anioActual.getFullYear() - fechaNac.getFullYear();
 
       this.edad = edad;

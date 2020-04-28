@@ -84,7 +84,7 @@
           </li>
           <li class="nav-item has-treeview">
             <a  class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+              <i class="nav-icon fas fa-flask"></i>
               <p>
                 Laboratorio
                 <i class="right fas fa-angle-left"></i>
@@ -93,11 +93,11 @@
           </li>
           <li class="nav-item has-treeview">
             <a class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
+              <i class="nav-icon fas fa-boxes"></i>
               <p>
-                Layout Options
+                Inventarios
                 <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
+                
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -147,9 +147,9 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-dolly-flatbed"></i>
               <p>
-                Charts
+                Proveedores
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -176,9 +176,9 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-tree"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>
-                UI Elements
+                Empleados
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -234,10 +234,27 @@
             </ul>
           </li>
           <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-edit"></i>
+            <a href="#" class="nav-link" [routerLinkActive]="['active']">
+              <i class="nav-icon fas fa-cubes"></i>
               <p>
-                Forms
+                Activo Fijo
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a [routerLink]="['/agregar']" [routerLinkActive]="['active']" [routerLinkActive]="['active']" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Agregar activo</p>
+                </a>
+              
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-chart-pie"></i>
+              <p>
+                Estadisticas
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -270,9 +287,9 @@
           </li>
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-table"></i>
+              <i class="nav-icon fas fa-print"></i>
               <p>
-                Tables
+                Informes
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -297,23 +314,7 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link" [routerLinkActive]="['active']">
-              <i class="nav-icon fas fa-table"></i>
-              <p>
-                Activo Fijo
-                <i class="fas fa-angle-left right"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a [routerLink]="['/agregar']" [routerLinkActive]="['active']" [routerLinkActive]="['active']" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Agregar activo</p>
-                </a>
-              
-            </ul>
-          </li>
+          
           <li class="nav-header">EXAMPLES</li>
           <li class="nav-item">
             <a href="pages/calendar.html" class="nav-link">
