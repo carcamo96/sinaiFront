@@ -9,7 +9,18 @@
 <section class="content clearfix">
     <div class="container-fluid">
 
-        <div class="col-md-12">
+      
+      <div class="col-md-12">
+           
+          <div class="col-md-5">
+    
+            <div class="form-group">
+              <label for="nomPaciente">Nombre de paciente</label>
+              <input type="text" class="form-control" name="nomPaciente" value="{{nomPaciente}}" disabled>
+            </div>
+
+          </div>
+        
 
             <div class="card card-primary">
                 <div class="card-header">
@@ -20,6 +31,20 @@
                 <form role="form" #consultaForm="ngForm" (ngSubmit)="onSubmit()">
                   <div class="card-body">
                     <div class="row">
+                      <div class="col-md-3">
+
+                        <div class="form-group">
+                          <label>Fecha de consulta:</label>
+                            <div class="input-group date" id="consultadate" data-target-input="nearest">
+                                <div class="input-group-prepend" data-target="#consultadate">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                                <input type="text" class="form-control datetimepicker-input" data-target="#consultadate"
+                                      value="consulta.fechaConsul"  name="fechaConsul" #fechaConsul="ngModel" [(ngModel)]="consulta.fechaConsul" disabled>
+                            </div>
+                        </div>
+
+                    </div>
 
                         <div class="col-md-6">
     
@@ -32,40 +57,29 @@
     
                         </div>
             
-                        <div class="col-md-6">
+                        <div class="col-md-3">
                             
                             <div class="form-group">
-                                <label for="tiempoSintoma">Tiempo de evolución de los síntomas</label>
+                                <label for="tiempoSintoma">Tiempo de evolución de síntomas</label>
                                 <input type="text" class="form-control" name="tiempoSintoma" 
-                                       placeholder="Tiempo de evolución de los síntomas"
+                                       placeholder="Tiempo de evolución..."
                                        #tiempoSintoma="ngModel" [(ngModel)]="consulta.tiemSintoma">
                             </div>
     
                         </div>
+                        
 
                     </div><!-- Fin del primer row -->
 
                     <div class="row">
-                      <div class="col-md-6">
-
-                          <div class="form-group">
-                            <label>Fecha de consulta:</label>
-                              <div class="input-group date" id="consultadate" data-target-input="nearest">
-                                  <div class="input-group-prepend" data-target="#consultadate" data-toggle="datetimepicker">
-                                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                  </div>
-                                  <input type="text" class="form-control datetimepicker-input" data-target="#consultadate"
-                                         name="fechaConsul" #fechaConsul="ngModel" [(ngModel)]="consulta.fechaConsul">
-                              </div>
-                          </div>
-
-                      </div>
-                      <div class="col-md-6">
+                      
+                      <div class="col-md-12">
 
                           <div class="form-group">
                             <label for="historia">Historia de la enfermedad</label>
-                            <input type="text" class="form-control" placeholder="Historia de la enfermedad"
+                            <textarea rows="3" class="form-control" placeholder="Historia de la enfermedad"
                                    name="historia" #historia="ngModel" [(ngModel)]="consulta.historia">
+                            </textarea>
                           </div>
 
                       </div>
