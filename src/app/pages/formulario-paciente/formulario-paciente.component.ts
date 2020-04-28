@@ -1,6 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { Paciente } from '../../models/paciente';
+//Importando la clase para manejar las alertas toastr para angular
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-formulario-paciente',
@@ -18,7 +20,7 @@ export class FormularioPacienteComponent implements OnInit {
   public form: NgForm;
   public edad: number;
 
-  constructor() {
+  constructor(private toastr: ToastrService) {
     this.paciente = {
       nombre: '',
       apellidos: '',
@@ -55,8 +57,13 @@ export class FormularioPacienteComponent implements OnInit {
 
       this.edad = edad;
 
+      this.showSuccess();
   }
 
+  // Alerta de exito
+  showSuccess() {
+    this.toastr.success('Hello world!', 'Toastr fun!');
+  }
  
 
 }

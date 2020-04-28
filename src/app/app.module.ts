@@ -4,6 +4,10 @@ import { routing, appRoutingProviders } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
+//importaciones para usar las alertas toastr
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -34,7 +38,9 @@ import { ConsultaComponent } from './pages/consulta/consulta.component';
     BrowserModule,
     routing,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule, // Se requiere el modulo de animaciones de angular
+    ToastrModule.forRoot(), //  agregando ToastrModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
