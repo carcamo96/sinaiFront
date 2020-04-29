@@ -16,14 +16,19 @@ public consulta: any;
 public nomPaciente: string;
 public atl = new Date();
   constructor() { 
-    this.nomPaciente = "Denny Romero";
+    this.nomPaciente = "";
     this.consulta = {
       motivo: '',
       tiemSintoma: '',
       fechaConsul: '',
       historia: '',
       antePatol: '',
-      alergias: ''
+      alergias: '',
+      peso:'',
+      talla:'',
+      temperatura:'',
+      presionArt:'',
+      freCardia:''
     }
     this.consulta.fechaConsul=this.atl.toLocaleDateString() +' '+ this.atl.toLocaleTimeString();
   }
