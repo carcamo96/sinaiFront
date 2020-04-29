@@ -20,6 +20,7 @@ export class FormularioPacienteComponent implements OnInit {
   public form: NgForm;
   public edad: number;
 
+
   constructor(private toastr: ToastrService) {
     this.paciente = {
       nombre: '',
@@ -50,7 +51,7 @@ export class FormularioPacienteComponent implements OnInit {
       let anioActual = new Date();
       let fechaNac = new Date(event);
 
-      this.paciente.fechaNac = fechaNac;
+      this.paciente.fechaNac = event;
 
       //Arreglar calculo con fecha completa con moment js
       let edad = anioActual.getFullYear() - fechaNac.getFullYear();

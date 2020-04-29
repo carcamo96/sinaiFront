@@ -28,7 +28,8 @@
                               <label for="nombrePaciente">Nombre</label>
                               <input type="text" class="form-control" name="nombrePaciente"
                                      placeholder="Nombre del paciente"
-                                     #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre">
+                                     #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre"
+                                     ngxPattern="[a-zA-Z]+" required>
                             </div>
     
                         </div>
@@ -39,7 +40,8 @@
                                 <label for="apellidosPaciente">Apellidos</label>
                                 <input type="text" class="form-control" name="apellidoPaciente" 
                                        placeholder="Apellidos del paciente"
-                                       #apellidoPaciente="ngModel" [(ngModel)]="paciente.apellidos">
+                                       #apellidoPaciente="ngModel" [(ngModel)]="paciente.apellidos"
+                                       ngxPattern="[a-zA-Z]+" required>
                             </div>
     
                         </div>
@@ -57,7 +59,7 @@
                                   </div>
                                   <input type="date" class="form-control" min="1995-01-01" max="2030-12-31" 
                                          name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
-                                         (ngModelChange)="cambioFecha($event)">
+                                         (ngModelChange)="cambioFecha($event)" required>
                               </div>
                           </div>
 
@@ -65,9 +67,11 @@
                       <div class="col-md-6">
 
                           <div class="form-group">
-                            <label for="edad">Edad</label>
-                            <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad }} años"
+                            <label for="edad">Edad (Años)</label>
+              
+                            <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad }}"
                                    name="edad">
+                            
                           </div>
                           
                             
@@ -122,7 +126,8 @@
                                       <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
                                     <input type="text" class="form-control" placeholder="Teléfono"
-                                           name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono">
+                                           name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono"
+                                           mask="9999-9999" required>
                                   </div>
                                   <!-- /.input group -->
                                 </div>
@@ -140,7 +145,8 @@
                           <label for="nombreEncargado">Nombre del padre o encargado</label>
                           <input type="text" class="form-control"
                                  placeholder="Padre o encargado" name="nombreEncargado"
-                                 #nombreEncargado="ngModel" [(ngModel)]="paciente.encargado">
+                                 #nombreEncargado="ngModel" [(ngModel)]="paciente.encargado"
+                                 ngxPattern="[a-zA-Z]+">
                         </div>
 
                       </div>
@@ -150,7 +156,8 @@
                           <label for="parentesco">Parentesco</label>
                           <input type="text" class="form-control" id="parentesco" 
                                  placeholder="Parentesco" name="parentesco"
-                                 #parentesco="ngModel" [(ngModel)]="paciente.parentesco">
+                                 #parentesco="ngModel" [(ngModel)]="paciente.parentesco"
+                                 ngxPattern="[a-zA-Z]+">
                         </div>
                       </div>
 
@@ -165,7 +172,8 @@
                           <label for="faContacto">Familiar de contacto (*):</label>
                           <input type="text" class="form-control"
                                  placeholder="Familiar de contacto" name="faContacto"
-                                 #faContacto="ngModel" [(ngModel)]="paciente.faContacto">
+                                 #faContacto="ngModel" [(ngModel)]="paciente.faContacto"
+                                 ngxPattern="[a-zA-Z]+">
                         </div>
 
                       </div>
@@ -179,7 +187,8 @@
                               <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
                             <input type="text" class="form-control" name="telFaContacto" placeholder="Teléfono"
-                                   #telFaContacto="ngModel" [(ngModel)]="paciente.telFaContacto">
+                                   #telFaContacto="ngModel" [(ngModel)]="paciente.telFaContacto"
+                                   mask="9999-9999">
                           </div>
                           <!-- /.input group -->
                         </div>
@@ -195,7 +204,8 @@
                             <div class="form-group">
                                 <label>Dirección</label>
                                 <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..."
-                                          name="direccion" #direccion="ngModel" [(ngModel)]="paciente.direccion">
+                                          name="direccion" #direccion="ngModel" [(ngModel)]="paciente.direccion"
+                                          ngxPattern="[a-zA-Z]+" required>
                                 </textarea>
                             </div>
                         </div>
@@ -205,7 +215,8 @@
                           <div class="form-group">
                               <label>Datos adicionales (*):</label>
                               <textarea class="form-control" rows="3" placeholder="Otros datos ..."
-                                        name="otrosDatos" #otrosDatos="ngModel" [(ngModel)]="paciente.otrosDatos">
+                                        name="otrosDatos" #otrosDatos="ngModel" [(ngModel)]="paciente.otrosDatos"
+                                        ngxPattern="[a-zA-Z]+">
 
                               </textarea>
                           </div>

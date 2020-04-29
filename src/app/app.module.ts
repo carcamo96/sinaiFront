@@ -8,6 +8,12 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 
+//para usar las mascaras en los campos de formulario
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+
+//Para usar patterns en las validaciones de formularios
+import { NgxPatternModule } from 'ngx-pattern';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -19,6 +25,13 @@ import { FormularioPacienteComponent } from './pages/formulario-paciente/formula
 import { MostrarPacienteComponent } from './pages/mostrar-paciente/mostrar-paciente.component';
 import { ExpedienteComponent } from './pages/expediente/expediente.component';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
+
+
+//Configuracion inicial de las mascaras ngx-mask
+const maskConfig: Partial<IConfig> = {
+  validation: false,
+};
+
 
 @NgModule({
   declarations: [
@@ -41,6 +54,8 @@ import { ConsultaComponent } from './pages/consulta/consulta.component';
     HttpClientModule,
     BrowserAnimationsModule, // Se requiere el modulo de animaciones de angular
     ToastrModule.forRoot(), //  agregando ToastrModule
+    NgxMaskModule.forRoot(maskConfig), //Agregando el modulo de ngx-mask
+    NgxPatternModule, // Agregando el modulo de ngx-patter
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
