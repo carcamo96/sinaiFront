@@ -44,6 +44,7 @@ export class FormularioPacienteComponent implements OnInit {
   onSubmit(f:NgForm){
       //console.log(this.paciente);
       console.log(f.value);
+      this.showSuccess("Se ha registrado un nuevo paciente", "Nuevo expediente");
   }
 
   cambioFecha(event){
@@ -58,12 +59,31 @@ export class FormularioPacienteComponent implements OnInit {
 
       this.edad = edad;
 
-      this.showSuccess();
+  }
+
+  esMenor(){
+    return this.edad >= 0 && this.edad < 18;
+  }
+
+  limpiarCampos(){
+    this.paciente = {
+      nombre: '',
+      apellidos: '',
+      fechaNac: '',
+      gen: 'M',
+      telefono: '',
+      encargado: '',
+      parentesco: '',
+      faContacto: '',
+      telFaContacto: '',
+      direccion: '',
+      otrosDatos: ''
+    }
   }
 
   // Alerta de exito
-  showSuccess() {
-    this.toastr.success('Hello world!', 'Toastr fun!');
+  showSuccess(mensaje: string, titulo: string) {
+    this.toastr.success(mensaje, titulo);
   }
  
 

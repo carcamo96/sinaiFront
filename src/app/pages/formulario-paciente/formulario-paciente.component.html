@@ -29,7 +29,13 @@
                               <input type="text" class="form-control" name="nombrePaciente"
                                      placeholder="Nombre del paciente"
                                      #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre"
-                                     ngxPattern="[a-zA-Z]+" required>
+                                     ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                     required autocomplete="off"
+                                     [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched }">
+
+                                     <small class="text-danger" *ngIf="!nombrePaciente.valid && nombrePaciente.touched">
+                                       Campo requerido
+                                     </small>
                             </div>
     
                         </div>
@@ -39,9 +45,14 @@
                             <div class="form-group">
                                 <label for="apellidosPaciente">Apellidos</label>
                                 <input type="text" class="form-control" name="apellidoPaciente" 
-                                       placeholder="Apellidos del paciente"
+                                       placeholder="Apellidos del paciente" autocomplete="off"
                                        #apellidoPaciente="ngModel" [(ngModel)]="paciente.apellidos"
-                                       ngxPattern="[a-zA-Z]+" required>
+                                       ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
+                                       [ngClass]="{'is-invalid': !apellidoPaciente.valid && apellidoPaciente.touched }">
+
+                                <small class="text-danger" *ngIf="!apellidoPaciente.valid && apellidoPaciente.touched">
+                                  Campo requerido
+                                </small>
                             </div>
     
                         </div>
@@ -59,8 +70,12 @@
                                   </div>
                                   <input type="date" class="form-control" min="1995-01-01" max="2030-12-31" 
                                          name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
-                                         (ngModelChange)="cambioFecha($event)" required>
+                                         (ngModelChange)="cambioFecha($event)" required
+                                         [ngClass]="{'is-invalid': !fechaNac.valid && fechaNac.touched }">
                               </div>
+                              <small class="text-danger" *ngIf="!fechaNac.valid && fechaNac.touched">
+                                Campo requerido
+                              </small>
                           </div>
 
                       </div>
@@ -119,16 +134,25 @@
 
                           <div class="col-md-6">
                                 <div class="form-group">
-                                  <label *ngIf="edad >= 18 || !edad || edad == 0 ">Teléfono:</label>
-                                  <label *ngIf="edad < 18 && edad != 0 ">Teléfono del encargado: </label>
+                                  
+                                  <label *ngIf="edad >= 0 && edad < 18; else noEsMenor">Teléfono del encargado: </label>
+                                  <ng-template #noEsMenor>
+                                      <label>Teléfono:</label>
+                                  </ng-template>
+                                  
                                   <div class="input-group">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Teléfono"
+                                    <input type="text" class="form-control" placeholder="Teléfono" autocomplete="off"
                                            name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono"
-                                           mask="9999-9999" required>
+                                           mask="9999-9999" required 
+                                           [ngClass]="{'is-invalid': !telefono.valid && telefono.touched }">
+
                                   </div>
+                                  <small class="text-danger" *ngIf="!telefono.valid && telefono.touched">
+                                    Campo requerido
+                                  </small>
                                   <!-- /.input group -->
                                 </div>
                                 
@@ -137,16 +161,22 @@
                     </div><!--  Fin del tercer row -->
              
 
-                    <div class="row" *ngIf="edad < 18 && edad!=0 "> <!-- Aqui van los campos adicionales para un menor de edad -->
+                    <div class="row" *ngIf="edad < 18 && edad >=0 "> <!-- Aqui van los campos adicionales para un menor de edad -->
 
                       <div class="col-md-6">
 
                         <div class="form-group">
                           <label for="nombreEncargado">Nombre del padre o encargado</label>
-                          <input type="text" class="form-control"
+                          <input type="text" class="form-control" autocomplete="off"
                                  placeholder="Padre o encargado" name="nombreEncargado"
                                  #nombreEncargado="ngModel" [(ngModel)]="paciente.encargado"
-                                 ngxPattern="[a-zA-Z]+">
+                                 ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
+                                 [ngClass]="{'is-invalid': !nombreEncargado.valid && nombreEncargado.touched}"
+                                 [required]="esMenor()">
+                          
+                          <small class="text-danger" *ngIf="!nombreEncargado.valid && nombreEncargado.touched">
+                                Campo requerido
+                          </small>
                         </div>
 
                       </div>
@@ -155,9 +185,15 @@
                         <div class="form-group">
                           <label for="parentesco">Parentesco</label>
                           <input type="text" class="form-control" id="parentesco" 
-                                 placeholder="Parentesco" name="parentesco"
+                                 placeholder="Parentesco" name="parentesco" autocomplete="off"
                                  #parentesco="ngModel" [(ngModel)]="paciente.parentesco"
-                                 ngxPattern="[a-zA-Z]+">
+                                 ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
+                                 [ngClass]="{'is-invalid': !parentesco.valid && parentesco.touched}"
+                                 [required]="esMenor()">
+
+                          <small class="text-danger" *ngIf="!parentesco.valid && parentesco.touched">
+                            Campo requerido
+                          </small>
                         </div>
                       </div>
 
@@ -170,10 +206,10 @@
 
                         <div class="form-group">
                           <label for="faContacto">Familiar de contacto (*):</label>
-                          <input type="text" class="form-control"
+                          <input type="text" class="form-control" autocomplete="off"
                                  placeholder="Familiar de contacto" name="faContacto"
                                  #faContacto="ngModel" [(ngModel)]="paciente.faContacto"
-                                 ngxPattern="[a-zA-Z]+">
+                                 ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$">
                         </div>
 
                       </div>
@@ -186,7 +222,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text" class="form-control" name="telFaContacto" placeholder="Teléfono"
+                            <input type="text" class="form-control" name="telFaContacto" placeholder="Teléfono" autocomplete="off"
                                    #telFaContacto="ngModel" [(ngModel)]="paciente.telFaContacto"
                                    mask="9999-9999">
                           </div>
@@ -203,10 +239,15 @@
                             <!-- textarea -->
                             <div class="form-group">
                                 <label>Dirección</label>
-                                <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..."
+                                <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..." autocomplete="off"
                                           name="direccion" #direccion="ngModel" [(ngModel)]="paciente.direccion"
-                                          ngxPattern="[a-zA-Z]+" required>
+                                          ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
+                                          [ngClass]="{'is-invalid': !direccion.valid && direccion.touched }">
                                 </textarea>
+
+                                <small class="text-danger" *ngIf="!direccion.valid && direccion.touched">
+                                    Campo requerido
+                                </small>
                             </div>
                         </div>
 
@@ -214,29 +255,43 @@
                           <!-- textarea -->
                           <div class="form-group">
                               <label>Datos adicionales (*):</label>
-                              <textarea class="form-control" rows="3" placeholder="Otros datos ..."
+                              <textarea class="form-control" rows="3" placeholder="Otros datos ..." autocomplete="off"
                                         name="otrosDatos" #otrosDatos="ngModel" [(ngModel)]="paciente.otrosDatos"
-                                        ngxPattern="[a-zA-Z]+">
+                                        ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$">
 
                               </textarea>
                           </div>
                         </div>
 
                     </div><!-- Fin del sexto row -->
-
+                    
 
                     <div class="card-footer">
+  
+            
 
-                      <button type="submit" id="crear" class="btn btn-primary">Crear expediente</button>
+                          <button type="submit" id="crear" class="btn btn-primary"
+                                  [disabled]="pacienteForm.invalid">
+                                  Crear expediente
+                          </button>
+                          
+                          
+                          <button type="button" class="btn btn-secondary ml-3 mr-0" (click)="limpiarCampos()">
+                              Limpiar campos
+                          </button>
+                          
+                          <div class="float-right d-none d-sm-block">
+                            <b>Campos opcionales (*)</b> 
+                          </div>
 
-                      <div class="float-right d-none d-sm-block">
-                        <b>Campos opcionales (*)</b> 
-                      </div>
+  
                     </div>
+                   
+
                   </div>
                   <!-- /.card-body -->
-  
                 </form>
+
             </div><!-- Fin del card -->
 
 
