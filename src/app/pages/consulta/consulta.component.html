@@ -11,11 +11,10 @@
 
       
       <div class="col-md-12">
-           
+        
           <div class="col-md-5">
-    
             <div class="form-group">
-              <label for="nomPaciente">Nombre de paciente</label>
+              <label>Nombre de paciente</label>
               <input type="text" class="form-control" name="nomPaciente" value="{{nomPaciente}}" disabled>
             </div>
 
@@ -61,8 +60,8 @@
                             
                             <div class="form-group">
                                 <label for="tiempoSintoma">Tiempo de evolución de síntomas</label>
-                                <input type="text" class="form-control" name="tiempoSintoma" 
-                                       placeholder="Tiempo de evolución..."
+                                <input type="number" class="form-control" name="tiempoSintoma" 
+                                       placeholder="Tiempo de evolución ..."
                                        #tiempoSintoma="ngModel" [(ngModel)]="consulta.tiemSintoma">
                             </div>
     
@@ -99,6 +98,54 @@
                         </div>
 
                     </div><!-- Fin del sexto row -->
+                    <fieldset class="border p-2">
+                      <legend class="w-auto">Signos vitales</legend>
+                   
+                    <div class="row"> <!--Div de signos vitales-->
+                      <div class="col-md-2">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>Peso</label>
+                            <input type="text" class="form-control" placeholder="Peso"
+                                      name="peso" #peso="ngModel" [(ngModel)]="consulta.peso">
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>Talla</label>
+                            <input type="text" class="form-control" placeholder="Talla"
+                                      name="talla" #talla="ngModel" [(ngModel)]="consulta.talla">
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>Temperatura</label>
+                            <input type="text" class="form-control" placeholder="Temperatura"
+                                      name="temp" #temp="ngModel" [(ngModel)]="consulta.temperatura">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>Presión arterial</label>
+                            <input type="text" class="form-control" placeholder="Presión arterial"
+                                      name="presion" #presion="ngModel" [(ngModel)]="consulta.presionArt">
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>Frecuencia cardiáca</label>
+                            <input type="text" class="form-control" placeholder="Frecuencia cardiáca"
+                                      name="frec" #frec="ngModel" [(ngModel)]="consulta.freCardia">
+                        </div>
+                      </div>
+
+                  </div><!-- Fin del div signos vitales -->
+                </fieldset>
+
                     <div class="row">
                         <div class="col-md-12">
                           <!-- textarea -->
