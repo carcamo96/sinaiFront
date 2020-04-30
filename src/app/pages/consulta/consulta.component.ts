@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {NgForm} from '@angular/forms';
+//Importando la clase para manejar las alertas toastr para angular
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-consulta',
@@ -12,11 +15,16 @@ public breads: any[] = [
   {titulo: 'Home', link: '/home'}
 ];
 
-public consulta: any;
+
 public nomPaciente: string;
 public atl = new Date();
-  constructor() { 
+
+public consulta: any;
+
+  constructor(private toastr: ToastrService) { 
     this.nomPaciente = "";
+
+
     this.consulta = {
       motivo: '',
       tiemSintoma: '',
@@ -28,7 +36,8 @@ public atl = new Date();
       talla:'',
       temperatura:'',
       presionArt:'',
-      freCardia:''
+      freCardia:'',
+      indiceMC:''
     }
     this.consulta.fechaConsul=this.atl.toLocaleDateString() +' '+ this.atl.toLocaleTimeString();
   }
@@ -36,8 +45,14 @@ public atl = new Date();
   ngOnInit(): void {
   }
 
-  onSubmit(){
-    
+  onSubmit(f:NgForm){
+    console.log(f.value);
+    this.showSuccess("Se ha realizado una nueva consulta", "Nueva consulta");
+}
+
+  // Alerta de exito
+  showSuccess(mensaje: string, titulo: string) {
+    this.toastr.success(mensaje, titulo);
   }
 
 }
