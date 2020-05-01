@@ -14,6 +14,9 @@ import { NgxMaskModule, IConfig } from 'ngx-mask';
 //Para usar patterns en las validaciones de formularios
 import { NgxPatternModule } from 'ngx-pattern';
 
+// importación para hacer uso de Pipes/Tuberías
+import {NgPipesModule} from 'ngx-pipes';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -56,6 +59,7 @@ const maskConfig: Partial<IConfig> = {
     ToastrModule.forRoot(), //  agregando ToastrModule
     NgxMaskModule.forRoot(maskConfig), //Agregando el modulo de ngx-mask
     NgxPatternModule, // Agregando el modulo de ngx-patter
+    NgPipesModule // Modulo de Pipes
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
