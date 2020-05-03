@@ -68,14 +68,23 @@
                                   <div class="input-group-prepend">
                                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                   </div>
-                                  <input type="date" class="form-control" min="1995-01-01" max="2030-12-31" 
+                                  <input type="date" class="form-control" min="1995-01-01" max="{{ fechaAux }}" 
                                          name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
                                          (ngModelChange)="cambioFecha($event)" required
-                                         [ngClass]="{'is-invalid': !fechaNac.valid && fechaNac.touched }">
+                                         [ngClass]="{'is-invalid': (!fechaNac.valid && fechaNac.touched) ||
+                                                     (edad < 0 || edad > 120) }">
                               </div>
                               <small class="text-danger" *ngIf="!fechaNac.valid && fechaNac.touched">
                                 Campo requerido
                               </small>
+                              <small class="text-danger" *ngIf="edad < 0">
+                                La edad no puede ser negativa
+                              </small>
+                              <small class="text-danger" *ngIf="edad > 120">
+                                La edad calculada es muy grande
+                              </small>
+                          
+                              
                           </div>
 
                       </div>
@@ -107,7 +116,7 @@
                                         
                                   <div class="form-group clearfix">
                                     <div class="icheck-primary d-inline">
-                                      <input type="radio" value="M" id="radioPrimary1" name="r1"
+                                      <input type="radio" value="M" id="radioPrimary1" name="r1" 
                                       #r1="ngModel" [(ngModel)]="paciente.gen">
                                       <label for="radioPrimary1">
                                         Masculino
@@ -271,7 +280,7 @@
             
 
                           <button type="submit" id="crear" class="btn btn-primary"
-                                  [disabled]="pacienteForm.invalid">
+                                  [disabled]="pacienteForm.invalid || edad < 0 || edad > 120 || edad==undefined">
                                   Crear expediente
                           </button>
                           
