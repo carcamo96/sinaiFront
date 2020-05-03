@@ -27,19 +27,19 @@
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" #consultaForm="ngForm" (ngSubmit)="onSubmit(consultaForm)">
+                <form role="form" #consultaForm="ngForm" (ngSubmit)="onSubmit()">
                   <div class="card-body">
                     <div class="row">
                       <div class="col-md-3">
 
                         <div class="form-group">
                           <label>Fecha de consulta:</label>
-                            <div class="input-group date" id="consultadate" data-target-input="nearest">
-                                <div class="input-group-prepend" data-target="#consultadate">
+                            <div class="input-group date">
+                                <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                <input type="text" class="form-control datetimepicker-input" data-target="#consultadate"
-                                      value="consulta.fechaConsul"  name="fechaConsul" #fechaConsul="ngModel" [(ngModel)]="consulta.fechaConsul" disabled>
+                                <input type="text" class="form-control" 
+                                      value="consulta.fechaConsul"  name="fechaConsul" #fechaConsul="ngModel" [(ngModel)]="consulta.fechaConsul">
                             </div>
                         </div>
 
@@ -66,7 +66,7 @@
                             
                             <div class="form-group">
                                 <label for="tiempoSintoma">Tiempo de evolución de síntomas</label>
-                                <input type="number" class="form-control" name="tiempoSintoma" 
+                                <input type="text" class="form-control" name="tiempoSintoma" 
                                        placeholder="Tiempo de evolución ..."
                                        #tiempoSintoma="ngModel" [(ngModel)]="consulta.tiemSintoma" 
                                        required autocomplete="off"
@@ -127,7 +127,7 @@
                         <div class="form-group">
                             <label>Peso</label>
                             <div class="input-group">
-                            <input type="number" class="form-control" placeholder="Peso"
+                            <input type="text" class="form-control" placeholder="Peso"
                                       name="peso" #peso="ngModel" [(ngModel)]="consulta.peso" required autocomplete="off"
                                       [ngClass]="{'is-invalid': !peso.valid && peso.touched}">
                                       <div class="input-group-prepend">
@@ -143,7 +143,7 @@
                         <div class="form-group">
                             <label>Talla</label>
                             <div class="input-group">
-                            <input type="number" class="form-control" placeholder="Talla"
+                            <input type="text" class="form-control" placeholder="Talla"
                                       name="talla" #talla="ngModel" [(ngModel)]="consulta.talla" required autocomplete="off"
                                       [ngClass]="{'is-invalid': !talla.valid && talla.touched }">
                                       <div class="input-group-prepend">
@@ -229,8 +229,8 @@
 
                     <div class="card-footer">
 
-                      <button type="submit" id="crear" class="btn btn-primary"
-                      [disabled]="consultaForm.invalid">Guardar consulta</button>
+                      <input type="submit" value="Guardar consulta" class="btn btn-primary"
+                      [disabled]="consultaForm.invalid"/>
 
                     </div>
                   </div>

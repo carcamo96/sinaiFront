@@ -1,10 +1,9 @@
 export class Consulta{
     constructor(
-        public _id: string,
+        public paciente: string,
         public motivo: string,
         public tiemSintoma: string,
         public fechaConsul: string,
-        public fechaModificacion: string,
         public historia: string,
         public antePatol: string,
         public alergias: string,
@@ -13,6 +12,7 @@ export class Consulta{
         public temperatura: string,
         public presionArt: string,
         public freCardia: string,
-        public indiceMC: string
+        public indiceMC: string,
+        public fechaCre: string
     ){}
 }
