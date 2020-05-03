@@ -17,6 +17,9 @@ import { NgxPatternModule } from 'ngx-pattern';
 // importación para hacer uso de Pipes/Tuberías
 import {NgPipesModule} from 'ngx-pipes';
 
+//Para usar ngx-loadingBar
+import {LoadingBarModule} from "@ngx-loading-bar/core";
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -59,7 +62,8 @@ const maskConfig: Partial<IConfig> = {
     ToastrModule.forRoot(), //  agregando ToastrModule
     NgxMaskModule.forRoot(maskConfig), //Agregando el modulo de ngx-mask
     NgxPatternModule, // Agregando el modulo de ngx-patter
-    NgPipesModule // Modulo de Pipes
+    NgPipesModule, // Modulo de Pipes
+    LoadingBarModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

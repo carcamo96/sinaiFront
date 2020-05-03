@@ -10,6 +10,8 @@
 <section class="content">
     <div class="container-fluid">
 
+      <ngx-loading-bar color="#339942" height="2" animationTime="0.8"></ngx-loading-bar>
+
         <div class="col-md-12">
 
             <div class="card card-primary">
@@ -20,6 +22,11 @@
                 <!-- form start -->
                 <form role="form" #pacienteForm="ngForm" (ngSubmit)="onSubmit(pacienteForm)">
                   <div class="card-body">
+
+                    <div class="overlay-wrapper" *ngIf="pacienteForm.submitted">
+                      <div class="overlay"><i class="fas fa-3x fa-sync-alt fa-spin"></i><div class="text-bold pt-2">Cargando...</div></div>
+                    </div>
+
                     <div class="row">
 
                         <div class="col-md-6">
@@ -68,7 +75,7 @@
                                   <div class="input-group-prepend">
                                       <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                   </div>
-                                  <input type="date" class="form-control" min="1995-01-01" max="{{ fechaAux }}" 
+                                  <input type="date" class="form-control"  max="{{ fechaAux }}" 
                                          name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
                                          (ngModelChange)="cambioFecha($event)" required
                                          [ngClass]="{'is-invalid': (!fechaNac.valid && fechaNac.touched) ||

@@ -3,12 +3,17 @@ import {NgForm} from '@angular/forms';
 import { Paciente } from '../../models/paciente';
 //Importando la clase para manejar las alertas toastr para angular
 import { ToastrService } from 'ngx-toastr';
+//Importando servicio para pacientes
+import { PacienteService } from '../../services/paciente.service';
+//importando ngx-loading
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
 
 @Component({
   selector: 'app-formulario-paciente',
   templateUrl: './formulario-paciente.component.html',
-  styleUrls: ['./formulario-paciente.component.css']
+  styleUrls: ['./formulario-paciente.component.css'],
+  providers:[PacienteService]
 })
 export class FormularioPacienteComponent implements OnInit {
 
@@ -17,13 +22,19 @@ export class FormularioPacienteComponent implements OnInit {
     {titulo: 'Home', link: '/home'}
   ];
 
-  public paciente: any;
-  public form: NgForm;
-  public edad: number;
-  
-  public fechaAux = '';
+  public paciente: any;//variable auxiliar que se manejara como ngModel
+  public edad: number; //variable auxiliar para mostrar la edad
+  public fechaAux = ''; //para definir la fecha actual para el datePicker
 
-  constructor(private toastr: ToastrService) {
+  public status: string;
+
+  height = 2;
+  color = "#4092F1";
+  runInterval = 300;
+
+  constructor(private toastr: ToastrService,
+     private _pacienteService: PacienteService,
+     private loadingBarService: LoadingBarService) {
     this.paciente = {
       nombre: '',
       apellidos: '',
@@ -49,8 +60,51 @@ export class FormularioPacienteComponent implements OnInit {
   //Enviando datos
   onSubmit(f:NgForm){
   
-      console.log(f.value);
-      this.showSuccess("Se ha registrado un nuevo paciente", "Nuevo expediente");
+    this.loadingBarService.start();
+
+    if(f.valid){
+
+      let paciente = new Paciente(
+        this.paciente.nombre,
+        this.paciente.apellidos,
+        new Date(this.paciente.fechaNac),
+        this.paciente.gen,
+        this.paciente.telefono,
+        this.paciente.encargado,
+        this.paciente.parentesco,
+        this.paciente.faContacto,
+        this.paciente.telFaContacto,
+        this.paciente.direccion,
+        this.paciente.otrosDatos
+      );
+
+      this._pacienteService.create(paciente).subscribe(
+        response => {
+
+          if(response.status == 'success'){
+            this.loadingBarService.complete();
+            this.status = 'success';
+            console.log("Respuesta de insercion: "+response.message);
+            this.showSuccess("Se ha registrado un nuevo paciente", "Nuevo expediente");
+
+          }else{
+            this.loadingBarService.complete();
+            this.status = 'error';
+            console.log("Respuesta de insercion err:"+response.message);
+            this.showError("No se ha podido registrar", "Expediente no registrado");
+          }
+
+        },
+        error => {
+          this.loadingBarService.complete();
+          this.status = 'error';
+          this.showError("No se ha conctado con el servidor", "Error");
+        }
+      );
+
+    }
+
+
       f.resetForm({r1: 'M' }); //importante!!! resetea y se le pasa un json con los nuevo valores por defecto
       this.edad = undefined;
       this.limpiarCampos(); //limpia los campos del objeto auxiliar
@@ -125,7 +179,24 @@ export class FormularioPacienteComponent implements OnInit {
 
   // Alerta de exito
   showSuccess(mensaje: string, titulo: string) {
-    this.toastr.success(mensaje, titulo);
+    this.toastr.success(mensaje, titulo, {
+        progressBar: true,
+        progressAnimation: 'decreasing'
+    });
+  }
+
+  showInfo(mensaje: string, titulo: string) {
+    this.toastr.info(mensaje, titulo, {
+        progressBar: true,
+        progressAnimation: 'decreasing'
+    });
+  }
+
+  showError(mensaje: string, titulo: string) {
+    this.toastr.error(mensaje, titulo, {
+        progressBar: true,
+        progressAnimation: 'decreasing'
+    });
   }
  
 

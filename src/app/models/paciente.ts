@@ -2,7 +2,6 @@ export class Paciente{
 
     constructor(
 
-        public _id: string,
         public nombre: string,
         public apellidos: string,
         public fechaNac: Date,
