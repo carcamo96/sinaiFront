@@ -6,29 +6,30 @@
 </app-page-header>
 
 <!-- Contenedor de página -->
-<section class="content clearfix">
-    <div class="container-fluid">
-
+<section class="content">
+    <div class="container-fluid"> 
+      <ngx-loading-bar color="#339942" height="2" animationTime="0.8"></ngx-loading-bar>
       
       <div class="col-md-12">
         
-          <div class="col-md-5">
-            <div class="form-group">
-              <label>Nombre de paciente</label>
-              <input type="text" class="form-control" name="nomPaciente" value="{{nomPaciente}}" disabled>
-            </div>
-
-          </div>
-        
-
             <div class="card card-primary">
                 <div class="card-header">
                   <h3 class="card-title">Datos de consulta</h3>
                 </div>
                 <!-- /.card-header -->
                 <!-- form start -->
-                <form role="form" #consultaForm="ngForm" (ngSubmit)="onSubmit()">
+                <form role="form" #consultaForm="ngForm" (ngSubmit)="onSubmit(consultaForm)">
                   <div class="card-body">
+                    <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Nombre de paciente</label>
+                        <input type="text" class="form-control" name="paciente" #paciente="ngModel" 
+                        [(ngModel)]="consulta.paciente" value="{{consulta.paciente}}" disabled>
+                      </div>
+          
+                    </div>
+                  </div>
                     <div class="row">
                       <div class="col-md-3">
 
@@ -39,13 +40,14 @@
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                                 <input type="text" class="form-control" 
-                                      value="consulta.fechaConsul"  name="fechaConsul" #fechaConsul="ngModel" [(ngModel)]="consulta.fechaConsul">
+                                      value="consulta.fechaConsul"  name="fechaConsul" #fechaConsul="ngModel" 
+                                      [(ngModel)]="consulta.fechaConsul" disabled>
                             </div>
                         </div>
 
                     </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-5">
     
                             <div class="form-group">
                               <label for="motivo">Motivo de consulta</label>
@@ -62,17 +64,17 @@
     
                         </div>
             
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             
                             <div class="form-group">
-                                <label for="tiempoSintoma">Tiempo de evolución de síntomas</label>
-                                <input type="text" class="form-control" name="tiempoSintoma" 
+                                <label for="tiemSintoma">Tiempo de evolución de síntomas</label>
+                                <input type="text" class="form-control" name="tiemSintoma" 
                                        placeholder="Tiempo de evolución ..."
-                                       #tiempoSintoma="ngModel" [(ngModel)]="consulta.tiemSintoma" 
+                                       #tiemSintoma="ngModel" [(ngModel)]="consulta.tiemSintoma" 
                                        required autocomplete="off"
-                                       [ngClass]="{'is-invalid': !tiempoSintoma.valid && tiempoSintoma.touched }">
+                                       [ngClass]="{'is-invalid': !tiemSintoma.valid && tiemSintoma.touched }">
   
-                                       <small class="text-danger" *ngIf="!tiempoSintoma.valid && tiempoSintoma.touched">
+                                       <small class="text-danger" *ngIf="!tiemSintoma.valid && tiemSintoma.touched">
                                          Campo requerido
                                        </small>
                             </div>
@@ -129,7 +131,7 @@
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Peso"
                                       name="peso" #peso="ngModel" [(ngModel)]="consulta.peso" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !peso.valid && peso.touched}">
+                                      [ngClass]="{'is-invalid': !peso.valid && peso.touched}" ngxPattern="[0-9.]+">
                                       <div class="input-group-prepend">
                                       <span class="input-group-text">kg</span>
                                     </div>
@@ -145,7 +147,7 @@
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Talla"
                                       name="talla" #talla="ngModel" [(ngModel)]="consulta.talla" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !talla.valid && talla.touched }">
+                                      [ngClass]="{'is-invalid': !talla.valid && talla.touched }" ngxPattern="[0-9.]+">
                                       <div class="input-group-prepend">
                                       <span class="input-group-text" *ngIf="talla.value < 1">cm</span>
                                       <span class="input-group-text" *ngIf="talla.value >= 1">m</span>
@@ -161,13 +163,13 @@
                             <label>Temperatura</label>
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Temperatura"
-                                      name="temp" #temp="ngModel" [(ngModel)]="consulta.temperatura" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !temp.valid && temp.touched }">
+                                      name="temperatura" #temperatura="ngModel" [(ngModel)]="consulta.temperatura" required autocomplete="off"
+                                      [ngClass]="{'is-invalid': !temperatura.valid && temperatura.touched }" ngxPattern="[0-9.]+"> 
                                       <div class="input-group-prepend">
                                       <span class="input-group-text">°C</span>
                                      </div>
                                     </div>
-                                      <small class="text-danger" *ngIf="!temp.valid && temp.touched">
+                                      <small class="text-danger" *ngIf="!temperatura.valid && temperatura.touched">
                                         Campo requerido
                                       </small>
                         </div>
@@ -177,13 +179,13 @@
                             <label>Presión arterial</label>
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Presión arterial"
-                                      name="presion" #presion="ngModel" [(ngModel)]="consulta.presionArt" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !presion.valid && presion.touched }">
+                                      name="presionArt" #presionArt="ngModel" [(ngModel)]="consulta.presionArt" required autocomplete="off"
+                                      [ngClass]="{'is-invalid': !presionArt.valid && presionArt.touched }">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">PA</span>
                                       </div>
                                     </div>
-                                      <small class="text-danger" *ngIf="!presion.valid && presion.touched">
+                                      <small class="text-danger" *ngIf="!presionArt.valid && presionArt.touched">
                                         Campo requerido
                                       </small>
                         </div>
@@ -193,13 +195,13 @@
                             <label>Frecuencia cardiáca</label>
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Frecuencia cardiáca"
-                                      name="frec" #frec="ngModel" [(ngModel)]="consulta.freCardia" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !frec.valid && frec.touched }" Pattern="^[A-Za-z]+@[a-z]+\.[a-z]+">
+                                      name="freCardia" #freCardia="ngModel" [(ngModel)]="consulta.freCardia" required autocomplete="off"
+                                      [ngClass]="{'is-invalid': !freCardia.valid && freCardia.touched }" ngxPattern="[0-9.]+">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">FC</span>
                                       </div>
                                     </div>
-                                      <small class="text-danger" *ngIf="!frec.valid && frec.touched">
+                                      <small class="text-danger" *ngIf="!freCardia.valid && freCardia.touched">
                                         Campo requerido
                                       </small>
                         </div>
@@ -229,9 +231,10 @@
 
                     <div class="card-footer">
 
-                      <input type="submit" value="Guardar consulta" class="btn btn-primary"
+                      <input  type="submit" value="Guardar consulta" class="btn btn-primary"
                       [disabled]="consultaForm.invalid"/>
-
+                      <input type="button" class="btn btn-secondary ml-3 mr-0" value="Limpiar campos" (click)="limpiarCampos()"/>
+                      
                     </div>
                   </div>
                   <!-- /.card-body -->
