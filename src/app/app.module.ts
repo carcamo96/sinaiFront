@@ -20,6 +20,9 @@ import {NgPipesModule} from 'ngx-pipes';
 //Para usar ngx-loadingBar
 import {LoadingBarModule} from "@ngx-loading-bar/core";
 
+//Para las dataTables
+import { DataTablesModule } from 'angular-datatables';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -31,6 +34,8 @@ import { FormularioPacienteComponent } from './pages/formulario-paciente/formula
 import { MostrarPacienteComponent } from './pages/mostrar-paciente/mostrar-paciente.component';
 import { ExpedienteComponent } from './pages/expediente/expediente.component';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
+import { ConsultasComponent } from './pages/consultas/consultas.component';
+import { ExpedientesComponent } from './pages/expedientes/expedientes.component';
 
 
 //Configuracion inicial de las mascaras ngx-mask
@@ -51,7 +56,9 @@ const maskConfig: Partial<IConfig> = {
     FormularioPacienteComponent,
     MostrarPacienteComponent,
     ExpedienteComponent,
-    ConsultaComponent
+    ConsultaComponent,
+    ConsultasComponent,
+    ExpedientesComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +70,8 @@ const maskConfig: Partial<IConfig> = {
     NgxMaskModule.forRoot(maskConfig), //Agregando el modulo de ngx-mask
     NgxPatternModule, // Agregando el modulo de ngx-patter
     NgPipesModule, // Modulo de Pipes
-    LoadingBarModule
+    LoadingBarModule,
+    DataTablesModule //Modulo para usar las tablas
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

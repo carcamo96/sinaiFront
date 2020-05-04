@@ -26,7 +26,8 @@
             "styles": [
               "src/styles.css",
               "node_modules/ngx-toastr/toastr.css",
-              "src/assets/dist/css/adminlte.css"
+              "src/assets/dist/css/adminlte.css",
+              "node_modules/datatables.net-dt/css/jquery.dataTables.css"
             ],
             "scripts": [
               "src/assets/dist/js/adminlte.js",
@@ -35,7 +36,9 @@
               "src/assets/dist/js/adminlte.min.js.map",
               "src/assets/dist/js/demo.js",
               "src/assets/plugins/jquery/jquery.js",
-              "src/assets/plugins/jquery/jquery.min.js"
+              "src/assets/plugins/jquery/jquery.min.js",
+              "node_modules/jquery/dist/jquery.js",
+              "node_modules/datatables.net/js/jquery.dataTables.js"
             ]
           },
           "configurations": {

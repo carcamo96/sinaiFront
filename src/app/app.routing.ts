@@ -9,6 +9,7 @@ import { FormularioPacienteComponent } from './pages/formulario-paciente/formula
 import { MostrarPacienteComponent } from './pages/mostrar-paciente/mostrar-paciente.component';
 import { ExpedienteComponent } from './pages/expediente/expediente.component';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
+import { ExpedientesComponent } from './pages/expedientes/expedientes.component';
 
 
 
@@ -20,8 +21,9 @@ const appRoutes: Routes = [
     {path: 'registrarPaciente', component: FormularioPacienteComponent},
     {path: 'mostrarPaciente', component: MostrarPacienteComponent},
     {path: 'expediente', component: ExpedienteComponent},
+    {path: 'expedientes', component: ExpedientesComponent},
     {path: 'consulta', component: ConsultaComponent},
-    {path: 'agregar', component: AgregarComponent}
+    {path: 'agregar', component: AgregarComponent},
    
 ];
 
