@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { PacienteService } from '../../services/paciente.service';
-import { Paciente } from 'src/app/models/paciente';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-expedientes',
@@ -8,20 +8,26 @@ import { Paciente } from 'src/app/models/paciente';
   styleUrls: ['./expedientes.component.css'],
   providers: [PacienteService]
 })
-export class ExpedientesComponent implements OnInit {
+export class ExpedientesComponent implements OnInit, OnDestroy {
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [
     {titulo: 'Home', link: '/home'}
   ];
-
-  public pacientes: Paciente[];
-
+  dtTrigger: Subject<any> = new Subject();
+  public pacientes: any[] =[];
+  dtOptions: DataTables.Settings = {};
+ 
   constructor(
     private _pacienteService: PacienteService
   ) { }
 
   ngOnInit(){
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true
+    };
     this.cargarPacientes();
   }
   cargarPacientes(){
@@ -29,13 +35,18 @@ export class ExpedientesComponent implements OnInit {
       response => {
         if (response.pacientes) {
          this.pacientes = response.pacientes;
-         console.log(response.pacientes);
+         this.dtTrigger.next();
+         //console.log(response.pacientes);
         }
       },
       error => {
         console.log(error);
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
   }
 
 }

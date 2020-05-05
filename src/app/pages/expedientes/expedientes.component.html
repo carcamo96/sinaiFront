@@ -21,21 +21,22 @@
                 <!-- contenido central -->
                 <div class="card-body">
                     
-                    <table datatable class="row-border hover table table-bordered table-striped">
+                    <table class="row-border hover table table-bordered table-striped" datatable [dtOptions]="dtOptions"
+                    [dtTrigger]="dtTrigger">
                         <thead>
                           <tr>
-                            <th>ID</th>
-                            <th>First name</th>
-                            <th>Last name</th>
+                            <th scope = "col"> ID</th>
+                            <th scope = "col">First name</th>
+                            <th scope = "col">Last name</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Foo</td>
-                            <td>Bar</td>
+                          <tr *ngFor="let paciente of pacientes">
+                            <td scope = "row">{{paciente.nombre}}</td>
+                            <td>{{paciente.apellidos}}</td>
+                            <td>{{paciente.telefono}}</td>
                           </tr>
-                          <tr>
+                         <!--<tr>
                             <td>2</td>
                             <td>Someone</td>
                             <td>Youknow</td>
@@ -90,7 +91,7 @@
                             <td>Zelda</td>
                             <td>Link</td>
                           </tr>
-                        </tbody>
+                        </tbody>-->
                     </table>
 
 
