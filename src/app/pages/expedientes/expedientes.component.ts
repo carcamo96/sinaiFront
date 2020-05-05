@@ -22,10 +22,13 @@ export class ExpedientesComponent implements OnInit {
   ) { }
 
   ngOnInit(){
+    this.cargarPacientes();
+  }
+  cargarPacientes(){
     this._pacienteService.getPaciente().subscribe(
       response => {
         if (response.pacientes) {
-         // this.pacientes = response.pacientes;
+         this.pacientes = response.pacientes;
          console.log(response.pacientes);
         }
       },
