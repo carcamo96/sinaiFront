@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { PacienteService } from '../../services/paciente.service';
+import { Paciente } from 'src/app/models/paciente';
 
 @Component({
   selector: 'app-expedientes',
   templateUrl: './expedientes.component.html',
-  styleUrls: ['./expedientes.component.css']
+  styleUrls: ['./expedientes.component.css'],
+  providers: [PacienteService]
 })
 export class ExpedientesComponent implements OnInit {
 
@@ -12,9 +15,24 @@ export class ExpedientesComponent implements OnInit {
     {titulo: 'Home', link: '/home'}
   ];
 
-  constructor() { }
+  public pacientes: Paciente[];
 
-  ngOnInit(): void {
+  constructor(
+    private _pacienteService: PacienteService
+  ) { }
+
+  ngOnInit(){
+    this._pacienteService.getPaciente().subscribe(
+      response => {
+        if (response.pacientes) {
+         // this.pacientes = response.pacientes;
+         console.log(response.pacientes);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
 
 }
