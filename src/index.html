@@ -85,5 +85,35 @@
   <!-- AdminLTE for demo purposes -->
   <script src="assets/dist/js/demo.js"></script>
 
+  <script>
+
+    $.extend( true, $.fn.dataTable.defaults, {
+        "searching": true,
+        "ordering": true,
+        "language": {
+          "paginate": {
+                    "first": "Primer página",
+                    "last": "Ultima página",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+				          },
+          "info": "Mostrando de _START_ a _END_ datos de un total de _TOTAL_ ",
+          "emptyTable": "No hay datos para mostrar",
+          "infoEmpty": "Mostrando de 0 a 0 datos de un total de 0 ",
+          "infoFiltered": "(filtrando de _MAX_ datos en total)",
+          "lengthMenu": "Mostrando _MENU_ registros",
+          "loadingRecords": "Cargando registros...",
+          "processing": "Procesando...",
+          "search": "Busqueda de registros:",
+          "zeroRecords": "No se encontraron coincidencias"
+			  }
+    } );
+ 
+
+    $(document).ready( function() {
+			  $('#example').dataTable();
+		} );
+
+  </script>
   
 </html>
