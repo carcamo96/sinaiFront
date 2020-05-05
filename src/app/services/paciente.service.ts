@@ -13,11 +13,10 @@ export class PacienteService{
         this.url = Global.url;
     }
 
-    /*
+    
     getPaciente():Observable<any>{
-        return this._http.get(this.url+'consulta/listar');
+        return this._http.get(this.url+'paciente/listar');
     }
-    */
 
     create(paciente):Observable<any>{
         
@@ -26,4 +25,5 @@ export class PacienteService{
         
         return this._http.post(this.url+'paciente/save', params, {headers: headers});
     }
+
 }

@@ -21,21 +21,40 @@
                 <!-- contenido central -->
                 <div class="card-body">
                     
-                    <table id="example" datatable class="row-border hover table table-bordered table-striped">
+                    <table id="example" class="row-border hover table table-bordered table-striped" datatable [dtOptions]="dtOptions"
+                    [dtTrigger]="dtTrigger">
                         <thead>
                           <tr>
-                            <th>ID</th>
-                            <th>First name</th>
-                            <th>Last name</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Teléfono</th>
+                            <th>Género</th>
+                            <th>Encargado</th>
+                            <th>Parentesco</th>
+                            <th>Fecha nacimiento</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Foo</td>
-                            <td>Bar</td>
+                          <tr *ngFor="let paciente of pacientes">
+                            <td>{{paciente.nombre}}</td>
+                            <td>{{paciente.apellidos}}</td>
+                            <td>{{paciente.telefono}}</td>
+                            <td [ngSwitch]="paciente.gen">
+                            <p *ngSwitchCase="'M'">
+                            masculino
+                            </p>
+                            <p *ngSwitchCase="'F'">
+                            femenino
+                            </p>
+                            <p *ngSwitchDefault>
+                            
+                            </p>
+                            </td>
+                            <td>{{paciente.encargado}}</td>
+                            <td>{{paciente.parentesco}}</td>
+                            <td>{{paciente.fechaNac}}</td>
                           </tr>
-                          <tr>
+                         <!--<tr>
                             <td>2</td>
                             <td>Someone</td>
                             <td>Youknow</td>
@@ -90,7 +109,7 @@
                             <td>Zelda</td>
                             <td>Link</td>
                           </tr>
-                        </tbody>
+                        </tbody>-->
                     </table>
 
 
