@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { PacienteService } from '../../services/paciente.service';
 import { Subject } from 'rxjs';
+import { Paciente } from '../../models/paciente';
 
 @Component({
   selector: 'app-expedientes',
@@ -25,7 +26,6 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
   ngOnInit(){
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 5,
       processing: true
     };
     this.cargarPacientes();

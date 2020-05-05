@@ -25,16 +25,34 @@
                     [dtTrigger]="dtTrigger">
                         <thead>
                           <tr>
-                            <th scope = "col"> ID</th>
-                            <th scope = "col">First name</th>
-                            <th scope = "col">Last name</th>
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Teléfono</th>
+                            <th>Género</th>
+                            <th>Encargado</th>
+                            <th>Parentesco</th>
+                            <th>Fecha nacimiento</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let paciente of pacientes">
-                            <td scope = "row">{{paciente.nombre}}</td>
+                            <td>{{paciente.nombre}}</td>
                             <td>{{paciente.apellidos}}</td>
                             <td>{{paciente.telefono}}</td>
+                            <td [ngSwitch]="paciente.gen">
+                            <p *ngSwitchCase="'M'">
+                            masculino
+                            </p>
+                            <p *ngSwitchCase="'F'">
+                            femenino
+                            </p>
+                            <p *ngSwitchDefault>
+                            
+                            </p>
+                            </td>
+                            <td>{{paciente.encargado}}</td>
+                            <td>{{paciente.parentesco}}</td>
+                            <td>{{paciente.fechaNac}}</td>
                           </tr>
                          <!--<tr>
                             <td>2</td>
