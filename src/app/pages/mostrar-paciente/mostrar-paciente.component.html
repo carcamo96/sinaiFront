@@ -15,7 +15,7 @@
                             <div class="form-group">
                               <label for="nombrePaciente">Nombre</label>
                               <input type="text" class="form-control" name="nombrePaciente"
-                                     placeholder="Nombre del paciente">
+                                     placeholder="Nombre del paciente" value="{{objeto.nombre}}">
                             </div>
     
                         </div>
@@ -25,7 +25,7 @@
                             <div class="form-group">
                                 <label for="apellidosPaciente">Apellidos</label>
                                 <input type="text" class="form-control" name="apellidoPaciente" 
-                                       placeholder="Apellidos del paciente">
+                                       placeholder="Apellidos del paciente" value="{{objeto.apellidos}}">
                             </div>
     
                         </div>
@@ -37,13 +37,13 @@
 
                           <div class="form-group">
                             <label>Fecha de nacimiento:</label>
-                              <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                  <div class="input-group-prepend" data-target="#reservationdate" data-toggle="datetimepicker">
-                                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                  </div>
-                                  <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"
-                                         name="fechaNac">
-                              </div>
+                              <div class="input-group date">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                                <input type="text" class="form-control" 
+                                      value="{{objeto.fechaNac}}"  name="fechaNac"  disabled>
+                            </div>
                           </div>
 
                       </div>
@@ -66,7 +66,7 @@
                               <div class="row">
                                   <label>Género: </label>
                               </div>
-                              <div class="row" *ngIf="paciente.gen == 'M'">
+                              <div class="row" *ngIf="objeto.gen == 'M'">
 
                                 <div class="col-md-2">
                                         
@@ -93,7 +93,7 @@
                                   
                                 </div>
                               </div>
-                              <div class="row" *ngIf="paciente.gen == 'F'">
+                              <div class="row" *ngIf="objeto.gen == 'F'">
 
                                 <div class="col-md-2">
                                         
@@ -132,7 +132,7 @@
                                       <span class="input-group-text"><i class="fas fa-phone"></i></span>
                                     </div>
                                     <input type="text" class="form-control"
-                                           name="telefono">
+                                           name="telefono" value="{{objeto.telefono}}">
                                   </div>
                                   <!-- /.input group -->
                                 </div>
@@ -149,7 +149,7 @@
                         <div class="form-group">
                           <label for="nombreEncargado">Nombre del padre o encargado</label>
                           <input type="text" class="form-control"
-                                 placeholder="Padre o encargado" name="nombreEncargado">
+                                 placeholder="Padre o encargado" name="nombreEncargado" value="{{objeto.encargado}}">
                         </div>
 
                       </div>
@@ -158,7 +158,7 @@
                         <div class="form-group">
                           <label for="parentesco">Parentesco</label>
                           <input type="text" class="form-control" id="parentesco" 
-                                 placeholder="Parentesco" name="parentesco">
+                                 placeholder="Parentesco" name="parentesco" value="{{objeto.parentesco}}">
                         </div>
                       </div>
 
@@ -172,7 +172,7 @@
                         <div class="form-group">
                           <label for="faContacto">Familiar de contacto (*):</label>
                           <input type="text" class="form-control"
-                                 placeholder="Familiar de contacto" name="faContacto">
+                                 placeholder="Familiar de contacto" name="faContacto" value="{{objeto.faContacto}}">
                         </div>
 
                       </div>
@@ -185,7 +185,7 @@
                             <div class="input-group-prepend">
                               <span class="input-group-text"><i class="fas fa-phone"></i></span>
                             </div>
-                            <input type="text" class="form-control" name="telFaContacto">
+                            <input type="text" class="form-control" name="telFaContacto" value="{{objeto.telFaContacto}}">
                           </div>
                           <!-- /.input group -->
                         </div>
@@ -201,7 +201,7 @@
                             <div class="form-group">
                                 <label>Dirección</label>
                                 <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..."
-                                          name="direccion">
+                                          name="direccion" value="{{objeto.direccion}}">
                                 </textarea>
                             </div>
                         </div>
@@ -211,7 +211,7 @@
                           <div class="form-group">
                               <label>Datos adicionales (*):</label>
                               <textarea class="form-control" rows="3" placeholder="Otros datos ..."
-                                        name="otrosDatos">
+                                        name="otrosDatos" value="{{objeto.otrosDatos}}">
 
                               </textarea>
                           </div>

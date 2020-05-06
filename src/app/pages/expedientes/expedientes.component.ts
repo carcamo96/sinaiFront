@@ -35,7 +35,7 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
     this.cargarPacientes();
   }
   cargarPacientes(){
-    this._pacienteService.getPaciente().subscribe(
+    this._pacienteService.getPacientes().subscribe(
       response => {
         if (response.pacientes) {
          this.pacientes = response.pacientes;

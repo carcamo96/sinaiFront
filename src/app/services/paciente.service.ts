@@ -14,8 +14,12 @@ export class PacienteService{
     }
 
     
-    getPaciente():Observable<any>{
+    getPacientes():Observable<any>{
         return this._http.get(this.url+'paciente/listar');
+    }
+
+    getPaciente(pacienteId):Observable<any>{
+        return this._http.get(this.url+'paciente/obtener/'+pacienteId);
     }
 
     create(paciente):Observable<any>{
