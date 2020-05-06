@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { PacienteService } from '../../services/paciente.service';
 import { Subject } from 'rxjs';
 import { Paciente } from '../../models/paciente';
+//importando ngx-loading
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
 @Component({
   selector: 'app-expedientes',
@@ -20,7 +22,8 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
   dtOptions: DataTables.Settings = {};
  
   constructor(
-    private _pacienteService: PacienteService
+    private _pacienteService: PacienteService,
+    private loadingBarService: LoadingBarService
   ) { }
 
   ngOnInit(){
@@ -28,6 +31,7 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
       pagingType: 'full_numbers',
       processing: true
     };
+    this.loadingBarService.start();
     this.cargarPacientes();
   }
   cargarPacientes(){
@@ -36,6 +40,7 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
         if (response.pacientes) {
          this.pacientes = response.pacientes;
          this.dtTrigger.next();
+         this.loadingBarService.complete();
          //console.log(response.pacientes);
         }
       },

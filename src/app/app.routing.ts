@@ -20,7 +20,7 @@ const appRoutes: Routes = [
     {path: 'home', component: HomeComponent},
     {path: 'registrarPaciente', component: FormularioPacienteComponent},
     {path: 'mostrarPaciente', component: MostrarPacienteComponent},
-    {path: 'expediente', component: ExpedienteComponent},
+    {path: 'expedientes/expediente/:id', component: ExpedienteComponent},
     {path: 'expedientes', component: ExpedientesComponent},
     {path: 'consulta', component: ConsultaComponent},
     {path: 'agregar', component: AgregarComponent},

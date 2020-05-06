@@ -8,7 +8,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 export class ExpedienteComponent implements OnInit {
 //Se le pasan los titulos y los links de las paginas que preseden esta pagina
 public breads: any[] = [
-  {titulo: 'Home', link: '/home'}
+  {titulo: 'Home', link: '/home'},
+  {titulo: 'Expedientes', link: '/expedientes'}
 ];
 
 constructor() { 

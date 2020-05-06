@@ -9,50 +9,66 @@
 <section class="content">
     <div class="container-fluid">
 
-     <!-- <ngx-loading-bar color="#339942" height="2" animationTime="0.8"></ngx-loading-bar> -->
+      <ngx-loading-bar color="#339942" height="2" animationTime="0.1"></ngx-loading-bar> 
 
         <div class="col-md-12">
 
             <div class="card card-primary">
                 <div class="card-header">
-                  <h3 class="card-title">Registros de pacientes</h3>
+                  <h3 class="card-title">Registro de pacientes <i class="fas fa-hospital-user ml-2"></i></h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
+                    </button>
+                  </div>
+                  <!-- card tools -->
                 </div>
                 <!-- /.card-header -->
-                <!-- contenido central -->
-                <div class="card-body">
+                <!-- contenido central --> <!--  table table-striped table-bordered 
+                row-border hover table table-bordered table-striped-->
+                <div class="card-body" style="overflow-y: scroll !important;">
                     
-                    <table id="example" class="row-border hover table table-bordered table-striped" datatable [dtOptions]="dtOptions"
+                    <table class="row-border hover table table-bordered table-striped" style="width:100%" datatable [dtOptions]="dtOptions"
                     [dtTrigger]="dtTrigger">
                         <thead>
                           <tr>
+                            <th>Código</th>
                             <th>Nombre</th>
                             <th>Apellidos</th>
                             <th>Teléfono</th>
                             <th>Género</th>
-                            <th>Encargado</th>
-                            <th>Parentesco</th>
-                            <th>Fecha nacimiento</th>
+                            <th>Edad</th>
+                            <th>Abrir</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr *ngFor="let paciente of pacientes">
+                            <td></td>
                             <td>{{paciente.nombre}}</td>
                             <td>{{paciente.apellidos}}</td>
                             <td>{{paciente.telefono}}</td>
                             <td [ngSwitch]="paciente.gen">
-                            <p *ngSwitchCase="'M'">
-                            masculino
-                            </p>
-                            <p *ngSwitchCase="'F'">
-                            femenino
-                            </p>
-                            <p *ngSwitchDefault>
-                            
-                            </p>
+                              <p *ngSwitchCase="'M'">
+                                Masculino
+                              </p>
+                              <p *ngSwitchCase="'F'">
+                                Femenino
+                              </p>
+                              <p *ngSwitchDefault>
+                              
+                              </p>
                             </td>
-                            <td>{{paciente.encargado}}</td>
-                            <td>{{paciente.parentesco}}</td>
                             <td>{{paciente.fechaNac}}</td>
+                            <td>
+                              <button type="button" class="btn btn-block btn-default" >
+                                <a [routerLink]="['/expedientes/expediente/', paciente._id]">
+
+                                  <i class="fas fa-folder"></i>
+                                </a>
+                              </button>
+                            </td>
+                           
                           </tr>
                          <!--<tr>
                             <td>2</td>
