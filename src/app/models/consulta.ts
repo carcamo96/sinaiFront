@@ -13,6 +13,7 @@ export class Consulta{
         public presionArt: string,
         public freCardia: string,
         public indiceMC: string,
-        public fechaCre: string
+        public fechaCre: string,
+        public diagnostico:string
     ){}
 }
