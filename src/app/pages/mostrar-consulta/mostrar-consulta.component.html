@@ -145,7 +145,7 @@
                             <label>Peso</label>
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Peso" 
-                                      name="peso" #peso="ngModel" [(ngModel)]="consulta.peso" required autocomplete="off"
+                                      name="peso" #peso="ngModel" [(ngModel)]="consulta.peso" required autocomplete="off" (ngModelChange)="cal3()"
                                       [ngClass]="{'is-invalid': !peso.valid && peso.touched}" ngxPattern="[0-9.]+" [disabled]="disabledDefault">
                                       <div class="input-group-prepend">
                                       <span class="input-group-text">kg</span>
@@ -161,7 +161,7 @@
                             <label>Talla</label>
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Talla" 
-                                      name="talla" #talla="ngModel" [(ngModel)]="consulta.talla" required autocomplete="off"
+                                      name="talla" #talla="ngModel" [(ngModel)]="consulta.talla" required autocomplete="off" (ngModelChange)="cal3()"
                                       [ngClass]="{'is-invalid': !talla.valid && talla.touched }" ngxPattern="[0-9.]+" [disabled]="disabledDefault">
                                       <div class="input-group-prepend">
                                       <span class="input-group-text" *ngIf="talla.value < 1">cm</span>
@@ -177,9 +177,9 @@
                         <div class="form-group">
                             <label>Índice de masa corporal</label>
                             <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Índice de masa corporal" value=""
-                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" 
-                                      required autocomplete="off" ngxPattern="[0-9/]+" [disabled]="disabledDefault">
+                            <input type="text" class="form-control" placeholder="Índice de masa corporal" 
+                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" value="{{indice | number }}"
+                                      required autocomplete="off" ngxPattern="[0-9]+" [disabled]="disabledDefault">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">IMC</span>
                                       </div>

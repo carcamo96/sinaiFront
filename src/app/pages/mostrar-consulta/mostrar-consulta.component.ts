@@ -27,6 +27,7 @@ public breads: any[] = [
   public status: string;
   public paciente: Paciente;
   public disabledDefault = true;
+  public indice = '';
 
   constructor(
       private _consultaService: ConsultaService,
@@ -168,6 +169,17 @@ public breads: any[] = [
         } 
 
     this.fechaAux = yyyy+'-'+mes+'-'+dia;
+  }
+
+  cal3(){
+    var pes =  parseFloat(this.consulta.peso);
+    var tall =  parseFloat(this.consulta.talla);
+    if(tall != 0 || tall != null || tall != Infinity){
+      let indice = pes / Math.pow(tall,2);
+      this.indice =''+ parseFloat(''+indice).toFixed(1);
+    }else{
+      //this.indice = '';
+    }
   }
 
   cargarPaciente(){

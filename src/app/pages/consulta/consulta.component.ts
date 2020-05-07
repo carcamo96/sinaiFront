@@ -176,6 +176,7 @@ spnChange(){
         response => {
           console.log(response);
           this.paciente = response.paciente;
+          this.paciente.nombre = response.paciente.nombre+' '+response.paciente.apellidos;
         },
         error => {
           console.log("nadaaa "+error);
