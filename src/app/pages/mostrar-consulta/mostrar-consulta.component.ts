@@ -109,7 +109,7 @@ public breads: any[] = [
         this.consulta.indiceMC,
         new Date(this.consulta.fechaCre),
         this.consulta.diagnostico
-      );
+      );    
       this._consultaService.update(this.idpa,consulta).subscribe(
         response => {
           if (response.status == 'Success') {

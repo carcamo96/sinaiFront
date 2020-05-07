@@ -39,9 +39,9 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                <input type="date" class="form-control" max="{{ fechaAux }}"
-                                      value="{{consulta.fechaConsul}}"  name="fechaConsul" #fechaConsul="ngModel" 
-                                      [(ngModel)]="consulta.fechaConsul ">
+                                <input type="text" class="form-control" max="{{ fechaAux }}"
+                                      value="{{consulta.fechaConsul | fechaFormat}}"  name="fechaConsul" #fechaConsul="ngModel" 
+                                      [(ngModel)]="consulta.fechaConsul">
                             </div>
                         </div>
 
