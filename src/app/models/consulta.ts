@@ -3,7 +3,7 @@ export class Consulta{
         public paciente: string,
         public motivo: string,
         public tiemSintoma: string,
-        public fechaConsul: string,
+        public fechaConsul: Date,
         public historia: string,
         public antePatol: string,
         public alergias: string,
@@ -13,7 +13,7 @@ export class Consulta{
         public presionArt: string,
         public freCardia: string,
         public indiceMC: string,
-        public fechaCre: string,
+        public fechaCre: Date,
         public diagnostico:string
     ){}
 }

@@ -10,6 +10,7 @@ import { MostrarPacienteComponent } from './pages/mostrar-paciente/mostrar-pacie
 import { ExpedienteComponent } from './pages/expediente/expediente.component';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ExpedientesComponent } from './pages/expedientes/expedientes.component';
+import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consulta.component';
 
 
 
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
     {path: 'expedientes/expediente/:id', component: ExpedienteComponent},
     {path: 'expedientes', component: ExpedientesComponent},
     {path: 'consulta', component: ConsultaComponent},
-    {path: 'consulta/:id', component: ConsultaComponent},
+    {path: 'consultas/:id', component: ConsultaComponent},
+    {path: 'consulta/:id', component: MostrarConsultaComponent},
     {path: 'agregar', component: AgregarComponent},
    
 ];

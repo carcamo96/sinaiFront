@@ -31,6 +31,7 @@ public consulta: any;
 public spinnStatus: boolean;
 public paciente: Paciente;
 public indice: string;
+public idpa:string;
 
 
   constructor(
@@ -69,14 +70,15 @@ public indice: string;
   }
 
   onSubmit(f:NgForm){
+    
     this.loadingBarService.start();
     if(f.valid)
     { 
       let consulta = new Consulta(
-        this.consulta.paciente,
+        this.idpa,
         this.consulta.motivo,
         this.consulta.tiemSintoma,
-        this.consulta.fechaConsul,
+        new Date(this.consulta.fechaConsul),
         this.consulta.historia,
         this.consulta.antePatol,
         this.consulta.alergias,
@@ -150,9 +152,9 @@ spnChange(){
 
   cargarPaciente(){
     this._route.params.subscribe(params => {
-      let id = params['id'];
+      this.idpa = params['id'];
 
-      this._pacienteService.getPaciente(id).subscribe(
+      this._pacienteService.getPaciente(this.idpa).subscribe(
         response => {
           console.log(response);
           this.paciente = response.paciente;

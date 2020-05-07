@@ -13,8 +13,12 @@ export class ConsultaService{
         this.url = Global.url;
     }
 
-    getConsulta():Observable<any>{
-        return this._http.get(this.url+'consulta/listar');
+    getConsultas(pacienteId):Observable<any>{
+        return this._http.get(this.url+'consulta/search/'+pacienteId);
+    }
+
+    getConsulta(consultaId):Observable<any>{
+        return this._http.get(this.url+'consulta/obtener/'+consultaId);
     }
 
     create(consulta):Observable<any>{
@@ -23,5 +27,12 @@ export class ConsultaService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
         
         return this._http.post(this.url+'consulta/save', params, {headers: headers});
+    }
+
+    update(id, consulta):Observable<any>{
+        let params = JSON.stringify(consulta);
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+        return this._http.put(this.url+'consulta/update/'+id, params, {headers: headers});;
     }
 }

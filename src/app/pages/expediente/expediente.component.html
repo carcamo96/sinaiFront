@@ -37,7 +37,7 @@
                 <app-mostrar-paciente [events]="eventsSubject.asObservable()"></app-mostrar-paciente>
             </div>
             <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                <app-consultas></app-consultas>                
+                <app-consultas [objeto]="consultas"></app-consultas>                
             </div>
             <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
                <h2>Examenes médicos</h2>

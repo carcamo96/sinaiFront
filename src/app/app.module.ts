@@ -41,6 +41,7 @@ import { ExpedienteComponent } from './pages/expediente/expediente.component';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { ExpedientesComponent } from './pages/expedientes/expedientes.component';
+import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consulta.component';
 
 
 //Configuracion inicial de las mascaras ngx-mask
@@ -64,6 +65,7 @@ const maskConfig: Partial<IConfig> = {
     ConsultaComponent,
     ConsultasComponent,
     ExpedientesComponent,
+    MostrarConsultaComponent,
     CalcularEdad
   ],
   imports: [
