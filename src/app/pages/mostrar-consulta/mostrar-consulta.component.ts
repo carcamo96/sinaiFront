@@ -26,6 +26,8 @@ public breads: any[] = [
   public idpa: string;
   public status: string;
   public paciente: Paciente;
+  public disabledDefault = true;
+  public indice = '';
 
   constructor(
       private _consultaService: ConsultaService,
@@ -54,24 +56,6 @@ public breads: any[] = [
     });
   }
 
-  inicializarFechaActual(){
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-    if(dd<10){
-            var dia=dd.toString();
-            dia='0'+dd;
-        } 
-        if(mm<10){
-          var mes = mm.toString();
-            mes='0'+mm;
-        } 
-
-    this.fechaAux = yyyy+'-'+mes+'-'+dia;
-    console.log(this.fechaAux);
-}
-
   cargarConsulta(){
     this._route.params.subscribe(params => {
       this.idpa = params['id'];
@@ -79,7 +63,23 @@ public breads: any[] = [
       this._consultaService.getConsulta(this.idpa).subscribe(
         response => {
           if (response.consulta) {
-            this.consulta = response.consulta;
+            this.consulta = {
+              paciente: response.consulta.paciente,
+              motivo: response.consulta.motivo,
+              fechaConsul: this.inicializarFechaConsul(response.consulta.fechaConsul),
+              tiemSintoma: response.consulta.tiemSintoma,
+              historia: response.consulta.historia,
+              antePatol: response.consulta.antePatol,
+              alergias: response.consulta.alergias,
+              peso: response.consulta.peso,
+              talla: response.consulta.talla,
+              temperatura: response.consulta.temperatura,
+              presionArt: response.consulta.presionArt,
+              freCardia: response.consulta.freCardia,
+              indiceMC: response.consulta.indiceMC,
+              fechaCre: response.consulta.fechaCre,
+              diagnostico: response.consulta.diagnostico
+             }
             console.log(this.consulta);
           }
         },
@@ -134,6 +134,54 @@ public breads: any[] = [
    f.resetForm();
   }
 
+  inicializarFechaConsul(fechaNacParam) {
+    var fechaNac = new Date(fechaNacParam);
+
+    var dd = fechaNac.getDate() + 1;
+    var mm = fechaNac.getMonth() + 1; //January is 0!
+    var yyyy = fechaNac.getFullYear();
+
+    var dia = dd.toString();
+    if (dd < 10) {
+      dia = "0" + dd;
+    }
+    var mes = mm.toString();
+    if (mm < 10) {
+      mes = "0" + mm;
+    }
+    console.log(yyyy + "-" + mes + "-" + dia);
+    return yyyy + "-" + mes + "-" + dia;
+  }
+
+  //Inicializar fecha actual en el date picker
+  inicializarFechaActual(){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+            var dia=dd.toString();
+            dia='0'+dd;
+        } 
+        if(mm<10){
+          var mes = mm.toString();
+            mes='0'+mm;
+        } 
+
+    this.fechaAux = yyyy+'-'+mes+'-'+dia;
+  }
+
+  cal3(){
+    var pes =  parseFloat(this.consulta.peso);
+    var tall =  parseFloat(this.consulta.talla);
+    if(tall != 0 || tall != null || tall != Infinity){
+      let indice = pes / Math.pow(tall,2);
+      this.indice =''+ parseFloat(''+indice).toFixed(1);
+    }else{
+      //this.indice = '';
+    }
+  }
+
   cargarPaciente(){
     
     console.log(this.consulta.paciente);
@@ -152,5 +200,8 @@ public breads: any[] = [
     
   }
 
+  edicion(){
+    this.disabledDefault  = !this.disabledDefault; 
+  }
 
 }

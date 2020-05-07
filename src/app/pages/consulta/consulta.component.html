@@ -21,10 +21,10 @@
                 <form role="form" #consultaForm="ngForm" (ngSubmit)="onSubmit(consultaForm)">
                   <div class="card-body">
                     <div class="row">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                       <div class="form-group">
                         <label>Nombre de paciente </label>
-                        <input type="text" class="form-control" name="nombre" #nombre="ngModel" 
+                        <input type="text" class="form-control" name="nombre" #nombre="ngModel"
                         [(ngModel)]="paciente.nombre" value="{{paciente.nombre}}" disabled>
                       </div>
           
@@ -39,8 +39,8 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                <input type="text" class="form-control" 
-                                      value="consulta.fechaConsul"  name="fechaConsul" #fechaConsul="ngModel" 
+                                <input type="" class="form-control" 
+                                      value="consulta.fechaConsul | fechaFormat"  name="fechaConsul" #fechaConsul="ngModel" 
                                       [(ngModel)]="consulta.fechaConsul" disabled>
                             </div>
                         </div>
@@ -71,7 +71,7 @@
                                 <input type="text" class="form-control" name="tiemSintoma" 
                                        placeholder="Tiempo de evolución ..."
                                        #tiemSintoma="ngModel" [(ngModel)]="consulta.tiemSintoma" 
-                                       required autocomplete="off"
+                                       required autocomplete="off" ngxPattern="[0-9]"
                                        [ngClass]="{'is-invalid': !tiemSintoma.valid && tiemSintoma.touched }">
   
                                        <small class="text-danger" *ngIf="!tiemSintoma.valid && tiemSintoma.touched">

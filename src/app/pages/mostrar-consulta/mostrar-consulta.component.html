@@ -30,6 +30,21 @@
           
                     </div>
                   </div>-->
+                    <!--Seccion de opciones de edicion o impresión-->
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="float-right d-none d-sm-block">
+                        <div class="icheck-primary d-inline">
+                          <input type="checkbox" id="checkboxPrimary1" [checked]="!disabledDefault"
+                                  (change)="edicion()">
+                          <label for="checkboxPrimary1">
+                            Habilitar edición
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div><br />
+                <!--Seccion de opciones de edicion o impresión-->
                     <div class="row">
                       <div class="col-md-3">
 
@@ -39,9 +54,9 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                <input type="text" class="form-control" max="{{ fechaAux }}"
+                                <input type="date" class="form-control" max="{{ fechaAux }}"
                                       value="{{consulta.fechaConsul | fechaFormat}}"  name="fechaConsul" #fechaConsul="ngModel" 
-                                      [(ngModel)]="consulta.fechaConsul">
+                                      [(ngModel)]="consulta.fechaConsul" [disabled]="disabledDefault">
                             </div>
                         </div>
 
@@ -55,7 +70,7 @@
                                      placeholder="Motivo de consulta"
                                      #motivo="ngModel" [(ngModel)]="consulta.motivo" ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                                      required autocomplete="off"
-                                     [ngClass]="{'is-invalid': !motivo.valid && motivo.touched }">
+                                     [ngClass]="{'is-invalid': !motivo.valid && motivo.touched }" [disabled]="disabledDefault">
 
                                      <small class="text-danger" *ngIf="!motivo.valid && motivo.touched">
                                        Campo requerido
@@ -71,8 +86,8 @@
                                 <input type="text" class="form-control" name="tiemSintoma" 
                                        placeholder="Tiempo de evolución ..." 
                                        #tiemSintoma="ngModel" [(ngModel)]="consulta.tiemSintoma" 
-                                       required autocomplete="off"
-                                       [ngClass]="{'is-invalid': !tiemSintoma.valid && tiemSintoma.touched }">
+                                       required autocomplete="off" ngxPattern="[0-9]+"
+                                       [ngClass]="{'is-invalid': !tiemSintoma.valid && tiemSintoma.touched }" [disabled]="disabledDefault">
   
                                        <small class="text-danger" *ngIf="!tiemSintoma.valid && tiemSintoma.touched">
                                          Campo requerido
@@ -92,7 +107,7 @@
                             <label>Historia de la enfermedad</label>
                             <textarea id="historia" rows="3" class="form-control" placeholder="Historia de la enfermedad" autocomplete="off"
                                    name="historia" #historia="ngModel" [(ngModel)]="consulta.historia" ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                   required [ngClass]="{'is-invalid': !historia.valid && historia.touched }">
+                                   required [ngClass]="{'is-invalid': !historia.valid && historia.touched }" [disabled]="disabledDefault">
 
                             </textarea>
                             <small class="text-danger" *ngIf="!historia.valid && historia.touched">
@@ -111,7 +126,7 @@
                               <label>Antecedentes patológicos personales o de enfermedades crónicas</label>
                               <textarea class="form-control" rows="3" placeholder="Antecedentes patológicos ..." autocomplete="off"
                                         name="antePatol" #antePatol="ngModel" [(ngModel)]="consulta.antePatol" ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                        required [ngClass]="{'is-invalid': !antePatol.valid && antePatol.touched }">
+                                        required [ngClass]="{'is-invalid': !antePatol.valid && antePatol.touched }" [disabled]="disabledDefault">
      
                                  </textarea>
                                  <small class="text-danger" *ngIf="!antePatol.valid && antePatol.touched">
@@ -130,8 +145,8 @@
                             <label>Peso</label>
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Peso" 
-                                      name="peso" #peso="ngModel" [(ngModel)]="consulta.peso" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !peso.valid && peso.touched}" ngxPattern="[0-9.]+">
+                                      name="peso" #peso="ngModel" [(ngModel)]="consulta.peso" required autocomplete="off" (ngModelChange)="cal3()"
+                                      [ngClass]="{'is-invalid': !peso.valid && peso.touched}" ngxPattern="[0-9.]+" [disabled]="disabledDefault">
                                       <div class="input-group-prepend">
                                       <span class="input-group-text">kg</span>
                                     </div>
@@ -146,8 +161,8 @@
                             <label>Talla</label>
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Talla" 
-                                      name="talla" #talla="ngModel" [(ngModel)]="consulta.talla" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !talla.valid && talla.touched }" ngxPattern="[0-9.]+">
+                                      name="talla" #talla="ngModel" [(ngModel)]="consulta.talla" required autocomplete="off" (ngModelChange)="cal3()"
+                                      [ngClass]="{'is-invalid': !talla.valid && talla.touched }" ngxPattern="[0-9.]+" [disabled]="disabledDefault">
                                       <div class="input-group-prepend">
                                       <span class="input-group-text" *ngIf="talla.value < 1">cm</span>
                                       <span class="input-group-text" *ngIf="talla.value >= 1">m</span>
@@ -162,8 +177,9 @@
                         <div class="form-group">
                             <label>Índice de masa corporal</label>
                             <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Índice de masa corporal" value=""
-                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" required autocomplete="off" ngxPattern="[0-9/]+">
+                            <input type="text" class="form-control" placeholder="Índice de masa corporal" 
+                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" value="{{indice | number }}"
+                                      required autocomplete="off" ngxPattern="[0-9]+" [disabled]="disabledDefault">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">IMC</span>
                                       </div>
@@ -179,7 +195,8 @@
                           <div class="input-group">
                           <input type="text" class="form-control" placeholder="Temperatura"
                                     name="temperatura" #temperatura="ngModel" [(ngModel)]="consulta.temperatura" required autocomplete="off"
-                                    [ngClass]="{'is-invalid': !temperatura.valid && temperatura.touched }" ngxPattern="[0-9.]+"> 
+                                    [ngClass]="{'is-invalid': !temperatura.valid && temperatura.touched }"
+                                     ngxPattern="[0-9.]+" [disabled]="disabledDefault">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text">°C</span>
                                    </div>
@@ -195,7 +212,7 @@
                           <div class="input-group">
                           <input type="text" class="form-control" placeholder="Presión arterial"
                                     name="presionArt" #presionArt="ngModel" [(ngModel)]="consulta.presionArt" required autocomplete="off" ngxPattern="[0-9/]+"
-                                    [ngClass]="{'is-invalid': !presionArt.valid && presionArt.touched }">
+                                    [ngClass]="{'is-invalid': !presionArt.valid && presionArt.touched }" [disabled]="disabledDefault">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text">PA</span>
                                     </div>
@@ -211,7 +228,8 @@
                           <div class="input-group">
                           <input type="text" class="form-control" placeholder="Frecuencia cardiáca"
                                     name="freCardia" #freCardia="ngModel" [(ngModel)]="consulta.freCardia" required autocomplete="off"
-                                    [ngClass]="{'is-invalid': !freCardia.valid && freCardia.touched }" ngxPattern="[0-9]+">
+                                    [ngClass]="{'is-invalid': !freCardia.valid && freCardia.touched }" 
+                                    ngxPattern="[0-9]+" [disabled]="disabledDefault">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text">FC</span>
                                     </div>
@@ -232,7 +250,7 @@
                               <label>Alergias</label>
                               <textarea class="form-control" rows="3" placeholder="Alergias" autocomplete="off"
                                         name="alergias" #alergias="ngModel" [(ngModel)]="consulta.alergias" ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                        required [ngClass]="{'is-invalid': !alergias.valid && alergias.touched }">
+                                        required [ngClass]="{'is-invalid': !alergias.valid && alergias.touched }" [disabled]="disabledDefault">
      
                                  </textarea>
                                  <small class="text-danger" *ngIf="!alergias.valid && alergias.touched">
@@ -248,8 +266,9 @@
                         <div class="form-group">
                             <label>Diagnóstico (*)</label>
                             <textarea class="form-control" rows="3" placeholder="Diagnóstico" autocomplete="off"
-                                      name="diagnostico" #diagnostico="ngModel" [(ngModel)]="consulta.diagnostico" ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                  >
+                                      name="diagnostico" #diagnostico="ngModel" [(ngModel)]="consulta.diagnostico" 
+                                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                      [disabled]="disabledDefault">
    
                                </textarea>
                                
@@ -261,7 +280,7 @@
 
                     <div class="card-footer">
                       <input  type="submit" value="Guardar consulta" class="btn btn-primary"
-                      [disabled]="consultaForm.invalid"/>                      
+                      [disabled]="disabledDefault || consultaForm.invalid"/>                      
                     </div>
                   </div>
                   <!-- /.card-body -->

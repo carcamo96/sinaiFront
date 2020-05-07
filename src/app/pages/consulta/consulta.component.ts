@@ -32,6 +32,7 @@ public spinnStatus: boolean;
 public paciente: Paciente;
 public indice: string;
 public idpa:string;
+public fechaAux="";
 
 
   constructor(
@@ -59,14 +60,13 @@ public idpa:string;
       freCardia:'',
       diagnostico:''
     }
-    this.consulta.fechaConsul=this.atl.toLocaleDateString() +' '+ this.atl.toLocaleTimeString();
+    this.consulta.fechaConsul= this.atl.toLocaleDateString();
   }
 
   ngOnInit(){
     this.cargarPaciente();
-    this.consulta.paciente = this.paciente.nombre;
-    
-    console.log(this.paciente.nombre);
+    this.inicializarFechaActual();
+    console.log(this.consulta.fechaConsul);
   }
 
   onSubmit(f:NgForm){
@@ -126,6 +126,24 @@ spnChange(){
     this.toastr.success(mensaje, titulo);
   }
 
+  //Inicializar fecha actual en el date picker
+  inicializarFechaActual(){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+            var dia=dd.toString();
+            dia='0'+dd;
+        } 
+        if(mm<10){
+          var mes = mm.toString();
+            mes='0'+mm;
+        } 
+
+    this.fechaAux = yyyy+'-'+mes+'-'+dia;
+  }
+
   limpiarCampos(){
     this.consulta = {
       motivo: '',
@@ -158,6 +176,7 @@ spnChange(){
         response => {
           console.log(response);
           this.paciente = response.paciente;
+          this.paciente.nombre = response.paciente.nombre+' '+response.paciente.apellidos;
         },
         error => {
           console.log("nadaaa "+error);
@@ -198,6 +217,25 @@ spnChange(){
     }else{
       //this.indice = '';
     }
+  }
+
+  inicializarFechaConsulP(fechaConsulP) {
+    var fechaNac = new Date(fechaConsulP);
+
+    var dd = fechaNac.getDate();
+    var mm = fechaNac.getMonth() + 1; //January is 0!
+    var yyyy = fechaNac.getFullYear();
+
+    var dia = dd.toString();
+    if (dd < 10) {
+      dia = "0" + dd;
+    }
+    var mes = mm.toString();
+    if (mm < 10) {
+      mes = "0" + mm;
+    }
+    console.log(yyyy + "-" + mes + "-" + dia);
+    return yyyy + "-" + mes + "-" + dia;
   }
 
 }
