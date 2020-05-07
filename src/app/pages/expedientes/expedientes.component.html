@@ -62,21 +62,17 @@
                               
                               </p>
                             </td>
-                            <td>{{paciente.fechaNac}}</td>
+                            <td>{{paciente.fechaNac | calcularEdad }}</td>
                             <td>
-                              <button type="button" class="btn btn-block btn-default">
-                                <a [routerLink]="['/expedientes/expediente/', paciente._id]" style="color: gray;">
-
-                                  <i class="fas fa-folder"></i>
-                                </a>
+                              <button type="button" class="btn btn-block btn-default"
+                                      (click)="redireccionarExpediente(paciente._id)">
+                                  <i class="fas fa-folder"></i> 
                               </button>
                             </td>
                             <td>
-                                <button type="button" class="btn btn-block btn-default">
-                                  <a [routerLink]="['/consulta/', paciente._id]" style="color: gray;">
-    
+                                <button type="button" class="btn btn-block btn-default"
+                                        (click)="redireccionarConsulta(paciente._id)">
                                     <i class="fas fa-notes-medical"></i>
-                                  </a>
                                 </button>
                             </td>
                            

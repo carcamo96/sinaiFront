@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { Paciente } from '../../models/paciente';
 //Importando la clase para manejar las alertas toastr para angular
@@ -7,6 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { PacienteService } from '../../services/paciente.service';
 //importando ngx-loading
 import { LoadingBarService } from '@ngx-loading-bar/core';
+//importando para navegar en las rutas
+import {Router, ActivatedRoute, Params} from '@angular/router';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 
 @Component({
@@ -16,6 +19,9 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
   providers:[PacienteService]
 })
 export class FormularioPacienteComponent implements OnInit {
+
+  @ViewChild('redireccionSwal') private redireccionSwal: SwalComponent;
+  @ViewChild('errorSwal') private errorSwal: SwalComponent;
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [
@@ -27,14 +33,15 @@ export class FormularioPacienteComponent implements OnInit {
   public fechaAux = ''; //para definir la fecha actual para el datePicker
 
   public status: string;
+  private idResponse = '';
 
-  height = 2;
-  color = "#4092F1";
-  runInterval = 300;
+  progress = 0;
 
   constructor(private toastr: ToastrService,
      private _pacienteService: PacienteService,
-     private loadingBarService: LoadingBarService) {
+     private loadingBarService: LoadingBarService,
+     private router: Router,
+     private route: ActivatedRoute) {
     this.paciente = {
       nombre: '',
       apellidos: '',
@@ -54,16 +61,15 @@ export class FormularioPacienteComponent implements OnInit {
   }
 
   ngOnInit(): void {
-      
+
   }
 
   //Enviando datos
   onSubmit(f:NgForm){
   
     this.loadingBarService.start();
-
+    this.progress = 30;
     if(f.valid){
-
       let paciente = new Paciente(
         this.paciente.nombre,
         this.paciente.apellidos,
@@ -77,28 +83,35 @@ export class FormularioPacienteComponent implements OnInit {
         this.paciente.direccion,
         this.paciente.otrosDatos
       );
+      this.progress = 50;
 
       this._pacienteService.create(paciente).subscribe(
         response => {
 
+          this.progress = 100;
           if(response.status == 'success'){
             this.loadingBarService.complete();
             this.status = 'success';
-            console.log("Respuesta de insercion: "+response.message);
-            this.showSuccess("Se ha registrado un nuevo paciente", "Nuevo expediente");
+            this.idResponse = response.paciente._id;
+            //console.log("Respuesta de insercion: "+response.paciente._id);
+            //this.showInfoRedirect("Click! para ir a consulta", "Realizar consulta!");
+            //this.showSuccess("Se ha registrado un nuevo paciente", "Nuevo expediente");
+            this.redireccionSwal.fire();
 
           }else{
             this.loadingBarService.complete();
             this.status = 'error';
-            console.log("Respuesta de insercion err:"+response.message);
-            this.showError("No se ha podido registrar", "Expediente no registrado");
+            //console.log("Respuesta de insercion err:"+response.message);
+            //this.showError("No se ha podido registrar", "Expediente no registrado");
+            this.errorSwal.fire();
           }
 
         },
         error => {
           this.loadingBarService.complete();
           this.status = 'error';
-          this.showError("No se ha conctado con el servidor", "Error");
+          //this.showError("No se ha conctado con el servidor", "Error");
+          this.errorSwal.fire();
         }
       );
 
@@ -192,12 +205,26 @@ export class FormularioPacienteComponent implements OnInit {
     });
   }
 
+  
   showError(mensaje: string, titulo: string) {
     this.toastr.error(mensaje, titulo, {
-        progressBar: true,
-        progressAnimation: 'decreasing'
+      progressBar: true,
+      progressAnimation: 'decreasing'
     });
   }
- 
+  
+  //Para redireccionar haciendo click en la toastr
+  /*
+  showInfoRedirect(mensaje: string, titulo: string) {
+    this.toastr.info(mensaje, titulo, {
+        progressBar: true,
+        progressAnimation: 'decreasing',
+        timeOut: 10000
+    }).onTap.subscribe(() => this.redireccionar());
+  }
+  */
+  redireccionar(){
+    this.router.navigate(['/consulta/', this.idResponse]);
+  }
 
 }

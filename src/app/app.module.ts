@@ -22,6 +22,12 @@ import {LoadingBarModule} from "@ngx-loading-bar/core";
 //Para las dataTables
 import { DataTablesModule } from 'angular-datatables';
 
+//Para las sweet alerts
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
+//Registrando pipe personalizada para calcular edad relativa
+import { CalcularEdad } from './pipes/calcularEdad.pipe';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -57,7 +63,8 @@ const maskConfig: Partial<IConfig> = {
     ExpedienteComponent,
     ConsultaComponent,
     ConsultasComponent,
-    ExpedientesComponent
+    ExpedientesComponent,
+    CalcularEdad
   ],
   imports: [
     BrowserModule,
@@ -70,7 +77,8 @@ const maskConfig: Partial<IConfig> = {
     NgxPatternModule, // Agregando el modulo de ngx-patter
     NgPipesModule, // Modulo de Pipes
     LoadingBarModule,
-    DataTablesModule //Modulo para usar las tablas
+    DataTablesModule, //Modulo para usar las tablas
+    SweetAlert2Module.forRoot() // inicializando las swett alerts
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
