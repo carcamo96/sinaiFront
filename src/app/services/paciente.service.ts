@@ -29,5 +29,12 @@ export class PacienteService{
         
         return this._http.post(this.url+'paciente/save', params, {headers: headers});
     }
+    update(id, paciente):Observable<any>{
+
+        let params = JSON.stringify(paciente);
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+        return this._http.put(this.url+'paciente/update/'+id, params, {headers: headers});
+    }
 
 }

@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, ViewChild } from "@angular/core";
 import { Paciente } from "../../models/paciente";
 import { NgForm } from '@angular/forms';
 import { PacienteService } from '../../services/paciente.service';
 import { Observable } from 'rxjs';
+import { LoadingBarService } from '@ngx-loading-bar/core';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: "app-mostrar-paciente",
@@ -10,6 +12,11 @@ import { Observable } from 'rxjs';
   styleUrls: ["./mostrar-paciente.component.css"],
 })
 export class MostrarPacienteComponent implements OnInit {
+
+  @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
+  @ViewChild('errorSwal') private errorSwal: SwalComponent;
+  @ViewChild('successSwal') private successSwal: SwalComponent;
+  @ViewChild('errorNoValidSwal') private errorNoValidSwal: SwalComponent;
 
   public disabledDefault = true;
 
@@ -21,10 +28,16 @@ export class MostrarPacienteComponent implements OnInit {
   private eventsSubscription: any
   @Input() events: Observable<any>;
 
+  //auxiliar del id
+  private id = '';
+
   constructor(
-      private _pacienteService: PacienteService
+      private _pacienteService: PacienteService,
+      private loadingBarService: LoadingBarService
   ) {
    
+    this.loadingBarService.start();
+
     this.paciente = {
       nombre: '',
       apellidos: '',
@@ -47,6 +60,7 @@ export class MostrarPacienteComponent implements OnInit {
     this.eventsSubscription = this.events.subscribe(
       response => {
         console.log(response);
+          this.id = response.paciente._id;
           this.paciente = {
             nombre: response.paciente.nombre,
             apellidos: response.paciente.apellidos,
@@ -61,10 +75,14 @@ export class MostrarPacienteComponent implements OnInit {
             otrosDatos: response.paciente.otrosDatos
           }
           //inicializando edad
-        this.edad = this.obtenerEdad(new Date() , new Date(response.paciente.fechaNac));
+          this.edad = this.obtenerEdad(new Date() , new Date(response.paciente.fechaNac));
+          this.loadingBarService.complete();
+          
       },
       error=>{
           console.log("Error del hijo: "+error);
+          this.loadingBarService.complete();
+          this.errorSwal.fire();
       }
     );
   }
@@ -76,6 +94,66 @@ export class MostrarPacienteComponent implements OnInit {
 
   onSubmit(f:NgForm){
 
+    this.loadingBarService.start();
+    if(f.valid && this.id != ''){
+
+      let paciente = new Paciente(
+        this.paciente.nombre,
+        this.paciente.apellidos,
+        new Date(this.paciente.fechaNac),
+        this.paciente.gen,
+        this.paciente.telefono,
+        this.paciente.encargado,
+        this.paciente.parentesco,
+        this.paciente.faContacto,
+        this.paciente.telFaContacto,
+        this.paciente.direccion,
+        this.paciente.otrosDatos
+      );
+
+      this._pacienteService.update(this.id, paciente).subscribe(
+          response => {
+                
+                this.id = response.paciente._id;
+                this.paciente = {
+                  nombre: response.paciente.nombre,
+                  apellidos: response.paciente.apellidos,
+                  fechaNac: this.inicializarFechaNac(response.paciente.fechaNac),
+                  gen: response.paciente.gen,
+                  telefono: response.paciente.telefono,
+                  encargado: response.paciente.encargado,
+                  parentesco: response.paciente.parentesco,
+                  faContacto: response.paciente.faContacto,
+                  telFaContacto: response.paciente.telFaContacto,
+                  direccion: response.paciente.direccion,
+                  otrosDatos: response.paciente.otrosDatos
+                }
+                //inicializando edad
+                this.edad = this.obtenerEdad(new Date() , new Date(response.paciente.fechaNac));
+                this.successSwal.fire();
+                this.loadingBarService.complete();
+                this.disabledDefault = true;
+
+          },
+          error =>{
+            this.loadingBarService.complete();
+            this.disabledDefault = true;
+            this.errorSwal.fire();
+            console.log(error.message);
+          }
+      );
+
+
+    }else{
+      this.errorNoValidSwal.fire();
+    }
+
+
+
+  }
+
+  confirmarEdicion(){
+    this.confirmarSwal.fire();
   }
 
   edicion(){

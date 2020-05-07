@@ -94,8 +94,6 @@ export class FormularioPacienteComponent implements OnInit {
             this.status = 'success';
             this.idResponse = response.paciente._id;
             //console.log("Respuesta de insercion: "+response.paciente._id);
-            //this.showInfoRedirect("Click! para ir a consulta", "Realizar consulta!");
-            //this.showSuccess("Se ha registrado un nuevo paciente", "Nuevo expediente");
             this.redireccionSwal.fire();
 
           }else{
