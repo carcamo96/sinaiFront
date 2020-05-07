@@ -23,9 +23,9 @@
                     <div class="row">
                     <div class="col-md-5">
                       <div class="form-group">
-                        <label>Nombre de paciente</label>
-                        <input type="text" class="form-control" name="paciente" #paciente="ngModel" 
-                        [(ngModel)]="consulta.paciente" value="{{consulta.paciente}}" disabled>
+                        <label>Nombre de paciente </label>
+                        <input type="text" class="form-control" name="nombre" #nombre="ngModel" 
+                        [(ngModel)]="paciente.nombre" value="{{paciente.nombre}}" disabled>
                       </div>
           
                     </div>
@@ -125,11 +125,11 @@
                       <legend class="w-auto">Signos vitales</legend>
                    
                     <div class="row"> <!--Div de signos vitales-->
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                         <div class="form-group">
                             <label>Peso</label>
                             <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Peso"
+                            <input type="text" class="form-control" placeholder="Peso" (ngModelChange)="cal3()"
                                       name="peso" #peso="ngModel" [(ngModel)]="consulta.peso" required autocomplete="off"
                                       [ngClass]="{'is-invalid': !peso.valid && peso.touched}" ngxPattern="[0-9.]+">
                                       <div class="input-group-prepend">
@@ -141,11 +141,11 @@
                                       </small>
                         </div>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                         <div class="form-group">
                             <label>Talla</label>
                             <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Talla"
+                            <input type="text" class="form-control" placeholder="Talla" (ngModelChange)="cal3()"
                                       name="talla" #talla="ngModel" [(ngModel)]="consulta.talla" required autocomplete="off"
                                       [ngClass]="{'is-invalid': !talla.valid && talla.touched }" ngxPattern="[0-9.]+">
                                       <div class="input-group-prepend">
@@ -158,56 +158,75 @@
                                       </small>
                         </div>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                         <div class="form-group">
-                            <label>Temperatura</label>
+                            <label>Índice de masa corporal</label>
                             <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Temperatura"
-                                      name="temperatura" #temperatura="ngModel" [(ngModel)]="consulta.temperatura" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !temperatura.valid && temperatura.touched }" ngxPattern="[0-9.]+"> 
+                            <input type="text" class="form-control" placeholder="Índice de masa corporal" value="{{indice | number }}"
+                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" required autocomplete="off" ngxPattern="[0-9/]+"
+                                      [ngClass]="{'is-invalid': !indiceMC.valid && indiceMC.touched }">
                                       <div class="input-group-prepend">
-                                      <span class="input-group-text">°C</span>
-                                     </div>
-                                    </div>
-                                      <small class="text-danger" *ngIf="!temperatura.valid && temperatura.touched">
-                                        Campo requerido
-                                      </small>
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Presión arterial</label>
-                            <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Presión arterial"
-                                      name="presionArt" #presionArt="ngModel" [(ngModel)]="consulta.presionArt" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !presionArt.valid && presionArt.touched }">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">PA</span>
+                                        <span class="input-group-text">IMC</span>
                                       </div>
                                     </div>
-                                      <small class="text-danger" *ngIf="!presionArt.valid && presionArt.touched">
+                                      <small class="text-danger" *ngIf="!indiceMC.valid && indiceMC.touched">
                                         Campo requerido
                                       </small>
                         </div>
                       </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Frecuencia cardiáca</label>
-                            <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Frecuencia cardiáca"
-                                      name="freCardia" #freCardia="ngModel" [(ngModel)]="consulta.freCardia" required autocomplete="off"
-                                      [ngClass]="{'is-invalid': !freCardia.valid && freCardia.touched }" ngxPattern="[0-9.]+">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">FC</span>
-                                      </div>
+                      
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <div class="form-group">
+                          <label>Temperatura</label>
+                          <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Temperatura"
+                                    name="temperatura" #temperatura="ngModel" [(ngModel)]="consulta.temperatura" required autocomplete="off"
+                                    [ngClass]="{'is-invalid': !temperatura.valid && temperatura.touched }" ngxPattern="[0-9.]+"> 
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">°C</span>
+                                   </div>
+                                  </div>
+                                    <small class="text-danger" *ngIf="!temperatura.valid && temperatura.touched">
+                                      Campo requerido
+                                    </small>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                          <label>Presión arterial</label>
+                          <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Presión arterial"
+                                    name="presionArt" #presionArt="ngModel" [(ngModel)]="consulta.presionArt" required autocomplete="off" ngxPattern="[0-9/]+"
+                                    [ngClass]="{'is-invalid': !presionArt.valid && presionArt.touched }">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">PA</span>
                                     </div>
-                                      <small class="text-danger" *ngIf="!freCardia.valid && freCardia.touched">
-                                        Campo requerido
-                                      </small>
-                        </div>
+                                  </div>
+                                    <small class="text-danger" *ngIf="!presionArt.valid && presionArt.touched">
+                                      Campo requerido
+                                    </small>
                       </div>
-
-                  </div><!-- Fin del div signos vitales -->
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                          <label>Frecuencia cardiáca</label>
+                          <div class="input-group">
+                          <input type="text" class="form-control" placeholder="Frecuencia cardiáca"
+                                    name="freCardia" #freCardia="ngModel" [(ngModel)]="consulta.freCardia" required autocomplete="off"
+                                    [ngClass]="{'is-invalid': !freCardia.valid && freCardia.touched }" ngxPattern="[0-9]+">
+                                    <div class="input-group-prepend">
+                                      <span class="input-group-text">FC</span>
+                                    </div>
+                                  </div>
+                                    <small class="text-danger" *ngIf="!freCardia.valid && freCardia.touched">
+                                      Campo requerido
+                                    </small>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Fin del div signos vitales -->
                 </fieldset>
 
                     <div class="row">
@@ -227,6 +246,21 @@
                         </div>
 
                     </div>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>Diagnóstico (*)</label>
+                            <textarea class="form-control" rows="3" placeholder="Diagnóstico" autocomplete="off"
+                                      name="diagnostico" #diagnostico="ngModel" [(ngModel)]="consulta.diagnostico" ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                  >
+   
+                               </textarea>
+                               
+                        </div>
+                      </div>
+
+                  </div>
                     
 
                     <div class="card-footer">
@@ -234,7 +268,9 @@
                       <input  type="submit" value="Guardar consulta" class="btn btn-primary"
                       [disabled]="consultaForm.invalid"/>
                       <input type="button" class="btn btn-secondary ml-3 mr-0" value="Limpiar campos" (click)="limpiarCampos()"/>
-                      
+                      <div class="float-right d-none d-sm-block">
+                        <b>Campos opcionales (*)</b> 
+                      </div>
                     </div>
                   </div>
                   <!-- /.card-body -->

@@ -37,6 +37,7 @@ export class ConsultasComponent implements OnInit, OnDestroy {
     );
   }
 
+
   ngOnDestroy(): void{
     this.dtTrigger.unsubscribe();
   }

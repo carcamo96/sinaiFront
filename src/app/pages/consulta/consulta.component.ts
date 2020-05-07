@@ -6,13 +6,15 @@ import { ConsultaService } from '../../services/consulta.service';
 import { Consulta } from 'src/app/models/consulta';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Paciente } from '../../models/paciente';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PacienteService } from '../../services/paciente.service';
 
 
 @Component({
   selector: 'app-consulta',
   templateUrl: './consulta.component.html',
   styleUrls: ['./consulta.component.css'],
-  providers: [ConsultaService]
+  providers: [ConsultaService, PacienteService]
 })
 export class ConsultaComponent implements OnInit {
 
@@ -27,18 +29,22 @@ public atl = new Date();
 public status: string;
 public consulta: any;
 public spinnStatus: boolean;
-
+public paciente: Paciente;
+public indice: string;
 
 
   constructor(
     private toastr: ToastrService,
     private _consultaService: ConsultaService,
-    private loadingBarService: LoadingBarService
+    private _pacienteService: PacienteService,
+    private loadingBarService: LoadingBarService,
+    private _route: ActivatedRoute,
+    private _router: Router
     ) { 
     this.consulta = {
-      paciente:'5eac959e35217825fdb963d8',
+      paciente: '',
       fechaCre:'02/06/2010',
-      indiceMC:'14',
+      indiceMC:'',
       motivo: '',
       tiemSintoma: '',
       fechaConsul: '',
@@ -49,21 +55,17 @@ public spinnStatus: boolean;
       talla:'',
       temperatura:'',
       presionArt:'',
-      freCardia:''
+      freCardia:'',
+      diagnostico:''
     }
-
     this.consulta.fechaConsul=this.atl.toLocaleDateString() +' '+ this.atl.toLocaleTimeString();
   }
 
   ngOnInit(){
-    this._consultaService.getConsulta().subscribe(
-      response => {
-        console.log(response);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+    this.cargarPaciente();
+    this.consulta.paciente = this.paciente.nombre;
+    
+    console.log(this.paciente.nombre);
   }
 
   onSubmit(f:NgForm){
@@ -78,13 +80,14 @@ public spinnStatus: boolean;
         this.consulta.historia,
         this.consulta.antePatol,
         this.consulta.alergias,
-        this.consulta.peso,
-        this.consulta.talla,
-        this.consulta.temperatura,
-        this.consulta.presionArt,
-        this.consulta.freCardia,
+        this.consulta.peso+' kg',
+        this.consulta.talla+' m',
+        this.consulta.temperatura+' °C',
+        this.consulta.presionArt+' mm gh',
+        this.consulta.freCardia+' bpm',
         this.consulta.indiceMC,
-        this.consulta.fechaCre
+        this.consulta.fechaCre,
+        this.consulta.diagnostico
       );
       this._consultaService.create(consulta).subscribe(
         response => {
@@ -143,6 +146,56 @@ spnChange(){
         progressBar: true,
         progressAnimation: 'decreasing'
     });
+  }
+
+  cargarPaciente(){
+    this._route.params.subscribe(params => {
+      let id = params['id'];
+
+      this._pacienteService.getPaciente(id).subscribe(
+        response => {
+          console.log(response);
+          this.paciente = response.paciente;
+        },
+        error => {
+          console.log("nadaaa "+error);
+          //this._router.navigate(['/home']);
+        }
+      );
+    });
+    
+  }
+
+  cal(event){
+
+    var pesoP=event;
+
+    this.indice = pesoP;
+  }
+
+  cal2(event){
+
+    var tallaP=event;
+    var pes = +this.indice;
+    let indice;
+    if (tallaP != null || this.consulta.talla !=null) {
+       indice = pes / Math.pow(tallaP,2);
+       this.indice =''+ indice;
+    }else{
+      this.indice=''+0;
+    }
+    
+  }
+
+  cal3(){
+    var pes =  parseFloat(this.consulta.peso);
+    var tall =  parseFloat(this.consulta.talla);
+    if(tall != 0 || tall != null || tall != Infinity){
+      let indice = pes / Math.pow(tall,2);
+      this.indice =''+ parseFloat(''+indice).toFixed(1);
+    }else{
+      //this.indice = '';
+    }
   }
 
 }
