@@ -32,6 +32,7 @@ public spinnStatus: boolean;
 public paciente: Paciente;
 public indice: string;
 public idpa:string;
+public fechaAux="";
 
 
   constructor(
@@ -65,7 +66,7 @@ public idpa:string;
   ngOnInit(){
     this.cargarPaciente();
     this.consulta.paciente = this.paciente.nombre;
-    
+    this.inicializarFechaActual();
     console.log(this.paciente.nombre);
   }
 
@@ -124,6 +125,24 @@ spnChange(){
   // Alerta de exito
   showSuccess(mensaje: string, titulo: string) {
     this.toastr.success(mensaje, titulo);
+  }
+
+  //Inicializar fecha actual en el date picker
+  inicializarFechaActual(){
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    if(dd<10){
+            var dia=dd.toString();
+            dia='0'+dd;
+        } 
+        if(mm<10){
+          var mes = mm.toString();
+            mes='0'+mm;
+        } 
+
+    this.fechaAux = yyyy+'-'+mes+'-'+dia;
   }
 
   limpiarCampos(){
