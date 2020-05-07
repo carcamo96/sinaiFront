@@ -28,6 +28,9 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 //Registrando pipe personalizada para calcular edad relativa
 import { CalcularEdad } from './pipes/calcularEdad.pipe';
 
+//Formatear fechas en vistas de tablas
+import { FechaFormat } from './pipes/fechaFormat.pipe';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -66,7 +69,8 @@ const maskConfig: Partial<IConfig> = {
     ConsultasComponent,
     ExpedientesComponent,
     MostrarConsultaComponent,
-    CalcularEdad
+    CalcularEdad,
+    FechaFormat
   ],
   imports: [
     BrowserModule,
