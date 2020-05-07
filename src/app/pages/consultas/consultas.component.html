@@ -14,14 +14,16 @@
                   <th>Peso</th>
                   <th>Talla</th>
                   <th>Temperatura</th>
-                  <th>Presio arterial</th>
+                  <th>Presión arterial</th>
                   <th>Historia</th>
                   <th>Antecedentes</th>
-                  <th>Fecha de consulta</th>
+                  <th>Fecha</th>
+                  <th>Diágnostico</th>
+                  <td>Abrir</td>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let consulta of consultas">
+              <tr *ngFor="let consulta of objeto">
                 <td>{{consulta.motivo}}</td>
                   <td>{{consulta.peso}}</td>
                   <td>{{consulta.talla}}</td>
@@ -30,6 +32,15 @@
                   <td>{{consulta.historia}}</td>
                   <td>{{consulta.antePatol}}</td>
                   <td>{{consulta.fechaConsul}}</td>
+                  <td>{{consulta.diagnostico}}</td>
+                  <td>
+                    <button type="button" class="btn btn-block btn-default">
+                      <a [routerLink]="['/consulta/', consulta._id]" style="color: gray;">
+
+                        <i class="fas fa-folder"></i>
+                      </a>
+                    </button>
+                  </td>
               </tr>
               
             </tbody>
