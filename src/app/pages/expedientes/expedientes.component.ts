@@ -4,6 +4,8 @@ import { Subject } from 'rxjs';
 import { Paciente } from '../../models/paciente';
 //importando ngx-loading
 import { LoadingBarService } from '@ngx-loading-bar/core';
+//importando para navegar en las rutas
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-expedientes',
@@ -17,13 +19,17 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
   public breads: any[] = [
     {titulo: 'Home', link: '/home'}
   ];
+
+
   dtTrigger: Subject<any> = new Subject();
   public pacientes: any[] =[];
   dtOptions: DataTables.Settings = {};
  
   constructor(
     private _pacienteService: PacienteService,
-    private loadingBarService: LoadingBarService
+    private loadingBarService: LoadingBarService,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(){
@@ -52,6 +58,14 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+  }
+
+  redireccionarConsulta(idPaciente){
+    this.router.navigate(['/consulta/', idPaciente ]);
+  }
+
+  redireccionarExpediente(idPaciente){
+    this.router.navigate(['/expedientes/expediente/', idPaciente ]);
   }
 
 }
