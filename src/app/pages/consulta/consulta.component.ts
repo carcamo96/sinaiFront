@@ -60,14 +60,13 @@ public fechaAux="";
       freCardia:'',
       diagnostico:''
     }
-    this.consulta.fechaConsul=this.atl.toLocaleDateString() +' '+ this.atl.toLocaleTimeString();
+    this.consulta.fechaConsul= this.atl.toLocaleDateString();
   }
 
   ngOnInit(){
     this.cargarPaciente();
-    this.consulta.paciente = this.paciente.nombre;
     this.inicializarFechaActual();
-    console.log(this.paciente.nombre);
+    console.log(this.consulta.fechaConsul);
   }
 
   onSubmit(f:NgForm){
@@ -217,6 +216,25 @@ spnChange(){
     }else{
       //this.indice = '';
     }
+  }
+
+  inicializarFechaConsulP(fechaConsulP) {
+    var fechaNac = new Date(fechaConsulP);
+
+    var dd = fechaNac.getDate();
+    var mm = fechaNac.getMonth() + 1; //January is 0!
+    var yyyy = fechaNac.getFullYear();
+
+    var dia = dd.toString();
+    if (dd < 10) {
+      dia = "0" + dd;
+    }
+    var mes = mm.toString();
+    if (mm < 10) {
+      mes = "0" + mm;
+    }
+    console.log(yyyy + "-" + mes + "-" + dia);
+    return yyyy + "-" + mes + "-" + dia;
   }
 
 }

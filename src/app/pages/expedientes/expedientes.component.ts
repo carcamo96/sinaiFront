@@ -61,7 +61,7 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
   }
 
   redireccionarConsulta(idPaciente){
-    this.router.navigate(['/consulta/', idPaciente ]);
+    this.router.navigate(['/consultas/', idPaciente ]);
   }
 
   redireccionarExpediente(idPaciente){
