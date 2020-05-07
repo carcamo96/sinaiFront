@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Paciente } from '../../models/paciente';
 import { PacienteService } from '../../services/paciente.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-expediente',
@@ -16,30 +17,31 @@ public breads: any[] = [
   {titulo: 'Expedientes', link: '/expedientes'}
 ];
 
-  public paciente: Paciente;
+  //Uso este objeto Subject para emitir el resultado del evento response al hijo 
+  public eventsSubject: Subject<any> = new Subject<any>();
 
 constructor(
   private _pacienteService: PacienteService,
     private _route: ActivatedRoute,
     private _router: Router
-) { 
-  
-}
+) { }
   ngOnInit(): void {
+ 
     this._route.params.subscribe(params => {
       let id = params['id'];
 
       this._pacienteService.getPaciente(id).subscribe(
         response => {
+          this.eventsSubject.next(response);
           console.log(response);
-          this.paciente = response.paciente;
         },
         error => {
           console.log("nadaaa "+error);
           //this._router.navigate(['/home']);
         }
       );
-    });
+    }); 
+
   }
 
 }

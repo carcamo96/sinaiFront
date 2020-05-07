@@ -1,232 +1,327 @@
 <!-- Contenedor de página -->
 <section class="content">
-    <div class="container-fluid">
+  <div class="container-fluid">
 
-        <div class="col-md-12">
+    <ngx-loading-bar color="#339942" height="2" animationTime="0.8"
+                    runInterval="100">
+    </ngx-loading-bar>
 
-            <div class="card card-primary">
-                <!-- form start -->
-               
-                  <div class="card-body">
-                    <div class="row">
+      <div class="col-md-12">
 
-                        <div class="col-md-6">
-    
-                            <div class="form-group">
-                              <label for="nombrePaciente">Nombre</label>
-                              <input type="text" class="form-control" name="nombrePaciente"
-                                     placeholder="Nombre del paciente" value="{{objeto.nombre}}">
-                            </div>
-    
+          <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Datos personales</h3>
+                
+              </div>
+              <!-- /.card-header -->
+
+              <!-- form start -->
+              <form role="form" #pacienteForm="ngForm"  (ngSubmit)="onSubmit(pacienteForm)">
+                <div class="card-body">
+
+                  <!--Seccion de opciones de edicion o impresión-->
+                  <div class="row">
+                      <div class="col-md-12">
+                        <div class="float-right d-none d-sm-block">
+                          <div class="icheck-primary d-inline">
+                            <input type="checkbox" id="checkboxPrimary1" [checked]="!disabledDefault"
+                                    (change)="edicion()">
+                            <label for="checkboxPrimary1">
+                              Habilitar edición
+                            </label>
+                          </div>
                         </div>
-            
-                        <div class="col-md-6">
-                            
-                            <div class="form-group">
-                                <label for="apellidosPaciente">Apellidos</label>
-                                <input type="text" class="form-control" name="apellidoPaciente" 
-                                       placeholder="Apellidos del paciente" value="{{objeto.apellidos}}">
-                            </div>
-    
-                        </div>
+                      </div>
+                  </div>
+                  <!--Seccion de opciones de edicion o impresión-->
 
-                    </div><!-- Fin del primer row -->
+                  <div class="row">
 
-                    <div class="row">
                       <div class="col-md-6">
-
+  
                           <div class="form-group">
-                            <label>Fecha de nacimiento:</label>
-                              <div class="input-group date">
+                            <label for="nombrePaciente">Nombre</label>
+                            <input type="text" class="form-control" name="nombrePaciente"
+                                   placeholder="Nombre del paciente"
+                                   #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre"
+                                   ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                   required autocomplete="off"
+                                   [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched }"
+                                   [disabled]="disabledDefault">
+
+                                   <small class="text-danger" *ngIf="!nombrePaciente.valid && nombrePaciente.touched">
+                                     Campo requerido
+                                   </small>
+                          </div>
+  
+                      </div>
+          
+                      <div class="col-md-6">
+                          
+                          <div class="form-group">
+                              <label for="apellidosPaciente">Apellidos</label>
+                              <input type="text" class="form-control" name="apellidoPaciente" 
+                                     placeholder="Apellidos del paciente" autocomplete="off"
+                                     #apellidoPaciente="ngModel" [(ngModel)]="paciente.apellidos"
+                                     ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
+                                     [ngClass]="{'is-invalid': !apellidoPaciente.valid && apellidoPaciente.touched }"
+                                     [disabled]="disabledDefault">
+
+                              <small class="text-danger" *ngIf="!apellidoPaciente.valid && apellidoPaciente.touched">
+                                Campo requerido
+                              </small>
+                          </div>
+  
+                      </div>
+
+                  </div><!-- Fin del primer row -->
+
+                  <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="form-group">
+                          <label>Fecha de nacimiento:</label>
+                            <div class="input-group date">
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                <input type="text" class="form-control" 
-                                      value="{{objeto.fechaNac}}"  name="fechaNac"  disabled>
+                                <input type="date" class="form-control"  max="{{ fechaAux }}" 
+                                       name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
+                                       (ngModelChange)="cambioFecha($event)" required
+                                       [ngClass]="{'is-invalid': (!fechaNac.valid && fechaNac.touched) ||
+                                                   (edad < 0 || edad > 120) }" [disabled]="disabledDefault">
                             </div>
-                          </div>
-
-                      </div>
-                      <div class="col-md-6">
-
-                          <div class="form-group">
-                            <label for="edad">Edad</label>
-                            <input type="text" class="form-control" placeholder="Edad"
-                                   name="edad">
-                          </div>
-
-                      </div>
-
-                    </div> <!-- Fin del segundo row -->
-
-
-                    <div class="row">
-
-                          <div class="col-md-6">
-                              <div class="row">
-                                  <label>Género: </label>
-                              </div>
-                              <div class="row" *ngIf="objeto.gen == 'M'">
-
-                                <div class="col-md-2">
-                                        
-                                  <div class="form-group clearfix">
-                                    <div class="icheck-primary d-inline">
-                                      <input type="radio" value="M" id="radioPrimary1" name="r1" checked>
-                                      <label for="radioPrimary1">
-                                        Masculino
-                                      </label>
-                                    </div>
-                                  </div>
-          
-                                </div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-2">
-          
-                                  <div class="icheck-primary d-inline">
-                                    <input type="radio" value="F" id="radioPrimary2" name="r1"
-                                    >
-                                    <label for="radioPrimary2">
-                                      Femenino
-                                    </label>
-                                  </div>
-                                  
-                                </div>
-                              </div>
-                              <div class="row" *ngIf="objeto.gen == 'F'">
-
-                                <div class="col-md-2">
-                                        
-                                  <div class="form-group clearfix">
-                                    <div class="icheck-primary d-inline">
-                                      <input type="radio" value="M" id="radioPrimary1" name="r1">
-                                      <label for="radioPrimary1">
-                                        Masculino
-                                      </label>
-                                    </div>
-                                  </div>
-          
-                                </div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-2">
-          
-                                  <div class="icheck-primary d-inline">
-                                    <input type="radio" value="F" id="radioPrimary2" name="r1"
-                                    checked>
-                                    <label for="radioPrimary2">
-                                      Femenino
-                                    </label>
-                                  </div>
-                                  
-                                </div>
-                              </div>
-                          </div>
-
-
-                          <div class="col-md-6">
-                                <div class="form-group">
-                                  <label>Teléfono:</label>
-                
-                                  <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control"
-                                           name="telefono" value="{{objeto.telefono}}">
-                                  </div>
-                                  <!-- /.input group -->
-                                </div>
-                                
-                          </div>
-
-                    </div><!--  Fin del tercer row -->
-             
-                    
-                    <div class="row" *ngIf="paciente.edad >= 18"> <!-- Aqui van los campos adicionales para un menor de edad -->
+                            <small class="text-danger" *ngIf="!fechaNac.valid && fechaNac.touched">
+                              Campo requerido
+                            </small>
+                            <small class="text-danger" *ngIf="edad < 0">
+                              La edad no puede ser negativa
+                            </small>
+                            <small class="text-danger" *ngIf="edad > 120">
+                              La edad calculada es muy grande
+                            </small>
                         
-                      <div class="col-md-6">
-
-                        <div class="form-group">
-                          <label for="nombreEncargado">Nombre del padre o encargado</label>
-                          <input type="text" class="form-control"
-                                 placeholder="Padre o encargado" name="nombreEncargado" value="{{objeto.encargado}}">
+                            
                         </div>
 
-                      </div>
+                    </div>
+                    <div class="col-md-6">
 
-                      <div class="col-md-6">
                         <div class="form-group">
-                          <label for="parentesco">Parentesco</label>
-                          <input type="text" class="form-control" id="parentesco" 
-                                 placeholder="Parentesco" name="parentesco" value="{{objeto.parentesco}}">
+                          <label for="edad">Edad (Años)</label>
+            
+                          <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad }}"
+                                 name="edad">
+                          
                         </div>
-                      </div>
+                        
+                          
+                    </div>
 
-                    </div> <!-- Fin del cuarto row -->
-                
+                  </div> <!-- Fin del segundo row -->
 
-                    <div class="row">
 
-                      <div class="col-md-6">
+                  <div class="row">
 
-                        <div class="form-group">
-                          <label for="faContacto">Familiar de contacto (*):</label>
-                          <input type="text" class="form-control"
-                                 placeholder="Familiar de contacto" name="faContacto" value="{{objeto.faContacto}}">
-                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <label>Género: </label>
+                            </div>
+                            <div class="row">
 
-                      </div>
-                      <div class="col-md-6">
-
-                        <div class="form-group">
-                          <label>Teléfono del familiar de contacto (*):</label>
+                              <div class="col-md-2">
+                                      
+                                <div class="form-group clearfix">
+                                  <div class="icheck-primary d-inline">
+                                    <input type="radio" value="M" id="radioPrimary1" name="r1" 
+                                    #r1="ngModel" [(ngModel)]="paciente.gen" [disabled]="disabledDefault">
+                                    <label for="radioPrimary1">
+                                      Masculino
+                                    </label>
+                                  </div>
+                                </div>
         
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                              </div>
+                              <div class="col-md-2"></div>
+                              <div class="col-md-2">
+        
+                                <div class="icheck-primary d-inline">
+                                  <input type="radio" value="F" id="radioPrimary2" name="r1"
+                                  #r1="ngModel" [(ngModel)]="paciente.gen" [disabled]="disabledDefault">
+                                  <label for="radioPrimary2">
+                                    Femenino
+                                  </label>
+                                </div>
+        
+                              </div>
                             </div>
-                            <input type="text" class="form-control" name="telFaContacto" value="{{objeto.telFaContacto}}">
-                          </div>
-                          <!-- /.input group -->
                         </div>
 
+
+                        <div class="col-md-6">
+                              <div class="form-group">
+                                
+                                <label *ngIf="edad >= 0 && edad < 18; else noEsMenor">Teléfono del encargado: </label>
+                                <ng-template #noEsMenor>
+                                    <label>Teléfono:</label>
+                                </ng-template>
+                                
+                                <div class="input-group">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                  </div>
+                                  <input type="text" class="form-control" placeholder="Teléfono" autocomplete="off"
+                                         name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono"
+                                         mask="9999-9999" required 
+                                         [ngClass]="{'is-invalid': !telefono.valid && telefono.touched }"
+                                         [disabled]="disabledDefault">
+
+                                </div>
+                                <small class="text-danger" *ngIf="!telefono.valid && telefono.touched">
+                                  Campo requerido
+                                </small>
+                                <!-- /.input group -->
+                              </div>
+                              
+                        </div>
+
+                  </div><!--  Fin del tercer row -->
+           
+
+                  <div class="row" *ngIf="edad < 18 && edad >=0 "> <!-- Aqui van los campos adicionales para un menor de edad -->
+
+                    <div class="col-md-6">
+
+                      <div class="form-group">
+                        <label for="nombreEncargado">Nombre del padre o encargado</label>
+                        <input type="text" class="form-control" autocomplete="off"
+                               placeholder="Padre o encargado" name="nombreEncargado"
+                               #nombreEncargado="ngModel" [(ngModel)]="paciente.encargado"
+                               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
+                               [ngClass]="{'is-invalid': !nombreEncargado.valid && nombreEncargado.touched}"
+                               [required]="esMenor()" [disabled]="disabledDefault">
+                        
+                        <small class="text-danger" *ngIf="!nombreEncargado.valid && nombreEncargado.touched">
+                              Campo requerido
+                        </small>
                       </div>
 
-                    </div> <!-- Fin del quinto row -->
+                    </div>
 
-                    <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="parentesco">Parentesco</label>
+                        <input type="text" class="form-control" id="parentesco" 
+                               placeholder="Parentesco" name="parentesco" autocomplete="off"
+                               #parentesco="ngModel" [(ngModel)]="paciente.parentesco"
+                               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
+                               [ngClass]="{'is-invalid': !parentesco.valid && parentesco.touched}"
+                               [required]="esMenor()" [disabled]="disabledDefault">
 
-                        <div class="col-md-12">
-                            <!-- textarea -->
-                            <div class="form-group">
-                                <label>Dirección</label>
-                                <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..."
-                                          name="direccion" value="{{objeto.direccion}}">
-                                </textarea>
-                            </div>
+                        <small class="text-danger" *ngIf="!parentesco.valid && parentesco.touched">
+                          Campo requerido
+                        </small>
+                      </div>
+                    </div>
+
+                  </div> <!-- Fin del cuarto row -->
+
+
+                  <div class="row">
+
+                    <div class="col-md-6">
+
+                      <div class="form-group">
+                        <label for="faContacto">Familiar de contacto (*):</label>
+                        <input type="text" class="form-control" autocomplete="off"
+                               placeholder="Familiar de contacto" name="faContacto"
+                               #faContacto="ngModel" [(ngModel)]="paciente.faContacto"
+                               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                               [disabled]="disabledDefault">
+                      </div>
+
+                    </div>
+                    <div class="col-md-6">
+
+                      <div class="form-group">
+                        <label>Teléfono del familiar de contacto (*):</label>
+      
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                          </div>
+                          <input type="text" class="form-control" name="telFaContacto" placeholder="Teléfono" autocomplete="off"
+                                 #telFaContacto="ngModel" [(ngModel)]="paciente.telFaContacto"
+                                 mask="9999-9999" [disabled]="disabledDefault">
                         </div>
+                        <!-- /.input group -->
+                      </div>
 
-                        <div class="col-md-12">
+                    </div>
+
+                  </div> <!-- Fin del quinto row -->
+
+                  <div class="row">
+
+                      <div class="col-md-12">
                           <!-- textarea -->
                           <div class="form-group">
-                              <label>Datos adicionales (*):</label>
-                              <textarea class="form-control" rows="3" placeholder="Otros datos ..."
-                                        name="otrosDatos" value="{{objeto.otrosDatos}}">
-
+                              <label>Dirección</label>
+                              <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..." autocomplete="off"
+                                        name="direccion" #direccion="ngModel" [(ngModel)]="paciente.direccion"
+                                        ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
+                                        [ngClass]="{'is-invalid': !direccion.valid && direccion.touched }"
+                                        [disabled]="disabledDefault">
                               </textarea>
+
+                              <small class="text-danger" *ngIf="!direccion.valid && direccion.touched">
+                                  Campo requerido
+                              </small>
                           </div>
+                      </div>
+
+                      <div class="col-md-12">
+                        <!-- textarea -->
+                        <div class="form-group">
+                            <label>Datos adicionales (*):</label>
+                            <textarea class="form-control" rows="3" placeholder="Otros datos ..." autocomplete="off"
+                                      name="otrosDatos" #otrosDatos="ngModel" [(ngModel)]="paciente.otrosDatos"
+                                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                      [disabled]="disabledDefault">
+
+                            </textarea>
+                        </div>
+                      </div>
+
+                  </div><!-- Fin del sexto row -->
+                  
+
+                  <div class="card-footer">
+
+          
+
+                        <button type="submit" id="crear" class="btn btn-primary"
+                                [disabled]="disabledDefault || pacienteForm.invalid || edad < 0 || edad > 120 || edad==undefined">
+                                Modificar expediente
+                        </button>
+                        
+                        
+                        <div class="float-right d-none d-sm-block">
+                          <b>Campos opcionales (*)</b> 
                         </div>
 
-                    </div><!-- Fin del sexto row -->
+
                   </div>
-                  <!-- /.card-body -->
-  
-                
-            </div><!-- Fin del card -->
+                 
+
+                </div>
+                <!-- /.card-body -->
+              </form>
+
+          </div><!-- Fin del card -->
 
 
+      </div><!-- Fin del div de las doce columnas -->
 
-        </div><!-- Fin del div de las doce columnas -->
-
-    </div><!-- /.container-fluid -->
+  </div><!-- /.container-fluid -->
 </section>
