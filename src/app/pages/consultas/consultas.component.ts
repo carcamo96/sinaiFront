@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ConsultaService } from '../../services/consulta.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Paciente } from 'src/app/models/paciente';
 
 @Component({
@@ -14,18 +15,49 @@ export class ConsultasComponent implements OnInit, OnDestroy {
   public consultas: any[] = [];
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
-  @Input() public objeto:any;
+
+  private eventsSubscription: any;
+  @Input() events: Observable<any>;
+
+  //auxiliar del id
+  private id = '';
 
   constructor(
-    private _consultaService: ConsultaService
-  ) { }
+    private _consultaService: ConsultaService,
+    private loadingBarService: LoadingBarService
+  ) { this.loadingBarService.start(); }
 
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
+      pageLength: 5,
       processing: true
     };
-    //this.cargarConsultas();
+    
+    this.eventsSubscription = this.events.subscribe(
+      response => {
+        //this.id = response.paciente._id;
+        this._consultaService.getConsultas(response.paciente._id).subscribe(
+          response => {
+            this.consultas = response.consultas;
+            console.log(response.consultas);
+            this.dtTrigger.next();
+          },
+          error => {
+            console.log("nadaaa "+error);
+            this.loadingBarService.complete();
+          }
+        );
+          this.loadingBarService.complete();
+          
+      },
+      error=>{
+          console.log("Error del hijo: "+error);
+          this.loadingBarService.complete();
+          //this.errorSwal.fire();
+      }
+    );
+
   }
 
   /*cargarConsultas(){
@@ -41,6 +73,6 @@ export class ConsultasComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void{
-    this.dtTrigger.unsubscribe();
+    this.eventsSubscription.unsubscribe();
   }
 }

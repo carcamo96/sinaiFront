@@ -85,7 +85,7 @@ public fechaAux="";
         this.consulta.peso+' kg',
         this.consulta.talla+' m',
         this.consulta.temperatura+' °C',
-        this.consulta.presionArt+' mm gh',
+        this.consulta.presionArt,
         this.consulta.freCardia+' bpm',
         this.consulta.indiceMC,
         this.consulta.fechaCre,

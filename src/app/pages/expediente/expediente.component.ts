@@ -36,9 +36,12 @@ constructor(
     private _router: Router
 ) { }
   ngOnInit(): void {
- 
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 5,
+      processing: true
+    };
     this.pacienteCargar();
-    this.consultasCargar();
   }
 
   pacienteCargar(){
@@ -57,24 +60,6 @@ constructor(
       );
     }); 
 
-  }
-
-  consultasCargar(){
-    this._route.params.subscribe(params => {
-      let id = params['id'];
-
-      this._consultaService.getConsultas(id).subscribe(
-        response => {
-          console.log(response.consultas);
-          this.consultas = response.consultas;
-          this.dtTrigger.next();
-        },
-        error => {
-          console.log("nadaaa "+error);
-          //this._router.navigate(['/home']);
-        }
-      );
-    });
   }
 
   ngOnDestroy(): void {

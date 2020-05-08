@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ConsultaService } from '../../services/consulta.service';
 import { ActivatedRoute } from '@angular/router';
 import { Consulta } from '../../models/consulta';
@@ -7,6 +7,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 import { ToastrService } from 'ngx-toastr';
 import { Paciente } from '../../models/paciente';
 import { PacienteService } from '../../services/paciente.service';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-mostrar-consulta',
@@ -21,6 +22,11 @@ public breads: any[] = [
   {titulo: 'Home', link: '/home'}
 ];
 
+  @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
+  @ViewChild('errorSwal') private errorSwal: SwalComponent;
+  @ViewChild('successSwal') private successSwal: SwalComponent;
+  @ViewChild('errorNoValidSwal') private errorNoValidSwal: SwalComponent;
+
   public consulta: any;
   public fechaAux = '';
   public idpa: string;
@@ -32,7 +38,6 @@ public breads: any[] = [
   constructor(
       private _consultaService: ConsultaService,
       private _pacienteService: PacienteService,
-      private toastr: ToastrService,
       private loadingBarService: LoadingBarService,
       private _route: ActivatedRoute
   ) {
@@ -45,7 +50,7 @@ public breads: any[] = [
     //this.cargarPaciente();
   }
 
-  showSuccess(mensaje: string, titulo: string) {
+  /*showSuccess(mensaje: string, titulo: string) {
     this.toastr.success(mensaje, titulo);
   }
 
@@ -54,7 +59,7 @@ public breads: any[] = [
         progressBar: true,
         progressAnimation: 'decreasing'
     });
-  }
+  }*/
 
   cargarConsulta(){
     this._route.params.subscribe(params => {
@@ -91,6 +96,8 @@ public breads: any[] = [
   }
 
   onSubmit(f: NgForm){
+    
+    this.loadingBarService.start();
     if(f.valid)
     { 
       let consulta = new Consulta(
@@ -112,26 +119,50 @@ public breads: any[] = [
       );    
       this._consultaService.update(this.idpa,consulta).subscribe(
         response => {
-          if (response.status == 'Success') {
+            this.idpa = response.consulta._id;
+            this.consulta = {
+              paciente: response.consulta.paciente,
+              motivo: response.consulta.motivo,
+              fechaConsul: this.inicializarFechaConsul(response.consulta.fechaConsul),
+              tiemSintoma: response.consulta.tiemSintoma,
+              historia: response.consulta.historia,
+              antePatol: response.consulta.antePatol,
+              alergias: response.consulta.alergias,
+              peso: response.consulta.peso,
+              talla: response.consulta.talla,
+              temperatura: response.consulta.temperatura,
+              presionArt: response.consulta.presionArt,
+              freCardia: response.consulta.freCardia,
+              indiceMC: response.consulta.indiceMC,
+              fechaCre: response.consulta.fechaCre,
+              diagnostico: response.consulta.diagnostico
+            }
+          //if (response.status == 'Success') {
             this.loadingBarService.complete();
-            this.status = 'Success';
+            //this.status = 'Success';
+            this.successSwal.fire();
+                this.loadingBarService.complete();
+                this.disabledDefault = true;
             //Alert
-            this.showSuccess("Se ha modificado la consulta", "Consulta modificada");
+            //this.showSuccess("Se ha modificado la consulta", "Consulta modificada");
             
-          }else{
+          /*}else{
             this.status = 'error';
-          }
+            this.errorNoValidSwal.fire();
+          }*/
         },
         error => {
             console.log(error);
             this.loadingBarService.complete();
-            this.status = 'error';
-            this.showError("No se ha conctado con el servidor", "Error");
+            this.disabledDefault = true;
+            this.errorSwal.fire();
+            //this.showError("No se ha conctado con el servidor", "Error");
         }
 
       );
-   }
-   f.resetForm();
+   }else{
+    this.errorNoValidSwal.fire();
+  }
   }
 
   inicializarFechaConsul(fechaNacParam) {
@@ -202,6 +233,10 @@ public breads: any[] = [
 
   edicion(){
     this.disabledDefault  = !this.disabledDefault; 
+  }
+
+  confirmarEdicion(){
+    this.confirmarSwal.fire();
   }
 
 }
