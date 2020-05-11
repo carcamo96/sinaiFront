@@ -22,18 +22,12 @@ public breads: any[] = [
   //Uso este objeto Subject para emitir el resultado del evento response al hijo 
   public eventsSubject: Subject<any> = new Subject<any>();
 
-
-  
   public paciente: Paciente;
-  public consultas: any[] = [];
   dtOptions: DataTables.Settings = {};
-  dtTrigger: Subject<any> = new Subject();
 
 constructor(
     private _pacienteService: PacienteService,
-    private _consultaService: ConsultaService,
-    private _route: ActivatedRoute,
-    private _router: Router
+    private _route: ActivatedRoute
 ) { }
   ngOnInit(): void {
     this.dtOptions = {
@@ -63,7 +57,7 @@ constructor(
   }
 
   ngOnDestroy(): void {
-    this.dtTrigger.unsubscribe();
+    //this.dtTrigger.unsubscribe();
   }
 
 }

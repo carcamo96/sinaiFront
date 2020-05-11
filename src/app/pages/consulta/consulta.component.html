@@ -39,8 +39,8 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                <input type="" class="form-control" 
-                                      value="consulta.fechaConsul | fechaFormat"  name="fechaConsul" #fechaConsul="ngModel" 
+                                <input type="text" class="form-control" max="{{ fechaAux }}"
+                                value="{{consulta.fechaConsul | fechaFormat}}"   name="fechaConsul" #fechaConsul="ngModel" 
                                       [(ngModel)]="consulta.fechaConsul" disabled>
                             </div>
                         </div>
@@ -163,15 +163,13 @@
                             <label>Índice de masa corporal</label>
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Índice de masa corporal" value="{{indice | number }}"
-                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" required autocomplete="off" ngxPattern="[0-9/]+"
-                                      [ngClass]="{'is-invalid': !indiceMC.valid && indiceMC.touched }">
+                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" autocomplete="off" ngxPattern="[0-9]+"
+                                      >
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">IMC</span>
                                       </div>
                                     </div>
-                                      <small class="text-danger" *ngIf="!indiceMC.valid && indiceMC.touched">
-                                        Campo requerido
-                                      </small>
+                                      
                         </div>
                       </div>
                       
@@ -278,7 +276,35 @@
                 </form>
             </div><!-- Fin del card -->
 
+            <!-- Sweet alerts -->
+              <!-- Sweet Confirm -->
+              <swal
+                #redireccionSwal
+                title="Consulta registrada!"
+                text="¿Desea regresar a los expedientes?"
+                icon="success"
+                [showCancelButton]="true"
+                confirmButtonText= "Si!"
+                cancelButtonText= "No!"
+                confirmButtonColor= "#3085d6"
+                cancelButtonColor= "#bbbbbb"
+                [focusCancel]="true"
+                (confirm)="redireccionar()">
+              </swal>
 
+              <!-- Sweet error -->
+
+              <swal
+                #errorSwal
+                title="Error!"
+                text="No se pudo realizar el registro"
+                icon="error"
+                confirmButtonText= "Ok"
+                confirmButtonColor= "#3085d6"
+                [focusConfirm]="true">
+              </swal>
+
+              <!-- Sweet alerts -->
 
         </div><!-- Fin del div de las doce columnas -->
 

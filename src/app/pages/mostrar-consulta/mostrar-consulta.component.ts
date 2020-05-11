@@ -46,20 +46,7 @@ public breads: any[] = [
 
   ngOnInit(): void {
     this.cargarConsulta();
-    //console.log(this.consulta.paciente);
-    //this.cargarPaciente();
   }
-
-  /*showSuccess(mensaje: string, titulo: string) {
-    this.toastr.success(mensaje, titulo);
-  }
-
-  showError(mensaje: string, titulo: string) {
-    this.toastr.error(mensaje, titulo, {
-        progressBar: true,
-        progressAnimation: 'decreasing'
-    });
-  }*/
 
   cargarConsulta(){
     this._route.params.subscribe(params => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {NgForm} from '@angular/forms';
 //Importando la clase para manejar las alertas toastr para angular
 import { ToastrService } from 'ngx-toastr';
@@ -8,6 +8,7 @@ import { LoadingBarService } from '@ngx-loading-bar/core';
 import { Paciente } from '../../models/paciente';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PacienteService } from '../../services/paciente.service';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 
 @Component({
@@ -18,6 +19,9 @@ import { PacienteService } from '../../services/paciente.service';
 })
 export class ConsultaComponent implements OnInit {
 
+  @ViewChild('redireccionSwal') private redireccionSwal: SwalComponent;
+  @ViewChild('errorSwal') private errorSwal: SwalComponent;
+
 //Se le pasan los titulos y los links de las paginas que preseden esta pagina
 public breads: any[] = [
   {titulo: 'Home', link: '/home'}
@@ -25,7 +29,7 @@ public breads: any[] = [
 
 
 public nomPaciente: string;
-public atl = new Date();
+public atl =Date.now();
 public status: string;
 public consulta: any;
 public spinnStatus: boolean;
@@ -33,6 +37,8 @@ public paciente: Paciente;
 public indice: string;
 public idpa:string;
 public fechaAux="";
+
+progress = 0;
 
 
   constructor(
@@ -43,6 +49,7 @@ public fechaAux="";
     private _route: ActivatedRoute,
     private _router: Router
     ) { 
+      
     this.consulta = {
       paciente: '',
       fechaCre:'02/06/2010',
@@ -60,18 +67,23 @@ public fechaAux="";
       freCardia:'',
       diagnostico:''
     }
-    this.consulta.fechaConsul= this.atl.toLocaleDateString();
+    this.consulta.fechaConsul=this.inicializarFechaConsulP(this.atl);
+    //this.consulta.fechaConsul= new Date(this.consulta.fechaConsul);
+    
+    this.inicializarFechaActual();
   }
 
   ngOnInit(){
     this.cargarPaciente();
-    this.inicializarFechaActual();
+    
     console.log(this.consulta.fechaConsul);
   }
 
   onSubmit(f:NgForm){
     
     this.loadingBarService.start();
+    this.progress = 30;
+
     if(f.valid)
     { 
       let consulta = new Consulta(
@@ -82,33 +94,39 @@ public fechaAux="";
         this.consulta.historia,
         this.consulta.antePatol,
         this.consulta.alergias,
-        this.consulta.peso+' kg',
-        this.consulta.talla+' m',
-        this.consulta.temperatura+' °C',
+        this.consulta.peso,
+        this.consulta.talla,
+        this.consulta.temperatura,
         this.consulta.presionArt,
-        this.consulta.freCardia+' bpm',
+        this.consulta.freCardia,
         this.consulta.indiceMC,
         this.consulta.fechaCre,
         this.consulta.diagnostico
       );
+      this.progress = 50;
       this._consultaService.create(consulta).subscribe(
         response => {
+
+          this.progress = 100;
+          this.consulta=response.consulta;
           if (response.status == 'success') {
             this.loadingBarService.complete();
             this.status = 'success';
-            this.spinnStatus=false;
+            this.consulta=response.consulta;
+
             //Alert
-            this.showSuccess("Se ha realizado una nueva consulta", "Nueva consulta");
+            this.redireccionSwal.fire();
             
           }else{
             this.status = 'error';
+            this.errorSwal.fire();
           }
         },
         error => {
             console.log(error);
             this.loadingBarService.complete();
             this.status = 'error';
-            this.showError("No se ha conctado con el servidor", "Error");
+            this.errorSwal.fire();
         }
 
       );
@@ -236,6 +254,10 @@ spnChange(){
     }
     console.log(yyyy + "-" + mes + "-" + dia);
     return yyyy + "-" + mes + "-" + dia;
+  }
+
+  redireccionar(){
+    this._router.navigate(['/expedientes/']);
   }
 
 }
