@@ -16,7 +16,7 @@
               <!-- /.card-header -->
 
               <!-- form start -->
-              <form role="form" #pacienteForm="ngForm">
+              <form role="form" #pacienteForm="ngForm" (ngSubmit)="confirmarEdicion()">
                 <div class="card-body">
 
                   <!--Seccion de opciones de edicion o impresión-->
@@ -46,10 +46,10 @@
                                    #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre"
                                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                                    required autocomplete="off"
-                                   [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched }"
+                                   [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched && pacienteForm.submitted}"
                                    [disabled]="disabledDefault">
 
-                                   <small class="text-danger" *ngIf="!nombrePaciente.valid && nombrePaciente.touched">
+                                   <small class="text-danger" *ngIf="!nombrePaciente.valid && nombrePaciente.touched && pacienteForm.submitted">
                                      Campo requerido
                                    </small>
                           </div>
@@ -64,10 +64,10 @@
                                      placeholder="Apellidos del paciente" autocomplete="off"
                                      #apellidoPaciente="ngModel" [(ngModel)]="paciente.apellidos"
                                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
-                                     [ngClass]="{'is-invalid': !apellidoPaciente.valid && apellidoPaciente.touched }"
+                                     [ngClass]="{'is-invalid': !apellidoPaciente.valid && apellidoPaciente.touched && pacienteForm.submitted}"
                                      [disabled]="disabledDefault">
 
-                              <small class="text-danger" *ngIf="!apellidoPaciente.valid && apellidoPaciente.touched">
+                              <small class="text-danger" *ngIf="!apellidoPaciente.valid && apellidoPaciente.touched && pacienteForm.submitted">
                                 Campo requerido
                               </small>
                           </div>
@@ -88,10 +88,10 @@
                                 <input type="date" class="form-control"  max="{{ fechaAux }}" 
                                        name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
                                        (ngModelChange)="cambioFecha($event)" required
-                                       [ngClass]="{'is-invalid': (!fechaNac.valid && fechaNac.touched) ||
+                                       [ngClass]="{'is-invalid': (!fechaNac.valid && fechaNac.touched && pacienteForm.submitted) ||
                                                    (edad < 0 || edad > 120) }" [disabled]="disabledDefault">
                             </div>
-                            <small class="text-danger" *ngIf="!fechaNac.valid && fechaNac.touched">
+                            <small class="text-danger" *ngIf="!fechaNac.valid && fechaNac.touched && pacienteForm.submitted">
                               Campo requerido
                             </small>
                             <small class="text-danger" *ngIf="edad < 0">
@@ -173,11 +173,11 @@
                                   <input type="text" class="form-control" placeholder="Teléfono" autocomplete="off"
                                          name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono"
                                          mask="9999-9999" required 
-                                         [ngClass]="{'is-invalid': !telefono.valid && telefono.touched }"
+                                         [ngClass]="{'is-invalid': !telefono.valid && telefono.touched && pacienteForm.submitted}"
                                          [disabled]="disabledDefault">
 
                                 </div>
-                                <small class="text-danger" *ngIf="!telefono.valid && telefono.touched">
+                                <small class="text-danger" *ngIf="!telefono.valid && telefono.touched && pacienteForm.submitted">
                                   Campo requerido
                                 </small>
                                 <!-- /.input group -->
@@ -198,10 +198,10 @@
                                placeholder="Padre o encargado" name="nombreEncargado"
                                #nombreEncargado="ngModel" [(ngModel)]="paciente.encargado"
                                ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
-                               [ngClass]="{'is-invalid': !nombreEncargado.valid && nombreEncargado.touched}"
+                               [ngClass]="{'is-invalid': !nombreEncargado.valid && nombreEncargado.touched && pacienteForm.submitted}"
                                [required]="esMenor()" [disabled]="disabledDefault">
                         
-                        <small class="text-danger" *ngIf="!nombreEncargado.valid && nombreEncargado.touched">
+                        <small class="text-danger" *ngIf="!nombreEncargado.valid && nombreEncargado.touched && pacienteForm.submitted">
                               Campo requerido
                         </small>
                       </div>
@@ -215,10 +215,10 @@
                                placeholder="Parentesco" name="parentesco" autocomplete="off"
                                #parentesco="ngModel" [(ngModel)]="paciente.parentesco"
                                ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
-                               [ngClass]="{'is-invalid': !parentesco.valid && parentesco.touched}"
+                               [ngClass]="{'is-invalid': !parentesco.valid && parentesco.touched && pacienteForm.submitted}"
                                [required]="esMenor()" [disabled]="disabledDefault">
 
-                        <small class="text-danger" *ngIf="!parentesco.valid && parentesco.touched">
+                        <small class="text-danger" *ngIf="!parentesco.valid && parentesco.touched && pacienteForm.submitted">
                           Campo requerido
                         </small>
                       </div>
@@ -270,11 +270,11 @@
                               <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..." autocomplete="off"
                                         name="direccion" #direccion="ngModel" [(ngModel)]="paciente.direccion"
                                         ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
-                                        [ngClass]="{'is-invalid': !direccion.valid && direccion.touched }"
+                                        [ngClass]="{'is-invalid': !direccion.valid && direccion.touched && pacienteForm.submitted}"
                                         [disabled]="disabledDefault">
                               </textarea>
 
-                              <small class="text-danger" *ngIf="!direccion.valid && direccion.touched">
+                              <small class="text-danger" *ngIf="!direccion.valid && direccion.touched && pacienteForm.submitted">
                                   Campo requerido
                               </small>
                           </div>

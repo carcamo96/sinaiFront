@@ -46,11 +46,11 @@
                           </tr>
                         </thead>
                         <tbody>
-                          <tr *ngFor="let paciente of pacientes">
-                            <td></td>
+                          <tr *ngFor="let paciente of pacientes; let i = index">
+                            <td>{{ i + 1 }}</td>
                             <td>{{paciente.nombre}}</td>
                             <td>{{paciente.apellidos}}</td>
-                            <td>{{paciente.telefono}}</td>
+                            <td>{{paciente.telefono | telFormat }}</td>
                             <td [ngSwitch]="paciente.gen">
                               <p *ngSwitchCase="'M'">
                                 Masculino

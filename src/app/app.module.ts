@@ -31,6 +31,9 @@ import { CalcularEdad } from './pipes/calcularEdad.pipe';
 //Formatear fechas en vistas de tablas
 import { FechaFormat } from './pipes/fechaFormat.pipe';
 
+//Para formatear el telefono 
+import { TelefonoFormat } from './pipes/telefonoFormat.pipe';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -70,7 +73,8 @@ const maskConfig: Partial<IConfig> = {
     ExpedientesComponent,
     MostrarConsultaComponent,
     CalcularEdad,
-    FechaFormat
+    FechaFormat,
+    TelefonoFormat
   ],
   imports: [
     BrowserModule,
