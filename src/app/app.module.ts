@@ -49,7 +49,7 @@ import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { ExpedientesComponent } from './pages/expedientes/expedientes.component';
 import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consulta.component';
 import { CalculadorComponent } from './components/calculador/calculador.component';
-import { CalculadorModalComponent } from './components/calculador-modal/calculador-modal.component';
+
 
 
 //Configuracion inicial de las mascaras ngx-mask
@@ -77,8 +77,7 @@ const maskConfig: Partial<IConfig> = {
     CalcularEdad,
     FechaFormat,
     TelefonoFormat,
-    CalculadorComponent,
-    CalculadorModalComponent
+    CalculadorComponent
   ],
   imports: [
     BrowserModule,
