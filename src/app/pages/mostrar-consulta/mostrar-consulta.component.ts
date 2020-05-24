@@ -31,9 +31,11 @@ public breads: any[] = [
   public fechaAux = '';
   public idpa: string;
   public status: string;
-  public paciente: Paciente;
+  public paciente: any;
   public disabledDefault = true;
   public indice = '';
+  public i:string;
+  public edad: number;
 
   constructor(
       private _consultaService: ConsultaService,
@@ -46,6 +48,7 @@ public breads: any[] = [
 
   ngOnInit(): void {
     this.cargarConsulta();
+    this.cargarPaciente();
   }
 
   cargarConsulta(){
@@ -55,6 +58,8 @@ public breads: any[] = [
       this._consultaService.getConsulta(this.idpa).subscribe(
         response => {
           if (response.consulta) {
+            this.i=response.consulta.paciente;
+            console.log(this.i);
             this.consulta = {
               paciente: response.consulta.paciente,
               motivo: response.consulta.motivo,
@@ -195,6 +200,7 @@ public breads: any[] = [
     if(tall != 0 || tall != null || tall != Infinity){
       let indice = pes / Math.pow(tall,2);
       this.indice =''+ parseFloat(''+indice).toFixed(1);
+      this.consulta.indiceMC = this.indice;
     }else{
       //this.indice = '';
     }
@@ -202,11 +208,25 @@ public breads: any[] = [
 
   cargarPaciente(){
     
-    console.log(this.consulta.paciente);
-      this._pacienteService.getPaciente(this.consulta.paciente).subscribe(
+    this._route.params.subscribe(params => {
+      let id = params['idp'];
+      this._pacienteService.getPaciente(id).subscribe(
         response => {
-          console.log(response);
-          this.paciente = response.paciente;
+          this.paciente = {
+            nombre: response.paciente.nombre,
+            apellidos: response.paciente.apellidos,
+            fechaNac: this.inicializarFechaConsul(response.paciente.fechaNac),
+            gen: response.paciente.gen,
+            telefono: response.paciente.telefono,
+            encargado: response.paciente.encargado,
+            parentesco: response.paciente.parentesco,
+            faContacto: response.paciente.faContacto,
+            telFaContacto: response.paciente.telFaContacto,
+            direccion: response.paciente.direccion,
+            otrosDatos: response.paciente.otrosDatos
+          }
+          //inicializando edad
+          this.edad = this.obtenerEdad(new Date() , new Date(response.paciente.fechaNac));
           console.log(this.paciente);
         },
         error => {
@@ -214,8 +234,36 @@ public breads: any[] = [
           //this._router.navigate(['/home']);
         }
       );
+      
+    });
+         
     
-    
+  }
+
+  obtenerEdad(fechaActual, fechaNac){
+
+    let diaActual = fechaActual.getDate();
+    let mesActual = fechaActual.getMonth() + 1;
+
+    let mesNac = fechaNac.getMonth() + 1;
+    let diaNac = fechaNac.getDate();
+
+    //Calculando edad relativa
+    let edad = fechaActual.getFullYear() - fechaNac.getFullYear();
+
+    if(mesActual < mesNac){
+        edad--;
+    }
+    if((mesNac == mesActual) && (diaActual < diaNac)){
+        edad--;
+    }
+
+    return edad;
+
+  }// fin del metodo de calculo de edad
+
+  esMenor(){
+    return this.edad >= 0 && this.edad < 15;
   }
 
   edicion(){

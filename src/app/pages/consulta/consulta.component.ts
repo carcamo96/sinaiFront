@@ -36,6 +36,7 @@ public spinnStatus: boolean;
 public paciente: Paciente;
 public indice: string;
 public idpa:string;
+public edad: number;
 public fechaAux="";
 
 progress = 0;
@@ -104,11 +105,12 @@ progress = 0;
         this.consulta.diagnostico
       );
       this.progress = 50;
+      console.log(consulta);
       this._consultaService.create(consulta).subscribe(
         response => {
 
           this.progress = 100;
-          this.consulta=response.consulta;
+          //console.log(this.consulta=response.consulta);
           if (response.status == 'success') {
             this.loadingBarService.complete();
             this.status = 'success';
@@ -118,11 +120,14 @@ progress = 0;
             this.redireccionSwal.fire();
             
           }else{
+            this.loadingBarService.complete();
+            console.log('else');
             this.status = 'error';
             this.errorSwal.fire();
           }
         },
         error => {
+          console.log('error');
             console.log(error);
             this.loadingBarService.complete();
             this.status = 'error';
@@ -194,6 +199,7 @@ spnChange(){
         response => {
           console.log(response);
           this.paciente = response.paciente;
+          this.edad = this.obtenerEdad(new Date(), new Date(this.paciente.fechaNac));
           this.paciente.nombre = response.paciente.nombre+' '+response.paciente.apellidos;
         },
         error => {
@@ -232,17 +238,18 @@ spnChange(){
     if(tall != 0 || tall != null || tall != Infinity){
       let indice = pes / Math.pow(tall,2);
       this.indice =''+ parseFloat(''+indice).toFixed(1);
+      this.consulta.indiceMC = this.indice;
     }else{
       //this.indice = '';
     }
   }
 
   inicializarFechaConsulP(fechaConsulP) {
-    var fechaNac = new Date(fechaConsulP);
-
-    var dd = fechaNac.getDate();
-    var mm = fechaNac.getMonth() + 1; //January is 0!
-    var yyyy = fechaNac.getFullYear();
+    var fechaCon = new Date(fechaConsulP);
+    console.log(fechaCon);
+    var dd = fechaCon.getDate();
+    var mm = fechaCon.getMonth() + 1; //January is 0!
+    var yyyy = fechaCon.getFullYear();
 
     var dia = dd.toString();
     if (dd < 10) {
@@ -254,6 +261,32 @@ spnChange(){
     }
     console.log(yyyy + "-" + mes + "-" + dia);
     return yyyy + "-" + mes + "-" + dia;
+  }
+
+  obtenerEdad(fechaActual, fechaNac){
+
+    let diaActual = fechaActual.getDate();
+    let mesActual = fechaActual.getMonth() + 1;
+
+    let mesNac = fechaNac.getMonth() + 1;
+    let diaNac = fechaNac.getDate();
+
+    //Calculando edad relativa
+    let edad = fechaActual.getFullYear() - fechaNac.getFullYear();
+
+    if(mesActual < mesNac){
+        edad--;
+    }
+    if((mesNac == mesActual) && (diaActual < diaNac)){
+        edad--;
+    }
+
+    return edad;
+
+  }// fin del metodo de calculo de edad
+
+  esMenor(){
+    return this.edad >= 0 && this.edad < 15;
   }
 
   redireccionar(){
