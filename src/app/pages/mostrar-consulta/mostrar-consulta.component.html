@@ -21,26 +21,9 @@
                 <form role="form" #consultaForm="ngForm">
                   <div class="card-body">
                     <div class="row">
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label>Nombre de paciente </label>
-                          <input type="text" class="form-control" name="nombre" #nombre="ngModel"
-                          [(ngModel)]="paciente.nombre" value="{{paciente.nombre}}" disabled>
-                        </div>
-            
-                      </div>
-
-                      <div class="col-md-4">
-                        <div class="form-group">
-                          <label>Apellidos de paciente </label>
-                          <input type="text" class="form-control" name="apellidos" #apellidos="ngModel"
-                          [(ngModel)]="paciente.apellidos" value="{{paciente.apellidos}}" disabled>
-                        </div>
-            
-                      </div>
-                    <!--Seccion de opciones de edicion o impresión-->
+                      <!--Seccion de opciones de edicion o impresión-->
                   
-                    <div class="col-md-4">
+                    <div class="col-md-12">
                       <div class="float-right d-none d-sm-block">
                         <div class="icheck-primary d-inline">
                           <input type="checkbox" id="checkboxPrimary1" [checked]="!disabledDefault"
@@ -51,8 +34,28 @@
                         </div>
                       </div>
                     </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Nombre de paciente </label>
+                          <input type="text" class="form-control" name="nombre" #nombre="ngModel"
+                          [(ngModel)]="paciente.nombre" value="{{paciente.nombre}}" disabled>
+                        </div>
+            
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Apellidos de paciente </label>
+                          <input type="text" class="form-control" name="apellidos" #apellidos="ngModel"
+                          [(ngModel)]="paciente.apellidos" value="{{paciente.apellidos}}" disabled>
+                        </div>
+            
+                      </div>
+                    
                   </div><br />
-                <!--Seccion de opciones de edicion o impresión-->
+              
                     <div class="row">
                       <div class="col-md-3">
 
