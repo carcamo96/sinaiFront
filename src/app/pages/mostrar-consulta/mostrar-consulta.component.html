@@ -20,18 +20,9 @@
                 <!-- form start -->
                 <form role="form" #consultaForm="ngForm">
                   <div class="card-body">
-                    <!--<div class="row">
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label>Nombre de paciente </label>
-                        <input type="text" class="form-control" name="nombre" 
-                         disabled>
-                      </div>
-          
-                    </div>
-                  </div>-->
-                    <!--Seccion de opciones de edicion o impresión-->
-                  <div class="row">
+                    <div class="row">
+                      <!--Seccion de opciones de edicion o impresión-->
+                  
                     <div class="col-md-12">
                       <div class="float-right d-none d-sm-block">
                         <div class="icheck-primary d-inline">
@@ -43,8 +34,28 @@
                         </div>
                       </div>
                     </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Nombre de paciente </label>
+                          <input type="text" class="form-control" name="nombre" #nombre="ngModel"
+                          [(ngModel)]="paciente.nombre" value="{{paciente.nombre}}" disabled>
+                        </div>
+            
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label>Apellidos de paciente </label>
+                          <input type="text" class="form-control" name="apellidos" #apellidos="ngModel"
+                          [(ngModel)]="paciente.apellidos" value="{{paciente.apellidos}}" disabled>
+                        </div>
+            
+                      </div>
+                    
                   </div><br />
-                <!--Seccion de opciones de edicion o impresión-->
+              
                     <div class="row">
                       <div class="col-md-3">
 
@@ -179,7 +190,7 @@
                             <div class="input-group">
                             <input type="text" class="form-control" placeholder="Índice de masa corporal" 
                                       name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" value="{{indice | number }}"
-                                      required autocomplete="off" ngxPattern="[0-9]+" [disabled]="disabledDefault">
+                                      autocomplete="off" ngxPattern="[0-9.]+" [disabled]="disabledDefault">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">IMC</span>
                                       </div>
@@ -207,7 +218,7 @@
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <div class="form-group">
+                      <div class="form-group" *ngIf="!esMenor()">
                           <label>Presión arterial</label>
                           <div class="input-group">
                           <input type="text" class="form-control" placeholder="Presión arterial"

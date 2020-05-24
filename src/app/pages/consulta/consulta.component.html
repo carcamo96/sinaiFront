@@ -29,7 +29,7 @@
                       </div>
           
                     </div>
-                  </div>
+                    </div>
                     <div class="row">
                       <div class="col-md-3">
 
@@ -39,7 +39,7 @@
                                 <div class="input-group-prepend">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
-                                <input type="text" class="form-control" max="{{ fechaAux }}"
+                                <input type="date" class="form-control" max="{{ fechaAux }}"
                                 value="{{consulta.fechaConsul | fechaFormat}}"   name="fechaConsul" #fechaConsul="ngModel" 
                                       [(ngModel)]="consulta.fechaConsul" disabled>
                             </div>
@@ -162,9 +162,9 @@
                         <div class="form-group">
                             <label>Índice de masa corporal</label>
                             <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Índice de masa corporal" value="{{indice | number }}"
-                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" autocomplete="off" ngxPattern="[0-9]+"
-                                      >
+                            <input type="number" class="form-control" placeholder="Índice de masa corporal" value="{{indice | number}}"
+                                      name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" autocomplete="off" ngxPattern="[0-9.]+"
+                                      [ngClass]="{'is-invalid': indiceMC.touched }">
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">IMC</span>
                                       </div>
@@ -192,11 +192,12 @@
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <div class="form-group">
+                      <div class="form-group" *ngIf="!esMenor()">
                           <label>Presión arterial</label>
                           <div class="input-group">
                           <input type="text" class="form-control" placeholder="Presión arterial"
-                                    name="presionArt" #presionArt="ngModel" [(ngModel)]="consulta.presionArt" required autocomplete="off" ngxPattern="[0-9/]+"
+                                    name="presionArt" #presionArt="ngModel" [(ngModel)]="consulta.presionArt" 
+                                    required autocomplete="off" ngxPattern="[0-9/]+"
                                     [ngClass]="{'is-invalid': !presionArt.valid && presionArt.touched }">
                                     <div class="input-group-prepend">
                                       <span class="input-group-text">PA</span>
@@ -208,7 +209,7 @@
                       </div>
                     </div>
                     <div class="col-md-4">
-                      <div class="form-group">
+                      <div class="form-group" *ngIf="!esMenor()">
                           <label>Frecuencia cardiáca</label>
                           <div class="input-group">
                           <input type="text" class="form-control" placeholder="Frecuencia cardiáca"
@@ -233,7 +234,8 @@
                           <div class="form-group">
                               <label>Alergias</label>
                               <textarea class="form-control" rows="3" placeholder="Alergias" autocomplete="off"
-                                        name="alergias" #alergias="ngModel" [(ngModel)]="consulta.alergias" ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                        name="alergias" #alergias="ngModel" [(ngModel)]="consulta.alergias" 
+                                        ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                                         required [ngClass]="{'is-invalid': !alergias.valid && alergias.touched }">
      
                                  </textarea>
@@ -250,7 +252,8 @@
                         <div class="form-group">
                             <label>Diagnóstico (*)</label>
                             <textarea class="form-control" rows="3" placeholder="Diagnóstico" autocomplete="off"
-                                      name="diagnostico" #diagnostico="ngModel" [(ngModel)]="consulta.diagnostico" ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                      name="diagnostico" #diagnostico="ngModel" [(ngModel)]="consulta.diagnostico" 
+                                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                                   >
    
                                </textarea>

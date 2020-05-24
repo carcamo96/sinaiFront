@@ -27,7 +27,7 @@ const appRoutes: Routes = [
     {path: 'expedientes', component: ExpedientesComponent},
     {path: 'consulta', component: ConsultaComponent},
     {path: 'consultas/:id', component: ConsultaComponent},
-    {path: 'consulta/:id', component: MostrarConsultaComponent},
+    {path: 'consulta/:id/:idp', component: MostrarConsultaComponent},
     {path: 'agregar', component: AgregarComponent},
    
 ];

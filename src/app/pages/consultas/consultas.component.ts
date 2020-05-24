@@ -20,7 +20,7 @@ export class ConsultasComponent implements OnInit, OnDestroy {
   @Input() events: Observable<any>;
 
   //auxiliar del id
-  private id = '';
+  public id = '';
 
   constructor(
     private _consultaService: ConsultaService,
@@ -36,7 +36,7 @@ export class ConsultasComponent implements OnInit, OnDestroy {
     
     this.eventsSubscription = this.events.subscribe(
       response => {
-        //this.id = response.paciente._id;
+        this.id = response.paciente._id;
         this._consultaService.getConsultas(response.paciente._id).subscribe(
           response => {
             this.consultas = response.consultas;
