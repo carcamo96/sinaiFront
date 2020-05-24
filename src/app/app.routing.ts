@@ -11,6 +11,7 @@ import { ExpedienteComponent } from './pages/expediente/expediente.component';
 import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ExpedientesComponent } from './pages/expedientes/expedientes.component';
 import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consulta.component';
+import { LoginComponent } from './pages/login/login.component';
 
 
 
@@ -18,6 +19,7 @@ import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consu
 // Array de rutas
 const appRoutes: Routes = [
     {path: '', component: HomeComponent},
+    {path:'login', component: LoginComponent},
     {path: 'home', component: HomeComponent},
     {path: 'registrarPaciente', component: FormularioPacienteComponent},
     {path: 'mostrarPaciente', component: MostrarPacienteComponent},

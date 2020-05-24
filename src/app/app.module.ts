@@ -49,6 +49,7 @@ import { ConsultasComponent } from './pages/consultas/consultas.component';
 import { ExpedientesComponent } from './pages/expedientes/expedientes.component';
 import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consulta.component';
 import { CalculadorComponent } from './components/calculador/calculador.component';
+import { LoginComponent } from './pages/login/login.component';
 
 
 
@@ -77,7 +78,8 @@ const maskConfig: Partial<IConfig> = {
     CalcularEdad,
     FechaFormat,
     TelefonoFormat,
-    CalculadorComponent
+    CalculadorComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
