@@ -135,8 +135,6 @@ public breads: any[] = [
             this.successSwal.fire();
                 this.loadingBarService.complete();
                 this.disabledDefault = true;
-            //Alert
-            //this.showSuccess("Se ha modificado la consulta", "Consulta modificada");
             
           /*}else{
             this.status = 'error';
@@ -231,7 +229,6 @@ public breads: any[] = [
         },
         error => {
           console.log("nadaaa "+error);
-          //this._router.navigate(['/home']);
         }
       );
       
