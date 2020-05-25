@@ -164,7 +164,7 @@
                             <div class="input-group">
                             <input type="number" class="form-control" placeholder="Índice de masa corporal" value="{{indice | number}}"
                                       name="indiceMC" #indiceMC="ngModel" [(ngModel)]="consulta.indiceMC" autocomplete="off" ngxPattern="[0-9.]+"
-                                      [ngClass]="{'is-invalid': indiceMC.touched }">
+                                      [ngClass]="{'is-invalid': indiceMC.touched }" disabled>
                                       <div class="input-group-prepend">
                                         <span class="input-group-text">IMC</span>
                                       </div>

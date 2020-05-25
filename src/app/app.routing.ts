@@ -12,6 +12,7 @@ import { ConsultaComponent } from './pages/consulta/consulta.component';
 import { ExpedientesComponent } from './pages/expedientes/expedientes.component';
 import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consulta.component';
 import { LoginComponent } from './pages/login/login.component';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
 
 
 
@@ -28,7 +29,7 @@ const appRoutes: Routes = [
     {path: 'consulta', component: ConsultaComponent},
     {path: 'consultas/:id', component: ConsultaComponent},
     {path: 'consulta/:id/:idp', component: MostrarConsultaComponent},
-    {path: 'agregar', component: AgregarComponent},
+    {path: 'usuario', component: UsuarioComponent},
    
 ];
 

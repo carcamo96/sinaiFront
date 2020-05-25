@@ -50,6 +50,7 @@ import { ExpedientesComponent } from './pages/expedientes/expedientes.component'
 import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consulta.component';
 import { CalculadorComponent } from './components/calculador/calculador.component';
 import { LoginComponent } from './pages/login/login.component';
+import { UsuarioComponent } from './pages/usuario/usuario.component';
 
 
 
@@ -79,7 +80,8 @@ const maskConfig: Partial<IConfig> = {
     FechaFormat,
     TelefonoFormat,
     CalculadorComponent,
-    LoginComponent
+    LoginComponent,
+    UsuarioComponent
   ],
   imports: [
     BrowserModule,
