@@ -37,6 +37,12 @@ import { TelefonoFormat } from './pipes/telefonoFormat.pipe';
 //Para usar ngx-smart-modal
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 
+//Para usar el ngx-Wizard
+import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
+
+//Para usar los popovers
+import { PopoverModule } from 'ngx-popover';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -60,6 +66,11 @@ import { UsuarioComponent } from './pages/usuario/usuario.component';
 //Configuracion inicial de las mascaras ngx-mask
 const maskConfig: Partial<IConfig> = {
   validation: false,
+};
+
+//Configuración inicial de ngx-wizard
+const ngWizardConfig: NgWizardConfig = {
+  theme: THEME.default
 };
 
 
@@ -100,6 +111,8 @@ const maskConfig: Partial<IConfig> = {
     DataTablesModule, //Modulo para usar las tablas
     SweetAlert2Module.forRoot(), // inicializando las swett alerts
     NgxSmartModalModule.forRoot(), // inicializando Ngx-smart-modal
+    NgWizardModule.forRoot(ngWizardConfig), //inicializando el ngx-wizard
+    PopoverModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

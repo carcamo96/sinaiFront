@@ -20,9 +20,10 @@
                 <div class="card-header">
                   <h3 class="card-title">Datos personales</h3>
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" (click)="ngxSmartModalService.getModal('myModal').open()">
+                    <button type="button" class="btn btn-tool">
                       <i class="fas fa-info-circle fa-2x"></i>
                     </button>
+                    
                   </div>
                   <!-- card tools -->
                 </div>
@@ -352,12 +353,12 @@
 
 <!-- Ngx-smart-modals -->
 
-<!-- Modal de informativo de ayuda del formulario  -->
-    <ngx-smart-modal #myModal identifier="myModal">
+  <!-- Modal de informativo de ayuda del formulario  -->
+    <ngx-smart-modal #myModal identifier="myModal" customClass="modal-dialog modal-lg">
       <h1>Prueba</h1>
       <p>Probando el modal...</p>
 
-      <button (click)="myModal.close()">Cerrar</button>
+      <button class="btn btn-secondary" (click)="myModal.close()">Cerrar</button>
     </ngx-smart-modal>    
-
+  <!-- Modal de informativo de ayuda del formulario  -->
 <!-- Ngx-smart-modals -->
