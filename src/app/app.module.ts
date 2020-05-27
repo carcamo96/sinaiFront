@@ -34,6 +34,9 @@ import { FechaFormat } from './pipes/fechaFormat.pipe';
 //Para formatear el telefono 
 import { TelefonoFormat } from './pipes/telefonoFormat.pipe';
 
+//Para usar ngx-smart-modal
+import { NgxSmartModalModule } from 'ngx-smart-modal';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -95,7 +98,8 @@ const maskConfig: Partial<IConfig> = {
     NgPipesModule, // Modulo de Pipes
     LoadingBarModule,
     DataTablesModule, //Modulo para usar las tablas
-    SweetAlert2Module.forRoot() // inicializando las swett alerts
+    SweetAlert2Module.forRoot(), // inicializando las swett alerts
+    NgxSmartModalModule.forRoot(), // inicializando Ngx-smart-modal
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

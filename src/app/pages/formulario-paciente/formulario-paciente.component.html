@@ -20,7 +20,8 @@
                 <div class="card-header">
                   <h3 class="card-title">Datos personales</h3>
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool"><i class="fas fa-info-circle fa-2x"></i>
+                    <button type="button" class="btn btn-tool" (click)="ngxSmartModalService.getModal('myModal').open()">
+                      <i class="fas fa-info-circle fa-2x"></i>
                     </button>
                   </div>
                   <!-- card tools -->
@@ -313,37 +314,50 @@
 
             </div><!-- Fin del card -->
 
-              <!-- Sweet alerts -->
-              <!-- Sweet Confirm -->
-              <swal
-                #redireccionSwal
-                title="Paciente registrado!"
-                text="¿Desea proceder con la consulta?"
-                icon="success"
-                [showCancelButton]="true"
-                confirmButtonText= "Si!"
-                cancelButtonText= "No!"
-                confirmButtonColor= "#3085d6"
-                cancelButtonColor= "#bbbbbb"
-                [focusCancel]="true"
-                (confirm)="redireccionar()">
-              </swal>
-
-              <!-- Sweet error -->
-
-              <swal
-                #errorSwal
-                title="Error!"
-                text="No se pudo realizar el registro"
-                icon="error"
-                confirmButtonText= "Ok"
-                confirmButtonColor= "#3085d6"
-                [focusConfirm]="true">
-              </swal>
-
-              <!-- Sweet alerts -->
 
         </div><!-- Fin del div de las doce columnas -->
 
     </div><!-- /.container-fluid -->
 </section>
+
+ <!-- Sweet alerts -->
+    <!-- Sweet Confirm -->
+        <swal
+          #redireccionSwal
+          title="Paciente registrado!"
+          text="¿Desea proceder con la consulta?"
+          icon="success"
+          [showCancelButton]="true"
+          confirmButtonText= "Si!"
+          cancelButtonText= "No!"
+          confirmButtonColor= "#3085d6"
+          cancelButtonColor= "#bbbbbb"
+          [focusCancel]="true"
+          (confirm)="redireccionar()">
+        </swal>
+
+        <!-- Sweet error -->
+
+        <swal
+          #errorSwal
+          title="Error!"
+          text="No se pudo realizar el registro"
+          icon="error"
+          confirmButtonText= "Ok"
+          confirmButtonColor= "#3085d6"
+          [focusConfirm]="true">
+        </swal>
+
+<!-- Sweet alerts -->
+
+<!-- Ngx-smart-modals -->
+
+<!-- Modal de informativo de ayuda del formulario  -->
+    <ngx-smart-modal #myModal identifier="myModal">
+      <h1>Prueba</h1>
+      <p>Probando el modal...</p>
+
+      <button (click)="myModal.close()">Cerrar</button>
+    </ngx-smart-modal>    
+
+<!-- Ngx-smart-modals -->

@@ -1,15 +1,19 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { Paciente } from '../../models/paciente';
-//Importando la clase para manejar las alertas toastr para angular
-import { ToastrService } from 'ngx-toastr';
-//Importando servicio para pacientes
-import { PacienteService } from '../../services/paciente.service';
-//importando ngx-loading
-import { LoadingBarService } from '@ngx-loading-bar/core';
 //importando para navegar en las rutas
 import {Router, ActivatedRoute, Params} from '@angular/router';
+//Importando servicio para pacientes
+import { PacienteService } from '../../services/paciente.service';
+
+//Importando la clase para manejar las alertas toastr para angular
+import { ToastrService } from 'ngx-toastr';
+//importando ngx-loading
+import { LoadingBarService } from '@ngx-loading-bar/core';
+//importando para usar las sweet alerts
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+//importando para usar los modales
+import { NgxSmartModalService } from 'ngx-smart-modal';
 
 
 @Component({
@@ -41,7 +45,8 @@ export class FormularioPacienteComponent implements OnInit {
      private _pacienteService: PacienteService,
      private loadingBarService: LoadingBarService,
      private router: Router,
-     private route: ActivatedRoute) {
+     private route: ActivatedRoute,
+     public ngxSmartModalService: NgxSmartModalService) {
     this.paciente = {
       nombre: '',
       apellidos: '',
@@ -223,6 +228,12 @@ export class FormularioPacienteComponent implements OnInit {
   */
   redireccionar(){
     this.router.navigate(['/consulta/', this.idResponse]);
+  }
+
+  //Para llamar al modal informativo de ayuda sobre el uso del formulario
+
+  modalAyudaInfo(){
+
   }
 
 }
