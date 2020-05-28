@@ -12,8 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 //importando para usar las sweet alerts
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
-//importando para usar los modales
-import { NgxSmartModalService } from 'ngx-smart-modal';
+
 
 
 @Component({
@@ -41,12 +40,13 @@ export class FormularioPacienteComponent implements OnInit {
 
   progress = 0;
 
+  public ayuda = false;//Para manejar los popovers
+
   constructor(private toastr: ToastrService,
      private _pacienteService: PacienteService,
      private loadingBarService: LoadingBarService,
      private router: Router,
-     private route: ActivatedRoute,
-     public ngxSmartModalService: NgxSmartModalService) {
+     private route: ActivatedRoute) {
     this.paciente = {
       nombre: '',
       apellidos: '',
@@ -230,10 +230,13 @@ export class FormularioPacienteComponent implements OnInit {
     this.router.navigate(['/consulta/', this.idResponse]);
   }
 
-  //Para llamar al modal informativo de ayuda sobre el uso del formulario
+  //Para activar la ayuda del formulario
+  activarPopovers(p1){
+      this.ayuda = !this.ayuda;
 
-  modalAyudaInfo(){
-
+      if(this.ayuda == false){
+          p1.close();
+      }
   }
 
 }

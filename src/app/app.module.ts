@@ -40,8 +40,8 @@ import { NgxSmartModalModule } from 'ngx-smart-modal';
 //Para usar el ngx-Wizard
 import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
 
-//Para usar los popovers
-import { PopoverModule } from 'ngx-popover';
+//Libreria de NgBootstrap. Se importó automaticamente (De esta libreria se usan los popovers)
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -112,7 +112,7 @@ const ngWizardConfig: NgWizardConfig = {
     SweetAlert2Module.forRoot(), // inicializando las swett alerts
     NgxSmartModalModule.forRoot(), // inicializando Ngx-smart-modal
     NgWizardModule.forRoot(ngWizardConfig), //inicializando el ngx-wizard
-    PopoverModule
+    NgbModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

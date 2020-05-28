@@ -20,7 +20,17 @@
                 <div class="card-header">
                   <h3 class="card-title">Datos personales</h3>
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool">
+                    <ng-template #popContent>
+                      Click! para activar o desactivar la información del formulario
+                    </ng-template>
+                    <ng-template #popTitle>
+                      <b>Guía de uso</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
+                    </ng-template>
+                    <button type="button" class="btn btn-tool" placement="left" popoverClass="text-dark"
+                    [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave"
+                    [ngClass]="{'text-light': ayuda }"
+                    (click)="activarPopovers(p1)">
+                      
                       <i class="fas fa-info-circle fa-2x"></i>
                     </button>
                     
@@ -43,11 +53,18 @@
                                      #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre"
                                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                                      required autocomplete="off"
-                                     [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched }">
+                                     [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched }"
+                                     placement="top" popoverClass="text-dark"
+                                     [ngbPopover]="popNombreContent" [popoverTitle]="popNombreTitulo" triggers="manual" #p1="ngbPopover"
+                                     (click)=" ayuda ? p1.toggle() : ''">
 
                                      <small class="text-danger" *ngIf="!nombrePaciente.valid && nombrePaciente.touched">
                                        Campo requerido
                                      </small>
+                                     <ng-template #popNombreContent>Digite el ó los nombres del paciente</ng-template>
+                                     <ng-template #popNombreTitulo>
+                                       <b>Campo Nombre</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
+                                    </ng-template>
                             </div>
     
                         </div>
@@ -90,7 +107,7 @@
                                 Campo requerido
                               </small>
                               <small class="text-danger" *ngIf="edad < 0">
-                                La edad no puede ser negativa
+                                No puede seleccionar fechas futuras. Edad negativa
                               </small>
                               <small class="text-danger" *ngIf="edad > 120">
                                 La edad calculada es muy grande
