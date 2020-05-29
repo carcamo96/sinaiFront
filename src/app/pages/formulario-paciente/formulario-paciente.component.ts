@@ -231,11 +231,20 @@ export class FormularioPacienteComponent implements OnInit {
   }
 
   //Para activar la ayuda del formulario
-  activarPopovers(p1){
+  activarPopovers(p1,p2,p3){
       this.ayuda = !this.ayuda;
 
       if(this.ayuda == false){
           p1.close();
+          p2.close();
+          p3.close();
+      }
+  }
+  //Para activar un popover X cuando el campo tenga el foco
+  popFocus(px, pxAnterior?){
+      px.open();
+      if(pxAnterior){
+        pxAnterior.close();
       }
   }
 
