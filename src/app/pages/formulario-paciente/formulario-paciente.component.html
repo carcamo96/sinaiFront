@@ -1,488 +1,708 @@
 <app-page-header
-                 [titulo]="'Nuevo expediente'"
-                 [icono]="'fas fa-folder-open'"
-                 [breadcrumbs]="breads">
-
+  [titulo]="'Nuevo expediente'"
+  [icono]="'fas fa-folder-open'"
+  [breadcrumbs]="breads"
+>
 </app-page-header>
-
 
 <!-- Contenedor de página -->
 <section class="content">
-    <div class="container-fluid">
+  <div class="container-fluid">
+    <ngx-loading-bar
+      color="#339942"
+      height="2"
+      animationTime="0.8"
+      runInterval="100"
+      progress="progress"
+    >
+    </ngx-loading-bar>
 
-      <ngx-loading-bar color="#339942" height="2" animationTime="0.8"
-                      runInterval="100" progress="progress">
-      </ngx-loading-bar>
+    <div class="col-md-12">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Datos personales</h3>
+          <div class="card-tools">
+            <ng-template #popContent>
+              <p *ngIf="ayuda == false">
+                <b>Click! para activar </b>la información del formulario
+              </p>
+              <p *ngIf="ayuda == true">
+                <b>Click! para desactivar </b>la información del formulario
+              </p>
+            </ng-template>
+            <ng-template #popTitle>
+              <b>Guía de uso</b>
+              <p class="float-right">
+                <i class="fas fa-info-circle fa-lg"></i>
+              </p>
+            </ng-template>
+            <button
+              type="button"
+              class="btn btn-tool"
+              placement="left"
+              popoverClass="text-dark"
+              [ngbPopover]="popContent"
+              [popoverTitle]="popTitle"
+              triggers="mouseenter:mouseleave"
+              [ngClass]="{ 'text-light': ayuda }"
+              (click)="activarPopovers(p1, p2, p3)"
+            >
+              <i class="fas fa-info-circle fa-2x"></i>
+            </button>
+          </div>
+          <!-- card tools -->
+        </div>
+        <!-- /.card-header -->
+        <!-- form start -->
+        <form
+          role="form"
+          #pacienteForm="ngForm"
+          (ngSubmit)="onSubmit(pacienteForm)"
+        >
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="nombrePaciente">Nombre</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="nombrePaciente"
+                    placeholder="Nombre del paciente"
+                    #nombrePaciente="ngModel"
+                    [(ngModel)]="paciente.nombre"
+                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                    required
+                    autocomplete="off"
+                    [ngClass]="{
+                      'is-invalid':
+                        !nombrePaciente.valid && nombrePaciente.touched
+                    }"
+                    placement="top"
+                    popoverClass="text-dark"
+                    [autoClose]="true"
+                    [ngbPopover]="popNombreContent"
+                    [popoverTitle]="popNombreTitulo"
+                    triggers="manual"
+                    #p1="ngbPopover"
+                    (click)="ayuda ? p1.open() : ''"
+                    (focus)="ayuda ? p1.open() : ''"
+                    (blur)="ayuda ? p1.close() : ''"
+                  />
 
-        <div class="col-md-12">
-
-            <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">Datos personales</h3>
-                  <div class="card-tools">
-                    <ng-template #popContent>
-                      <p *ngIf="ayuda == false">
-                        <b>Click! para activar </b>la información del formulario
-                      </p>
-                      <p *ngIf="ayuda == true">
-                        <b>Click! para desactivar </b>la información del formulario
-                      </p>
-                    </ng-template>
-                    <ng-template #popTitle>
-                      <b>Guía de uso</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                    </ng-template>
-                    <button type="button" class="btn btn-tool" placement="left" popoverClass="text-dark"
-                    [ngbPopover]="popContent" [popoverTitle]="popTitle" triggers="mouseenter:mouseleave"
-                    [ngClass]="{'text-light': ayuda }"
-                    (click)="activarPopovers(p1,p2,p3)">
-                      
-                      <i class="fas fa-info-circle fa-2x"></i>
-                    </button>
-                    
-                  </div>
-                  <!-- card tools -->
+                  <small
+                    class="text-danger"
+                    *ngIf="!nombrePaciente.valid && nombrePaciente.touched"
+                  >
+                    Campo requerido
+                  </small>
+                  <ng-template #popNombreContent
+                    >Digite el ó los nombres del paciente</ng-template
+                  >
+                  <ng-template #popNombreTitulo>
+                    <b>Nombre</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
                 </div>
-                <!-- /.card-header -->
-                <!-- form start -->
-                <form role="form" #pacienteForm="ngForm" (ngSubmit)="onSubmit(pacienteForm)">
-                  <div class="card-body">
+              </div>
 
-                    <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="apellidosPaciente">Apellidos</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="apellidoPaciente"
+                    placeholder="Apellidos del paciente"
+                    autocomplete="off"
+                    #apellidoPaciente="ngModel"
+                    [(ngModel)]="paciente.apellidos"
+                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                    required
+                    [ngClass]="{
+                      'is-invalid':
+                        !apellidoPaciente.valid && apellidoPaciente.touched
+                    }"
+                    popoverClass="text-dark"
+                    [ngbPopover]="popApellidoContent"
+                    [popoverTitle]="popApellidoTitulo"
+                    [autoClose]="true"
+                    triggers="manual"
+                    #p2="ngbPopover"
+                    (click)="ayuda ? p2.open() : ''"
+                    (focus)="ayuda ? p2.open() : ''"
+                    (blur)="ayuda ? p2.close() : ''"
+                  />
 
-                        <div class="col-md-6">
-    
-                            <div class="form-group">
-                              <label for="nombrePaciente">Nombre</label>
-                              <input type="text" class="form-control" name="nombrePaciente"
-                                     placeholder="Nombre del paciente"
-                                     #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre"
-                                     ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                     required autocomplete="off"
-                                     [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched }"
-                                     placement="top" popoverClass="text-dark" [autoClose]="true"
-                                     [ngbPopover]="popNombreContent" [popoverTitle]="popNombreTitulo" triggers="manual" #p1="ngbPopover"
-                                     (click)=" ayuda ? p1.open() : ''" (focus)=" ayuda ? popFocus(p1) : ''">
+                  <small
+                    class="text-danger"
+                    *ngIf="!apellidoPaciente.valid && apellidoPaciente.touched"
+                  >
+                    Campo requerido
+                  </small>
+                  <ng-template #popApellidoContent
+                    >Digite el ó los apellidos del paciente</ng-template
+                  >
+                  <ng-template #popApellidoTitulo>
+                    <b>Apellidos</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            <!-- Fin del primer row -->
 
-                                     <small class="text-danger" *ngIf="!nombrePaciente.valid && nombrePaciente.touched">
-                                       Campo requerido
-                                     </small>
-                                     <ng-template #popNombreContent>Digite el ó los nombres del paciente</ng-template>
-                                     <ng-template #popNombreTitulo>
-                                       <b>Nombre</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                                    </ng-template>
-                            </div>
-    
-                        </div>
-            
-                        <div class="col-md-6">
-                            
-                            <div class="form-group">
-                                <label for="apellidosPaciente">Apellidos</label>
-                                <input type="text" class="form-control" name="apellidoPaciente" 
-                                       placeholder="Apellidos del paciente" autocomplete="off"
-                                       #apellidoPaciente="ngModel" [(ngModel)]="paciente.apellidos"
-                                       ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
-                                       [ngClass]="{'is-invalid': !apellidoPaciente.valid && apellidoPaciente.touched }"
-                                       popoverClass="text-dark" [ngbPopover]="popApellidoContent" [popoverTitle]="popApellidoTitulo" [autoClose]="true"
-                                       triggers="manual" #p2="ngbPopover" (click)=" ayuda ? p2.open() : ''" (focus)="ayuda ? popFocus(p2, p1) : ''">
-
-                                <small class="text-danger" *ngIf="!apellidoPaciente.valid && apellidoPaciente.touched">
-                                  Campo requerido
-                                </small>
-                                <ng-template #popApellidoContent>Digite el ó los apellidos del paciente</ng-template>
-                                <ng-template #popApellidoTitulo>
-                                    <b>Apellidos</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                                </ng-template>
-                            </div>
-    
-                        </div>
-
-                    </div><!-- Fin del primer row -->
-
-                    <div class="row">
-                      <div class="col-md-6">
-
-                          <div class="form-group">
-                            <label>Fecha de nacimiento:</label>
-                              <div class="input-group date">
-                                  <div class="input-group-prepend">
-                                      <div class="input-group-text"><i class="fas fa-calendar"></i></div>
-                                  </div>
-                                  <input type="date" class="form-control"  max="{{ fechaAux }}" 
-                                         name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
-                                         (ngModelChange)="cambioFecha($event)" required
-                                         [ngClass]="{'is-invalid': (!fechaNac.valid && fechaNac.touched) || (edad < 0 || edad > 120) }"
-                                         popoverClass="text-dark" [ngbPopover]="popFechaNacContent" [popoverTitle]="popFechaNacTitulo"
-                                         [autoClose]="true" triggers="manual" #p3="ngbPopover"
-                                         (click)=" ayuda ? p3.open() : ''" (focus)="ayuda ? popFocus(p3, p2) : ''">
-                              </div>
-                              <small class="text-danger" *ngIf="!fechaNac.valid && fechaNac.touched">
-                                Campo requerido
-                              </small>
-                              <small class="text-danger" *ngIf="edad < 0">
-                                No puede seleccionar fechas futuras. Edad negativa
-                              </small>
-                              <small class="text-danger" *ngIf="edad > 120">
-                                La edad calculada es muy grande
-                              </small>
-                              <ng-template #popFechaNacContent>
-                                Digite la fecha de nacimiento del paciente <br>
-                                ó tambien puede desplegar el calendario con el icono: <p><i class="far fa-calendar fa-lg"></i>
-                              </ng-template>
-                              <ng-template #popFechaNacTitulo>
-                                <b>Fecha de nacimiento</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                              </ng-template>
-                              
-                          </div>
-
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Fecha de nacimiento:</label>
+                  <div class="input-group date">
+                    <div class="input-group-prepend">
+                      <div class="input-group-text">
+                        <i class="fas fa-calendar"></i>
                       </div>
-                      <div class="col-md-6">
-
-                          <div class="form-group">
-                            <label for="edad">Edad (Años)</label>
-              
-                            <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad }}"
-                                   name="edad">
-                            
-                          </div>
-                          
-                            
-                      </div>
-
-                    </div> <!-- Fin del segundo row -->
-
-
-                    <div class="row">
-
-                          <div class="col-md-6">
-                              <div class="row">
-                                  <label>Género: </label>
-                              </div>
-                              <div class="row">
-
-                                <div class="col-md-2">
-                                        
-                                  <div class="form-group clearfix">
-                                    <div class="icheck-primary d-inline">
-                                      <input type="radio" value="M" id="radioPrimary1" name="r1" 
-                                      #r1="ngModel" [(ngModel)]="paciente.gen">
-                                      <label for="radioPrimary1">
-                                        Masculino
-                                      </label>
-                                    </div>
-                                  </div>
-          
-                                </div>
-                                <div class="col-md-2"></div>
-                                <div class="col-md-2">
-          
-                                  <div class="icheck-primary d-inline">
-                                    <input type="radio" value="F" id="radioPrimary2" name="r1"
-                                    #r1="ngModel" [(ngModel)]="paciente.gen">
-                                    <label for="radioPrimary2">
-                                      Femenino
-                                    </label>
-                                  </div>
-          
-                                </div>
-                              </div>
-                          </div>
-
-
-                          <div class="col-md-6">
-                                <div class="form-group">
-                                  
-                                  <label *ngIf="edad >= 0 && edad < 18; else noEsMenor">Teléfono del encargado: </label>
-                                  <ng-template #noEsMenor>
-                                      <label>Teléfono:</label>
-                                  </ng-template>
-                                  
-                                  <div class="input-group">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" placeholder="Teléfono" autocomplete="off"
-                                           name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono"
-                                           mask="9999-9999" required 
-                                           [ngClass]="{'is-invalid': !telefono.valid && telefono.touched }"
-                                           popoverClass="text-dark" [ngbPopover]="popTelContent" [popoverTitle]="popTelTitulo"
-                                           [autoClose]="true" triggers="manual" #p4="ngbPopover"
-                                           (click)=" ayuda ? p4.open() : ''" (focus)="ayuda ? popFocus(p4, p3) : ''">
-
-                                  </div>
-                                  <small class="text-danger" *ngIf="!telefono.valid && telefono.touched">
-                                    Campo requerido
-                                  </small>
-                                  <ng-template #popTelContent>
-                                    <p *ngIf="edad >= 0 && edad < 18; else telMsgDefault">
-                                      Digite el número de teléfono del encargado del menor.
-                                      Formato de 8 dígitos
-                                    </p>
-                                    <ng-template #telMsgDefault>
-                                      <p>
-                                        Digite un número de teléfono para agregar como contacto.
-                                        Formato de 8 dígitos
-                                      </p>
-                                    </ng-template>
-                                    
-                                  </ng-template>
-                                  <ng-template #popTelTitulo>
-                                    <b *ngIf="edad >= 0 && edad < 18; else titleDefault">                                 
-                                        Tel. del encargado
-                                    </b>
-                                    <ng-template #titleDefault>
-                                      <b>Teléfono</b>
-                                    </ng-template>
-                                    <p class="float-right">
-                                      <i class="fas fa-info-circle fa-lg"></i>
-                                    </p>
-                                  </ng-template>
-                                  <!-- /.input group -->
-                                </div>
-                                
-                          </div>
-
-                    </div><!--  Fin del tercer row -->
-             
-
-                    <div class="row" *ngIf="edad < 18 && edad >=0 "> <!-- Aqui van los campos adicionales para un menor de edad -->
-
-                      <div class="col-md-6">
-
-                        <div class="form-group">
-                          <label for="nombreEncargado">Nombre del padre o encargado</label>
-                          <input type="text" class="form-control" autocomplete="off"
-                                 placeholder="Padre o encargado" name="nombreEncargado"
-                                 #nombreEncargado="ngModel" [(ngModel)]="paciente.encargado"
-                                 ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
-                                 [ngClass]="{'is-invalid': !nombreEncargado.valid && nombreEncargado.touched}"
-                                 [required]="esMenor()"
-                                 popoverClass="text-dark" [ngbPopover]="popNombreEncarContent" [popoverTitle]="popNombreEncarTitulo"
-                                 [autoClose]="true" triggers="manual" #p5="ngbPopover"
-                                 (click)=" ayuda ? p5.open() : ''" (focus)="ayuda ? popFocus(p5, p4) : ''">
-                          
-                          <small class="text-danger" *ngIf="!nombreEncargado.valid && nombreEncargado.touched">
-                                Campo requerido
-                          </small>
-                          <ng-template #popNombreEncarContent>
-                            Digite el nombre del padre ó encargado del menor
-                          </ng-template>
-                          <ng-template #popNombreEncarTitulo>
-                            <b>Nombre del padre ó encargado</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                          </ng-template>
-                        </div>
-
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label for="parentesco">Parentesco</label>
-                          <input type="text" class="form-control" id="parentesco" 
-                                 placeholder="Parentesco" name="parentesco" autocomplete="off"
-                                 #parentesco="ngModel" [(ngModel)]="paciente.parentesco"
-                                 ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
-                                 [ngClass]="{'is-invalid': !parentesco.valid && parentesco.touched}"
-                                 [required]="esMenor()"
-                                 popoverClass="text-dark" [ngbPopover]="popParentContent" [popoverTitle]="popParentTitulo"
-                                 [autoClose]="true" triggers="manual" #p6="ngbPopover"
-                                 (click)=" ayuda ? p6.open() : ''" (focus)="ayuda ? popFocus(p6, p5) : ''" (blur)="ayuda ? p6.close() : ''">
-
-                          <small class="text-danger" *ngIf="!parentesco.valid && parentesco.touched">
-                            Campo requerido
-                          </small>
-                          <ng-template #popParentContent>
-                            Digite el parentesco que tiene el encargado con el menor
-                          </ng-template>
-                          <ng-template #popParentTitulo>
-                            <b>Parentesco</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                          </ng-template>
-                        </div>
-                      </div>
-
-                    </div> <!-- Fin del cuarto row -->
-
-
-                    <div class="row">
-
-                      <div class="col-md-6">
-
-                        <div class="form-group">
-                          <label for="faContacto">Familiar de contacto (*):</label>
-                          <input type="text" class="form-control" autocomplete="off"
-                                 placeholder="Familiar de contacto" name="faContacto"
-                                 #faContacto="ngModel" [(ngModel)]="paciente.faContacto"
-                                 ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                 popoverClass="text-dark" [ngbPopover]="popFaContacContent" [popoverTitle]="popFaContacTitulo"
-                                 [autoClose]="true" triggers="manual" #p7="ngbPopover"
-                                 (click)=" ayuda ? p7.open() : ''" (focus)=" ayuda ? popFocus(p7) : ''">
-
-                                 <ng-template #popFaContacContent>
-                                  Puede digitar el nombre de un familiar como contacto adicional.
-                                  El simbolo: <b>(*)</b> indica que es un campo opcional
-                                </ng-template>
-                                <ng-template #popFaContacTitulo>
-                                  <b>Familiar de contacto</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                                </ng-template>        
-                        </div>
-
-                      </div>
-                      <div class="col-md-6">
-
-                        <div class="form-group">
-                          <label>Teléfono del familiar de contacto (*):</label>
-        
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                            </div>
-                            <input type="text" class="form-control" name="telFaContacto" placeholder="Teléfono" autocomplete="off"
-                                   #telFaContacto="ngModel" [(ngModel)]="paciente.telFaContacto"
-                                   mask="9999-9999"
-                                   popoverClass="text-dark" [ngbPopover]="popTelFaConContent" [popoverTitle]="popTelFaConTitulo"
-                                   [autoClose]="true" triggers="manual" #p8="ngbPopover"
-                                   (click)=" ayuda ? p8.open() : ''" (focus)="ayuda ? popFocus(p8, p7) : ''">
-
-                                   <ng-template #popTelFaConContent>
-                                    Puede digitar el teléfono del familiar de contacto. <br>
-                                    Formato de 8 dígitos. <br>
-                                    El simbolo: <b>(*)</b> indica que es un campo opcional
-                                  </ng-template>
-                                  <ng-template #popTelFaConTitulo>
-                                    <b>Tel. del familiar de contacto</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                                  </ng-template>   
-                          </div>
-                          <!-- /.input group -->
-                        </div>
-
-                      </div>
-
-                    </div> <!-- Fin del quinto row -->
-
-                    <div class="row">
-
-                        <div class="col-md-12">
-                            <!-- textarea -->
-                            <div class="form-group">
-                                <label>Dirección</label>
-                                <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..." autocomplete="off"
-                                          name="direccion" #direccion="ngModel" [(ngModel)]="paciente.direccion"
-                                          ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
-                                          [ngClass]="{'is-invalid': !direccion.valid && direccion.touched }"
-                                          popoverClass="text-dark" [ngbPopover]="popDirContent" [popoverTitle]="popDirTitulo"
-                                          [autoClose]="true" triggers="manual" #p9="ngbPopover"
-                                          (click)=" ayuda ? p9.open() : ''" (focus)="ayuda ? popFocus(p9, p8) : ''">
-                                </textarea>
-
-                                <small class="text-danger" *ngIf="!direccion.valid && direccion.touched">
-                                    Campo requerido
-                                </small>
-                                <ng-template #popDirContent>
-                                  Digite una dirección del paciente como dato de contacto
-                                </ng-template>
-                                <ng-template #popDirTitulo>
-                                  <b>Dirección</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                                </ng-template>  
-                            </div>
-                        </div>
-
-                        <div class="col-md-12">
-                          <!-- textarea -->
-                          <div class="form-group">
-                              <label>Datos adicionales (*):</label>
-                              <textarea class="form-control" rows="3" placeholder="Otros datos ..." autocomplete="off"
-                                        name="otrosDatos" #otrosDatos="ngModel" [(ngModel)]="paciente.otrosDatos"
-                                        ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                        popoverClass="text-dark" [ngbPopover]="popDatosAdContent" [popoverTitle]="popDatosAdTitulo"
-                                        [autoClose]="true" triggers="manual" #p10="ngbPopover"
-                                        (click)=" ayuda ? p10.open() : ''" (focus)="ayuda ? popFocus(p10, p9) : ''">
-
-                              </textarea>
-
-                              <ng-template #popDatosAdContent>
-                                Puede digitar datos adicionales que sean relevantes. <br>
-                                El simbolo: <b>(*)</b> indica que es un campo opcional
-                              </ng-template>
-                              <ng-template #popDatosAdTitulo>
-                                <b>Datos adicionales</b><p class="float-right"><i class="fas fa-info-circle fa-lg"></i></p>
-                              </ng-template> 
-                          </div>
-                        </div>
-
-                    </div><!-- Fin del sexto row -->
-                    
-
-                    <div class="card-footer">
-  
-            
-
-                          <button type="submit" id="crear" class="btn btn-primary"
-                                  [disabled]="pacienteForm.invalid || edad < 0 || edad > 120 || edad==undefined">
-                                  Crear expediente
-                          </button>
-                          
-                          
-                          <button type="button" class="btn btn-secondary ml-3 mr-0" (click)="limpiarCampos()">
-                              Limpiar campos
-                          </button>
-                          
-                          <div class="float-right d-none d-sm-block">
-                            <b>Campos opcionales (*)</b> 
-                          </div>
-
-  
                     </div>
-                   
-
+                    <input
+                      type="date"
+                      class="form-control"
+                      max="{{ fechaAux }}"
+                      name="fechaNac"
+                      #fechaNac="ngModel"
+                      [ngModel]="paciente.fechaNac"
+                      (ngModelChange)="cambioFecha($event)"
+                      required
+                      [ngClass]="{
+                        'is-invalid':
+                          (!fechaNac.valid && fechaNac.touched) ||
+                          edad < 0 || edad > 120
+                      }"
+                      popoverClass="text-dark"
+                      [ngbPopover]="popFechaNacContent"
+                      [popoverTitle]="popFechaNacTitulo"
+                      [autoClose]="true"
+                      triggers="manual"
+                      #p3="ngbPopover"
+                      (click)="ayuda ? p3.open() : ''"
+                      (focus)="ayuda ? p3.open() : ''"
+                      (blur)="ayuda ? p3.close() : ''"
+                    />
                   </div>
-                  <!-- /.card-body -->
-                </form>
+                  <small
+                    class="text-danger"
+                    *ngIf="!fechaNac.valid && fechaNac.touched"
+                  >
+                    Campo requerido
+                  </small>
+                  <small class="text-danger" *ngIf="edad < 0">
+                    No puede seleccionar fechas futuras. Edad negativa
+                  </small>
+                  <small class="text-danger" *ngIf="edad > 120">
+                    La edad calculada es muy grande
+                  </small>
+                  <ng-template #popFechaNacContent>
+                    Digite la fecha de nacimiento del paciente <br />
+                    ó tambien puede desplegar el calendario con el icono:
+                    <p><i class="far fa-calendar fa-lg"></i></p
+                  ></ng-template>
 
-            </div><!-- Fin del card -->
+                  <ng-template #popFechaNacTitulo>
+                    <b>Fecha de nacimiento</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="edad">Edad (Años)</label>
 
+                  <input
+                    type="text"
+                    class="form-control"
+                    disabled
+                    placeholder="Edad"
+                    value="{{ edad }}"
+                    name="edad"
+                  />
+                </div>
+              </div>
+            </div>
+            <!-- Fin del segundo row -->
 
-        </div><!-- Fin del div de las doce columnas -->
+            <div class="row">
+              <div class="col-md-6">
+                <div class="row">
+                  <label>Género: </label>
+                </div>
+                <div class="row">
+                  <div class="col-md-2">
+                    <div class="form-group clearfix">
+                      <div class="icheck-primary d-inline">
+                        <input
+                          type="radio"
+                          value="M"
+                          id="radioPrimary1"
+                          name="r1"
+                          #r1="ngModel"
+                          [(ngModel)]="paciente.gen"
+                        />
+                        <label for="radioPrimary1">
+                          Masculino
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-2"></div>
+                  <div class="col-md-2">
+                    <div class="icheck-primary d-inline">
+                      <input
+                        type="radio"
+                        value="F"
+                        id="radioPrimary2"
+                        name="r1"
+                        #r1="ngModel"
+                        [(ngModel)]="paciente.gen"
+                      />
+                      <label for="radioPrimary2">
+                        Femenino
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-    </div><!-- /.container-fluid -->
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label *ngIf="edad >= 0 && edad < 18; else noEsMenor"
+                    >Teléfono del encargado:
+                  </label>
+                  <ng-template #noEsMenor>
+                    <label>Teléfono:</label>
+                  </ng-template>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fas fa-phone"></i
+                      ></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Teléfono"
+                      autocomplete="off"
+                      name="telefono"
+                      #telefono="ngModel"
+                      [(ngModel)]="paciente.telefono"
+                      mask="9999-9999"
+                      required
+                      [ngClass]="{
+                        'is-invalid': !telefono.valid && telefono.touched
+                      }"
+                      popoverClass="text-dark"
+                      [ngbPopover]="popTelContent"
+                      [popoverTitle]="popTelTitulo"
+                      [autoClose]="true"
+                      triggers="manual"
+                      #p4="ngbPopover"
+                      (click)="ayuda ? p4.open() : ''"
+                      (focus)="ayuda ? p4.open() : ''"
+                      (blur)="ayuda ? p4.close() : ''"
+                    />
+                  </div>
+                  <small
+                    class="text-danger"
+                    *ngIf="!telefono.valid && telefono.touched"
+                  >
+                    Campo requerido
+                  </small>
+                  <ng-template #popTelContent>
+                    <p *ngIf="edad >= 0 && edad < 18; else telMsgDefault">
+                      Digite el número de teléfono del encargado del menor.
+                      Formato de 8 dígitos
+                    </p>
+                    <ng-template #telMsgDefault>
+                      <p>
+                        Digite un número de teléfono para agregar como contacto.
+                        Formato de 8 dígitos
+                      </p>
+                    </ng-template>
+                  </ng-template>
+                  <ng-template #popTelTitulo>
+                    <b *ngIf="edad >= 0 && edad < 18; else titleDefault">
+                      Tel. del encargado
+                    </b>
+                    <ng-template #titleDefault>
+                      <b>Teléfono</b>
+                    </ng-template>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+                  <!-- /.input group -->
+                </div>
+              </div>
+            </div>
+            <!--  Fin del tercer row -->
+
+            <div class="row" *ngIf="edad < 18 && edad >= 0">
+              <!-- Aqui van los campos adicionales para un menor de edad -->
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="nombreEncargado">Nombre del padre o encargado</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    autocomplete="off"
+                    placeholder="Padre o encargado"
+                    name="nombreEncargado"
+                    #nombreEncargado="ngModel"
+                    [(ngModel)]="paciente.encargado"
+                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                    [ngClass]="{
+                      'is-invalid':
+                        !nombreEncargado.valid && nombreEncargado.touched
+                    }"
+                    [required]="esMenor()"
+                    popoverClass="text-dark"
+                    [ngbPopover]="popNombreEncarContent"
+                    [popoverTitle]="popNombreEncarTitulo"
+                    [autoClose]="true"
+                    triggers="manual"
+                    #p5="ngbPopover"
+                    (click)="ayuda ? p5.open() : ''"
+                    (focus)="ayuda ? p5.open() : ''"
+                    (blur)="ayuda ? p5.close() : ''"
+                  />
+
+                  <small
+                    class="text-danger"
+                    *ngIf="!nombreEncargado.valid && nombreEncargado.touched"
+                  >
+                    Campo requerido
+                  </small>
+                  <ng-template #popNombreEncarContent>
+                    Digite el nombre del padre ó encargado del menor
+                  </ng-template>
+                  <ng-template #popNombreEncarTitulo>
+                    <b>Nombre del padre ó encargado</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="parentesco">Parentesco</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="parentesco"
+                    placeholder="Parentesco"
+                    name="parentesco"
+                    autocomplete="off"
+                    #parentesco="ngModel"
+                    [(ngModel)]="paciente.parentesco"
+                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                    [ngClass]="{
+                      'is-invalid': !parentesco.valid && parentesco.touched
+                    }"
+                    [required]="esMenor()"
+                    popoverClass="text-dark"
+                    [ngbPopover]="popParentContent"
+                    [popoverTitle]="popParentTitulo"
+                    [autoClose]="true"
+                    triggers="manual"
+                    #p6="ngbPopover"
+                    (click)="ayuda ? p6.open() : ''"
+                    (focus)="ayuda ? p6.open() : ''"
+                    (blur)="ayuda ? p6.close() : ''"
+                  />
+
+                  <small
+                    class="text-danger"
+                    *ngIf="!parentesco.valid && parentesco.touched"
+                  >
+                    Campo requerido
+                  </small>
+                  <ng-template #popParentContent>
+                    Digite el parentesco que tiene el encargado con el menor
+                  </ng-template>
+                  <ng-template #popParentTitulo>
+                    <b>Parentesco</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            <!-- Fin del cuarto row -->
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="faContacto">Familiar de contacto (*):</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    autocomplete="off"
+                    placeholder="Familiar de contacto"
+                    name="faContacto"
+                    #faContacto="ngModel"
+                    [(ngModel)]="paciente.faContacto"
+                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                    popoverClass="text-dark"
+                    [ngbPopover]="popFaContacContent"
+                    [popoverTitle]="popFaContacTitulo"
+                    [autoClose]="true"
+                    triggers="manual"
+                    #p7="ngbPopover"
+                    (click)="ayuda ? p7.open() : ''"
+                    (focus)="ayuda ? p7.open() : ''"
+                    (blur)="ayuda ? p7.close() : ''"
+                  />
+
+                  <ng-template #popFaContacContent>
+                    Puede digitar el nombre de un familiar como contacto
+                    adicional. El simbolo: <b>(*)</b> indica que es un campo
+                    opcional
+                  </ng-template>
+                  <ng-template #popFaContacTitulo>
+                    <b>Familiar de contacto</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Teléfono del familiar de contacto (*):</label>
+
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text"
+                        ><i class="fas fa-phone"></i
+                      ></span>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="telFaContacto"
+                      placeholder="Teléfono"
+                      autocomplete="off"
+                      #telFaContacto="ngModel"
+                      [(ngModel)]="paciente.telFaContacto"
+                      mask="9999-9999"
+                      popoverClass="text-dark"
+                      [ngbPopover]="popTelFaConContent"
+                      [popoverTitle]="popTelFaConTitulo"
+                      [autoClose]="true"
+                      triggers="manual"
+                      #p8="ngbPopover"
+                      (click)="ayuda ? p8.open() : ''"
+                      (focus)="ayuda ? p8.open() : ''"
+                      (blur)="ayuda ? p8.close() : ''"
+                    />
+
+                    <ng-template #popTelFaConContent>
+                      Puede digitar el teléfono del familiar de contacto. <br />
+                      Formato de 8 dígitos. <br />
+                      El simbolo: <b>(*)</b> indica que es un campo opcional
+                    </ng-template>
+                    <ng-template #popTelFaConTitulo>
+                      <b>Tel. del familiar de contacto</b>
+                      <p class="float-right">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                      </p>
+                    </ng-template>
+                  </div>
+                  <!-- /.input group -->
+                </div>
+              </div>
+            </div>
+            <!-- Fin del quinto row -->
+
+            <div class="row">
+              <div class="col-md-12">
+                <!-- textarea -->
+                <div class="form-group">
+                  <label>Dirección</label>
+                  <textarea
+                    id="direccion"
+                    class="form-control"
+                    rows="3"
+                    placeholder="Dirección ..."
+                    autocomplete="off"
+                    name="direccion"
+                    #direccion="ngModel"
+                    [(ngModel)]="paciente.direccion"
+                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                    required
+                    [ngClass]="{
+                      'is-invalid': !direccion.valid && direccion.touched
+                    }"
+                    popoverClass="text-dark"
+                    [ngbPopover]="popDirContent"
+                    [popoverTitle]="popDirTitulo"
+                    [autoClose]="true"
+                    triggers="manual"
+                    #p9="ngbPopover"
+                    (click)="ayuda ? p9.open() : ''"
+                    (focus)="ayuda ? p9.open() : ''"
+                    (blur)="ayuda ? p9.close() : ''"
+                  >
+                  </textarea>
+
+                  <small
+                    class="text-danger"
+                    *ngIf="!direccion.valid && direccion.touched"
+                  >
+                    Campo requerido
+                  </small>
+                  <ng-template #popDirContent>
+                    Digite una dirección del paciente como dato de contacto
+                  </ng-template>
+                  <ng-template #popDirTitulo>
+                    <b>Dirección</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+
+              <div class="col-md-12">
+                <!-- textarea -->
+                <div class="form-group">
+                  <label>Datos adicionales (*):</label>
+                  <textarea
+                    class="form-control"
+                    rows="3"
+                    placeholder="Otros datos ..."
+                    autocomplete="off"
+                    name="otrosDatos"
+                    #otrosDatos="ngModel"
+                    [(ngModel)]="paciente.otrosDatos"
+                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                    popoverClass="text-dark"
+                    [ngbPopover]="popDatosAdContent"
+                    [popoverTitle]="popDatosAdTitulo"
+                    [autoClose]="true"
+                    triggers="manual"
+                    #p10="ngbPopover"
+                    (click)="ayuda ? p10.open() : ''"
+                    (focus)="ayuda ? p10.open() : ''"
+                    (blur)="ayuda ? p10.close() : ''"
+                  >
+                  </textarea>
+
+                  <ng-template #popDatosAdContent>
+                    Puede digitar datos adicionales que sean relevantes. <br />
+                    El simbolo: <b>(*)</b> indica que es un campo opcional
+                  </ng-template>
+                  <ng-template #popDatosAdTitulo>
+                    <b>Datos adicionales</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+                </div>
+              </div>
+            </div>
+            <!-- Fin del sexto row -->
+
+            <div class="card-footer">
+              <button
+                type="submit"
+                id="crear"
+                class="btn btn-primary"
+                [disabled]="
+                  pacienteForm.invalid ||
+                  edad < 0 ||
+                  edad > 120 ||
+                  edad == undefined
+                "
+              >
+                Crear expediente
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-secondary ml-3 mr-0"
+                (click)="limpiarCampos()"
+              >
+                Limpiar campos
+              </button>
+
+              <div class="float-right d-none d-sm-block">
+                <b>Campos opcionales (*)</b>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </form>
+      </div>
+      <!-- Fin del card -->
+    </div>
+    <!-- Fin del div de las doce columnas -->
+  </div>
+  <!-- /.container-fluid -->
 </section>
 
- <!-- Sweet alerts -->
-    <!-- Sweet Confirm -->
-        <swal
-          #redireccionSwal
-          title="Paciente registrado!"
-          text="¿Desea proceder con la consulta?"
-          icon="success"
-          [showCancelButton]="true"
-          confirmButtonText= "Si!"
-          cancelButtonText= "No!"
-          confirmButtonColor= "#3085d6"
-          cancelButtonColor= "#bbbbbb"
-          [focusCancel]="true"
-          (confirm)="redireccionar()">
-        </swal>
+<!-- Sweet alerts -->
+<!-- Sweet Confirm -->
+<swal
+  #redireccionSwal
+  title="Paciente registrado!"
+  text="¿Desea proceder con la consulta?"
+  icon="success"
+  [showCancelButton]="true"
+  confirmButtonText="Si!"
+  cancelButtonText="No!"
+  confirmButtonColor="#3085d6"
+  cancelButtonColor="#bbbbbb"
+  [focusCancel]="true"
+  (confirm)="redireccionar()"
+>
+</swal>
 
-        <!-- Sweet error -->
+<!-- Sweet error -->
 
-        <swal
-          #errorSwal
-          title="Error!"
-          text="No se pudo realizar el registro"
-          icon="error"
-          confirmButtonText= "Ok"
-          confirmButtonColor= "#3085d6"
-          [focusConfirm]="true">
-        </swal>
+<swal
+  #errorSwal
+  title="Error!"
+  text="No se pudo realizar el registro"
+  icon="error"
+  confirmButtonText="Ok"
+  confirmButtonColor="#3085d6"
+  [focusConfirm]="true"
+>
+</swal>
 
 <!-- Sweet alerts -->
 
 <!-- Ngx-smart-modals -->
 
-  <!-- Modal de informativo de ayuda del formulario  -->
-    <ngx-smart-modal #myModal identifier="myModal" customClass="modal-dialog modal-lg">
-      <h1>Prueba</h1>
-      <p>Probando el modal...</p>
+<!-- Modal de informativo de ayuda del formulario  -->
+<ngx-smart-modal
+  #myModal
+  identifier="myModal"
+  customClass="modal-dialog modal-lg"
+>
+  <h1>Prueba</h1>
+  <p>Probando el modal...</p>
 
-      <button class="btn btn-secondary" (click)="myModal.close()">Cerrar</button>
-    </ngx-smart-modal>    
-  <!-- Modal de informativo de ayuda del formulario  -->
+  <button class="btn btn-secondary" (click)="myModal.close()">Cerrar</button>
+</ngx-smart-modal>
+<!-- Modal de informativo de ayuda del formulario  -->
 <!-- Ngx-smart-modals -->
