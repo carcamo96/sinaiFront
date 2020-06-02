@@ -19,10 +19,63 @@
                 <div class="card-header">
                   <h3 class="card-title">Registro de pacientes</h3>
                   <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="maximize"><i class="fas fa-expand"></i>
-                    </button>
+                    
+                    <!-- Boton para ayuda -->
+                              <ng-template #popContent>
+                                <p *ngIf="ayuda == false">
+                                  <b>Click! para activar </b>la información de la tabla
+                                </p>
+                                <p *ngIf="ayuda == true">
+                                  <b>Click! para desactivar </b>la información de la tabla
+                                </p>
+                              </ng-template>
+                              <ng-template #popTitle>
+                                <b>Guía de uso</b>
+                                <p class="float-right">
+                                  <i class="fas fa-info-circle fa-lg"></i>
+                                </p>
+                              </ng-template>
+                              <button
+                                type="button"
+                                class="btn btn-tool"
+                                placement="left"
+                                popoverClass="text-dark"
+                                [ngbPopover]="popContent"
+                                [popoverTitle]="popTitle"
+                                triggers="mouseenter:mouseleave"
+                                [ngClass]="{'text-light': ayuda}"
+                                (click)="activarPopovers()"
+                              >
+                                <i class="fas fa-info-circle fa-2x"></i>
+                              </button>
+                    <!-- Boton para ayuda -->
+                    <!-- Boton para maximizar -->
+                          <ng-template #popMaxContent>
+                              Maximizar tabla
+                          </ng-template>
+                          <ng-template #popMaxTitle>
+                            <b>Maximizar</b>
+                            <p class="float-right">
+                              <i class="fas fa-info-circle fa-lg"></i>
+                            </p>
+                          </ng-template>
+                          <button type="button" 
+                                  class="btn btn-tool" 
+                                  data-card-widget="maximize"
+                                  placement="left"
+                                  popoverClass="text-dark"
+                                  [ngbPopover]="popMaxContent"
+                                  [popoverTitle]="popMaxTitle"
+                                  triggers="manual"
+                                  [ngClass]="{'text-light': ayuda}"
+                                  [autoClose]="true"
+                                  #pMax="ngbPopover"
+                                  (mouseenter)="ayuda ? pMax.open() : ''"
+                                  (mouseleave)="ayuda ? pMax.close() : ''"
+                          >
+                            <i class="fas fa-expand fa-2x"></i>
+                          </button>
+                    <!-- Boton para maximizar -->
                   </div>
                   <!-- card tools -->
                 </div>

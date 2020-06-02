@@ -20,6 +20,8 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
     {titulo: 'Home', link: '/home'}
   ];
 
+  //Para controlar la ayuda o información de la tabla
+  public ayuda = false;
 
   dtTrigger: Subject<any> = new Subject();
   public pacientes: any[] =[];
@@ -66,6 +68,12 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
 
   redireccionarExpediente(idPaciente){
     this.router.navigate(['/expedientes/expediente/', idPaciente ]);
+  }
+
+  activarPopovers(){
+
+    this.ayuda = !this.ayuda;
+
   }
 
 }
