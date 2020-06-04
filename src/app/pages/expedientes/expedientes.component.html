@@ -22,11 +22,8 @@
                     
                     <!-- Boton para ayuda -->
                               <ng-template #popContent>
-                                <p *ngIf="ayuda == false">
+                                <p>
                                   <b>Click! para activar </b>la información de la tabla
-                                </p>
-                                <p *ngIf="ayuda == true">
-                                  <b>Click! para desactivar </b>la información de la tabla
                                 </p>
                               </ng-template>
                               <ng-template #popTitle>
@@ -43,39 +40,12 @@
                                 [ngbPopover]="popContent"
                                 [popoverTitle]="popTitle"
                                 triggers="mouseenter:mouseleave"
-                                [ngClass]="{'text-light': ayuda}"
-                                (click)="activarPopovers()"
+                                (click)="ngxSmartModalService.getModal('infoModal').open()"
                               >
                                 <i class="fas fa-info-circle fa-2x"></i>
                               </button>
                     <!-- Boton para ayuda -->
-                    <!-- Boton para maximizar -->
-                          <ng-template #popMaxContent>
-                              Maximizar tabla
-                          </ng-template>
-                          <ng-template #popMaxTitle>
-                            <b>Maximizar</b>
-                            <p class="float-right">
-                              <i class="fas fa-info-circle fa-lg"></i>
-                            </p>
-                          </ng-template>
-                          <button type="button" 
-                                  class="btn btn-tool" 
-                                  data-card-widget="maximize"
-                                  placement="left"
-                                  popoverClass="text-dark"
-                                  [ngbPopover]="popMaxContent"
-                                  [popoverTitle]="popMaxTitle"
-                                  triggers="manual"
-                                  [ngClass]="{'text-light': ayuda}"
-                                  [autoClose]="true"
-                                  #pMax="ngbPopover"
-                                  (mouseenter)="ayuda ? pMax.open() : ''"
-                                  (mouseleave)="ayuda ? pMax.close() : ''"
-                          >
-                            <i class="fas fa-expand fa-2x"></i>
-                          </button>
-                    <!-- Boton para maximizar -->
+                    
                   </div>
                   <!-- card tools -->
                 </div>
@@ -146,3 +116,91 @@
 
     </div><!-- /.container-fluid -->
 </section>
+
+<!-- Ngx-smart-modals -->
+
+<!-- Modal de informativo de ayuda del formulario  -->
+<ngx-smart-modal
+  #infoModal
+  identifier="infoModal"
+  customClass="modal-dialog modal-lg"
+>
+  <h3><i class="fas fa-info-circle fa-sm"></i>
+    Infomación de la tabla 
+ </h3>
+  
+    <div class="col-md-12">
+      <div class="card card-primary card-outline card-tabs">
+        <div class="card-header p-0 pt-1 border-bottom-0">
+          <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Especificaciones</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Generalidades</a>
+            </li>
+            
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" id="custom-tabs-three-tabContent">
+            <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+              
+              <ul>
+                <li>
+                  En esta tabla se muestran todos los registros de la información de cada paciente (expedientes),
+                  cada uno de los registros se encuentra ordenado por su código de registro (por defecto).
+                 </li>
+                 <li>
+                   En cada registro se muestran los datos más generales del paciente.
+                 </li>
+                 <li>
+                   Cada registro en la columna <b>Abrir</b> poseé un boton con el icono: <i class="fas fa-folder fa-lg"></i>
+                   el cual abre el expediente completo mostrando el historial de datos del paciente.
+                 </li>
+                 <li>
+                   Cada registro en la columna <b>Consulta</b> poseé un boton con el icono: <i class="fas fas fa-notes-medical fa-lg"></i>
+                   el cual abre el formulario de consulta para ese registro de paciente seleccionado.
+                 </li>
+               </ul>
+            </div>
+            <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+               
+              <ul>
+                <li>
+                    <b>Paginación: </b>La cantidad de registros mostrada en la tabla se encuentra segmentada en páginas,
+                    cada página de la tabla muestra 10 registros por defecto. En la esquina inferior derecha se muestra
+                    un menú de paginación para navegar facilmente entre las páginas de la tabla. 
+                </li>
+                <li>
+                  <b>Mostrar cierto número de registros:</b> En el apartado de la esquina superior izquierda de la tabla
+                  se elije el número de registros a mostrar en cada página de la tabla.
+                </li>
+                <li>
+                  <b>Busqueda de registros en la tabla:</b> En el apartado de la esquina superior derecha de la tabla se 
+                  muestra un campo de busqueda, este permite filtrar los registros que muestra la tabla, el filtro funciona
+                  de tal manera que se puede buscar ingresando cualquier dato asociado al registro ó registros que se desean ver.
+                  En este caso por ejemplo: Por código de expediente, nombres, apellidos, teléfono, género y edad.
+                </li>
+                <li>
+                  <b>Ordenamiento:</b> Los registros mostrados se pueden ordenar por cualquiera de los datos mostrados en sus columnas
+                  para facilitar aun más la busqueda de registros, funciona por cada página, según sean los datos mostrados
+                  los registros se pueden ordenar de manera ascendente ó descendente clickeando el simbolo de flecha al lado del título
+                  de cada columna, sí los datos mostrados en la columna son números se ordenan de menor a mayor y viceversa, sí los datos 
+                  que muestra la columna son letras se ordenan alfabéticamente ascendente ó desecentemente. 
+                </li>
+              </ul>
+
+            </div>
+            
+          </div>
+        </div>
+        <!-- /.card -->
+      </div>
+    </div>
+  
+
+  <button class="btn btn-primary" (click)="infoModal.close()">Ok!</button>
+</ngx-smart-modal>
+<!-- Modal de informativo de ayuda del formulario  -->
+<!-- Ngx-smart-modals -->

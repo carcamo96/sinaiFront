@@ -6,6 +6,9 @@ import { Paciente } from '../../models/paciente';
 import { LoadingBarService } from '@ngx-loading-bar/core';
 //importando para navegar en las rutas
 import {Router, ActivatedRoute, Params} from '@angular/router';
+//Para usar el modal
+import { NgxSmartModalService } from 'ngx-smart-modal';
+
 
 @Component({
   selector: 'app-expedientes',
@@ -20,8 +23,6 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
     {titulo: 'Home', link: '/home'}
   ];
 
-  //Para controlar la ayuda o información de la tabla
-  public ayuda = false;
 
   dtTrigger: Subject<any> = new Subject();
   public pacientes: any[] =[];
@@ -31,7 +32,8 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
     private _pacienteService: PacienteService,
     private loadingBarService: LoadingBarService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public ngxSmartModalService: NgxSmartModalService
   ) { }
 
   ngOnInit(){
@@ -68,12 +70,6 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
 
   redireccionarExpediente(idPaciente){
     this.router.navigate(['/expedientes/expediente/', idPaciente ]);
-  }
-
-  activarPopovers(){
-
-    this.ayuda = !this.ayuda;
-
   }
 
 }
