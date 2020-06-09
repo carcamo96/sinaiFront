@@ -232,6 +232,20 @@
                                       Campo requerido
                                     </small>
                       </div>
+                      <div class="form-group" *ngIf="esMenor()">
+                        <label>Presión arterial</label>
+                        <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Presión arterial"
+                                  name="presionArt" #presionArt="ngModel" [(ngModel)]="consulta.presionArt" required autocomplete="off" ngxPattern="[0-9/]+"
+                                  [ngClass]="{'is-invalid': !presionArt.valid && presionArt.touched }" disabled>
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">PA</span>
+                                  </div>
+                                </div>
+                                  <small class="text-danger" *ngIf="!presionArt.valid && presionArt.touched">
+                                    Campo requerido
+                                  </small>
+                    </div>
                     </div>
                     <div class="col-md-4">
                       <div class="form-group">

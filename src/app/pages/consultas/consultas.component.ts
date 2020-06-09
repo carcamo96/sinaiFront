@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ConsultaService } from '../../services/consulta.service';
 import { Subject, Observable } from 'rxjs';
 import { LoadingBarService } from '@ngx-loading-bar/core';
+import { NgxSmartModalService } from 'ngx-smart-modal';
 import { Paciente } from 'src/app/models/paciente';
 
 @Component({
@@ -24,7 +25,8 @@ export class ConsultasComponent implements OnInit, OnDestroy {
 
   constructor(
     private _consultaService: ConsultaService,
-    private loadingBarService: LoadingBarService
+    private loadingBarService: LoadingBarService,
+    public ngxSmartModalService: NgxSmartModalService
   ) { this.loadingBarService.start(); }
 
   ngOnInit(): void {
