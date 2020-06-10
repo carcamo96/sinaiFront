@@ -531,9 +531,57 @@
                           </p>
                         </ng-template>
                   </div>
+                  <div class="form-group" *ngIf="esMenor()">
+                    <label>Presión arterial</label>
+                    <div class="input-group">
+                      <input
+                        type="text"
+                        class="form-control"
+                        placeholder="Presión arterial"
+                        name="presionArt"
+                        #presionArt="ngModel"
+                        [(ngModel)]="consulta.presionArt"
+                        required
+                        autocomplete="off"
+                        ngxPattern="[0-9/]+"
+                        [ngClass]="{
+                          'is-invalid': !presionArt.valid && presionArt.touched
+                        }"
+                        disabled
+
+                        popoverClass="text-dark"
+                        [autoClose]="true"
+                        [ngbPopover]="popPresionContent"
+                        [popoverTitle]="popPresionTitulo"
+                        triggers="manual"
+                        #p8="ngbPopover"
+                        (click)="ayuda ? p8.open() : ''"
+                        (focus)="ayuda ? p8.open() : ''"
+                        (blur)="ayuda ? p8.close() : ''"
+                      />
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">PA</span>
+                      </div>
+                    </div>
+                    <small
+                      class="text-danger"
+                      *ngIf="!presionArt.valid && presionArt.touched"
+                    >
+                      Campo requerido
+                    </small>
+                    <ng-template #popPresionContent
+                        >Digite la presión arterial del paciente. Ej: 120/80</ng-template
+                        >
+                        <ng-template #popPresionTitulo>
+                          <b>Presión arterial</b>
+                          <p class="float-right">
+                            <i class="fas fa-info-circle fa-lg"></i>
+                          </p>
+                        </ng-template>
+                  </div>
                 </div>
                 <div class="col-md-4">
-                  <div class="form-group" *ngIf="!esMenor()">
+                  <div class="form-group">
                     <label>Frecuencia cardiáca</label>
                     <div class="input-group">
                       <input
