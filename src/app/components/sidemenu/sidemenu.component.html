@@ -54,13 +54,13 @@
                       <!-- Nivel 3 -->
                       <ul class="nav nav-treeview">
                         <li class="nav-item">
-                          <a [routerLink]="['/expedientes']" [routerLinkActive]="['active']" class="nav-link">
+                          <a [routerLink]="['/admin/expedientes']" [routerLinkActive]="['active']" class="nav-link">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>Expedientes</p>
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a [routerLink]="['/registrarPaciente']" [routerLinkActive]="['active']" class="nav-link">
+                          <a [routerLink]="['/admin/registrarPaciente']" [routerLinkActive]="['active']" class="nav-link">
                             <i class="far fa-dot-circle nav-icon"></i>
                             <p>Nuevo expediente</p>
                           </a>
@@ -241,6 +241,31 @@
                 <a [routerLink]="['/agregar']" [routerLinkActive]="['active']" [routerLinkActive]="['active']" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Agregar activo</p>
+                </a>
+              
+            </ul>
+          </li>
+          <li class="nav-item has-treeview">
+            <a href="#" class="nav-link" [routerLinkActive]="['active']">
+              <i class="nav-icon fas fa-user-friends"></i>
+              <p>
+                Usuarios
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a [routerLink]="['/admin/registrarUsuario']" [routerLinkActive]="['active']" [routerLinkActive]="['active']" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Crear usuarios</p>
+                </a>
+              
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a [routerLink]="['/agregar']" [routerLinkActive]="['active']" [routerLinkActive]="['active']" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Registro de usuarios</p>
                 </a>
               
             </ul>

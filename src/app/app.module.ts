@@ -60,6 +60,9 @@ import { MostrarConsultaComponent } from './pages/mostrar-consulta/mostrar-consu
 import { CalculadorComponent } from './components/calculador/calculador.component';
 import { LoginComponent } from './pages/login/login.component';
 import { UsuarioComponent } from './pages/usuario/usuario.component';
+import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
+import { FormularioUsuarioComponent } from './pages/formulario-usuario/formulario-usuario.component';
+import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 
 
 
@@ -95,7 +98,10 @@ const ngWizardConfig: NgWizardConfig = {
     TelefonoFormat,
     CalculadorComponent,
     LoginComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    AdminHomeComponent,
+    FormularioUsuarioComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,

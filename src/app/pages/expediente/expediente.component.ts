@@ -15,8 +15,8 @@ import { Subject } from 'rxjs';
 export class ExpedienteComponent implements OnInit {
 //Se le pasan los titulos y los links de las paginas que preseden esta pagina
 public breads: any[] = [
-  {titulo: 'Home', link: '/home'},
-  {titulo: 'Expedientes', link: '/expedientes'}
+  {titulo: 'Home', link: '/admin/home'},
+  {titulo: 'Expedientes', link: '/admin/expedientes'}
 ];
 
   //Uso este objeto Subject para emitir el resultado del evento response al hijo 

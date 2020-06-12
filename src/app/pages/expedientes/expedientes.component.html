@@ -1,121 +1,123 @@
-<app-page-header
-                 [titulo]="'Expedientes'"
-                 [icono]="'fas fa-archive'"
-                 [breadcrumbs]="breads">
 
-</app-page-header>
 
-<!-- Contenedor de página -->
-<section class="content">
-    <div class="container-fluid">
-
-      <ngx-loading-bar color="#339942" height="2" animationTime="2000" 
-                       runInterval="100" progress="0">
-      </ngx-loading-bar> 
-
-        <div class="col-md-12">
-
-            <div class="card card-primary">
-                <div class="card-header">
-                  <h3 class="card-title">Registro de pacientes</h3>
-                  <div class="card-tools">
-                    
-                    <!-- Boton para ayuda -->
-                              <ng-template #popContent>
-                                <p>
-                                  <b>Click! para activar </b>la información de la tabla
-                                </p>
-                              </ng-template>
-                              <ng-template #popTitle>
-                                <b>Guía de uso</b>
-                                <p class="float-right">
-                                  <i class="fas fa-info-circle fa-lg"></i>
-                                </p>
-                              </ng-template>
-                              <button
-                                type="button"
-                                class="btn btn-tool"
-                                placement="left"
-                                popoverClass="text-dark"
-                                [ngbPopover]="popContent"
-                                [popoverTitle]="popTitle"
-                                triggers="mouseenter:mouseleave"
-                                (click)="ngxSmartModalService.getModal('infoModal').open()"
-                              >
-                                <i class="fas fa-info-circle fa-2x"></i>
-                              </button>
-                    <!-- Boton para ayuda -->
-                    
-                  </div>
-                  <!-- card tools -->
-                </div>
-                <!-- /.card-header -->
-                <!-- contenido central --> <!--  table table-striped table-bordered 
-                row-border hover table table-bordered table-striped-->
-                <div class="card-body" style="overflow-y: scroll !important;">
-                    
-                    <table class="row-border hover table table-bordered table-striped" style="width:100%" datatable [dtOptions]="dtOptions"
-                    [dtTrigger]="dtTrigger">
-                        <thead>
-                          <tr>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Apellidos</th>
-                            <th>Teléfono</th>
-                            <th>Género</th>
-                            <th>Edad</th>
-                            <th>Abrir</th>
-                            <th>Consulta</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let paciente of pacientes; let i = index">
-                            <td>{{ i + 1 }}</td>
-                            <td>{{paciente.nombre}}</td>
-                            <td>{{paciente.apellidos}}</td>
-                            <td>{{paciente.telefono | telFormat }}</td>
-                            <td [ngSwitch]="paciente.gen">
-                              <p *ngSwitchCase="'M'">
-                                Masculino
-                              </p>
-                              <p *ngSwitchCase="'F'">
-                                Femenino
-                              </p>
-                              <p *ngSwitchDefault>
+    <app-page-header
+                    [titulo]="'Expedientes'"
+                    [icono]="'fas fa-archive'"
+                    [breadcrumbs]="breads">
+    
+    </app-page-header>
+    
+    <!-- Contenedor de página -->
+    <section class="content">
+        <div class="container-fluid">
+    
+          <ngx-loading-bar color="#339942" height="2" animationTime="2000" 
+                          runInterval="100" progress="0">
+          </ngx-loading-bar> 
+    
+            <div class="col-md-12">
+    
+                <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Registro de pacientes</h3>
+                      <div class="card-tools">
+                        
+                        <!-- Boton para ayuda -->
+                                  <ng-template #popContent>
+                                    <p>
+                                      <b>Click! para activar </b>la información de la tabla
+                                    </p>
+                                  </ng-template>
+                                  <ng-template #popTitle>
+                                    <b>Guía de uso</b>
+                                    <p class="float-right">
+                                      <i class="fas fa-info-circle fa-lg"></i>
+                                    </p>
+                                  </ng-template>
+                                  <button
+                                    type="button"
+                                    class="btn btn-tool"
+                                    placement="left"
+                                    popoverClass="text-dark"
+                                    [ngbPopover]="popContent"
+                                    [popoverTitle]="popTitle"
+                                    triggers="mouseenter:mouseleave"
+                                    (click)="ngxSmartModalService.getModal('infoModal').open()"
+                                  >
+                                    <i class="fas fa-info-circle fa-2x"></i>
+                                  </button>
+                        <!-- Boton para ayuda -->
+                        
+                      </div>
+                      <!-- card tools -->
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- contenido central --> <!--  table table-striped table-bordered 
+                    row-border hover table table-bordered table-striped-->
+                    <div class="card-body" style="overflow-y: scroll !important;">
+                        
+                        <table class="row-border hover table table-bordered table-striped" style="width:100%" datatable [dtOptions]="dtOptions"
+                        [dtTrigger]="dtTrigger">
+                            <thead>
+                              <tr>
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Apellidos</th>
+                                <th>Teléfono</th>
+                                <th>Género</th>
+                                <th>Edad</th>
+                                <th>Abrir</th>
+                                <th>Consulta</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let paciente of pacientes; let i = index">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{paciente.nombre}}</td>
+                                <td>{{paciente.apellidos}}</td>
+                                <td>{{paciente.telefono | telFormat }}</td>
+                                <td [ngSwitch]="paciente.gen">
+                                  <p *ngSwitchCase="'M'">
+                                    Masculino
+                                  </p>
+                                  <p *ngSwitchCase="'F'">
+                                    Femenino
+                                  </p>
+                                  <p *ngSwitchDefault>
+                                  
+                                  </p>
+                                </td>
+                                <td>{{paciente.fechaNac | calcularEdad }}</td>
+                                <td>
+                                  <button type="button" class="btn btn-block btn-default"
+                                          (click)="redireccionarExpediente(paciente._id)">
+                                      <i class="fas fa-folder"></i> 
+                                  </button>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-block btn-default"
+                                            (click)="redireccionarConsulta(paciente._id)">
+                                        <i class="fas fa-notes-medical"></i>
+                                    </button>
+                                </td>
                               
-                              </p>
-                            </td>
-                            <td>{{paciente.fechaNac | calcularEdad }}</td>
-                            <td>
-                              <button type="button" class="btn btn-block btn-default"
-                                      (click)="redireccionarExpediente(paciente._id)">
-                                  <i class="fas fa-folder"></i> 
-                              </button>
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-block btn-default"
-                                        (click)="redireccionarConsulta(paciente._id)">
-                                    <i class="fas fa-notes-medical"></i>
-                                </button>
-                            </td>
-                           
-                          </tr>
-                      
-                        </tbody>
-                    </table>
-
-
-                </div>
-                <!-- fin del card-body -->
-
-            </div><!-- Fin del card -->
-
-
-
-        </div><!-- Fin del div de las doce columnas -->
-
-    </div><!-- /.container-fluid -->
-</section>
+                              </tr>
+                          
+                            </tbody>
+                        </table>
+    
+    
+                    </div>
+                    <!-- fin del card-body -->
+    
+                </div><!-- Fin del card -->
+    
+    
+    
+            </div><!-- Fin del div de las doce columnas -->
+    
+        </div><!-- /.container-fluid -->
+    </section>
 
 <!-- Ngx-smart-modals -->
 

@@ -28,7 +28,7 @@ export class FormularioPacienteComponent implements OnInit {
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [
-    {titulo: 'Home', link: '/home'}
+    {titulo: 'Home', link: '/admin/home'}
   ];
 
   public paciente: any;//variable auxiliar que se manejara como ngModel
@@ -227,7 +227,7 @@ export class FormularioPacienteComponent implements OnInit {
   }
   */
   redireccionar(){
-    this.router.navigate(['/consulta/', this.idResponse]);
+    this.router.navigate(['/admin/consulta/', this.idResponse]);
   }
 
   //Para activar la ayuda del formulario

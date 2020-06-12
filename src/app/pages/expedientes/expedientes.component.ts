@@ -20,7 +20,7 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [
-    {titulo: 'Home', link: '/home'}
+    {titulo: 'Home', link: '/admin/home'}
   ];
 
 
@@ -65,11 +65,11 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
   }
 
   redireccionarConsulta(idPaciente){
-    this.router.navigate(['/consultas/', idPaciente ]);
+    this.router.navigate(['/admin/consultas/', idPaciente ]);
   }
 
   redireccionarExpediente(idPaciente){
-    this.router.navigate(['/expedientes/expediente/', idPaciente ]);
+    this.router.navigate(['/admin/expedientes/expediente/', idPaciente ]);
   }
 
 }

@@ -1,782 +1,785 @@
-<app-page-header
-  [titulo]="'Realizar consulta'"
-  [icono]="'fas fa-notes-medical'"
-  [breadcrumbs]="breads"
->
-</app-page-header>
 
-<!-- Contenedor de página -->
-<section class="content">
-  <div class="container-fluid">
-    <ngx-loading-bar
-      color="#339942"
-      height="2"
-      animationTime="0.8"
-    ></ngx-loading-bar>
-
-    <div class="col-md-12">
-      <div class="card card-primary">
-        <div class="card-header">
-          <h3 class="card-title">Datos de consulta</h3>
-          <div class="card-tools">
-            <ng-template #popContent>
-              <p *ngIf="ayuda == false">
-                <b>Click! para activar </b>la información del formulario
-              </p>
-              <p *ngIf="ayuda == true">
-                <b>Click! para desactivar </b>la información del formulario
-              </p>
-            </ng-template>
-            <ng-template #popTitle>
-              <b>Guía de uso</b>
-              <p class="float-right">
-                <i class="fas fa-info-circle fa-lg"></i>
-              </p>
-            </ng-template>
-            <button
-              type="button"
-              class="btn btn-tool"
-              placement="left"
-              popoverClass="text-dark"
-              [ngbPopover]="popContent"
-              [popoverTitle]="popTitle"
-              triggers="mouseenter:mouseleave"
-              [ngClass]="{ 'text-light': ayuda }"
-              (click)="activarPopovers(p1, p2, p3)"
-            >
-              <i class="fas fa-info-circle fa-2x"></i>
-            </button>
-          </div>
-          <!-- card tools -->
-        </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-        <form
-          role="form"
-          #consultaForm="ngForm"
-          (ngSubmit)="onSubmit(consultaForm)"
-        >
-          <div class="card-body">
-            <div class="row">
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label>Nombre de paciente </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="nombre"
-                    #nombre="ngModel"
-                    [(ngModel)]="paciente.nombre"
-                    value="{{ paciente.nombre }}"
-                    disabled
-                  />
-                </div>
-              </div>
+  <app-page-header
+    [titulo]="'Realizar consulta'"
+    [icono]="'fas fa-notes-medical'"
+    [breadcrumbs]="breads"
+  >
+  </app-page-header>
+  
+  <!-- Contenedor de página -->
+  <section class="content">
+    <div class="container-fluid">
+      <ngx-loading-bar
+        color="#339942"
+        height="2"
+        animationTime="0.8"
+      ></ngx-loading-bar>
+  
+      <div class="col-md-12">
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Datos de consulta</h3>
+            <div class="card-tools">
+              <ng-template #popContent>
+                <p *ngIf="ayuda == false">
+                  <b>Click! para activar </b>la información del formulario
+                </p>
+                <p *ngIf="ayuda == true">
+                  <b>Click! para desactivar </b>la información del formulario
+                </p>
+              </ng-template>
+              <ng-template #popTitle>
+                <b>Guía de uso</b>
+                <p class="float-right">
+                  <i class="fas fa-info-circle fa-lg"></i>
+                </p>
+              </ng-template>
+              <button
+                type="button"
+                class="btn btn-tool"
+                placement="left"
+                popoverClass="text-dark"
+                [ngbPopover]="popContent"
+                [popoverTitle]="popTitle"
+                triggers="mouseenter:mouseleave"
+                [ngClass]="{ 'text-light': ayuda }"
+                (click)="activarPopovers(p1, p2, p3)"
+              >
+                <i class="fas fa-info-circle fa-2x"></i>
+              </button>
             </div>
-            <div class="row">
-              <div class="col-md-3">
-                <div class="form-group">
-                  <label>Fecha de consulta:</label>
-                  <div class="input-group date">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text">
-                        <i class="fa fa-calendar"></i>
-                      </div>
-                    </div>
+            <!-- card tools -->
+          </div>
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form
+            role="form"
+            #consultaForm="ngForm"
+            (ngSubmit)="onSubmit(consultaForm)"
+          >
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label>Nombre de paciente </label>
                     <input
-                      type="date"
+                      type="text"
                       class="form-control"
-                      max="{{ fechaAux }}"
-                      value="{{ consulta.fechaConsul | fechaFormat }}"
-                      name="fechaConsul"
-                      #fechaConsul="ngModel"
-                      [(ngModel)]="consulta.fechaConsul"
+                      name="nombre"
+                      #nombre="ngModel"
+                      [(ngModel)]="paciente.nombre"
+                      value="{{ paciente.nombre }}"
                       disabled
                     />
                   </div>
                 </div>
               </div>
-
-              <div class="col-md-5">
-                <div class="form-group">
-                  <label for="motivo">Motivo de consulta</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="motivo"
-                    placeholder="Motivo de consulta"
-                    #motivo="ngModel"
-                    [(ngModel)]="consulta.motivo"
-                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                    required
-                    autocomplete="off"
-                    [ngClass]="{
-                      'is-invalid': !motivo.valid && motivo.touched
-                    }"
-                    placement="top"
-                    popoverClass="text-dark"
-                    [autoClose]="true"
-                    [ngbPopover]="popMotivoContent"
-                    [popoverTitle]="popMotivoTitulo"
-                    triggers="manual"
-                    #p1="ngbPopover"
-                    (click)="ayuda ? p1.open() : ''"
-                    (focus)="ayuda ? p1.open() : ''"
-                    (blur)="ayuda ? p1.close() : ''"
-                  />
-
-                  <small
-                    class="text-danger"
-                    *ngIf="!motivo.valid && motivo.touched"
-                  >
-                    Campo requerido
-                  </small>
-                  <ng-template #popMotivoContent
-                    >Digite el motivo por el cual pasa consulta el paciente</ng-template
-                  >
-                  <ng-template #popMotivoTitulo>
-                    <b>Motivo de la consulta</b>
-                    <p class="float-right">
-                      <i class="fas fa-info-circle fa-lg"></i>
-                    </p>
-                  </ng-template>
-                </div>
-              </div>
-
-              <div class="col-md-4">
-                <div class="form-group">
-                  <label for="tiemSintoma"
-                    >Tiempo de evolución de síntomas</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="tiemSintoma"
-                    placeholder="Tiempo de evolución ..."
-                    #tiemSintoma="ngModel"
-                    [(ngModel)]="consulta.tiemSintoma"
-                    required
-                    autocomplete="off"
-                    ngxPattern="[0-9]"
-                    [ngClass]="{
-                      'is-invalid': !tiemSintoma.valid && tiemSintoma.touched
-                    }"
-                    placement="top"
-                    popoverClass="text-dark"
-                    [autoClose]="true"
-                    [ngbPopover]="popSintomaContent"
-                    [popoverTitle]="popSintomaTitulo"
-                    triggers="manual"
-                    #p2="ngbPopover"
-                    (click)="ayuda ? p2.open() : ''"
-                    (focus)="ayuda ? p2.open() : ''"
-                    (blur)="ayuda ? p2.close() : ''"
-                  />
-
-                  <small
-                    class="text-danger"
-                    *ngIf="!tiemSintoma.valid && tiemSintoma.touched"
-                  >
-                    Campo requerido
-                  </small>
-                  <ng-template #popSintomaContent
-                    >Digite una cantidad en días del tiempo de evolución de los síntomas del paciente</ng-template
-                  >
-                  <ng-template #popSintomaTitulo>
-                    <b>Tiempo de evolución de síntomas</b>
-                    <p class="float-right">
-                      <i class="fas fa-info-circle fa-lg"></i>
-                    </p>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
-            <!-- Fin del primer row -->
-
-            <div class="row">
-              <div class="col-md-12">
-                <div class="form-group">
-                  <label>Historia de la enfermedad</label>
-                  <textarea
-                    id="historia"
-                    rows="3"
-                    class="form-control"
-                    placeholder="Historia de la enfermedad"
-                    autocomplete="off"
-                    name="historia"
-                    #historia="ngModel"
-                    [(ngModel)]="consulta.historia"
-                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                    required
-                    [ngClass]="{
-                      'is-invalid': !historia.valid && historia.touched
-                    }"
-                    placement="top"
-                    popoverClass="text-dark"
-                    [autoClose]="true"
-                    [ngbPopover]="popHistoriaContent"
-                    [popoverTitle]="popHistoriaTitulo"
-                    triggers="manual"
-                    #p3="ngbPopover"
-                    (click)="ayuda ? p3.open() : ''"
-                    (focus)="ayuda ? p3.open() : ''"
-                    (blur)="ayuda ? p3.close() : ''"
-                  >
-                  </textarea>
-                  <small
-                    class="text-danger"
-                    *ngIf="!historia.valid && historia.touched"
-                  >
-                    Campo requerido
-                  </small>
-                  <ng-template #popHistoriaContent
-                    >Digite la historia sobre como se dió la enfermedad del paciente</ng-template
-                  >
-                  <ng-template #popHistoriaTitulo>
-                    <b>Historia de la enfermedad</b>
-                    <p class="float-right">
-                      <i class="fas fa-info-circle fa-lg"></i>
-                    </p>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
-            <!-- Fin del segundo row -->
-
-            <div class="row">
-              <div class="col-md-12">
-                <!-- textarea -->
-                <div class="form-group">
-                  <label
-                    >Antecedentes patológicos personales o de enfermedades
-                    crónicas</label
-                  >
-                  <textarea
-                    class="form-control"
-                    rows="3"
-                    placeholder="Antecedentes patológicos ..."
-                    autocomplete="off"
-                    name="antePatol"
-                    #antePatol="ngModel"
-                    [(ngModel)]="consulta.antePatol"
-                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                    required
-                    [ngClass]="{
-                      'is-invalid': !antePatol.valid && antePatol.touched
-                    }"
-                    placement="top"
-                    popoverClass="text-dark"
-                    [autoClose]="true"
-                    [ngbPopover]="popAntecedentesContent"
-                    [popoverTitle]="popAntecedentesTitulo"
-                    triggers="manual"
-                    #p4="ngbPopover"
-                    (click)="ayuda ? p4.open() : ''"
-                    (focus)="ayuda ? p4.open() : ''"
-                    (blur)="ayuda ? p4.close() : ''"
-                  >
-                  </textarea>
-                  <small
-                    class="text-danger"
-                    *ngIf="!antePatol.valid && antePatol.touched"
-                  >
-                    Campo requerido
-                  </small>
-                  <ng-template #popAntecedentesContent
-                    >Digite las enfermedades que el paciente ha padecido</ng-template
-                  >
-                  <ng-template #popAntecedentesTitulo>
-                    <b>Antecedentes patológicos personales o de enfermedades
-                      crónicas</b>
-                    <p class="float-right">
-                      <i class="fas fa-info-circle fa-lg"></i>
-                    </p>
-                  </ng-template>
-                </div>
-              </div>
-            </div>
-            <!-- Fin del sexto row -->
-            <fieldset class="border p-2">
-              <legend class="w-auto">Signos vitales</legend>
-
               <div class="row">
-                <!--Div de signos vitales-->
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
-                    <label>Peso</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Peso"
-                        (ngModelChange)="cal3()"
-                        name="peso"
-                        #peso="ngModel"
-                        [(ngModel)]="consulta.peso"
-                        required
-                        autocomplete="off"
-                        [ngClass]="{
-                          'is-invalid': !peso.valid && peso.touched
-                        }"
-                        ngxPattern="[0-9.]+"
-                        placement="top"
-
-                        popoverClass="text-dark"
-                        [autoClose]="true"
-                        [ngbPopover]="popPesoContent"
-                        [popoverTitle]="popPesoTitulo"
-                        triggers="manual"
-                        #p5="ngbPopover"
-                        (click)="ayuda ? p5.open() : ''"
-                        (focus)="ayuda ? p5.open() : ''"
-                        (blur)="ayuda ? p5.close() : ''"
-                      />
+                    <label>Fecha de consulta:</label>
+                    <div class="input-group date">
                       <div class="input-group-prepend">
-                        <span class="input-group-text">kg</span>
+                        <div class="input-group-text">
+                          <i class="fa fa-calendar"></i>
+                        </div>
                       </div>
+                      <input
+                        type="date"
+                        class="form-control"
+                        max="{{ fechaAux }}"
+                        value="{{ consulta.fechaConsul | fechaFormat }}"
+                        name="fechaConsul"
+                        #fechaConsul="ngModel"
+                        [(ngModel)]="consulta.fechaConsul"
+                        disabled
+                      />
                     </div>
+                  </div>
+                </div>
+  
+                <div class="col-md-5">
+                  <div class="form-group">
+                    <label for="motivo">Motivo de consulta</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="motivo"
+                      placeholder="Motivo de consulta"
+                      #motivo="ngModel"
+                      [(ngModel)]="consulta.motivo"
+                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                      required
+                      autocomplete="off"
+                      [ngClass]="{
+                        'is-invalid': !motivo.valid && motivo.touched
+                      }"
+                      placement="top"
+                      popoverClass="text-dark"
+                      [autoClose]="true"
+                      [ngbPopover]="popMotivoContent"
+                      [popoverTitle]="popMotivoTitulo"
+                      triggers="manual"
+                      #p1="ngbPopover"
+                      (click)="ayuda ? p1.open() : ''"
+                      (focus)="ayuda ? p1.open() : ''"
+                      (blur)="ayuda ? p1.close() : ''"
+                    />
+  
                     <small
                       class="text-danger"
-                      *ngIf="!peso.valid && peso.touched"
+                      *ngIf="!motivo.valid && motivo.touched"
                     >
                       Campo requerido
                     </small>
-                    <ng-template #popPesoContent
-                    >Digite el peso del paciente en Kilogramos</ng-template
+                    <ng-template #popMotivoContent
+                      >Digite el motivo por el cual pasa consulta el paciente</ng-template
                     >
-                    <ng-template #popPesoTitulo>
-                      <b>Peso</b>
+                    <ng-template #popMotivoTitulo>
+                      <b>Motivo de la consulta</b>
                       <p class="float-right">
                         <i class="fas fa-info-circle fa-lg"></i>
                       </p>
                     </ng-template>
                   </div>
                 </div>
+  
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label>Talla</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Talla"
-                        (ngModelChange)="cal3()"
-                        name="talla"
-                        #talla="ngModel"
-                        [(ngModel)]="consulta.talla"
-                        required
-                        autocomplete="off"
-                        [ngClass]="{
-                          'is-invalid': !talla.valid && talla.touched
-                        }"
-                        ngxPattern="[0-9.]+"
-
-                        popoverClass="text-dark"
-                        [autoClose]="true"
-                        [ngbPopover]="popTallaContent"
-                        [popoverTitle]="popTallaTitulo"
-                        triggers="manual"
-                        #p6="ngbPopover"
-                        (click)="ayuda ? p6.open() : ''"
-                        (focus)="ayuda ? p6.open() : ''"
-                        (blur)="ayuda ? p6.close() : ''"
-                      />
-                      <div class="input-group-prepend">
-                        <span class="input-group-text" *ngIf="talla.value < 1"
-                          >cm</span
-                        >
-                        <span class="input-group-text" *ngIf="talla.value >= 1"
-                          >m</span
-                        >
-                        <ng-template #popTallaContent
-                        >Digite la estatura del paciente</ng-template
-                        >
-                        <ng-template #popTallaTitulo>
-                          <b>Talla</b>
-                          <p class="float-right">
-                            <i class="fas fa-info-circle fa-lg"></i>
-                          </p>
-                        </ng-template>
-                      </div>
-                    </div>
+                    <label for="tiemSintoma"
+                      >Tiempo de evolución de síntomas</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="tiemSintoma"
+                      placeholder="Tiempo de evolución ..."
+                      #tiemSintoma="ngModel"
+                      [(ngModel)]="consulta.tiemSintoma"
+                      required
+                      autocomplete="off"
+                      ngxPattern="[0-9]"
+                      [ngClass]="{
+                        'is-invalid': !tiemSintoma.valid && tiemSintoma.touched
+                      }"
+                      placement="top"
+                      popoverClass="text-dark"
+                      [autoClose]="true"
+                      [ngbPopover]="popSintomaContent"
+                      [popoverTitle]="popSintomaTitulo"
+                      triggers="manual"
+                      #p2="ngbPopover"
+                      (click)="ayuda ? p2.open() : ''"
+                      (focus)="ayuda ? p2.open() : ''"
+                      (blur)="ayuda ? p2.close() : ''"
+                    />
+  
                     <small
                       class="text-danger"
-                      *ngIf="!talla.valid && talla.touched"
+                      *ngIf="!tiemSintoma.valid && tiemSintoma.touched"
                     >
                       Campo requerido
                     </small>
+                    <ng-template #popSintomaContent
+                      >Digite una cantidad en días del tiempo de evolución de los síntomas del paciente</ng-template
+                    >
+                    <ng-template #popSintomaTitulo>
+                      <b>Tiempo de evolución de síntomas</b>
+                      <p class="float-right">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                      </p>
+                    </ng-template>
                   </div>
                 </div>
-                <div class="col-md-4">
+              </div>
+              <!-- Fin del primer row -->
+  
+              <div class="row">
+                <div class="col-md-12">
                   <div class="form-group">
-                    <label>Índice de masa corporal</label>
-                    <div class="input-group">
-                      <input
-                        type="number"
-                        class="form-control"
-                        placeholder="Índice de masa corporal"
-                        value="{{ indice | number }}"
-                        name="indiceMC"
-                        #indiceMC="ngModel"
-                        [(ngModel)]="consulta.indiceMC"
-                        autocomplete="off"
-                        ngxPattern="[0-9.]+"
-                        [ngClass]="{ 'is-invalid': indiceMC.touched }"
-                        disabled
-                      />
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">IMC</span>
+                    <label>Historia de la enfermedad</label>
+                    <textarea
+                      id="historia"
+                      rows="3"
+                      class="form-control"
+                      placeholder="Historia de la enfermedad"
+                      autocomplete="off"
+                      name="historia"
+                      #historia="ngModel"
+                      [(ngModel)]="consulta.historia"
+                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                      required
+                      [ngClass]="{
+                        'is-invalid': !historia.valid && historia.touched
+                      }"
+                      placement="top"
+                      popoverClass="text-dark"
+                      [autoClose]="true"
+                      [ngbPopover]="popHistoriaContent"
+                      [popoverTitle]="popHistoriaTitulo"
+                      triggers="manual"
+                      #p3="ngbPopover"
+                      (click)="ayuda ? p3.open() : ''"
+                      (focus)="ayuda ? p3.open() : ''"
+                      (blur)="ayuda ? p3.close() : ''"
+                    >
+                    </textarea>
+                    <small
+                      class="text-danger"
+                      *ngIf="!historia.valid && historia.touched"
+                    >
+                      Campo requerido
+                    </small>
+                    <ng-template #popHistoriaContent
+                      >Digite la historia sobre como se dió la enfermedad del paciente</ng-template
+                    >
+                    <ng-template #popHistoriaTitulo>
+                      <b>Historia de la enfermedad</b>
+                      <p class="float-right">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                      </p>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <!-- Fin del segundo row -->
+  
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- textarea -->
+                  <div class="form-group">
+                    <label
+                      >Antecedentes patológicos personales o de enfermedades
+                      crónicas</label
+                    >
+                    <textarea
+                      class="form-control"
+                      rows="3"
+                      placeholder="Antecedentes patológicos ..."
+                      autocomplete="off"
+                      name="antePatol"
+                      #antePatol="ngModel"
+                      [(ngModel)]="consulta.antePatol"
+                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                      required
+                      [ngClass]="{
+                        'is-invalid': !antePatol.valid && antePatol.touched
+                      }"
+                      placement="top"
+                      popoverClass="text-dark"
+                      [autoClose]="true"
+                      [ngbPopover]="popAntecedentesContent"
+                      [popoverTitle]="popAntecedentesTitulo"
+                      triggers="manual"
+                      #p4="ngbPopover"
+                      (click)="ayuda ? p4.open() : ''"
+                      (focus)="ayuda ? p4.open() : ''"
+                      (blur)="ayuda ? p4.close() : ''"
+                    >
+                    </textarea>
+                    <small
+                      class="text-danger"
+                      *ngIf="!antePatol.valid && antePatol.touched"
+                    >
+                      Campo requerido
+                    </small>
+                    <ng-template #popAntecedentesContent
+                      >Digite las enfermedades que el paciente ha padecido</ng-template
+                    >
+                    <ng-template #popAntecedentesTitulo>
+                      <b>Antecedentes patológicos personales o de enfermedades
+                        crónicas</b>
+                      <p class="float-right">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                      </p>
+                    </ng-template>
+                  </div>
+                </div>
+              </div>
+              <!-- Fin del sexto row -->
+              <fieldset class="border p-2">
+                <legend class="w-auto">Signos vitales</legend>
+  
+                <div class="row">
+                  <!--Div de signos vitales-->
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Peso</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Peso"
+                          (ngModelChange)="cal3()"
+                          name="peso"
+                          #peso="ngModel"
+                          [(ngModel)]="consulta.peso"
+                          required
+                          autocomplete="off"
+                          [ngClass]="{
+                            'is-invalid': !peso.valid && peso.touched
+                          }"
+                          ngxPattern="[0-9.]+"
+                          placement="top"
+  
+                          popoverClass="text-dark"
+                          [autoClose]="true"
+                          [ngbPopover]="popPesoContent"
+                          [popoverTitle]="popPesoTitulo"
+                          triggers="manual"
+                          #p5="ngbPopover"
+                          (click)="ayuda ? p5.open() : ''"
+                          (focus)="ayuda ? p5.open() : ''"
+                          (blur)="ayuda ? p5.close() : ''"
+                        />
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">kg</span>
+                        </div>
+                      </div>
+                      <small
+                        class="text-danger"
+                        *ngIf="!peso.valid && peso.touched"
+                      >
+                        Campo requerido
+                      </small>
+                      <ng-template #popPesoContent
+                      >Digite el peso del paciente en Kilogramos</ng-template
+                      >
+                      <ng-template #popPesoTitulo>
+                        <b>Peso</b>
+                        <p class="float-right">
+                          <i class="fas fa-info-circle fa-lg"></i>
+                        </p>
+                      </ng-template>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Talla</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Talla"
+                          (ngModelChange)="cal3()"
+                          name="talla"
+                          #talla="ngModel"
+                          [(ngModel)]="consulta.talla"
+                          required
+                          autocomplete="off"
+                          [ngClass]="{
+                            'is-invalid': !talla.valid && talla.touched
+                          }"
+                          ngxPattern="[0-9.]+"
+  
+                          popoverClass="text-dark"
+                          [autoClose]="true"
+                          [ngbPopover]="popTallaContent"
+                          [popoverTitle]="popTallaTitulo"
+                          triggers="manual"
+                          #p6="ngbPopover"
+                          (click)="ayuda ? p6.open() : ''"
+                          (focus)="ayuda ? p6.open() : ''"
+                          (blur)="ayuda ? p6.close() : ''"
+                        />
+                        <div class="input-group-prepend">
+                          <span class="input-group-text" *ngIf="talla.value < 1"
+                            >cm</span
+                          >
+                          <span class="input-group-text" *ngIf="talla.value >= 1"
+                            >m</span
+                          >
+                          <ng-template #popTallaContent
+                          >Digite la estatura del paciente</ng-template
+                          >
+                          <ng-template #popTallaTitulo>
+                            <b>Talla</b>
+                            <p class="float-right">
+                              <i class="fas fa-info-circle fa-lg"></i>
+                            </p>
+                          </ng-template>
+                        </div>
+                      </div>
+                      <small
+                        class="text-danger"
+                        *ngIf="!talla.valid && talla.touched"
+                      >
+                        Campo requerido
+                      </small>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Índice de masa corporal</label>
+                      <div class="input-group">
+                        <input
+                          type="number"
+                          class="form-control"
+                          placeholder="Índice de masa corporal"
+                          value="{{ indice | number }}"
+                          name="indiceMC"
+                          #indiceMC="ngModel"
+                          [(ngModel)]="consulta.indiceMC"
+                          autocomplete="off"
+                          ngxPattern="[0-9.]+"
+                          [ngClass]="{ 'is-invalid': indiceMC.touched }"
+                          disabled
+                        />
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">IMC</span>
+                        </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Temperatura</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Temperatura"
+                          name="temperatura"
+                          #temperatura="ngModel"
+                          [(ngModel)]="consulta.temperatura"
+                          required
+                          autocomplete="off"
+                          [ngClass]="{
+                            'is-invalid':
+                              !temperatura.valid && temperatura.touched
+                          }"
+                          ngxPattern="[0-9.]+"
+  
+                          popoverClass="text-dark"
+                          [autoClose]="true"
+                          [ngbPopover]="popTemperaturaContent"
+                          [popoverTitle]="popTemperaturaTitulo"
+                          triggers="manual"
+                          #p7="ngbPopover"
+                          (click)="ayuda ? p7.open() : ''"
+                          (focus)="ayuda ? p7.open() : ''"
+                          (blur)="ayuda ? p7.close() : ''"
+                        />
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">°C</span>
+                        </div>
+                      </div>
+                      <small
+                        class="text-danger"
+                        *ngIf="!temperatura.valid && temperatura.touched"
+                      >
+                        Campo requerido
+                      </small>
+  
+                      <ng-template #popTemperaturaContent
+                          >Digite la temperatura del paciente. Ej: 35</ng-template
+                          >
+                          <ng-template #popTemperaturaTitulo>
+                            <b>Temperatura</b>
+                            <p class="float-right">
+                              <i class="fas fa-info-circle fa-lg"></i>
+                            </p>
+                          </ng-template>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group" *ngIf="!esMenor()">
+                      <label>Presión arterial</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Presión arterial"
+                          name="presionArt"
+                          #presionArt="ngModel"
+                          [(ngModel)]="consulta.presionArt"
+                          required
+                          autocomplete="off"
+                          ngxPattern="[0-9/]+"
+                          [ngClass]="{
+                            'is-invalid': !presionArt.valid && presionArt.touched
+                          }"
+  
+                          popoverClass="text-dark"
+                          [autoClose]="true"
+                          [ngbPopover]="popPresionContent"
+                          [popoverTitle]="popPresionTitulo"
+                          triggers="manual"
+                          #p8="ngbPopover"
+                          (click)="ayuda ? p8.open() : ''"
+                          (focus)="ayuda ? p8.open() : ''"
+                          (blur)="ayuda ? p8.close() : ''"
+                        />
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">PA</span>
+                        </div>
+                      </div>
+                      <small
+                        class="text-danger"
+                        *ngIf="!presionArt.valid && presionArt.touched"
+                      >
+                        Campo requerido
+                      </small>
+                      <ng-template #popPresionContent
+                          >Digite la presión arterial del paciente. Ej: 120/80</ng-template
+                          >
+                          <ng-template #popPresionTitulo>
+                            <b>Presión arterial</b>
+                            <p class="float-right">
+                              <i class="fas fa-info-circle fa-lg"></i>
+                            </p>
+                          </ng-template>
+                    </div>
+                    <div class="form-group" *ngIf="esMenor()">
+                      <label>Presión arterial</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Presión arterial"
+                          name="presionArt"
+                          #presionArt="ngModel"
+                          [(ngModel)]="consulta.presionArt"
+                          required
+                          autocomplete="off"
+                          ngxPattern="[0-9/]+"
+                          [ngClass]="{
+                            'is-invalid': !presionArt.valid && presionArt.touched
+                          }"
+                          disabled
+  
+                          popoverClass="text-dark"
+                          [autoClose]="true"
+                          [ngbPopover]="popPresionContent"
+                          [popoverTitle]="popPresionTitulo"
+                          triggers="manual"
+                          #p8="ngbPopover"
+                          (click)="ayuda ? p8.open() : ''"
+                          (focus)="ayuda ? p8.open() : ''"
+                          (blur)="ayuda ? p8.close() : ''"
+                        />
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">PA</span>
+                        </div>
+                      </div>
+                      <small
+                        class="text-danger"
+                        *ngIf="!presionArt.valid && presionArt.touched"
+                      >
+                        Campo requerido
+                      </small>
+                      <ng-template #popPresionContent
+                          >Digite la presión arterial del paciente. Ej: 120/80</ng-template
+                          >
+                          <ng-template #popPresionTitulo>
+                            <b>Presión arterial</b>
+                            <p class="float-right">
+                              <i class="fas fa-info-circle fa-lg"></i>
+                            </p>
+                          </ng-template>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label>Frecuencia cardiáca</label>
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Frecuencia cardiáca"
+                          name="freCardia"
+                          #freCardia="ngModel"
+                          [(ngModel)]="consulta.freCardia"
+                          required
+                          autocomplete="off"
+                          [ngClass]="{
+                            'is-invalid': !freCardia.valid && freCardia.touched
+                          }"
+                          ngxPattern="[0-9]+"
+  
+                          popoverClass="text-dark"
+                          [autoClose]="true"
+                          [ngbPopover]="popFrecuenciaContent"
+                          [popoverTitle]="popFrecuenciaTitulo"
+                          triggers="manual"
+                          #p9="ngbPopover"
+                          (click)="ayuda ? p9.open() : ''"
+                          (focus)="ayuda ? p9.open() : ''"
+                          (blur)="ayuda ? p9.close() : ''"
+                        />
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">FC</span>
+                        </div>
+                      </div>
+                      <small
+                        class="text-danger"
+                        *ngIf="!freCardia.valid && freCardia.touched"
+                      >
+                        Campo requerido
+                      </small>
+  
+                      <ng-template #popFrecuenciaContent
+                          >Digite la frecuencia cardiáca del paciente.</ng-template
+                          >
+                          <ng-template #popFrecuenciaTitulo>
+                            <b>Presión arterial</b>
+                            <p class="float-right">
+                              <i class="fas fa-info-circle fa-lg"></i>
+                            </p>
+                          </ng-template>
+                    </div>
+                  </div>
+                </div>
+                <!-- Fin del div signos vitales -->
+              </fieldset>
+  
+              <div class="row">
+                <div class="col-md-12">
+                  <!-- textarea -->
+                  <div class="form-group">
+                    <label>Alergias</label>
+                    <textarea
+                      class="form-control"
+                      rows="3"
+                      placeholder="Alergias"
+                      autocomplete="off"
+                      name="alergias"
+                      #alergias="ngModel"
+                      [(ngModel)]="consulta.alergias"
+                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                      required
+                      [ngClass]="{
+                        'is-invalid': !alergias.valid && alergias.touched
+                      }"
+  
+                      popoverClass="text-dark"
+                          [autoClose]="true"
+                          [ngbPopover]="popAlergiaContent"
+                          [popoverTitle]="popAlergiaTitulo"
+                          triggers="manual"
+                          #p10="ngbPopover"
+                          (click)="ayuda ? p10.open() : ''"
+                          (focus)="ayuda ? p10.open() : ''"
+                          (blur)="ayuda ? p10.close() : ''"
+                    >
+                    </textarea>
+                    <small
+                      class="text-danger"
+                      *ngIf="!alergias.valid && alergias.touched"
+                    >
+                      Campo requerido
+                    </small>
+                    <ng-template #popAlergiaContent
+                          >Digite todas las alergias que padece el paciente.</ng-template
+                          >
+                          <ng-template #popAlergiaTitulo>
+                            <b>Alergias</b>
+                            <p class="float-right">
+                              <i class="fas fa-info-circle fa-lg"></i>
+                            </p>
+                          </ng-template>
                   </div>
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
+                  <!-- textarea -->
                   <div class="form-group">
-                    <label>Temperatura</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Temperatura"
-                        name="temperatura"
-                        #temperatura="ngModel"
-                        [(ngModel)]="consulta.temperatura"
-                        required
-                        autocomplete="off"
-                        [ngClass]="{
-                          'is-invalid':
-                            !temperatura.valid && temperatura.touched
-                        }"
-                        ngxPattern="[0-9.]+"
-
-                        popoverClass="text-dark"
-                        [autoClose]="true"
-                        [ngbPopover]="popTemperaturaContent"
-                        [popoverTitle]="popTemperaturaTitulo"
-                        triggers="manual"
-                        #p7="ngbPopover"
-                        (click)="ayuda ? p7.open() : ''"
-                        (focus)="ayuda ? p7.open() : ''"
-                        (blur)="ayuda ? p7.close() : ''"
-                      />
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">°C</span>
-                      </div>
-                    </div>
-                    <small
-                      class="text-danger"
-                      *ngIf="!temperatura.valid && temperatura.touched"
-                    >
-                      Campo requerido
-                    </small>
-
-                    <ng-template #popTemperaturaContent
-                        >Digite la temperatura del paciente. Ej: 35</ng-template
-                        >
-                        <ng-template #popTemperaturaTitulo>
-                          <b>Temperatura</b>
-                          <p class="float-right">
-                            <i class="fas fa-info-circle fa-lg"></i>
-                          </p>
-                        </ng-template>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group" *ngIf="!esMenor()">
-                    <label>Presión arterial</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Presión arterial"
-                        name="presionArt"
-                        #presionArt="ngModel"
-                        [(ngModel)]="consulta.presionArt"
-                        required
-                        autocomplete="off"
-                        ngxPattern="[0-9/]+"
-                        [ngClass]="{
-                          'is-invalid': !presionArt.valid && presionArt.touched
-                        }"
-
-                        popoverClass="text-dark"
-                        [autoClose]="true"
-                        [ngbPopover]="popPresionContent"
-                        [popoverTitle]="popPresionTitulo"
-                        triggers="manual"
-                        #p8="ngbPopover"
-                        (click)="ayuda ? p8.open() : ''"
-                        (focus)="ayuda ? p8.open() : ''"
-                        (blur)="ayuda ? p8.close() : ''"
-                      />
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">PA</span>
-                      </div>
-                    </div>
-                    <small
-                      class="text-danger"
-                      *ngIf="!presionArt.valid && presionArt.touched"
-                    >
-                      Campo requerido
-                    </small>
-                    <ng-template #popPresionContent
-                        >Digite la presión arterial del paciente. Ej: 120/80</ng-template
-                        >
-                        <ng-template #popPresionTitulo>
-                          <b>Presión arterial</b>
-                          <p class="float-right">
-                            <i class="fas fa-info-circle fa-lg"></i>
-                          </p>
-                        </ng-template>
-                  </div>
-                  <div class="form-group" *ngIf="esMenor()">
-                    <label>Presión arterial</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Presión arterial"
-                        name="presionArt"
-                        #presionArt="ngModel"
-                        [(ngModel)]="consulta.presionArt"
-                        required
-                        autocomplete="off"
-                        ngxPattern="[0-9/]+"
-                        [ngClass]="{
-                          'is-invalid': !presionArt.valid && presionArt.touched
-                        }"
-                        disabled
-
-                        popoverClass="text-dark"
-                        [autoClose]="true"
-                        [ngbPopover]="popPresionContent"
-                        [popoverTitle]="popPresionTitulo"
-                        triggers="manual"
-                        #p8="ngbPopover"
-                        (click)="ayuda ? p8.open() : ''"
-                        (focus)="ayuda ? p8.open() : ''"
-                        (blur)="ayuda ? p8.close() : ''"
-                      />
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">PA</span>
-                      </div>
-                    </div>
-                    <small
-                      class="text-danger"
-                      *ngIf="!presionArt.valid && presionArt.touched"
-                    >
-                      Campo requerido
-                    </small>
-                    <ng-template #popPresionContent
-                        >Digite la presión arterial del paciente. Ej: 120/80</ng-template
-                        >
-                        <ng-template #popPresionTitulo>
-                          <b>Presión arterial</b>
-                          <p class="float-right">
-                            <i class="fas fa-info-circle fa-lg"></i>
-                          </p>
-                        </ng-template>
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label>Frecuencia cardiáca</label>
-                    <div class="input-group">
-                      <input
-                        type="text"
-                        class="form-control"
-                        placeholder="Frecuencia cardiáca"
-                        name="freCardia"
-                        #freCardia="ngModel"
-                        [(ngModel)]="consulta.freCardia"
-                        required
-                        autocomplete="off"
-                        [ngClass]="{
-                          'is-invalid': !freCardia.valid && freCardia.touched
-                        }"
-                        ngxPattern="[0-9]+"
-
-                        popoverClass="text-dark"
-                        [autoClose]="true"
-                        [ngbPopover]="popFrecuenciaContent"
-                        [popoverTitle]="popFrecuenciaTitulo"
-                        triggers="manual"
-                        #p9="ngbPopover"
-                        (click)="ayuda ? p9.open() : ''"
-                        (focus)="ayuda ? p9.open() : ''"
-                        (blur)="ayuda ? p9.close() : ''"
-                      />
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">FC</span>
-                      </div>
-                    </div>
-                    <small
-                      class="text-danger"
-                      *ngIf="!freCardia.valid && freCardia.touched"
-                    >
-                      Campo requerido
-                    </small>
-
-                    <ng-template #popFrecuenciaContent
-                        >Digite la frecuencia cardiáca del paciente.</ng-template
-                        >
-                        <ng-template #popFrecuenciaTitulo>
-                          <b>Presión arterial</b>
-                          <p class="float-right">
-                            <i class="fas fa-info-circle fa-lg"></i>
-                          </p>
-                        </ng-template>
+                    <label>Diagnóstico (*)</label>
+                    <textarea
+                      class="form-control"
+                      rows="3"
+                      placeholder="Diagnóstico"
+                      autocomplete="off"
+                      name="diagnostico"
+                      #diagnostico="ngModel"
+                      [(ngModel)]="consulta.diagnostico"
+                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                    
+                      popoverClass="text-dark"
+                          [autoClose]="true"
+                          [ngbPopover]="popDiagnosticoContent"
+                          [popoverTitle]="popDiagnosticoTitulo"
+                          triggers="manual"
+                          #p11="ngbPopover"
+                          (click)="ayuda ? p11.open() : ''"
+                          (focus)="ayuda ? p11.open() : ''"
+                          (blur)="ayuda ? p11.close() : ''"
+                      >
+                    </textarea>
+                    <ng-template #popDiagnosticoContent
+                          >Escriba el diagnóstico para el paciente. Este campo es opcional</ng-template
+                          >
+                          <ng-template #popDiagnosticoTitulo>
+                            <b>Diagnóstico</b>
+                            <p class="float-right">
+                              <i class="fas fa-info-circle fa-lg"></i>
+                            </p>
+                          </ng-template>
                   </div>
                 </div>
               </div>
-              <!-- Fin del div signos vitales -->
-            </fieldset>
-
-            <div class="row">
-              <div class="col-md-12">
-                <!-- textarea -->
-                <div class="form-group">
-                  <label>Alergias</label>
-                  <textarea
-                    class="form-control"
-                    rows="3"
-                    placeholder="Alergias"
-                    autocomplete="off"
-                    name="alergias"
-                    #alergias="ngModel"
-                    [(ngModel)]="consulta.alergias"
-                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                    required
-                    [ngClass]="{
-                      'is-invalid': !alergias.valid && alergias.touched
-                    }"
-
-                    popoverClass="text-dark"
-                        [autoClose]="true"
-                        [ngbPopover]="popAlergiaContent"
-                        [popoverTitle]="popAlergiaTitulo"
-                        triggers="manual"
-                        #p10="ngbPopover"
-                        (click)="ayuda ? p10.open() : ''"
-                        (focus)="ayuda ? p10.open() : ''"
-                        (blur)="ayuda ? p10.close() : ''"
-                  >
-                  </textarea>
-                  <small
-                    class="text-danger"
-                    *ngIf="!alergias.valid && alergias.touched"
-                  >
-                    Campo requerido
-                  </small>
-                  <ng-template #popAlergiaContent
-                        >Digite todas las alergias que padece el paciente.</ng-template
-                        >
-                        <ng-template #popAlergiaTitulo>
-                          <b>Alergias</b>
-                          <p class="float-right">
-                            <i class="fas fa-info-circle fa-lg"></i>
-                          </p>
-                        </ng-template>
+  
+              <div class="card-footer">
+                <input
+                  type="submit"
+                  value="Guardar consulta"
+                  class="btn btn-primary"
+                  [disabled]="consultaForm.invalid"
+                />
+                <input
+                  type="button"
+                  class="btn btn-secondary ml-3 mr-0"
+                  value="Limpiar campos"
+                  (click)="limpiarCampos()"
+                />
+                <div class="float-right d-none d-sm-block">
+                  <b>Campos opcionales (*)</b>
                 </div>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <!-- textarea -->
-                <div class="form-group">
-                  <label>Diagnóstico (*)</label>
-                  <textarea
-                    class="form-control"
-                    rows="3"
-                    placeholder="Diagnóstico"
-                    autocomplete="off"
-                    name="diagnostico"
-                    #diagnostico="ngModel"
-                    [(ngModel)]="consulta.diagnostico"
-                    ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                  
-                    popoverClass="text-dark"
-                        [autoClose]="true"
-                        [ngbPopover]="popDiagnosticoContent"
-                        [popoverTitle]="popDiagnosticoTitulo"
-                        triggers="manual"
-                        #p11="ngbPopover"
-                        (click)="ayuda ? p11.open() : ''"
-                        (focus)="ayuda ? p11.open() : ''"
-                        (blur)="ayuda ? p11.close() : ''"
-                    >
-                  </textarea>
-                  <ng-template #popDiagnosticoContent
-                        >Escriba el diagnóstico para el paciente. Este campo es opcional</ng-template
-                        >
-                        <ng-template #popDiagnosticoTitulo>
-                          <b>Diagnóstico</b>
-                          <p class="float-right">
-                            <i class="fas fa-info-circle fa-lg"></i>
-                          </p>
-                        </ng-template>
-                </div>
-              </div>
-            </div>
-
-            <div class="card-footer">
-              <input
-                type="submit"
-                value="Guardar consulta"
-                class="btn btn-primary"
-                [disabled]="consultaForm.invalid"
-              />
-              <input
-                type="button"
-                class="btn btn-secondary ml-3 mr-0"
-                value="Limpiar campos"
-                (click)="limpiarCampos()"
-              />
-              <div class="float-right d-none d-sm-block">
-                <b>Campos opcionales (*)</b>
-              </div>
-            </div>
-          </div>
-          <!-- /.card-body -->
-        </form>
+            <!-- /.card-body -->
+          </form>
+        </div>
+        <!-- Fin del card -->
+  
+        <!-- Sweet alerts -->
+        <!-- Sweet Confirm -->
+        <swal
+          #redireccionSwal
+          title="Consulta registrada!"
+          text="¿Desea regresar a los expedientes?"
+          icon="success"
+          [showCancelButton]="true"
+          confirmButtonText="Si!"
+          cancelButtonText="No!"
+          confirmButtonColor="#3085d6"
+          cancelButtonColor="#bbbbbb"
+          [focusCancel]="true"
+          (confirm)="redireccionar()"
+        >
+        </swal>
+  
+        <!-- Sweet error -->
+  
+        <swal
+          #errorSwal
+          title="Error!"
+          text="No se pudo realizar el registro"
+          icon="error"
+          confirmButtonText="Ok"
+          confirmButtonColor="#3085d6"
+          [focusConfirm]="true"
+        >
+        </swal>
+  
+        <!-- Sweet alerts -->
       </div>
-      <!-- Fin del card -->
-
-      <!-- Sweet alerts -->
-      <!-- Sweet Confirm -->
-      <swal
-        #redireccionSwal
-        title="Consulta registrada!"
-        text="¿Desea regresar a los expedientes?"
-        icon="success"
-        [showCancelButton]="true"
-        confirmButtonText="Si!"
-        cancelButtonText="No!"
-        confirmButtonColor="#3085d6"
-        cancelButtonColor="#bbbbbb"
-        [focusCancel]="true"
-        (confirm)="redireccionar()"
-      >
-      </swal>
-
-      <!-- Sweet error -->
-
-      <swal
-        #errorSwal
-        title="Error!"
-        text="No se pudo realizar el registro"
-        icon="error"
-        confirmButtonText="Ok"
-        confirmButtonColor="#3085d6"
-        [focusConfirm]="true"
-      >
-      </swal>
-
-      <!-- Sweet alerts -->
+      <!-- Fin del div de las doce columnas -->
     </div>
-    <!-- Fin del div de las doce columnas -->
-  </div>
-  <!-- /.container-fluid -->
-</section>
+    <!-- /.container-fluid -->
+  </section>
+
+

@@ -1,30 +1,8 @@
+       
+<!-- Aqui se cargan todas las paginas Iniciales -->
+<router-outlet></router-outlet>
+  
+  
+ 
 
-<ng-container *ngIf="auth else login">
-  <app-header></app-header>
-  <app-sidemenu></app-sidemenu>
-  
-  
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-      
-      <!-- Aqui se cargan todas las paginas  -->
-      <router-outlet></router-outlet>
-  
-      
-    </div>
-    <!-- /.content-wrapper -->
-  
-  
-  <app-footer></app-footer>
-  
-  <!-- Área de herramientas -->
-  <app-calculador></app-calculador> <!-- Aqui estara presente el modal de la calculadora -->
-
-</ng-container>
-
-<ng-template #login>
-
-  <app-login></app-login>
-
-</ng-template>
 
