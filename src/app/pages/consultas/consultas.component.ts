@@ -32,7 +32,6 @@ export class ConsultasComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 5,
       processing: true
     };
     

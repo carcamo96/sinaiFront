@@ -8,13 +8,17 @@
   <!--Contenido de la página-->
   <section class="content">
     <div class="container-fluid">
-
+      <ngx-loading-bar
+      color="#339942"
+      height="2"
+      animationTime="0.8"
+    ></ngx-loading-bar>
         <div class="col-md-12">
 
             <div class="row align-items-center">
 
-                <div class="col-md-4"><input type="hidden" name=""></div>
-                <div class="col-md-4">
+                
+                <div class="col-md-12">
     
     
                     <div class="card card-primary">
@@ -27,76 +31,131 @@
                         </div>
                         <div class="card-body">
 
-                            <form action="../../index3.html" method="post">
+                            <form role="form"
+                            #usuarioForm="ngForm" (ngSubmit)="onSubmit(usuarioForm)">
+                            <div class="row">
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="usuario">Nombre de usuario:</label>
                                     <div class="input-group mb-3">
-                                      <input type="text" name="usuario" class="form-control" placeholder="Usuario" />
+                                      <input type="text" #nombre="ngModel"
+                                      [(ngModel)]="usuario.usuario" name="nombreUsuario" 
+                                      class="form-control" placeholder="Usuario" required 
+                                      [ngClass]="{
+                                        'is-invalid': !nombre.valid && nombre.touched
+                                      }" />
                                       <div class="input-group-append">
                                         <div class="input-group-text">
                                           <span class="fas fa-user"></span>
                                         </div>
                                       </div>
                                     </div>
-
+                                    <small
+                      class="text-danger"
+                      *ngIf="!nombre.valid && nombre.touched"
+                    >
+                      Campo requerido
+                    </small>
                                 </div>
-                                <div class="form-group">
-                                    <label for="rol">Rol de usuario:</label>
-                                    <div class="input-group mb-3">
-                                      <select name="rol" class="form-control">
-                                          <option value="Administrador">Administrador</option>
-                                          <option value="Enfermero">Enfermer@</option>
-                                          <option value="Laboratorista">Laboratorista</option>
-                                          <option value="Recepcionista">Recepcionista</option>
-                                      </select>
-                                      <div class="input-group-append">
-                                        <div class="input-group-text">
-                                          <span class="fas fa-user-cog"></span>
-                                        </div>
-                                      </div>
+                              </div>
+                              <!--<div class="col-md-2"></div>-->
+                              <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="rol">Rol de usuario:</label>
+                                <div class="input-group mb-3">
+                                  <select name="rolUsuario" class="form-control"
+                                  [(ngModel)]="usuario.rol" #rol="ngModel" [ngClass]="{
+                                    'is-invalid': !rol.valid && rol.touched
+                                  }" >
+                                      <option value="Administrador">Administrador</option>
+                                      <option value="Enfermero">Enfermer@</option>
+                                      <option value="Laboratorista">Laboratorista</option>
+                                      <option value="Recepcionista">Recepcionista</option>
+                                  </select>
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-user-cog"></span>
                                     </div>
-
+                                  </div>
                                 </div>
+                                <small
+                  class="text-danger"
+                  *ngIf="rol.value == '' && rol.touched"
+                >
+                  Campo requerido
+                </small>
+
+                            </div>
+                          </div>
+                            </div>
+                                <div class="row">
+                                  <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="password">Contraseña: </label>
                                     <div class="input-group mb-3">
                                       <input
-                                        name="password"
+                                        #contraUsuario="ngModel"
                                         type="password"
                                         class="form-control"
                                         placeholder="Contraseña"
+                                      [(ngModel)]="usuario.pass"
+                                      
+                                      
                                       />
                                       <div class="input-group-append">
                                         <div class="input-group-text">
                                           <span class="fas fa-lock"></span>
                                         </div>
                                       </div>
+                                      
                                     </div>
+                                   <!-- <small
+                        class="text-danger"
+                        *ngIf="minPass == true"
+                      >
+                        Debe contener un mínimo de 8 caractéres
+                      </small>-->
                                 </div>
-                                <div class="form-group">
-                                    <label for="password">Confirmar contraseña: </label>
-                                    <div class="input-group mb-3">
-                                      <input
-                                        name="passwordCofirm"
-                                        type="passwordCofirm"
-                                        class="form-control"
-                                        placeholder="Contraseña"
-                                      />
-                                      <div class="input-group-append">
-                                        <div class="input-group-text">
-                                          <span class="fas fa-lock"></span>
-                                        </div>
-                                      </div>
+                              </div>
+                              <!--<div class="col-md-2"></div>-->
+                              <div class="col-md-6">
+                              <div class="form-group">
+                                <label for="password">Confirmar contraseña: </label>
+                                <div class="input-group mb-3">
+                                  <input
+                                    name="passwordCofirm"
+                                    #passwordCofirm="ngModel"
+                                    type="password"
+                                    class="form-control"
+                                    placeholder="Contraseña"
+                                  [(ngModel)]="pas"
+                                  />
+                                  
+                                  <div class="input-group-append">
+                                    <div class="input-group-text">
+                                      <span class="fas fa-lock"></span>
                                     </div>
+                                  </div>
                                 </div>
+                               <!-- <small
+                    class="text-danger"
+                    *ngIf="valPass == false"
+                  >
+                    Las contraseñas no coinciden
+                  </small>-->
+                            </div>
+                          </div>
+                              </div>
+                                
  
                                 <div class="row">
                                   <!-- /.col -->
-                                  <div class="col-md-12">
+                                  <div class="col-md-9"></div>
+                                  <div class="col-md-3">
                                       <button type="submit" class="btn btn-primary mr-3">
                                           Crear usuario
                                       </button>
-                                      <button type="reset" class="btn btn-secondary">
+                                      <button type="reset" class="btn btn-secondary" [ngStyle]="{'display': 'space-between'}">
                                          Cancelar
                                       </button>
                                 
@@ -110,12 +169,101 @@
                     </div>
     
                 </div>
-                <div class="col-md-4"><input type="hidden" name=""></div>
+                
+                
+
+                  <!-- Sweet alerts -->
+                  <!-- Sweet Confirm -->
+                  <swal
+                  #redireccionSwal
+                  title="Usuario registrado!"
+                  text="¿Desea regresar a inicio?"
+                  icon="success"
+                  [showCancelButton]="true"
+                  confirmButtonText="Si!"
+                  cancelButtonText="No!"
+                  confirmButtonColor="#3085d6"
+                  cancelButtonColor="#bbbbbb"
+                  [focusCancel]="true"
+                  (confirm)="redireccionar()"
+                >
+                </swal>
+
+                <!-- Sweet error -->
+
+                <swal
+                  #errorSwal
+                  title="Error!"
+                  text="No se pudo realizar el registro"
+                  icon="error"
+                  confirmButtonText="Ok"
+                  confirmButtonColor="#3085d6"
+                  [focusConfirm]="true"
+                >
+                </swal>
+
+                <!-- Sweet alerts -->
+
+            </div>
+            <div class="col-md-12">
+              <div class="card card-primary">
+                <div class="card-header">
+                  <h3 class="card-title">Usuarios registrados</h3>
+                  <div class="card-tools">
+                                
+                    
+                    
+                  </div>
+                  <!-- card tools -->
+                </div>
+                <!-- /.card-header -->
+                
+                <div class="card-body">
+            
+                    <table datatable [dtOptions]="dtOptions"
+                    [dtTrigger]="dtTrigger" class="row-border hover table table-bordered table-striped">
+                        <thead>
+                          <tr>
+                            <th>Nombre de usuario</th>
+                              <th>Rol de usuario</th>
+                              <th>Fecha de registro</th>
+                              <th>Modificar</th>
+                              <th>Eliminar</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let user of usuarios">
+                            <td>{{user.usuario}}</td>
+                            <td>{{user.rol}}</td>
+                            <td>{{user.fechaRegistro}}</td>
+                            <td><button type="button" class="btn btn-block btn-default">
+                              <a [routerLink]="['']" style="color: gray;">
+        
+                                <i class="fa fa-wrench"></i>
+                              </a>
+                            </button></td>
+                            <td><button type="button" class="btn btn-block btn-default">
+                              <a [routerLink]="['']" style="color: gray;">
+        
+                                <i class="fa fa-user-times"></i>
+                              </a>
+                            </button></td>
+                              
+                          </tr>
+                          
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+                
+              </div>
+              <!-- /.card -->
             </div>
            
         </div><!-- Div col-md-12-->
 
     </div><!--Fin del container-fluid-->
   </section>
+
 
 
