@@ -25,7 +25,7 @@ export class UsuarioService{
         let params = JSON.stringify(usuario);
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-        return this._http.put(this.url+'consulta/update/'+id, params, {headers: headers});;
+        return this._http.put(this.url+'usuario/update/'+id, params, {headers: headers});;
     }
 
     getUsuarios():Observable<any>{
@@ -36,6 +36,10 @@ export class UsuarioService{
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
         return this._http.delete(this.url+'usuario/delete/'+id, {headers: headers});;
+    }
+
+    getUsuario(id):Observable<any>{
+        return this._http.get(this.url+'usuario/obtener/'+id);
     }
 
 }

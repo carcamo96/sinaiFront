@@ -162,7 +162,7 @@
                                   <div class="col-md-3">
                                       <button type="submit" class="btn btn-primary mr-3" 
                                       [disabled]="usuarioForm.invalid || minPass || !valPass">
-                                          Crear usuario
+                                          Guardar usuario
                                       </button>
                                       <button type="reset" class="btn btn-secondary" [ngStyle]="{'display': 'space-between'}">
                                          Cancelar
@@ -185,8 +185,8 @@
                   <!-- Sweet Confirm -->
                   <swal
                   #redireccionSwal
-                  title="Usuario registrado!"
-                  text="El usuario ha sido registrado con éxito"
+                  title="Usuario guardado!"
+                  text="El usuario ha sido guardado con éxito"
                   icon="success"
                   [showCancelButton]="false"
                   confirmButtonText="Ok!"
@@ -245,8 +245,8 @@
                             <td>{{user.usuario}}</td>
                             <td>{{user.rol}}</td>
                             <td>{{user.fechaRegistro}}</td>
-                            <td><button type="button" class="btn btn-block btn-default">
-                              <a [routerLink]="['']" style="color: gray;">
+                            <td><button type="button" (click)="llenarCampos(user._id)" class="btn btn-block btn-default">
+                              <a  style="color: gray;">
         
                                 <i class="fa fa-wrench"></i>
                               </a>

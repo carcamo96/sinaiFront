@@ -1,10 +1,9 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Renderer2, ElementRef } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
 import { NgForm, FormControl, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario';
 import { LoadingBarService } from "@ngx-loading-bar/core";
 import { SwalComponent } from "@sweetalert2/ngx-sweetalert2";
-import { Router } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 
 @Component({
@@ -20,6 +19,9 @@ export class FormularioUsuarioComponent implements OnInit {
 
   @ViewChild("redireccionSwalDel") private redireccionSwalDel: SwalComponent;
   @ViewChild("errorSwalDel") private errorSwalDel: SwalComponent;
+
+  @ViewChild("myimg") elementView: ElementRef;
+
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [
@@ -38,23 +40,23 @@ export class FormularioUsuarioComponent implements OnInit {
   public valPass: boolean;
   public minPass: boolean;
   public progress = 0;
+  public isEdit: boolean;
+  private idU;
 
 
   constructor(
     private _usuarioService: UsuarioService,
     private loadingBarService: LoadingBarService,
-    private _router: Router
   ) {
-    
     this.usuario = {
       usuario:'',
       rol:'',
       pass:'',
       fechaRegistro:new Date(Date.now())
     }
-    
+        
   }
-
+  
   ngOnInit(): void {
     this.dtOptions = {
       pagingType: 'full_numbers',
@@ -66,6 +68,7 @@ export class FormularioUsuarioComponent implements OnInit {
   onSubmit(f:NgForm){
     this.loadingBarService.start();
     this.progress = 30;
+    
     if (f.valid) {
       let usuario = new Usuario(
         this.usuario.usuario,
@@ -76,6 +79,24 @@ export class FormularioUsuarioComponent implements OnInit {
       );
       console.log(usuario);
       this.progress = 50;
+      if(this.isEdit){
+        console.log(this.idU);
+        this._usuarioService.update(this.idU,usuario).subscribe(
+          response =>{ 
+            if (response.status == "Success") {
+              this.loadingBarService.complete();
+              this.usuario=response.usuario
+              
+              //Alert
+              this.redireccionSwal.fire();
+            } else {
+              this.loadingBarService.complete();
+              console.log("else",response);
+              this.errorSwal.fire();
+            }
+          }
+        );
+      }else{ 
         this._usuarioService.create(usuario).subscribe(
           (response) => {
             this.progress = 100;
@@ -99,6 +120,7 @@ export class FormularioUsuarioComponent implements OnInit {
             this.errorSwal.fire();
           }
         );
+      }
     }
       
       
@@ -130,6 +152,22 @@ export class FormularioUsuarioComponent implements OnInit {
       },
       error => {
           console.log(error);
+      }
+    );
+  }
+  llenarCampos(id){
+    this.isEdit = true;
+    this._usuarioService.getUsuario(id).subscribe(
+      response => {
+        if (response.status == 'success') {
+          console.log(response);
+          this.idU = response.usuario._id;
+          console.log(this.idU);
+          this.usuario = response.usuario;
+        }
+      },
+      err => {
+        console.log(err);
       }
     );
   }
@@ -170,6 +208,10 @@ export class FormularioUsuarioComponent implements OnInit {
       }
     );
     
+    
+  }
+
+  modificarUsuario(f: NgForm){
     
   }
 
