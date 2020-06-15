@@ -80,7 +80,7 @@ export class FormularioUsuarioComponent implements OnInit {
             if (response.status == "success") {
               this.loadingBarService.complete();
               this.usuario=response.usuario
-              this.getUsuarios();
+              
               //Alert
               this.redireccionSwal.fire();
             } else {
