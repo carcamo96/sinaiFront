@@ -18,6 +18,9 @@ export class FormularioUsuarioComponent implements OnInit {
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
 
+  @ViewChild("redireccionSwalDel") private redireccionSwalDel: SwalComponent;
+  @ViewChild("errorSwalDel") private errorSwalDel: SwalComponent;
+
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [
     {titulo: 'Home', link: '/admin/home'}
@@ -102,9 +105,6 @@ export class FormularioUsuarioComponent implements OnInit {
 
   }
 
-  redireccionar(){
-    this._router.navigate(["admin/home"]);
-  }
 
   validarPass(){
     if (this.usuario.pass === this.pas) {
@@ -132,6 +132,45 @@ export class FormularioUsuarioComponent implements OnInit {
           console.log(error);
       }
     );
+  }
+
+  eliminarUsuario(id){
+    this.loadingBarService.start();
+    this.progress = 50;
+    //Alert
+    this.redireccionSwalDel.fire();
+    console.log(this.redireccionSwalDel.cancel);
+    this.redireccionSwalDel.confirm.subscribe(
+      res=>{
+        console.log(res);
+        if (res == true) {
+          this._usuarioService.delete(id).subscribe(
+      
+            response => {
+              this.progress = 100;
+              if (response.status == 'success') {
+                this.getUsuarios();
+                this.loadingBarService.complete();
+                this.usuario=response.usuario
+                 
+              }
+            },
+            err => {
+              console.log(err);
+              this.loadingBarService.complete();
+              this.errorSwalDel.fire();
+            }
+          );
+        }else{
+          this.loadingBarService.complete();
+              this.errorSwalDel.fire();
+          console.log('else');
+        }
+        this.loadingBarService.complete();
+      }
+    );
+    
+    
   }
 
   ngOnDestroy(): void {
