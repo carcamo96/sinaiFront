@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Usuario } from 'src/app/models/usuario';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormControl, Validators } from '@angular/forms';
 import { UsuarioService } from '../../services/usuario';
 import { LoadingBarService } from "@ngx-loading-bar/core";
 import { SwalComponent } from "@sweetalert2/ngx-sweetalert2";
@@ -36,17 +36,20 @@ export class FormularioUsuarioComponent implements OnInit {
   public minPass: boolean;
   public progress = 0;
 
+
   constructor(
     private _usuarioService: UsuarioService,
     private loadingBarService: LoadingBarService,
     private _router: Router
   ) {
+    
     this.usuario = {
       usuario:'',
       rol:'',
       pass:'',
       fechaRegistro:new Date(Date.now())
     }
+    
   }
 
   ngOnInit(): void {
@@ -63,7 +66,7 @@ export class FormularioUsuarioComponent implements OnInit {
     if (f.valid) {
       let usuario = new Usuario(
         this.usuario.usuario,
-        '123',
+        this.usuario.pass,
         this.usuario.rol,
         
         new Date(Date.now())
@@ -104,18 +107,16 @@ export class FormularioUsuarioComponent implements OnInit {
   }
 
   validarPass(){
-    if (this.usuario.pass == this.pas) {
+    if (this.usuario.pass === this.pas) {
       this.valPass = true;
     }
     else{this.valPass = false}
   }
 
   passLgth(){
-    if(this.usuario.pass.length < 8){
-      this.minPass = true;
-    }else{
-      this.minPass = false;
-    }
+    const control = new FormControl(this.usuario.pass, Validators.minLength(8));
+    this.minPass=control.invalid;
+    console.log(control.invalid);
   }
 
   getUsuarios(){

@@ -66,7 +66,7 @@
                                   <select name="rolUsuario" class="form-control"
                                   [(ngModel)]="usuario.rol" #rol="ngModel" [ngClass]="{
                                     'is-invalid': !rol.valid && rol.touched
-                                  }" >
+                                  }" required>
                                       <option value="Administrador">Administrador</option>
                                       <option value="Enfermero">Enfermer@</option>
                                       <option value="Laboratorista">Laboratorista</option>
@@ -94,13 +94,17 @@
                                     <label for="password">Contraseña: </label>
                                     <div class="input-group mb-3">
                                       <input
+                                      required
+                                      name="contra"
                                         #contraUsuario="ngModel"
                                         type="password"
                                         class="form-control"
                                         placeholder="Contraseña"
                                       [(ngModel)]="usuario.pass"
-                                      
-                                      
+                                      (ngModelChange)="passLgth()"
+                                      [ngClass]="{
+                                        'is-invalid': !contraUsuario.valid && contraUsuario.touched
+                                      }" 
                                       />
                                       <div class="input-group-append">
                                         <div class="input-group-text">
@@ -109,12 +113,12 @@
                                       </div>
                                       
                                     </div>
-                                   <!-- <small
+                                   <small
                         class="text-danger"
-                        *ngIf="minPass == true"
+                        *ngIf="minPass"
                       >
                         Debe contener un mínimo de 8 caractéres
-                      </small>-->
+                      </small>
                                 </div>
                               </div>
                               <!--<div class="col-md-2"></div>-->
@@ -124,11 +128,15 @@
                                 <div class="input-group mb-3">
                                   <input
                                     name="passwordCofirm"
-                                    #passwordCofirm="ngModel"
+                                    #passwor="ngModel"
                                     type="password"
                                     class="form-control"
                                     placeholder="Contraseña"
                                   [(ngModel)]="pas"
+                                  (ngModelChange)="validarPass()"
+                                  [ngClass]="{
+                                    'is-invalid': !passwor.valid && passwor.touched
+                                  }" 
                                   />
                                   
                                   <div class="input-group-append">
@@ -137,12 +145,12 @@
                                     </div>
                                   </div>
                                 </div>
-                               <!-- <small
+                               <small
                     class="text-danger"
                     *ngIf="valPass == false"
                   >
                     Las contraseñas no coinciden
-                  </small>-->
+                  </small>
                             </div>
                           </div>
                               </div>
@@ -152,7 +160,8 @@
                                   <!-- /.col -->
                                   <div class="col-md-9"></div>
                                   <div class="col-md-3">
-                                      <button type="submit" class="btn btn-primary mr-3">
+                                      <button type="submit" class="btn btn-primary mr-3" 
+                                      [disabled]="usuarioForm.invalid || minPass || !valPass">
                                           Crear usuario
                                       </button>
                                       <button type="reset" class="btn btn-secondary" [ngStyle]="{'display': 'space-between'}">
@@ -177,15 +186,14 @@
                   <swal
                   #redireccionSwal
                   title="Usuario registrado!"
-                  text="¿Desea regresar a inicio?"
+                  text="El usuario ha sido registrado con éxito"
                   icon="success"
-                  [showCancelButton]="true"
-                  confirmButtonText="Si!"
+                  [showCancelButton]="false"
+                  confirmButtonText="Ok!"
                   cancelButtonText="No!"
                   confirmButtonColor="#3085d6"
                   cancelButtonColor="#bbbbbb"
                   [focusCancel]="true"
-                  (confirm)="redireccionar()"
                 >
                 </swal>
 
