@@ -96,6 +96,7 @@ export class FormularioUsuarioComponent implements OnInit {
               this.loadingBarService.complete();
               this.usuario = response.usuario;
               this.usuarios.push(this.usuario);
+              this.updateUsers();
               //Alert
               this.redireccionSwal.fire();
             } else {
@@ -112,7 +113,7 @@ export class FormularioUsuarioComponent implements OnInit {
           }
         );
       }
-      this.usuario = null;
+      //this.usuario = null;
       f.reset();
   }
 
@@ -137,7 +138,7 @@ export class FormularioUsuarioComponent implements OnInit {
           this.loadingBarService.complete();
           this.usuario = response.usuario;
           //this.usuarios.push(this.usuario);
-          this.updateEmployee();
+          this.updateUsers();
           this.isEdit = false;
           //Alert
           this.redireccionSwalMod.fire();
@@ -155,18 +156,24 @@ export class FormularioUsuarioComponent implements OnInit {
       );
       
     }
-    this.usuario=null;
+    //this.usuario=null;
     f.reset();
   }
  
 
-  updateEmployee():void {
+  updateUsers():void {
+    //this.getUsuarios();
+    console.log(this.usuarios);
     this.usuarios.forEach(v => {
-      if (v._id==this.idU) {
+      console.log(this.usuario._id);
+      if (v._id==this.usuario._id) {
         v.usuario=this.usuario.usuario;
         v.pass=this.usuario.pass;
         v.rol=this.usuario.rol;
         v.fechaRegistro=this.usuario.fechaRegistro;
+        console.log('correcto', v);
+      }else{
+        console.log('else');
       }
     });
     

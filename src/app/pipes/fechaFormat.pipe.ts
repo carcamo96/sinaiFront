@@ -10,7 +10,7 @@ export class FechaFormat implements PipeTransform{
 
         let fecha = new Date(value);
 
-        let dia = fecha.getDate()+1;
+        let dia = fecha.getDate();
         let mes = fecha.getMonth()+1;
         let year = fecha.getFullYear();
 
