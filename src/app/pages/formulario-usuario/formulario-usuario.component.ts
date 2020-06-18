@@ -29,7 +29,8 @@ export class FormularioUsuarioComponent implements OnInit {
   @ViewChild("redireccionSwalDel") private redireccionSwalDel: SwalComponent;
   @ViewChild("errorSwalDel") private errorSwalDel: SwalComponent;
 
-  @ViewChild("myimg") elementView: ElementRef;
+  @ViewChild('contraUsuario', { read: ElementRef }) passwordEye: ElementRef;
+// Seleccionamos el elemento con el nombre que le pusimos con el #
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [{ titulo: "Home", link: "/admin/home" }];
@@ -39,7 +40,7 @@ export class FormularioUsuarioComponent implements OnInit {
 
   private eventsSubscription: any;
   @Input() events: Observable<any>;
-
+  passwordTypeInput  =  'password';
   public usuario: Usuario;
   public tablaUser: any[] = [];
   public usuarios: any[] = [];
@@ -112,7 +113,6 @@ export class FormularioUsuarioComponent implements OnInit {
         );
       }
       this.usuario = null;
-      this.getUsuarios();
       f.reset();
   }
 
@@ -132,6 +132,7 @@ export class FormularioUsuarioComponent implements OnInit {
       this.progress = 50;
       console.log(this.idU);
       this._usuarioService.update(this.idU, usuario).subscribe((response) => {
+        this.progress=100;
         if (response.status == "Success") {
           this.loadingBarService.complete();
           this.usuario = response.usuario;
@@ -142,23 +143,24 @@ export class FormularioUsuarioComponent implements OnInit {
           this.redireccionSwalMod.fire();
         } else {
           this.loadingBarService.complete();
-          console.log("else", response);
+          //console.log("else", response);
           this.errorSwalMod.fire();
         }
-      });
+      },
+      err=>{
+        console.log(err);
+        this.loadingBarService.complete();
+        this.errorSwal.fire();
+      }
+      );
       
     }
+    this.usuario=null;
     f.reset();
   }
-  myValue;
-  editEmployee(i):void {
-    //this.hideUpdate = false;
-    this.model2 = this.usuarios.find(usr => usr._id == i) ;
-    
-  }
+ 
 
   updateEmployee():void {
-    let i = this.myValue;
     this.usuarios.forEach(v => {
       if (v._id==this.idU) {
         v.usuario=this.usuario.usuario;
@@ -216,7 +218,7 @@ export class FormularioUsuarioComponent implements OnInit {
     );
   }
 
-  eliminarUsuario(id) {
+  eliminarUsuario(id,i) {
     this.loadingBarService.start();
     this.progress = 50;
     //Alert
@@ -229,9 +231,18 @@ export class FormularioUsuarioComponent implements OnInit {
           (response) => {
             this.progress = 100;
             if (response.status == "success") {
-              this.getUsuarios();
               this.loadingBarService.complete();
-              this.usuario = response.usuario;
+              //this.usuario = response.usuario;
+              let users:any[]=[];
+              this.usuarios.forEach(v => {
+                if (v._id===this.idU) {
+                  
+                }else{users.push(v);}
+              });
+              
+              users.splice(i,1);
+              console.log(users);
+               this.usuarios=users;
             }
           },
           (err) => {
@@ -247,9 +258,24 @@ export class FormularioUsuarioComponent implements OnInit {
       }
       this.loadingBarService.complete();
     });
+    this.loadingBarService.complete();
   }
 
-  modificarUsuario(f: NgForm) {}
+  mostrarPassword() {
+    //cambiar tipo input
+this.passwordTypeInput = this.passwordTypeInput === 'text' ? 'password' : 'text';
+   //obtener el input
+   const nativeEl = this.passwordEye.nativeElement.querySelector('input');
+   //obtener el indice de la posición del texto actual en el input
+   const inputSelection = nativeEl.selectionStart;
+   //ejecuto el focus al input
+   nativeEl.focus();
+  //espero un milisegundo y actualizo la posición del indice del texto
+   setTimeout(() => {
+       nativeEl.setSelectionRange(inputSelection, inputSelection);
+   }, 1);
+
+}
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.

@@ -102,7 +102,7 @@
                           required
                           name="contra"
                           #contraUsuario="ngModel"
-                          type="password"
+                          type="{{passwordTypeInput}}"
                           class="form-control"
                           placeholder="Contraseña"
                           [(ngModel)]="usuario.pass"
@@ -113,9 +113,9 @@
                           }"
                         />
                         <div class="input-group-append">
-                          <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                          </div>
+                          <button class="input-group-text" type="button" (click)="mostrarPassword()">
+                            <span class="fa fa-eye-slash icon"></span>
+                          </button>
                         </div>
                       </div>
                       <small class="text-danger" *ngIf="minPass">
@@ -267,7 +267,7 @@
                           required
                           name="contra"
                           #contraUsuario="ngModel"
-                          type="password"
+                          type="{{passwordTypeInput}}"
                           class="form-control"
                           placeholder="Contraseña"
                           [(ngModel)]="usuario.pass"
@@ -278,9 +278,9 @@
                           }"
                         />
                         <div class="input-group-append">
-                          <div class="input-group-text">
-                            <span class="fas fa-lock"></span>
-                          </div>
+                          <button class="input-group-text" type="button" (click)="mostrarPassword()">
+                            <span class="fa fa-eye-slash icon"></span>
+                          </button>
                         </div>
                       </div>
                       <small class="text-danger" *ngIf="minPass">
@@ -432,7 +432,7 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let user of usuarios">
+                <tr *ngFor="let user of usuarios let i = index">
                   <td>{{ user.usuario }}</td>
                   <td>{{ user.rol }}</td>
                   <td>{{ user.fechaRegistro | fechaFormat }}</td>
@@ -450,7 +450,7 @@
                   <td>
                     <button
                       type="button"
-                      (click)="eliminarUsuario(user._id)"
+                      (click)="eliminarUsuario(user._id,i)"
                       class="btn btn-block btn-default"
                     >
                       <a style="color: gray;">
@@ -480,7 +480,6 @@
         confirmButtonColor="#3085d6"
         cancelButtonColor="#bbbbbb"
         [focusCancel]="true"
-        (confirm)="getUsuarios()"
       >
       </swal>
 
