@@ -56,10 +56,10 @@
             <tbody>
               <tr *ngFor="let consulta of consultas">
                 <td>{{consulta.motivo}}</td>
-                  <td>{{consulta.peso}}</td>
-                  <td>{{consulta.talla}}</td>
-                  <td>{{consulta.temperatura}}</td>
-                  <td>{{consulta.presionArt}}</td>
+                  <td>{{consulta.peso}} kg</td>
+                  <td>{{consulta.talla}} m</td>
+                  <td>{{consulta.temperatura}} °C</td>
+                  <td>{{consulta.presionArt}} PA</td>
                   <td>{{consulta.historia}}</td>
                   <td>{{consulta.antePatol}}</td>
                   <td>{{consulta.fechaConsul | fechaFormat}}</td>

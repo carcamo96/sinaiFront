@@ -41,12 +41,14 @@ export class FormularioUsuarioComponent implements OnInit {
   @Input() events: Observable<any>;
 
   public usuario: Usuario;
+  public tablaUser: any[] = [];
   public usuarios: any[] = [];
   public pas: string;
   public valPass: boolean;
   public minPass: boolean;
   public progress = 0;
   public isEdit = false;
+  public model2: any = {};
   private idU;
 
   constructor(
@@ -54,6 +56,7 @@ export class FormularioUsuarioComponent implements OnInit {
     private loadingBarService: LoadingBarService
   ) {
     this.usuario = {
+      _id:"",
       usuario: "",
       rol: "",
       pass: "",
@@ -74,7 +77,7 @@ export class FormularioUsuarioComponent implements OnInit {
     this.progress = 30;
 
     if (f.valid) {
-      let usuario = new Usuario(
+      let usuario = new Usuario('',
         this.usuario.usuario,
         this.usuario.pass,
         this.usuario.rol,
@@ -91,7 +94,7 @@ export class FormularioUsuarioComponent implements OnInit {
             if (response.status == "success") {
               this.loadingBarService.complete();
               this.usuario = response.usuario;
-
+              this.usuarios.push(this.usuario);
               //Alert
               this.redireccionSwal.fire();
             } else {
@@ -118,7 +121,7 @@ export class FormularioUsuarioComponent implements OnInit {
     this.progress = 30;
 
     if (f.valid) {
-      let usuario = new Usuario(
+      let usuario = new Usuario('',
         this.usuario.usuario,
         this.usuario.pass,
         this.usuario.rol,
@@ -132,6 +135,8 @@ export class FormularioUsuarioComponent implements OnInit {
         if (response.status == "Success") {
           this.loadingBarService.complete();
           this.usuario = response.usuario;
+          //this.usuarios.push(this.usuario);
+          this.updateEmployee();
           this.isEdit = false;
           //Alert
           this.redireccionSwalMod.fire();
@@ -144,6 +149,25 @@ export class FormularioUsuarioComponent implements OnInit {
       
     }
     f.reset();
+  }
+  myValue;
+  editEmployee(i):void {
+    //this.hideUpdate = false;
+    this.model2 = this.usuarios.find(usr => usr._id == i) ;
+    
+  }
+
+  updateEmployee():void {
+    let i = this.myValue;
+    this.usuarios.forEach(v => {
+      if (v._id==this.idU) {
+        v.usuario=this.usuario.usuario;
+        v.pass=this.usuario.pass;
+        v.rol=this.usuario.rol;
+        v.fechaRegistro=this.usuario.fechaRegistro;
+      }
+    });
+    
   }
 
   validarPass() {
@@ -166,6 +190,7 @@ export class FormularioUsuarioComponent implements OnInit {
         console.log(response.usuarios);
         if (response.status == "success") {
           this.usuarios = response.usuarios;
+          this.tablaUser = this.usuarios;
           this.dtTrigger.next();
         }
       },
