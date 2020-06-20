@@ -3,15 +3,17 @@ import {
   OnInit,
   ViewChild,
   Input,
-  Renderer2,
   ElementRef,
+  OnDestroy
 } from "@angular/core";
 import { Usuario } from "src/app/models/usuario";
 import { NgForm, FormControl, Validators } from "@angular/forms";
 import { UsuarioService } from "../../services/usuario";
+
 import { LoadingBarService } from "@ngx-loading-bar/core";
 import { SwalComponent } from "@sweetalert2/ngx-sweetalert2";
 import { Subject, Observable } from "rxjs";
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: "app-formulario-usuario",
@@ -19,7 +21,8 @@ import { Subject, Observable } from "rxjs";
   styleUrls: ["./formulario-usuario.component.css"],
   providers: [UsuarioService],
 })
-export class FormularioUsuarioComponent implements OnInit {
+export class FormularioUsuarioComponent implements OnDestroy, OnInit {
+
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
 
@@ -34,10 +37,10 @@ export class FormularioUsuarioComponent implements OnInit {
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [{ titulo: "Home", link: "/admin/home" }];
 
+  @ViewChild(DataTableDirective, {static: false}) dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  private eventsSubscription: any;
   @Input() events: Observable<any>;
 
   public usuario: Usuario;
@@ -74,6 +77,7 @@ export class FormularioUsuarioComponent implements OnInit {
     this.progress = 30;
 
     if (f.valid) {
+      //Creando el usuario
       let usuario = new Usuario(
         this.usuario.usuario,
         this.usuario.pass,
@@ -81,7 +85,7 @@ export class FormularioUsuarioComponent implements OnInit {
 
         new Date(Date.now())
       );
-      console.log(usuario);
+        //console.log(usuario);
       this.progress = 50;
       
         this._usuarioService.create(usuario).subscribe(
@@ -91,8 +95,7 @@ export class FormularioUsuarioComponent implements OnInit {
             if (response.status == "success") {
               this.loadingBarService.complete();
               this.usuario = response.usuario;
-
-              //Alert
+              //Se registro correctamente
               this.redireccionSwal.fire();
             } else {
               this.loadingBarService.complete();
@@ -108,9 +111,8 @@ export class FormularioUsuarioComponent implements OnInit {
           }
         );
       }
-      this.usuario = null;
-      this.getUsuarios();
-      f.reset();
+      this.usuario = null; //Limpia la el objeto auxiliar
+      f.reset();//Refresca el formulario
   }
 
   onSubmit2(f: NgForm) {
@@ -125,7 +127,7 @@ export class FormularioUsuarioComponent implements OnInit {
 
         new Date(Date.now())
       );
-      console.log(usuario);
+      //console.log(usuario);
       this.progress = 50;
       console.log(this.idU);
       this._usuarioService.update(this.idU, usuario).subscribe((response) => {
@@ -133,7 +135,7 @@ export class FormularioUsuarioComponent implements OnInit {
           this.loadingBarService.complete();
           this.usuario = response.usuario;
           this.isEdit = false;
-          //Alert
+          //El registro fue editado con exito
           this.redireccionSwalMod.fire();
         } else {
           this.loadingBarService.complete();
@@ -143,7 +145,7 @@ export class FormularioUsuarioComponent implements OnInit {
       });
       
     }
-    f.reset();
+    f.reset();//limpia el formulario de edición
   }
 
   validarPass() {
@@ -160,13 +162,14 @@ export class FormularioUsuarioComponent implements OnInit {
     console.log(control.invalid);
   }
 
+  //Carga los usuarios que se muestran en la tabla
   getUsuarios() {
     this._usuarioService.getUsuarios().subscribe(
       (response) => {
         console.log(response.usuarios);
         if (response.status == "success") {
           this.usuarios = response.usuarios;
-          this.dtTrigger.next();
+          this.dtTrigger.next();//Para refrescar la tabla
         }
       },
       (error) => {
@@ -174,14 +177,16 @@ export class FormularioUsuarioComponent implements OnInit {
       }
     );
   }
+
+  //Cuando se clickea el boton de editar
   llenarCampos(id) {
-    this.isEdit = true;
+    this.isEdit = true;//Cambia bandera a true para mostrar el formulario de edición 
     this._usuarioService.getUsuario(id).subscribe(
       (response) => {
         if (response.status == "success") {
-          console.log(response);
+          //console.log(response);
           this.idU = response.usuario._id;
-          console.log(this.idU);
+          //console.log(this.idU);
           this.usuario = response.usuario;
         }
       },
@@ -196,17 +201,18 @@ export class FormularioUsuarioComponent implements OnInit {
     this.progress = 50;
     //Alert
     this.redireccionSwalDel.fire();
-    console.log(this.redireccionSwalDel.cancel);
+    //console.log(this.redireccionSwalDel.cancel);
     this.redireccionSwalDel.confirm.subscribe((res) => {
-      console.log(res);
+      //console.log(res);
       if (res == true) {
         this._usuarioService.delete(id).subscribe(
           (response) => {
             this.progress = 100;
             if (response.status == "success") {
-              this.getUsuarios();
+              //this.getUsuarios();
               this.loadingBarService.complete();
-              this.usuario = response.usuario;
+              //this.usuario = response.usuario;
+              this.refrescarTabla();
             }
           },
           (err) => {
@@ -224,11 +230,22 @@ export class FormularioUsuarioComponent implements OnInit {
     });
   }
 
-  modificarUsuario(f: NgForm) {}
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.dtTrigger.unsubscribe();
   }
+
+
+  refrescarTabla(){
+    this.ngOnInit();
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      //this.dtTrigger.next();
+    });
+  }
 }
+
