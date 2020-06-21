@@ -23,6 +23,7 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
     {titulo: 'Home', link: '/admin/home'}
   ];
 
+  progressData = 10;
 
   dtTrigger: Subject<any> = new Subject();
   public pacientes: any[] =[];
@@ -45,13 +46,17 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
     this.cargarPacientes();
   }
   cargarPacientes(){
+    this.progressData = 30;
     this._pacienteService.getPacientes().subscribe(
       response => {
+        this.progressData = 70;
         if (response.pacientes) {
-         this.pacientes = response.pacientes;
-         this.dtTrigger.next();
-         this.loadingBarService.complete();
-         //console.log(response.pacientes);
+            
+            this.pacientes = response.pacientes;
+            this.dtTrigger.next();
+            this.loadingBarService.complete();
+            this.progressData = 100;
+
         }
       },
       error => {
