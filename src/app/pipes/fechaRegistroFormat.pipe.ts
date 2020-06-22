@@ -18,6 +18,15 @@ export class FechaRegistroFormat implements PipeTransform{
         let min = fecha.getMinutes();
         let hor = fecha.getHours();
 
+        if(min < 10){
+            let aux = '0'+min;
+            min = parseInt(aux);
+        }
+        if(sec < 10){
+            let aux2 = '0'+sec;
+            sec = parseInt(aux2);
+        }
+
         let fechaString = dia+'/'+mes+'/'+year+'/'+hor+':'+min+':'+sec;
 
         return fechaString;

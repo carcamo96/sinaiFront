@@ -26,6 +26,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
 
+  @ViewChild("confirmSwalMod") private confirmSwalMod: SwalComponent;
   @ViewChild("redireccionSwalMod") private redireccionSwalMod: SwalComponent;
   @ViewChild("errorSwalMod") private errorSwalMod: SwalComponent;
 
@@ -56,12 +57,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
     private _usuarioService: UsuarioService,
     private loadingBarService: LoadingBarService
   ) {
-    this.usuario = {
-      usuario: "",
-      rol: "",
-      pass: "",
-      fechaRegistro: new Date(Date.now()),
-    };
+    this.defaultUserValues();
   }
 
   ngOnInit(): void {
@@ -70,6 +66,15 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
       processing: true,
     };
     this.getUsuarios();
+  }
+
+  defaultUserValues(){
+    this.usuario = {
+      usuario: "",
+      rol: "Administrador",
+      pass: "",
+      fechaRegistro: new Date(Date.now()),
+    };
   }
 
   onSubmit(f: NgForm) {
@@ -115,10 +120,25 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
       f.reset();//Refresca el formulario
   }
 
-  onSubmit2(f: NgForm) {
+  //Solo para confirmar la edicion y separa logica
+  editarRegistro(f: NgForm){
     this.loadingBarService.start();
     this.progress = 30;
 
+    this.confirmSwalMod.fire();//lanzando la alerta
+    //Esperando por confirmación
+    this.confirmSwalMod.confirm.subscribe((res) =>{
+      //Si se confirma
+        if(res == true){
+          //continua el proceso de modificación 
+            this.onSubmit2(f);
+        }
+
+    });
+  }
+
+  onSubmit2(f: NgForm) {
+ 
     if (f.valid) {
       let usuario = new Usuario(
         this.usuario.usuario,
@@ -129,12 +149,11 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
       );
       //console.log(usuario);
       this.progress = 50;
-      console.log(this.idU);
+      //console.log(this.idU);
       this._usuarioService.update(this.idU, usuario).subscribe((response) => {
         if (response.status == "Success") {
           this.loadingBarService.complete();
-          this.usuario = response.usuario;
-          this.isEdit = false;
+          this.defaultUserValues();//Para limpiar el formulario de modificación        
           //El registro fue editado con exito
           this.redireccionSwalMod.fire();
         } else {
@@ -142,6 +161,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
           console.log("else", response);
           this.errorSwalMod.fire();
         }
+        this.isEdit = false;
       });
       
     }

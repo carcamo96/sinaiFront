@@ -51,12 +51,13 @@ export class ExpedientesComponent implements OnInit, OnDestroy {
       response => {
         this.progressData = 70;
         if (response.pacientes) {
-            
-            this.pacientes = response.pacientes;
-            this.dtTrigger.next();
-            this.loadingBarService.complete();
-            this.progressData = 100;
-
+            //Para efecto de carga
+            setTimeout(() => {
+              this.pacientes = response.pacientes;
+              this.dtTrigger.next();
+              this.loadingBarService.complete();
+              this.progressData = 100;
+            }, 2000);
         }
       },
       error => {
