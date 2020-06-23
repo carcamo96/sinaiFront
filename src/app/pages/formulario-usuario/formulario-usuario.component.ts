@@ -38,8 +38,7 @@ export class FormularioUsuarioComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
-  private eventsSubscription: any;
-  @Input() events: Observable<any>;
+
   passwordTypeInput  =  'password';
   public usuario: Usuario;
   public tablaUser: any[] = [];
@@ -97,6 +96,7 @@ export class FormularioUsuarioComponent implements OnInit {
               this.usuario = response.usuario;
               this.usuarios.push(this.usuario);
               this.updateUsers();
+              this.dtTrigger.next(this.usuarios);
               //Alert
               this.redireccionSwal.fire();
             } else {
