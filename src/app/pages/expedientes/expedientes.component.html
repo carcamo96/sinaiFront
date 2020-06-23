@@ -13,10 +13,13 @@
     
           <ngx-loading-bar color="#339942" height="2" animationTime="2000" 
                           runInterval="100" progress="0">
-          </ngx-loading-bar> 
+          </ngx-loading-bar>
     
             <div class="col-md-12">
-    
+              <p *ngIf="progressData < 100">Cargando ...</p>
+              <p *ngIf="progressData < 100">
+                <ngb-progressbar [showValue]="true" type="primary" [value]="progressData" [max]="100"></ngb-progressbar>
+              </p>
                 <div class="card card-primary">
                     <div class="card-header">
                       <h3 class="card-title">Registro de pacientes</h3>
@@ -206,3 +209,4 @@
 </ngx-smart-modal>
 <!-- Modal de informativo de ayuda del formulario  -->
 <!-- Ngx-smart-modals -->
+

@@ -34,6 +34,9 @@ import { FechaFormat } from './pipes/fechaFormat.pipe';
 //Para formatear el telefono 
 import { TelefonoFormat } from './pipes/telefonoFormat.pipe';
 
+//Para formatear la hora exacta en que se realizo un registro en el servidor
+import { FechaRegistroFormat } from './pipes/fechaRegistroFormat.pipe';
+
 //Para usar ngx-smart-modal
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 
@@ -42,6 +45,9 @@ import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
 
 //Libreria de NgBootstrap. Se importó automaticamente (De esta libreria se usan los popovers)
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+// Import ng-circle-progress
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -96,6 +102,7 @@ const ngWizardConfig: NgWizardConfig = {
     CalcularEdad,
     FechaFormat,
     TelefonoFormat,
+    FechaRegistroFormat,
     CalculadorComponent,
     LoginComponent,
     UsuarioComponent,
@@ -118,7 +125,26 @@ const ngWizardConfig: NgWizardConfig = {
     SweetAlert2Module.forRoot(), // inicializando las swett alerts
     NgxSmartModalModule.forRoot(), // inicializando Ngx-smart-modal
     NgWizardModule.forRoot(ngWizardConfig), //inicializando el ngx-wizard
-    NgbModule
+    NgbModule,
+    NgCircleProgressModule.forRoot({
+      "radius": 60,
+      "space": -10,
+      "outerStrokeGradient": true,
+      "outerStrokeWidth": 10,
+      "outerStrokeColor": "#4882c2",
+      "outerStrokeGradientStopColor": "#53a9ff",
+      "innerStrokeColor": "#e7e8ea",
+      "innerStrokeWidth": 10,
+      "title": "UI",
+      "titleFontSize": "19",
+      "subtitleFontSize": "21",
+      "animateTitle": false,
+      "animationDuration": 1000,
+      "showUnits": false,
+      "showBackground": false,
+      "clockwise": false,
+      "startFromZero": false
+    })
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

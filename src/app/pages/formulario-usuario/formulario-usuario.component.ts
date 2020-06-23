@@ -3,15 +3,17 @@ import {
   OnInit,
   ViewChild,
   Input,
-  Renderer2,
   ElementRef,
+  OnDestroy
 } from "@angular/core";
 import { Usuario } from "src/app/models/usuario";
 import { NgForm, FormControl, Validators } from "@angular/forms";
 import { UsuarioService } from "../../services/usuario";
+
 import { LoadingBarService } from "@ngx-loading-bar/core";
 import { SwalComponent } from "@sweetalert2/ngx-sweetalert2";
 import { Subject, Observable } from "rxjs";
+import { DataTableDirective } from 'angular-datatables';
 
 @Component({
   selector: "app-formulario-usuario",
@@ -19,49 +21,43 @@ import { Subject, Observable } from "rxjs";
   styleUrls: ["./formulario-usuario.component.css"],
   providers: [UsuarioService],
 })
-export class FormularioUsuarioComponent implements OnInit {
+export class FormularioUsuarioComponent implements OnDestroy, OnInit {
+
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
 
+  @ViewChild("confirmSwalMod") private confirmSwalMod: SwalComponent;
   @ViewChild("redireccionSwalMod") private redireccionSwalMod: SwalComponent;
   @ViewChild("errorSwalMod") private errorSwalMod: SwalComponent;
 
   @ViewChild("redireccionSwalDel") private redireccionSwalDel: SwalComponent;
   @ViewChild("errorSwalDel") private errorSwalDel: SwalComponent;
 
-  @ViewChild('contraUsuario', { read: ElementRef }) passwordEye: ElementRef;
-// Seleccionamos el elemento con el nombre que le pusimos con el #
+  @ViewChild("myimg") elementView: ElementRef;
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [{ titulo: "Home", link: "/admin/home" }];
 
+  @ViewChild(DataTableDirective, {static: false}) dtElement: DataTableDirective;
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
+  @Input() events: Observable<any>;
 
-  passwordTypeInput  =  'password';
   public usuario: Usuario;
-  public tablaUser: any[] = [];
   public usuarios: any[] = [];
   public pas: string;
   public valPass: boolean;
   public minPass: boolean;
   public progress = 0;
   public isEdit = false;
-  public model2: any = {};
   private idU;
 
   constructor(
     private _usuarioService: UsuarioService,
     private loadingBarService: LoadingBarService
   ) {
-    this.usuario = {
-      _id:"",
-      usuario: "",
-      rol: "",
-      pass: "",
-      fechaRegistro: new Date(Date.now()),
-    };
+    this.defaultUserValues();
   }
 
   ngOnInit(): void {
@@ -72,19 +68,29 @@ export class FormularioUsuarioComponent implements OnInit {
     this.getUsuarios();
   }
 
+  defaultUserValues(){
+    this.usuario = {
+      usuario: "",
+      rol: "Administrador",
+      pass: "",
+      fechaRegistro: new Date(Date.now()),
+    };
+  }
+
   onSubmit(f: NgForm) {
     this.loadingBarService.start();
     this.progress = 30;
 
     if (f.valid) {
-      let usuario = new Usuario('',
+      //Creando el usuario
+      let usuario = new Usuario(
         this.usuario.usuario,
         this.usuario.pass,
         this.usuario.rol,
 
         new Date(Date.now())
       );
-      console.log(usuario);
+        //console.log(usuario);
       this.progress = 50;
       
         this._usuarioService.create(usuario).subscribe(
@@ -94,10 +100,7 @@ export class FormularioUsuarioComponent implements OnInit {
             if (response.status == "success") {
               this.loadingBarService.complete();
               this.usuario = response.usuario;
-              this.usuarios.push(this.usuario);
-              this.updateUsers();
-              this.dtTrigger.next(this.usuarios);
-              //Alert
+              //Se registro correctamente
               this.redireccionSwal.fire();
             } else {
               this.loadingBarService.complete();
@@ -113,70 +116,56 @@ export class FormularioUsuarioComponent implements OnInit {
           }
         );
       }
-      //this.usuario = null;
-      f.reset();
+      this.usuario = null; //Limpia la el objeto auxiliar
+      f.reset();//Refresca el formulario
   }
 
-  onSubmit2(f: NgForm) {
+  //Solo para confirmar la edicion y separa logica
+  editarRegistro(f: NgForm){
     this.loadingBarService.start();
     this.progress = 30;
 
+    this.confirmSwalMod.fire();//lanzando la alerta
+    //Esperando por confirmación
+    this.confirmSwalMod.confirm.subscribe((res) =>{
+      //Si se confirma
+        if(res == true){
+          //continua el proceso de modificación 
+            this.onSubmit2(f);
+        }
+
+    });
+  }
+
+  onSubmit2(f: NgForm) {
+ 
     if (f.valid) {
-      let usuario = new Usuario('',
+      let usuario = new Usuario(
         this.usuario.usuario,
         this.usuario.pass,
         this.usuario.rol,
 
         new Date(Date.now())
       );
-      console.log(usuario);
+      //console.log(usuario);
       this.progress = 50;
-      console.log(this.idU);
+      //console.log(this.idU);
       this._usuarioService.update(this.idU, usuario).subscribe((response) => {
-        this.progress=100;
         if (response.status == "Success") {
           this.loadingBarService.complete();
-          this.usuario = response.usuario;
-          //this.usuarios.push(this.usuario);
-          this.updateUsers();
-          this.isEdit = false;
-          //Alert
+          this.defaultUserValues();//Para limpiar el formulario de modificación        
+          //El registro fue editado con exito
           this.redireccionSwalMod.fire();
         } else {
           this.loadingBarService.complete();
-          //console.log("else", response);
+          console.log("else", response);
           this.errorSwalMod.fire();
         }
-      },
-      err=>{
-        console.log(err);
-        this.loadingBarService.complete();
-        this.errorSwal.fire();
-      }
-      );
+        this.isEdit = false;
+      });
       
     }
-    //this.usuario=null;
-    f.reset();
-  }
- 
-
-  updateUsers():void {
-    //this.getUsuarios();
-    console.log(this.usuarios);
-    this.usuarios.forEach(v => {
-      console.log(this.usuario._id);
-      if (v._id==this.usuario._id) {
-        v.usuario=this.usuario.usuario;
-        v.pass=this.usuario.pass;
-        v.rol=this.usuario.rol;
-        v.fechaRegistro=this.usuario.fechaRegistro;
-        console.log('correcto', v);
-      }else{
-        console.log('else');
-      }
-    });
-    
+    f.reset();//limpia el formulario de edición
   }
 
   validarPass() {
@@ -193,14 +182,14 @@ export class FormularioUsuarioComponent implements OnInit {
     console.log(control.invalid);
   }
 
+  //Carga los usuarios que se muestran en la tabla
   getUsuarios() {
     this._usuarioService.getUsuarios().subscribe(
       (response) => {
         console.log(response.usuarios);
         if (response.status == "success") {
           this.usuarios = response.usuarios;
-          this.tablaUser = this.usuarios;
-          this.dtTrigger.next();
+          this.dtTrigger.next();//Para refrescar la tabla
         }
       },
       (error) => {
@@ -208,14 +197,16 @@ export class FormularioUsuarioComponent implements OnInit {
       }
     );
   }
+
+  //Cuando se clickea el boton de editar
   llenarCampos(id) {
-    this.isEdit = true;
+    this.isEdit = true;//Cambia bandera a true para mostrar el formulario de edición 
     this._usuarioService.getUsuario(id).subscribe(
       (response) => {
         if (response.status == "success") {
-          console.log(response);
+          //console.log(response);
           this.idU = response.usuario._id;
-          console.log(this.idU);
+          //console.log(this.idU);
           this.usuario = response.usuario;
         }
       },
@@ -225,31 +216,23 @@ export class FormularioUsuarioComponent implements OnInit {
     );
   }
 
-  eliminarUsuario(id,i) {
+  eliminarUsuario(id) {
     this.loadingBarService.start();
     this.progress = 50;
     //Alert
     this.redireccionSwalDel.fire();
-    console.log(this.redireccionSwalDel.cancel);
+    //console.log(this.redireccionSwalDel.cancel);
     this.redireccionSwalDel.confirm.subscribe((res) => {
-      console.log(res);
+      //console.log(res);
       if (res == true) {
         this._usuarioService.delete(id).subscribe(
           (response) => {
             this.progress = 100;
             if (response.status == "success") {
+              //this.getUsuarios();
               this.loadingBarService.complete();
               //this.usuario = response.usuario;
-              let users:any[]=[];
-              this.usuarios.forEach(v => {
-                if (v._id===this.idU) {
-                  
-                }else{users.push(v);}
-              });
-              
-              users.splice(i,1);
-              console.log(users);
-               this.usuarios=users;
+              this.refrescarTabla();
             }
           },
           (err) => {
@@ -265,28 +248,24 @@ export class FormularioUsuarioComponent implements OnInit {
       }
       this.loadingBarService.complete();
     });
-    this.loadingBarService.complete();
   }
 
-  mostrarPassword() {
-    //cambiar tipo input
-this.passwordTypeInput = this.passwordTypeInput === 'text' ? 'password' : 'text';
-   //obtener el input
-   const nativeEl = this.passwordEye.nativeElement.querySelector('input');
-   //obtener el indice de la posición del texto actual en el input
-   const inputSelection = nativeEl.selectionStart;
-   //ejecuto el focus al input
-   nativeEl.focus();
-  //espero un milisegundo y actualizo la posición del indice del texto
-   setTimeout(() => {
-       nativeEl.setSelectionRange(inputSelection, inputSelection);
-   }, 1);
-
-}
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.dtTrigger.unsubscribe();
   }
+
+
+  refrescarTabla(){
+    this.ngOnInit();
+    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+      // Destroy the table first
+      dtInstance.destroy();
+      // Call the dtTrigger to rerender again
+      //this.dtTrigger.next();
+    });
+  }
 }
+
