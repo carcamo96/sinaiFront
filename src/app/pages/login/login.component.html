@@ -12,42 +12,76 @@
       <div class="card-body login-card-body">
         <p class="login-box-msg">Ingresa tus claves para iniciar sesión</p>
 
-        <form action="../../index3.html" method="post">
+        <form 
+          role="form"
+          #loginForm="ngForm"
+          (ngSubmit)="logear()"  
+        >
+          <small
+              class="text-danger"
+              *ngIf="!user.valid && user.touched" 
+          >
+            Campo requerido
+          </small>
           <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Usuario" />
+            <input 
+              type="text" 
+              class="form-control" 
+              placeholder="Usuario" 
+              autofocus 
+              name="user"
+              #user="ngModel"
+              [(ngModel)]="usuario.usuario"
+              required
+              autocomplete="off"
+              [ngClass]="{
+                'is-invalid': 
+                 !user.valid && user.touched
+              }"
+            />
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-user"></span>
               </div>
             </div>
-          </div>
+          </div><!--Fin del input group-->
+          
+            <small
+              class="text-danger"
+              *ngIf="!pass.valid && pass.touched" 
+            >
+              Campo requerido
+            </small>
           <div class="input-group mb-3">
             <input
               type="password"
               class="form-control"
-              placeholder="Password"
+              placeholder="Contraseña"
+              name="pass"
+              #pass="ngModel"
+              [(ngModel)]="usuario.password"
+              required
+              [ngClass]="{
+                'is-invalid': 
+                 !pass.valid && pass.touched
+              }"
             />
             <div class="input-group-append">
               <div class="input-group-text">
                 <span class="fas fa-lock"></span>
               </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-8">
-              <div class="icheck-primary">
-                <input type="checkbox" id="remember" />
-                <label for="remember">
-                  Recordar contraseña
-                </label>
-              </div>
-            </div>
-          </div>
+          </div><!--Fin del input group-->
+          
           <br />
           <div class="row">
             <!-- /.col -->
             <div class="col-12">
-              <button type="submit" class="btn btn-primary btn-block">
+              <button 
+                type="submit" 
+                class="btn btn-primary btn-block"
+                [disabled]="loginForm.invalid"
+              >
                 Iniciar sesión
               </button>
             </div>
@@ -61,7 +95,7 @@
         <!-- /.social-auth-links -->
 
         <p class="mb-1">
-          <a href="forgot-password.html">¿Recuperar contraseña?</a>
+          <a href="#">¿Recuperar contraseña?</a>
         </p>
         
       </div>
