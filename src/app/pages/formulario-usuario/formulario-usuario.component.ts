@@ -41,7 +41,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
   public breads: any[] = [{ titulo: "Home", link: "/admin/home" }];
 
   @ViewChildren(DataTableDirective) dtElements: QueryList<DataTableDirective>;
-  
+
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
@@ -69,10 +69,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
       pagingType: "full_numbers",
       processing: true,
     };
-    this.dtOptions2 = {
-      pagingType: "full_numbers",
-      processing: true,
-    };
+    
     this.getUsuarios();
   }
 
@@ -212,7 +209,6 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
           this.usuarios=users;
           this.usuariosIn=users2;
           this.dtTrigger.next();//Para refrescar la tabla
-          this.dtTrigger2.next();
         }
       },
       (error) => {
@@ -278,7 +274,6 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.dtTrigger.unsubscribe();
-    this.dtTrigger2.unsubscribe();
   }
 
 
