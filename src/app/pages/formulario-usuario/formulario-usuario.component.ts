@@ -4,7 +4,9 @@ import {
   ViewChild,
   Input,
   ElementRef,
-  OnDestroy
+  OnDestroy,
+  ViewChildren,
+  QueryList
 } from "@angular/core";
 import { Usuario } from "src/app/models/usuario";
 import { NgForm, FormControl, Validators } from "@angular/forms";
@@ -38,7 +40,8 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [{ titulo: "Home", link: "/admin/home" }];
 
-  @ViewChild(DataTableDirective, {static: false}) dtElement: DataTableDirective;
+  @ViewChildren(DataTableDirective) dtElements: QueryList<DataTableDirective>;
+  
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
 
@@ -46,6 +49,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
 
   public usuario: Usuario;
   public usuarios: any[] = [];
+  public usuariosIn: any[] = [];
   public pas: string;
   public valPass: boolean;
   public minPass: boolean;
@@ -65,6 +69,10 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
       pagingType: "full_numbers",
       processing: true,
     };
+    this.dtOptions2 = {
+      pagingType: "full_numbers",
+      processing: true,
+    };
     this.getUsuarios();
   }
 
@@ -74,6 +82,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
       rol: "Administrador",
       pass: "",
       fechaRegistro: new Date(Date.now()),
+      estado:"activo"
     };
   }
 
@@ -88,7 +97,8 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
         this.usuario.pass,
         this.usuario.rol,
 
-        new Date(Date.now())
+        new Date(Date.now()),
+        this.usuario.estado
       );
         //console.log(usuario);
       this.progress = 50;
@@ -145,7 +155,8 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
         this.usuario.pass,
         this.usuario.rol,
 
-        new Date(Date.now())
+        new Date(Date.now()),
+        this.usuario.estado
       );
       //console.log(usuario);
       this.progress = 50;
@@ -189,7 +200,19 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
         console.log(response.usuarios);
         if (response.status == "success") {
           this.usuarios = response.usuarios;
+          let users:any[]=[];
+          let users2:any[]=[];
+          this.usuarios.filter(f=>{
+            if(f.rol == 'Laboratorista'){
+              users.push(f);
+            }if (f.rol == 'Administrador') {
+              users2.push(f);
+            }
+          });
+          this.usuarios=users;
+          this.usuariosIn=users2;
           this.dtTrigger.next();//Para refrescar la tabla
+          this.dtTrigger2.next();
         }
       },
       (error) => {
@@ -255,17 +278,20 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     this.dtTrigger.unsubscribe();
+    this.dtTrigger2.unsubscribe();
   }
 
 
   refrescarTabla(){
     this.ngOnInit();
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+    this.dtElements.forEach((dtElement: DataTableDirective)=>{ 
+    dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
       // Destroy the table first
       dtInstance.destroy();
       // Call the dtTrigger to rerender again
       //this.dtTrigger.next();
     });
+  });
   }
 }
 

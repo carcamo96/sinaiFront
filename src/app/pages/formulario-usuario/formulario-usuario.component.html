@@ -170,7 +170,20 @@
 
                 <div class="row">
                   <!-- /.col -->
-                  <div class="col-md-9"></div>
+                  <div class="col-md-2">
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input" value="activo" #r1="ngModel"
+                        [(ngModel)]="usuario.estado" type="radio" id="customRadio1" name="customRadio" checked>
+                        <label for="customRadio1" class="custom-control-label">Activo</label>
+                      </div>
+                  </div>
+                  <div class="col-md-7">
+                      <div class="custom-control custom-radio">
+                        <input class="custom-control-input" value="inactivo" #r1="ngModel"
+                        [(ngModel)]="usuario.estado" type="radio" id="customRadio2" name="customRadio">
+                        <label for="customRadio2" class="custom-control-label">Inactivo</label>
+                      </div>
+                  </div>
                   <div class="col-md-3">
                     <button
                       type="submit"
@@ -336,7 +349,20 @@
 
                 <div class="row">
                   <!-- /.col -->
-                  <div class="col-md-9"></div>
+                  <div class="col-md-2">
+                    <div class="custom-control custom-radio">
+                        <input class="custom-control-input" value="activo" #r1="ngModel"
+                        [(ngModel)]="usuario.estado" type="radio" id="customRadio1" name="customRadio" checked>
+                        <label for="customRadio1" class="custom-control-label">Habilitado</label>
+                      </div>
+                  </div>
+                  <div class="col-md-7">
+                      <div class="custom-control custom-radio">
+                        <input class="custom-control-input" value="inactivo" #r1="ngModel"
+                        [(ngModel)]="usuario.estado" type="radio" id="customRadio2" name="customRadio">
+                        <label for="customRadio2" class="custom-control-label">Deshabilitado</label>
+                      </div>
+                  </div>
                   <div class="col-md-3">
                     <button
                       type="submit"
@@ -366,14 +392,38 @@
        
       </div> <!--  Fin row align-items-center -->
 
+
+<div class="container-fluid">
+<!-- <div class="row">
+<div class="col-12">
+<h4>Usuarios registrados</h4>
+</div>
+</div>
+./row -->
+<div class="row">
+<div class="col-12">
+<div class="card card-primary card-tabs">
+<div class="card-header p-0 pt-1">
+<ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+<li class="nav-item">
+  <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Usuarios habilitados</a>
+</li>
+<li class="nav-item">
+  <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Usuarios deshabilitados</a>
+</li>
+</ul>
+</div>
+<div class="card-body">
+<div class="tab-content" id="custom-tabs-one-tabContent">
+<div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
       <!-- Tabla de registros -->
       <div class="col-md-12">
         <div class="card card-primary">
-          <div class="card-header">
+          <!--<div class="card-header">
             <h3 class="card-title">Usuarios registrados</h3>
             <div class="card-tools"></div>
             
-          </div>
+          </div>-->
            
 
           <div class="card-body">
@@ -428,6 +478,80 @@
         <!-- /.card -->
       </div>
       <!-- Fin de Tabla de registros -->
+</div>
+<div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+    <!-- Tabla de registros -->
+    <div class="col-md-12">
+      <div class="card card-primary">
+        <!--<div class="card-header">
+          <h3 class="card-title">Usuarios registrados</h3>
+          <div class="card-tools"></div>
+          
+        </div>-->
+         
+
+        <div class="card-body">
+          <table
+            datatable
+            [dtOptions]="dtOptions"
+            [dtTrigger]="dtTrigger"
+            class="row-border hover table table-bordered table-striped"
+          >
+            <thead>
+              <tr>
+                <th>Nombre de usuario</th>
+                <th>Rol de usuario</th>
+                <th>Fecha de registro</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of usuariosIn">
+                <td>{{ user.usuario }}</td>
+                <td>{{ user.rol }}</td>
+                <td>{{ user.fechaRegistro | fechaHoraMinSec }}</td>
+                <td>
+                  <button
+                    type="button"
+                    (click)="llenarCampos(user._id)"
+                    class="btn btn-block btn-default"
+                  >
+                    <a style="color: gray;">
+                      <i class="fa fa-wrench"></i>
+                    </a>
+                  </button>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    (click)="eliminarUsuario(user._id)"
+                    class="btn btn-block btn-default"
+                  >
+                    <a style="color: gray;">
+                      <i class="fa fa-user-times"></i>
+                    </a>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+      </div>
+      <!-- /.card -->
+    </div>
+    <!-- Fin de Tabla de registros -->               
+</div>
+
+</div>
+</div>
+<!-- /.card -->
+</div>
+</div>
+
+</div>
+</div>
 
     </div>
     <!-- Div col-md-12-->
