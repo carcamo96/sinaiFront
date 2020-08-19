@@ -21,7 +21,7 @@ export class ConsultaComponent implements OnInit {
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
-  public breads: any[] = [{ titulo: "Home", link: "/home" }];
+  public breads: any[] = [{ titulo: "Home", link: "/admin" }, {titulo: "Expedientes", link: "/admin/expedientes"}];
 
   public nomPaciente: string;
   public atl = Date.now();
@@ -34,6 +34,8 @@ export class ConsultaComponent implements OnInit {
   public edad: number;
   public fechaAux = "";
   public ayuda = false;
+
+  genEdad = '';
 
   progress = 0;
 
@@ -69,9 +71,9 @@ export class ConsultaComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadingBarService.start();
     this.cargarPaciente();
-
-    console.log(this.consulta.fechaConsul);
+    //console.log(this.consulta.fechaConsul);
   }
 
   onSubmit(f: NgForm) {
@@ -186,14 +188,20 @@ export class ConsultaComponent implements OnInit {
 
       this._pacienteService.getPaciente(this.idpa).subscribe(
         (response) => {
-          console.log(response);
+          //console.log(response);
           this.paciente = response.paciente;
           this.edad = this.obtenerEdad(
             new Date(),
             new Date(this.paciente.fechaNac)
           );
-          this.paciente.nombre =
-            response.paciente.nombre + " " + response.paciente.apellidos;
+          
+          if(this.paciente.gen === 'M'){
+            this.genEdad = this.edad + " años - MASCULINO";
+          }else{
+            this.genEdad = this.edad + " años - FEMENINO";
+          }
+          this.paciente.nombre = response.paciente.nombre + " " + response.paciente.apellidos;
+            this.loadingBarService.complete();
         },
         (error) => {
           console.log("nadaaa " + error);

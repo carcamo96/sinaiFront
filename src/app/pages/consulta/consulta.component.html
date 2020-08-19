@@ -59,10 +59,11 @@
           >
             <div class="card-body">
               <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-5">
                   <div class="form-group">
                     <label>Nombre de paciente </label>
-                    <input
+                    <div class="input-group">
+                      <input
                       type="text"
                       class="form-control"
                       name="nombre"
@@ -70,9 +71,14 @@
                       [(ngModel)]="paciente.nombre"
                       value="{{ paciente.nombre }}"
                       disabled
-                    />
+                  
+                      />
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">{{genEdad}}</span>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                </div><!--Fin de col-md-4-->
               </div>
               <div class="row">
                 <div class="col-md-3">
@@ -249,7 +255,7 @@
                   <!-- textarea -->
                   <div class="form-group">
                     <label
-                      >Antecedentes patológicos personales o de enfermedades
+                      >Antecedentes patológicos personales ó de enfermedades
                       crónicas</label
                     >
                     <textarea
