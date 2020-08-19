@@ -26,6 +26,8 @@ export class FormularioPacienteComponent implements OnInit {
   @ViewChild('redireccionSwal') private redireccionSwal: SwalComponent;
   @ViewChild('errorSwal') private errorSwal: SwalComponent;
 
+  @ViewChild('pacienteForm') private formulario: NgForm;//Variable para manejar el formulario
+
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [
     {titulo: 'Home', link: '/admin/home'}
@@ -120,9 +122,7 @@ export class FormularioPacienteComponent implements OnInit {
 
     }
 
-
-      f.resetForm({r1: 'M' }); //importante!!! resetea y se le pasa un json con los nuevo valores por defecto
-      this.edad = undefined;
+      //f.resetForm({r1: 'M' }); //importante!!! resetea y se le pasa un json con los nuevo valores por defecto
       this.limpiarCampos(); //limpia los campos del objeto auxiliar
 
   }
@@ -191,6 +191,8 @@ export class FormularioPacienteComponent implements OnInit {
       direccion: '',
       otrosDatos: ''
     }
+    this.formulario.resetForm({r1: 'M'});
+    this.edad = undefined;
   }
 
   // Alerta de exito
