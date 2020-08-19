@@ -5,5 +5,6 @@ export class Usuario{
         public pass: string,
         public rol: string,
         public fechaRegistro: Date,
+        public estado: string
     ){}
 }

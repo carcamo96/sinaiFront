@@ -18,7 +18,6 @@ import { FormularioUsuarioComponent } from './pages/formulario-usuario/formulari
 
 
 
-
 // Array de rutas
 const appRoutes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: 'login'},
