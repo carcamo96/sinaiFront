@@ -19,10 +19,154 @@
                                autocomplete="off">
                     </div>
                 </div>
-            </div>
-        </div>
+            </div><!-- Fin del primer row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="presentacion">Presentación:</label>
+                        <div class="input-group mb-3">
+                            <select
+                              name="presentacion"
+                              class="form-control"
+                              
+                            >
+                              <option value="" selected>Tableta</option>
+                              <option value="">Capsula</option>
+                              <option value="">Solución inyectable</option>
+                              <option value="">Solución bebible</option>
+                            
+                            </select>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Fin del segundo row -->
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="medicamento">Concentración:</label>
+                            <input type="text" 
+                                   class="form-control input-lg"
+                                   name="concentracion" 
+                                   placeholder="Digite concentración"
+                                   autofocus
+                                   autocomplete="off">
+                        </div>   
+                    </div> 
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="medida">Medida:</label>
+                        <div class="input-group mb-3">
+                            <select
+                              name="medida"
+                              class="form-control"
+                              
+                            >
+                              <option value="" selected>mg</option>
+                              <option value="">ml</option>
+                            
+                            </select>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Fin del tercer row -->
 
-    </div>
+            <div class="row">
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="cantidad">Cantidad:</label>
+                        <input type="number" 
+                               class="form-control"
+                               name="cantidad"
+                               min="1"
+                               max="15"
+                               value="1">
+                    </div>
+                </div>
+                <div class="col-md-5">
+                        <div class="form-group">
+                            <label for="cantidad">Frecuencia:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                        Cada: 
+                                    </span>
+                                </div>
+                                <input type="number" 
+                                   class="form-control"
+                                   name="cantidad"
+                                   min="1"
+                                   max="15"
+                                   value="2">
+                            </div>
+                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="tiempo"><i class="fas fa-alarm-clock"></i></label>
+                        <div class="input-group mb-3">
+                            <select
+                              name="tiempo"
+                              class="form-control"
+                              
+                            >
+                              <option value="" selected>Hora/s</option>
+                              <option value="">Minutos</option>
+                            </select>
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- Fin del cuarto row -->
+            <div class="row">
+                
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="cantidad">Durante:</label>
+                             
+                                <input type="number" 
+                                class="form-control"
+                                name="cantidad"
+                                min="1"
+                                max="30"
+                                value="7">  
+                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
+                        <div class="input-group mb-3">
+                            <select
+                            name="lapso"
+                            class="form-control"
+                            
+                            >
+                            <option value="" selected>Día/s</option>
+                            <option value="">Mes/es</option>
+                            <option value="">Año/s</option>
+                            </select>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
+                    <br>
+                    <input
+                        type="button"
+                        value="Agregar"
+                        class="btn btn-primary"
+                    />
+                </div>
+            </div><!--Fin del quinto row-->
+        </div><!-- Fin del card body -->
+
+    </div><!-- Fin del div para agregar a receta -->
 
     <div class="col-md-8">
 
@@ -39,6 +183,7 @@
                         <thead>
                         <tr>
                             <th>Medicamento</th>
+                            <th>Presentación</th>
                             <th>Concentración</th>
                             <th>Cantidad</th>
                             <th>Frecuencia</th>
@@ -47,8 +192,9 @@
                         </thead>
                         <tbody>
                         <tr>
-                            <td>Acetaminofen SOLUCION inyectable</td>
-                            <td>500 mg</td>
+                            <td>Acetaminofen</td>
+                            <td>Solución inyectable</td>
+                            <td>200 ml</td>
                             <td>1</td>
                             <td>3 horas</td>
                             <td>7 dias</td>
@@ -57,7 +203,24 @@
                         </tbody>
                         </table>
                 </div>
-                <!-- /.table-responsive -->        
+                <!-- /.table-responsive --> 
+                <hr>
+                <div class="col-md-12">
+                    <!-- textarea -->
+                    <div class="form-group">
+                      <label for="detalles">Detalles medicos (*):</label>
+                      <textarea
+                        class="form-control"
+                        rows="3"
+                        placeholder="Detalles ..."
+                        autocomplete="off"
+                        name="detalles"
+                        ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                      >
+                      </textarea>
+  
+                    </div>
+                </div>
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
@@ -69,14 +232,14 @@
               <input
                 type="button"
                 class="btn btn-secondary ml-3 mr-0 float-right"
-                value="Imprimir"
+                value=""
               />
             </div>
             <!-- /.card-footer -->
         </div>
         <!-- /.card -->
 
-    </div>
+    </div> <!-- Fin del div que contiene la tabla de receta -->
 
 </div>
 
