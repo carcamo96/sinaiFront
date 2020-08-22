@@ -2,19 +2,25 @@
 
     <div class="col-md-4">
 
-          <!-- TABLE: RECETA -->
-          <div class="card">
-            <div class="card-header border-transparent">
-            <h3 class="card-title">Agrega medicamentos</h3>
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body p-0">
-       
-            </div>
-            <!-- /.card-body -->
-            
+        <div class="row">
+            <p class="card-title">Agrega medicamento</p>
         </div>
-        <!-- /.card -->
+        <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="medicamento">Medicamento:</label>
+                        <input type="text" 
+                               class="form-control input-lg"
+                               name="medicamento" 
+                               placeholder="Digite un medicamento"
+                               autofocus
+                               autocomplete="off">
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
@@ -55,8 +61,16 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-            <a  class="btn btn-sm btn-primary float-right">Confirmar receta</a>
-            <a class="btn btn-sm btn-secondary float-right">Imprimir</a>
+              <input
+                type="button"
+                value="Confirmar receta"
+                class="btn btn-primary float-left"
+              />
+              <input
+                type="button"
+                class="btn btn-secondary ml-3 mr-0 float-right"
+                value="Imprimir"
+              />
             </div>
             <!-- /.card-footer -->
         </div>
