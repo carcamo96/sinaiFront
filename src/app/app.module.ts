@@ -69,6 +69,9 @@ import { UsuarioComponent } from './pages/usuario/usuario.component';
 import { AdminHomeComponent } from './pages/admin-home/admin-home.component';
 import { FormularioUsuarioComponent } from './pages/formulario-usuario/formulario-usuario.component';
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
+import { RecetaComponent } from './components/consultaComponents/receta/receta.component';
+import { DatosConsultaComponent } from './components/consultaComponents/datos-consulta/datos-consulta.component';
+import { EstudiosClinicosComponent } from './components/consultaComponents/estudios-clinicos/estudios-clinicos.component';
 
 
 
@@ -108,7 +111,10 @@ const ngWizardConfig: NgWizardConfig = {
     UsuarioComponent,
     AdminHomeComponent,
     FormularioUsuarioComponent,
-    UsuariosComponent
+    UsuariosComponent,
+    RecetaComponent,
+    DatosConsultaComponent,
+    EstudiosClinicosComponent
   ],
   imports: [
     BrowserModule,
