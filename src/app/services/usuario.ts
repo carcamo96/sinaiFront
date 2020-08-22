@@ -35,11 +35,17 @@ export class UsuarioService{
     delete(id):Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-        return this._http.delete(this.url+'usuario/delete/'+id, {headers: headers});;
+        return this._http.delete(this.url+'usuario/delete/'+id, {headers: headers});
     }
 
     getUsuario(id):Observable<any>{
         return this._http.get(this.url+'usuario/obtener/'+id);
+    }
+
+    updateEstado(id, estado):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+        return this._http.put(this.url+'usuario/estado/'+id, estado, {headers: headers});
     }
 
 }

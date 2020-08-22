@@ -16,6 +16,7 @@ import { LoadingBarService } from "@ngx-loading-bar/core";
 import { SwalComponent } from "@sweetalert2/ngx-sweetalert2";
 import { Subject, Observable } from "rxjs";
 import { DataTableDirective } from 'angular-datatables';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: "app-formulario-usuario",
@@ -47,7 +48,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
 
   @Input() events: Observable<any>;
 
-  public usuario: Usuario;
+  public usuario: any;
   public usuarios: any[] = [];
   public usuariosIn: any[] = [];
   public pas: string;
@@ -56,6 +57,13 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
   public progress = 0;
   public isEdit = false;
   private idU;
+
+  key: string = "0123456789123456";
+  encrypted: any = "";
+  decrypted: string;
+
+  request: string;
+  responce: string;
 
   constructor(
     private _usuarioService: UsuarioService,
@@ -89,9 +97,11 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
 
     if (f.valid) {
       //Creando el usuario
+      this.encryptPass(this.usuario.pass);
+      console.log(this.encrypted);
       let usuario = new Usuario(
         this.usuario.usuario,
-        this.usuario.pass,
+        this.encrypted,
         this.usuario.rol,
 
         new Date(Date.now()),
@@ -106,13 +116,16 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
             console.log(response.usuario);
             if (response.status == "success") {
               this.loadingBarService.complete();
+              this.estado(response.usuario._id, usuario.estado);
               this.usuario = response.usuario;
               //Se registro correctamente
               this.redireccionSwal.fire();
+              this.defaultUserValues();
             } else {
               this.loadingBarService.complete();
               console.log("else");
               this.errorSwal.fire();
+              this.defaultUserValues();
             }
           },
           (error) => {
@@ -145,11 +158,12 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
   }
 
   onSubmit2(f: NgForm) {
- 
+    this.encrypted = "";
+    this.encryptPass(this.usuario.pass);
     if (f.valid) {
       let usuario = new Usuario(
         this.usuario.usuario,
-        this.usuario.pass,
+        this.encrypted,
         this.usuario.rol,
 
         new Date(Date.now()),
@@ -162,6 +176,9 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
         if (response.status == "Success") {
           this.loadingBarService.complete();
           this.defaultUserValues();//Para limpiar el formulario de modificación        
+          
+          this.estado(response.usuario._id,usuario.estado);
+         
           //El registro fue editado con exito
           this.redireccionSwalMod.fire();
         } else {
@@ -200,9 +217,9 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
           let users:any[]=[];
           let users2:any[]=[];
           this.usuarios.filter(f=>{
-            if(f.rol == 'Laboratorista'){
+            if(f.estado == 'activo'){
               users.push(f);
-            }if (f.rol == 'Administrador') {
+            }if (f.estado == 'inactivo') {
               users2.push(f);
             }
           });
@@ -219,6 +236,7 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
 
   //Cuando se clickea el boton de editar
   llenarCampos(id) {
+    let usuario: Usuario;
     this.isEdit = true;//Cambia bandera a true para mostrar el formulario de edición 
     this._usuarioService.getUsuario(id).subscribe(
       (response) => {
@@ -226,7 +244,17 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
           //console.log(response);
           this.idU = response.usuario._id;
           //console.log(this.idU);
-          this.usuario = response.usuario;
+          this.decryptPass(response.usuario.pass)
+          this.pas=this.decrypted;
+          this.usuario = {
+            id:response.usuario._id,
+            usuario:response.usuario.usuario,
+            pass: this.decrypted,
+            rol:response.usuario.rol,
+            fechaRegistro:response.usuario.fechaRegistro,
+            estado:response.usuario.estado
+          };
+          console.log(this.usuario.pass);
         }
       },
       (err) => {
@@ -288,5 +316,44 @@ export class FormularioUsuarioComponent implements OnDestroy, OnInit {
     });
   });
   }
+
+  encryptPass(pass: string) {
+    let _key = CryptoJS.enc.Utf8.parse(this.key);
+    let _iv = CryptoJS.enc.Utf8.parse(this.key);
+    let encrypted = CryptoJS.AES.encrypt(
+      JSON.stringify(pass), _key, {
+        keySize: 16,
+        iv: _iv,
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7
+      });
+    this.encrypted = encrypted.toString();
+  }
+  decryptPass(pass: string) {
+    let _key = CryptoJS.enc.Utf8.parse(this.key);
+    let _iv = CryptoJS.enc.Utf8.parse(this.key);
+
+    this.decrypted = CryptoJS.AES.decrypt(
+      pass, _key, {
+        keySize: 16,
+        iv: _iv,
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7
+      }).toString(CryptoJS.enc.Utf8);
+  }
+
+  estado(id, estado){
+    this._usuarioService.updateEstado(id, estado).subscribe(
+      response => {
+        if (response.status=='success') {
+          console.log('exito');
+        }
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
 }
 
