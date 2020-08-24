@@ -5,166 +5,184 @@
         <div class="row">
             <p class="card-title">Agrega medicamento</p>
         </div>
-        <div class="card-body">
+        <form role="form"
+              #recetaForm="ngForm"
+              (ngSubmit)="onSubmit(recetaForm)">
+            <div class="card-body">
 
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="medicamento">Medicamento:</label>
-                        <input type="text" 
-                               class="form-control input-lg"
-                               name="medicamento" 
-                               placeholder="Digite un medicamento"
-                               autofocus
-                               autocomplete="off">
-                    </div>
-                </div>
-            </div><!-- Fin del primer row -->
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="presentacion">Presentación:</label>
-                        <div class="input-group mb-3">
-                            <select
-                              name="presentacion"
-                              class="form-control"
-                              
-                            >
-                              <option value="" selected>Tableta</option>
-                              <option value="">Capsula</option>
-                              <option value="">Solución inyectable</option>
-                              <option value="">Solución bebible</option>
-                            
-                            </select>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div><!-- Fin del segundo row -->
-            <div class="row">
-                <div class="col-md-9">
-                    <div class="form-group">
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label for="medicamento">Concentración:</label>
+                            <label for="medicamento">Medicamento:</label>
                             <input type="text" 
-                                   class="form-control input-lg"
-                                   name="concentracion" 
-                                   placeholder="Digite concentración"
-                                   autofocus
-                                   autocomplete="off">
-                        </div>   
-                    </div> 
-                </div>
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="medida">Medida:</label>
-                        <div class="input-group mb-3">
-                            <select
-                              name="medida"
-                              class="form-control"
-                              
-                            >
-                              <option value="" selected>mg</option>
-                              <option value="">ml</option>
-                            
-                            </select>
-                            
+                                class="form-control input-lg"
+                                name="medicamento" 
+                                placeholder="Digite un medicamento"
+                                autofocus
+                                autocomplete="off"
+                                #medicamento="ngModel"
+                                [(ngModel)]="receta.medicamento"
+                                ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                >
                         </div>
                     </div>
-                </div>
-            </div><!-- Fin del tercer row -->
-
-            <div class="row">
-
-                <div class="col-md-3">
-                    <div class="form-group">
-                        <label for="cantidad">Cantidad:</label>
-                        <input type="number" 
-                               class="form-control"
-                               name="cantidad"
-                               min="1"
-                               max="15"
-                               value="1">
-                    </div>
-                </div>
-                <div class="col-md-5">
+                </div><!-- Fin del primer row -->
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-group">
-                            <label for="cantidad">Frecuencia:</label>
-                            <div class="input-group">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">
-                                        Cada: 
-                                    </span>
-                                </div>
-                                <input type="number" 
-                                   class="form-control"
-                                   name="cantidad"
-                                   min="1"
-                                   max="15"
-                                   value="2">
+                            <label for="presentacion">Presentación:</label>
+                            <div class="input-group mb-3">
+                                <select
+                                name="presentacion"
+                                class="form-control"
+                                #presentacion="ngModel"
+                                [(ngModel)]="receta.presentacion"
+                                >
+                                <option value="Tableta" selected>Tableta</option>
+                                <option value="Capsula">Capsula</option>
+                                <option value="Solución inyectable">Solución inyectable</option>
+                                <option value="Solución bebible">Solución bebible</option>
+                                
+                                </select>
+                                
                             </div>
                         </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="tiempo"><i class="fas fa-alarm-clock"></i></label>
-                        <div class="input-group mb-3">
-                            <select
-                              name="tiempo"
-                              class="form-control"
-                              
-                            >
-                              <option value="" selected>Hora/s</option>
-                              <option value="">Minutos</option>
-                            </select>
-                            
-                        </div>
                     </div>
-                </div>
-
-            </div><!-- Fin del cuarto row -->
-            <div class="row">
-                
+                </div><!-- Fin del segundo row -->
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="medicamento">Concentración:</label>
+                                <input type="text" 
+                                    class="form-control input-lg"
+                                    name="concentracion" 
+                                    placeholder="Digite concentración"
+                                    #concentracion="ngModel"
+                                    [(ngModel)]="receta.concentracion"
+                                    autocomplete="off">
+                            </div>   
+                        </div> 
+                    </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="cantidad">Durante:</label>
-                             
-                                <input type="number" 
+                            <label for="medida">Medida:</label>
+                            <div class="input-group mb-3">
+                                <select
+                                name="medida"
+                                class="form-control"
+                                #medida="ngModel"
+                                [(ngModel)]="receta.medida"
+                                >
+                                <option value="mg" selected>mg</option>
+                                <option value="ml">ml</option>
+                                
+                                </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- Fin del tercer row -->
+
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="cantidad">Cantidad:</label>
+                            <input type="number" 
                                 class="form-control"
                                 name="cantidad"
                                 min="1"
-                                max="30"
-                                value="7">  
-                        </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
-                        <div class="input-group mb-3">
-                            <select
-                            name="lapso"
-                            class="form-control"
-                            
-                            >
-                            <option value="" selected>Día/s</option>
-                            <option value="">Mes/es</option>
-                            <option value="">Año/s</option>
-                            </select>
-                            
+                                max="15"
+                                value="1"
+                                #cantidad="ngModel"
+                                [(ngModel)]="receta.cantidad">
                         </div>
                     </div>
-                </div>
-                <div class="col-md-5">
-                    <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
-                    <br>
-                    <input
-                        type="button"
-                        value="Agregar"
-                        class="btn btn-primary"
-                    />
-                </div>
-            </div><!--Fin del quinto row-->
-        </div><!-- Fin del card body -->
+                    <div class="col-md-5">
+                            <div class="form-group">
+                                <label for="cantidad">Frecuencia:</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            Cada: 
+                                        </span>
+                                    </div>
+                                    <input type="number" 
+                                    class="form-control"
+                                    name="frecuencia"
+                                    min="1"
+                                    max="15"
+                                    value="2"
+                                    #frecuencia="ngModel"
+                                    [(ngModel)]="receta.frecuencia">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="tiempo"><i class="fas fa-alarm-clock"></i></label>
+                            <div class="input-group mb-3">
+                                <select
+                                name="tiempo"
+                                class="form-control"
+                                #tiempo="ngModel"
+                                [(ngModel)]="receta.tiempo"
+                                >
+                                <option value="Hora/s" selected>Hora/s</option>
+                                <option value="Minuto/s">Minutos</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- Fin del cuarto row -->
+                <div class="row">
+                    
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="cantidad">Durante:</label>
+                                
+                                <input type="number" 
+                                       class="form-control"
+                                       name="duracion"
+                                       min="1"
+                                       max="30"
+                                       value="7"
+                                       #duracion="ngModel"
+                                       [(ngModel)]="receta.duracion">  
+                            </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
+                            <div class="input-group mb-3">
+                                <select
+                                name="lapso"
+                                class="form-control"
+                                #lapso="ngModel"
+                                [(ngModel)]="receta.lapso"
+                                >
+                                <option value='Dia/s' selected>Dia/s</option>
+                                <option value='Mes/es'>Mes/es</option>
+                                <option value='Año/s'>Año/s</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
+                        <br>
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Agregar
+                        </button>
+                    </div>
+                </div><!--Fin del quinto row-->
+            </div><!-- Fin del card body -->
+        </form><!--Fin del form de receta-->
 
     </div><!-- Fin del div para agregar a receta -->
 
@@ -191,15 +209,23 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Acetaminofen</td>
-                            <td>Solución inyectable</td>
-                            <td>200 ml</td>
-                            <td>1</td>
-                            <td>3 horas</td>
-                            <td>7 dias</td>
-                        </tr>
-                        
+                            <tr *ngIf="recetas.length === 0;else recetados">
+                                <span class="text-center">No se han recetado medicamentos</span>
+                            </tr>
+                
+                            <ng-template #recetados>
+
+                                <tr *ngFor="let re of recetas">
+                                    <td>{{ re.medicamento }}</td>
+                                    <td>{{ re.presentacion }}</td>
+                                    <td>{{ re.concentracion }}</td>
+                                    <td>{{ re.cantidad }}</td>
+                                    <td>{{ re.frecuencia }}</td>
+                                    <td>{{ re.duracion }}</td>
+                                </tr>
+
+                            </ng-template>
+                            
                         </tbody>
                         </table>
                 </div>
@@ -224,16 +250,13 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-              <input
-                type="button"
-                value="Confirmar receta"
-                class="btn btn-primary float-left"
-              />
-              <input
-                type="button"
-                class="btn btn-secondary ml-3 mr-0 float-right"
-                value=""
-              />
+             
+              <button class="btn btn-primary float-left">
+                    <i class="fas fa-check"></i> Confirmar receta
+              </button>
+              <button class="btn btn-secondary ml-3 mr-0 float-right" >
+                  <i class="fas fa-print"></i> Imprimir
+              </button>
             </div>
             <!-- /.card-footer -->
         </div>
