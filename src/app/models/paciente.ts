@@ -1,7 +1,6 @@
 export class Paciente{
 
     constructor(
-
         public nombre: string,
         public apellidos: string,
         public fechaNac: Date,
@@ -12,7 +11,8 @@ export class Paciente{
         public faContacto: string,
         public telFaContacto: string,
         public direccion: string,
-        public otrosDatos: string
+        public otrosDatos: string,
+        public id?: string,
 
     ){}
     

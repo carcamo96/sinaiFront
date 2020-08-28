@@ -59,7 +59,7 @@ export class MostrarPacienteComponent implements OnInit {
   ngOnInit() {
     this.eventsSubscription = this.events.subscribe(
       response => {
-        console.log(response);
+        //console.log(response);
           this.id = response.paciente._id;
           this.paciente = {
             nombre: response.paciente.nombre,
@@ -80,7 +80,7 @@ export class MostrarPacienteComponent implements OnInit {
           
       },
       error=>{
-          console.log("Error del hijo: "+error);
+          //console.log("Error del hijo: "+error);
           this.loadingBarService.complete();
           this.errorSwal.fire();
       }
@@ -139,7 +139,7 @@ export class MostrarPacienteComponent implements OnInit {
             this.loadingBarService.complete();
             this.disabledDefault = true;
             this.errorSwal.fire();
-            console.log(error.message);
+            //console.log(error.message);
           }
       );
 
@@ -175,7 +175,7 @@ export class MostrarPacienteComponent implements OnInit {
     if (mm < 10) {
       mes = "0" + mm;
     }
-    console.log(yyyy + "-" + mes + "-" + dia);
+    //console.log(yyyy + "-" + mes + "-" + dia);
     return yyyy + "-" + mes + "-" + dia;
   }
 

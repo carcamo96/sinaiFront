@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Receta } from '../../../models/receta';
+import { RecetaItem } from '../../../models/recetaItem';
 import { NgForm } from '@angular/forms';
+import { Receta } from 'src/app/models/receta';
 
 @Component({
   selector: 'app-receta',
@@ -9,7 +10,7 @@ import { NgForm } from '@angular/forms';
 })
 export class RecetaComponent implements OnInit {
 
-  receta = {
+  recetaItem = {
     medicamento: '',
     presentacion: 'Tableta',
     concentracion: '',
@@ -21,27 +22,43 @@ export class RecetaComponent implements OnInit {
     lapso: 'Dia/s',
   }
 
-  recetas: Receta[] = [];
+  detallesMedicos = '';
+
+  items: RecetaItem[] = [];
 
   constructor() { }
 
   ngOnInit(): void {
-    console.log('Arrary: ', this.recetas);
+    //console.log('Arrary: ', this.recetas);
   }
 
   onSubmit(f:NgForm){
 
-      console.log("Receta: " ,this.receta);
-      let recetaFull = new Receta(
-          this.receta.medicamento,
-          this.receta.presentacion,
-          this.receta.concentracion + ' ' + this.receta.medida,
-          this.receta.cantidad,
-          'Cada ' + this.receta.frecuencia + ' ' + this.receta.tiempo,
-          'Durante '+ this.receta.duracion + ' ' + this.receta.lapso
+      //console.log("Receta: " ,this.receta);
+      let recetaItem = new RecetaItem(
+          this.recetaItem.medicamento,
+          this.recetaItem.presentacion,
+          this.recetaItem.concentracion + ' ' + this.recetaItem.medida,
+          this.recetaItem.cantidad,
+          'Cada ' + this.recetaItem.frecuencia + ' ' + this.recetaItem.tiempo,
+          'Durante '+ this.recetaItem.duracion + ' ' + this.recetaItem.lapso
       );
 
-      this.recetas.push(recetaFull);
+      this.items.push(recetaItem);
+  }
+
+  //Elimina un conjunto de elementos del array desde la pocisión dada
+  descartar(index){
+    this.items.splice(index, 1);
+  }
+
+  confirmar(){
+      //Empaquetando en un solo objeto para enviar 
+      let recetaFull = new Receta(
+        this.items,
+        this.detallesMedicos
+      );
+      //console.log('Datos confirmados: ', recetaFull);
   }
 
 }

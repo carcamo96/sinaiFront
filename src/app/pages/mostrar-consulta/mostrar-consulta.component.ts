@@ -106,7 +106,6 @@ public breads: any[] = [
         this.consulta.presionArt,
         this.consulta.freCardia,
         this.consulta.indiceMC,
-        new Date(this.consulta.fechaCre),
         this.consulta.diagnostico
       );    
       this._consultaService.update(this.idpa,consulta).subscribe(
@@ -155,8 +154,8 @@ public breads: any[] = [
   }
   }
 
-  inicializarFechaConsul(fechaNacParam) {
-    var fechaNac = new Date(fechaNacParam);
+  inicializarFechaConsul(fechaConParam) {
+    var fechaNac = new Date(fechaConParam);
 
     var dd = fechaNac.getDate() + 1;
     var mm = fechaNac.getMonth() + 1; //January is 0!
@@ -180,14 +179,15 @@ public breads: any[] = [
     var dd = today.getDate();
     var mm = today.getMonth()+1; //January is 0!
     var yyyy = today.getFullYear();
+    var dia=dd.toString();
+
     if(dd<10){
-            var dia=dd.toString();
             dia='0'+dd;
-        } 
-        if(mm<10){
-          var mes = mm.toString();
-            mes='0'+mm;
-        } 
+    } 
+    var mes = mm.toString();
+    if(mm<10){
+        mes='0'+mm;
+    } 
 
     this.fechaAux = yyyy+'-'+mes+'-'+dia;
   }

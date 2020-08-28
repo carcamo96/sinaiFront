@@ -9,6 +9,7 @@ import { Paciente } from "../../models/paciente";
 import { ActivatedRoute, Router } from "@angular/router";
 import { PacienteService } from "../../services/paciente.service";
 import { SwalComponent } from "@sweetalert2/ngx-sweetalert2";
+import { Subject } from 'rxjs';
 
 @Component({
   selector: "app-consulta",
@@ -23,21 +24,26 @@ export class ConsultaComponent implements OnInit {
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [{ titulo: "Home", link: "/admin" }, {titulo: "Expedientes", link: "/admin/expedientes"}];
 
-  public nomPaciente: string;
+  //Uso este objeto Subject para emitir el resultado del evento response al hijo 
+  public eventsSubject: Subject<any> = new Subject<any>();
+
+  public consulta; //Con esta variable manejaré la consulta
+
+  public nomPaciente: string; //Para mostrar el nombre completo del paciente
+  public edad: number;  //Para guardar el calculo de la edad en base a su edad de nacimiento
+  public ayuda = false; //Para manejar la ayuda
+  genEdad = '';// Para mostrar la edad - genero
+
+  public paciente: Paciente; //Objeto que mapea los datos del paciente para manejarlos con POO
+  public idpa: string; //Maneja el id del paciente que se ha cargado
+  
+  progress = 0;//Usando para la loadingPorgressBar
+
+  //Averiguar para que sirven ???
   public atl = Date.now();
   public status: string;
-  public consulta: any;
   public spinnStatus: boolean;
-  public paciente: Paciente;
   public indice: string;
-  public idpa: string;
-  public edad: number;
-  public fechaAux = "";
-  public ayuda = false;
-
-  genEdad = '';
-
-  progress = 0;
 
   constructor(
     private toastr: ToastrService,
@@ -47,27 +53,7 @@ export class ConsultaComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router
   ) {
-    this.consulta = {
-      paciente: "",
-      fechaCre: "02/06/2010",
-      indiceMC: "",
-      motivo: "",
-      tiemSintoma: "",
-      fechaConsul: "",
-      historia: "",
-      antePatol: "",
-      alergias: "",
-      peso: "",
-      talla: "",
-      temperatura: "",
-      presionArt: "",
-      freCardia: "",
-      diagnostico: "",
-    };
-    this.consulta.fechaConsul = this.inicializarFechaConsulP(this.atl);
-    //this.consulta.fechaConsul= new Date(this.consulta.fechaConsul);
-
-    this.inicializarFechaActual();
+    this.consulta = new Consulta();
   }
 
   ngOnInit() {
@@ -76,30 +62,20 @@ export class ConsultaComponent implements OnInit {
     //console.log(this.consulta.fechaConsul);
   }
 
+  //Aqui se reciben los datos de consulta del componente hijo (datos-consulta)
+  addDatosConsulta(event){
+      console.log("Datos de consulta recibidos: ", event);
+  }
+
+  /*
   onSubmit(f: NgForm) {
     this.loadingBarService.start();
     this.progress = 30;
 
     if (f.valid) {
-      let consulta = new Consulta(
-        this.idpa,
-        this.consulta.motivo,
-        this.consulta.tiemSintoma,
-        new Date(this.consulta.fechaConsul),
-        this.consulta.historia,
-        this.consulta.antePatol,
-        this.consulta.alergias,
-        this.consulta.peso,
-        this.consulta.talla,
-        this.consulta.temperatura,
-        this.consulta.presionArt,
-        this.consulta.freCardia,
-        this.consulta.indiceMC,
-        this.consulta.fechaCre,
-        this.consulta.diagnostico
-      );
+   
       this.progress = 50;
-      console.log(consulta);
+      //console.log(consulta);
       this._consultaService.create(consulta).subscribe(
         (response) => {
           this.progress = 100;
@@ -131,56 +107,7 @@ export class ConsultaComponent implements OnInit {
     this.limpiarCampos();
   }
 
-  spnChange() {
-    this.spinnStatus = true;
-  }
-
-  // Alerta de exito
-  showSuccess(mensaje: string, titulo: string) {
-    this.toastr.success(mensaje, titulo);
-  }
-
-  //Inicializar fecha actual en el date picker
-  inicializarFechaActual() {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1; //January is 0!
-    var yyyy = today.getFullYear();
-    if (dd < 10) {
-      var dia = dd.toString();
-      dia = "0" + dd;
-    }
-    if (mm < 10) {
-      var mes = mm.toString();
-      mes = "0" + mm;
-    }
-
-    this.fechaAux = yyyy + "-" + mes + "-" + dia;
-  }
-
-  limpiarCampos() {
-    this.consulta = {
-      motivo: "",
-      tiemSintoma: "",
-      fechaConsul: "",
-      historia: "",
-      antePatol: "",
-      alergias: "",
-      peso: "",
-      talla: "",
-      temperatura: "",
-      presionArt: "",
-      freCardia: "",
-      indiceMC: "",
-    };
-  }
-
-  showError(mensaje: string, titulo: string) {
-    this.toastr.error(mensaje, titulo, {
-      progressBar: true,
-      progressAnimation: "decreasing",
-    });
-  }
+  */
 
   cargarPaciente() {
     this._route.params.subscribe((params) => {
@@ -188,7 +115,8 @@ export class ConsultaComponent implements OnInit {
 
       this._pacienteService.getPaciente(this.idpa).subscribe(
         (response) => {
-          //console.log(response);
+          //console.log('Paciente: ',response);
+          this.eventsSubject.next(response); // propagando el evento al componente hijo
           this.paciente = response.paciente;
           this.edad = this.obtenerEdad(
             new Date(),
@@ -200,8 +128,8 @@ export class ConsultaComponent implements OnInit {
           }else{
             this.genEdad = this.edad + " años - FEMENINO";
           }
-          this.paciente.nombre = response.paciente.nombre + " " + response.paciente.apellidos;
-            this.loadingBarService.complete();
+          this.nomPaciente = this.paciente.nombre + " " + this.paciente.apellidos;
+          this.loadingBarService.complete();
         },
         (error) => {
           console.log("nadaaa " + error);
@@ -211,7 +139,8 @@ export class ConsultaComponent implements OnInit {
     });
   }
 
-  cal(event) {
+ 
+  /*cal(event) {
     var pesoP = event;
 
     this.indice = pesoP;
@@ -228,22 +157,12 @@ export class ConsultaComponent implements OnInit {
       this.indice = "" + 0;
     }
   }
-
-  cal3() {
-    var pes = parseFloat(this.consulta.peso);
-    var tall = parseFloat(this.consulta.talla);
-    if (tall != 0 || tall != null || tall != Infinity) {
-      let indice = pes / Math.pow(tall, 2);
-      this.indice = "" + parseFloat("" + indice).toFixed(1);
-      this.consulta.indiceMC = this.indice;
-    } else {
-      //this.indice = '';
-    }
-  }
+  */
+ 
 
   inicializarFechaConsulP(fechaConsulP) {
     var fechaCon = new Date(fechaConsulP);
-    console.log(fechaCon);
+    //console.log(fechaCon);
     var dd = fechaCon.getDate();
     var mm = fechaCon.getMonth() + 1; //January is 0!
     var yyyy = fechaCon.getFullYear();
@@ -256,7 +175,7 @@ export class ConsultaComponent implements OnInit {
     if (mm < 10) {
       mes = "0" + mm;
     }
-    console.log(yyyy + "-" + mes + "-" + dia);
+    //console.log(yyyy + "-" + mes + "-" + dia);
     return yyyy + "-" + mes + "-" + dia;
   }
 
@@ -280,29 +199,28 @@ export class ConsultaComponent implements OnInit {
     return edad;
   } // fin del metodo de calculo de edad
 
-  esMenor() {
-    return this.edad >= 0 && this.edad < 15;
-  }
 
   redireccionar() {
     this._router.navigate(["/expedientes/"]);
   }
 
-  //Para activar la ayuda del formulario
-  activarPopovers(p1, p2, p3) {
-    this.ayuda = !this.ayuda;
 
-    if (this.ayuda == false) {
-      p1.close();
-      p2.close();
-      p3.close();
-    }
+  spnChange() {
+    this.spinnStatus = true;
   }
-  //Para activar un popover X cuando el campo tenga el foco
-  popFocus(px, pxAnterior?) {
-    px.open();
-    if (pxAnterior) {
-      pxAnterior.close();
-    }
+
+  // Alerta de exito
+  showSuccess(mensaje: string, titulo: string) {
+    this.toastr.success(mensaje, titulo);
   }
+
+
+  showError(mensaje: string, titulo: string) {
+    this.toastr.error(mensaje, titulo, {
+      progressBar: true,
+      progressAnimation: "decreasing",
+    });
+  }
+
+  
 }
