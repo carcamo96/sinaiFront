@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, ViewChild } from '@angular/core';
 import { RecetaItem } from '../../../models/recetaItem';
 import { NgForm } from '@angular/forms';
 import { Receta } from 'src/app/models/receta';
@@ -10,6 +10,8 @@ import { EventEmitter } from '@angular/core';
   styleUrls: ['./receta.component.css']
 })
 export class RecetaComponent implements OnInit {
+
+  @ViewChild('recetaForm') private formulario: NgForm;//Variable para manejar el formulario
 
   //Objeto que ayuda a manejar los datos del formulario
   recetaItem = {
@@ -48,10 +50,11 @@ export class RecetaComponent implements OnInit {
           this.recetaItem.concentracion + ' ' + this.recetaItem.medida,
           this.recetaItem.cantidad,
           'Cada ' + this.recetaItem.frecuencia + ' ' + this.recetaItem.tiempo,
-          'Durante '+ this.recetaItem.duracion + ' ' + this.recetaItem.lapso
+          ''+ this.recetaItem.duracion + ' ' + this.recetaItem.lapso
       );
 
       this.items.push(recetaItem);
+      this.limpiarCampos();
   }
 
   //Elimina un conjunto de elementos del array desde la pocisión dada
@@ -68,6 +71,22 @@ export class RecetaComponent implements OnInit {
       
       //Propagando el objeto Receta al componente Padre
       this.recetaMedica.emit(recetaFull);
+  }
+
+  limpiarCampos(){
+    this.recetaItem = {
+      medicamento: '',
+      presentacion: 'Tableta',
+      concentracion: '',
+      medida: 'mg',
+      cantidad: 1,
+      frecuencia: 2,
+      tiempo: 'Hora/s',
+      duracion: 7,
+      lapso: 'Dia/s',
+    }
+
+    this.formulario.resetForm(this.recetaItem);
   }
 
 }

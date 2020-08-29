@@ -20,6 +20,7 @@ import { Subject } from 'rxjs';
 export class ConsultaComponent implements OnInit, OnDestroy {
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
+  @ViewChild("msgCompletarConsulta") private adjuntarReceta: SwalComponent;
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [{ titulo: "Home", link: "/admin" }, {titulo: "Expedientes", link: "/admin/expedientes"}];
@@ -101,6 +102,7 @@ export class ConsultaComponent implements OnInit, OnDestroy {
         console.log('Receta recibida: ', this.consulta);
       }else{
         //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
+        this.adjuntarReceta.fire();
       }
   }
 
@@ -108,16 +110,16 @@ export class ConsultaComponent implements OnInit, OnDestroy {
 
   }
 
-  /*
-  onSubmit(f: NgForm) {
+  
+  onSubmit() {
     this.loadingBarService.start();
     this.progress = 30;
 
-    if (f.valid) {
+    if (this.consulta != null) {
    
       this.progress = 50;
       //console.log(consulta);
-      this._consultaService.create(consulta).subscribe(
+      this._consultaService.create(this.consulta).subscribe(
         (response) => {
           this.progress = 100;
           //console.log(this.consulta=response.consulta);
@@ -144,11 +146,10 @@ export class ConsultaComponent implements OnInit, OnDestroy {
         }
       );
     }
-    f.resetForm();
-    this.limpiarCampos();
+    //f.resetForm();
+    //this.limpiarCampos();
   }
 
-  */
 
   cargarPaciente() {
     this._route.params.subscribe((params) => {
