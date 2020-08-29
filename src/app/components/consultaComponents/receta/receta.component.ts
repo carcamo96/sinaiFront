@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, Input } from '@angular/core';
 import { RecetaItem } from '../../../models/recetaItem';
 import { NgForm } from '@angular/forms';
 import { Receta } from 'src/app/models/receta';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-receta',
@@ -10,6 +11,7 @@ import { Receta } from 'src/app/models/receta';
 })
 export class RecetaComponent implements OnInit {
 
+  //Objeto que ayuda a manejar los datos del formulario
   recetaItem = {
     medicamento: '',
     presentacion: 'Tableta',
@@ -22,9 +24,14 @@ export class RecetaComponent implements OnInit {
     lapso: 'Dia/s',
   }
 
-  detallesMedicos = '';
+  detallesMedicos = '';//Más detalles de la receta
 
-  items: RecetaItem[] = [];
+  items: RecetaItem[] = [];//Arreglo de los items de receta(Medicamentos recetados)
+
+  //Para propagar el evento de confirmación de  la receta
+  @Output() recetaMedica = new EventEmitter();
+
+  @Input() ayuda: boolean; //Para manejar la ayuda de los formularios
 
   constructor() { }
 
@@ -58,7 +65,9 @@ export class RecetaComponent implements OnInit {
         this.items,
         this.detallesMedicos
       );
-      //console.log('Datos confirmados: ', recetaFull);
+      
+      //Propagando el objeto Receta al componente Padre
+      this.recetaMedica.emit(recetaFull);
   }
 
 }

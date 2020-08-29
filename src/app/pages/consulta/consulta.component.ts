@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
 import { NgForm } from "@angular/forms";
 //Importando la clase para manejar las alertas toastr para angular
 import { ToastrService } from "ngx-toastr";
@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
   styleUrls: ["./consulta.component.css"],
   providers: [ConsultaService, PacienteService],
 })
-export class ConsultaComponent implements OnInit {
+export class ConsultaComponent implements OnInit, OnDestroy {
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
 
@@ -27,7 +27,7 @@ export class ConsultaComponent implements OnInit {
   //Uso este objeto Subject para emitir el resultado del evento response al hijo 
   public eventsSubject: Subject<any> = new Subject<any>();
 
-  public consulta; //Con esta variable manejaré la consulta
+  public consulta; //Con esta variable se maneja la consulta
 
   public nomPaciente: string; //Para mostrar el nombre completo del paciente
   public edad: number;  //Para guardar el calculo de la edad en base a su edad de nacimiento
@@ -38,6 +38,8 @@ export class ConsultaComponent implements OnInit {
   public idpa: string; //Maneja el id del paciente que se ha cargado
   
   progress = 0;//Usando para la loadingPorgressBar
+
+  public adjuntado = false; //Bandera para saber si han adjuntado datos de consulta
 
   //Averiguar para que sirven ???
   public atl = Date.now();
@@ -53,7 +55,7 @@ export class ConsultaComponent implements OnInit {
     private _route: ActivatedRoute,
     private _router: Router
   ) {
-    this.consulta = new Consulta();
+
   }
 
   ngOnInit() {
@@ -62,9 +64,48 @@ export class ConsultaComponent implements OnInit {
     //console.log(this.consulta.fechaConsul);
   }
 
+  ngOnDestroy(){
+    //Asignando un objeto vacio para manejar la consulta al terminar de usar la vista
+    this.consulta = new Consulta();
+  }
+
   //Aqui se reciben los datos de consulta del componente hijo (datos-consulta)
-  addDatosConsulta(event){
-      console.log("Datos de consulta recibidos: ", event);
+  addDatosConsulta(datosConsulta){
+      this.consulta = new Consulta(
+        datosConsulta.paciente,
+        datosConsulta.motivo,
+        datosConsulta.tiemSintoma,
+        datosConsulta.fechaConsul,
+        datosConsulta.historia,
+        datosConsulta.antePatol,
+        datosConsulta.alergias,
+        datosConsulta.peso,
+        datosConsulta.talla,
+        datosConsulta.temperatura,
+        datosConsulta.presionArt,
+        datosConsulta.indiceMC,
+        datosConsulta.freCardia,
+        datosConsulta.diagnostico
+      );
+
+      //Se activa el boton de guardar consulta
+      this.adjuntado = true;
+
+  }
+
+  addRecetaMedica(recetaMedica){
+      
+    //Solo si ya se obtuvieron datos de consulta, se podrá adjuntar una receta
+      if(this.adjuntado){
+        this.consulta.setReceta(recetaMedica);
+        console.log('Receta recibida: ', this.consulta);
+      }else{
+        //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
+      }
+  }
+
+  addEstudiosDelaboratorio(){
+
   }
 
   /*

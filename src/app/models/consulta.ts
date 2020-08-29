@@ -17,6 +17,11 @@ export class Consulta{
         public diagnostico?:string,
         public receta?: Receta
     ){}
+ 
+    public setReceta(recetaMedica : Receta) {
+        this.receta = recetaMedica;
+    }
+    
 }
 
 /*Coloco todos los atributos como opcionales para manejarlos por convencion en el componente padre

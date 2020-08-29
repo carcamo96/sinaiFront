@@ -96,7 +96,7 @@ export class DatosConsultaComponent implements OnInit {
         );
         //Guarda el id del paciente al que pertenece la consulta
         this.consulta.paciente = response.paciente._id;
-        console.log(this.consulta.paciente);
+        //console.log(this.consulta.paciente);
 
       },//Fin del response
       error =>{
