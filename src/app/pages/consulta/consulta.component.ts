@@ -84,8 +84,8 @@ export class ConsultaComponent implements OnInit, OnDestroy {
         datosConsulta.talla,
         datosConsulta.temperatura,
         datosConsulta.presionArt,
-        datosConsulta.indiceMC,
         datosConsulta.freCardia,
+        datosConsulta.indiceMC,
         datosConsulta.diagnostico
       );
 
