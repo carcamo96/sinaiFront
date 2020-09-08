@@ -360,6 +360,21 @@
     </div> <!-- Fin del div que contiene la tabla de receta -->
 
 </div>
+<!-- Sweet alerts -->
+              <!-- Sweet Confirm -->
+              <swal
+                #confirmarSwal
+                title="¿Adjuntar los datos de receta?"
+                text="¿Desea proceder con el registro de estos datos?"
+                icon="question"
+                [showCancelButton]="true"
+                confirmButtonText= "Si!"
+                cancelButtonText= "No!"
+                confirmButtonColor= "#3085d6"
+                cancelButtonColor= "#bbbbbb"
+                [focusCancel]="true"
+                >
+              </swal>
 
 
 

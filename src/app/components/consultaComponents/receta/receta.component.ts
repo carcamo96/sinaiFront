@@ -3,6 +3,7 @@ import { RecetaItem } from '../../../models/recetaItem';
 import { NgForm } from '@angular/forms';
 import { Receta } from 'src/app/models/receta';
 import { EventEmitter } from '@angular/core';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 
 @Component({
   selector: 'app-receta',
@@ -12,6 +13,9 @@ import { EventEmitter } from '@angular/core';
 export class RecetaComponent implements OnInit {
 
   @ViewChild('recetaForm') private formulario: NgForm;//Variable para manejar el formulario
+
+  //Para las sweetAlerts
+  @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
 
   //Objeto que ayuda a manejar los datos del formulario
   recetaItem = {
@@ -63,6 +67,20 @@ export class RecetaComponent implements OnInit {
   }
 
   confirmar(){
+    this.confirmarSwal.fire();//lanzando la alerta
+
+      //Esperando por confirmación
+      this.confirmarSwal.confirm.subscribe(res => {
+
+        //Si se confirma
+        if(res){
+          //continua el proceso de adjuntar los datos de receta
+          this.adjuntarReceta();
+        }
+      });
+  }
+
+  adjuntarReceta(){
       //Empaquetando en un solo objeto para enviar 
       let recetaFull = new Receta(
         this.items,
@@ -87,6 +105,11 @@ export class RecetaComponent implements OnInit {
     }
 
     this.formulario.resetForm(this.recetaItem);
+  }
+
+  //Se dispara cuando se da click en el boton de adjuntar receta
+  confirmarDatosReceta(){
+    this.confirmarSwal.fire();
   }
 
 }
