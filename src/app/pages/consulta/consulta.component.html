@@ -132,6 +132,7 @@
               value="Guardar consulta"
               class="btn btn-primary"
               [disabled]="!adjuntado"
+              (click)="onSubmit()"
             />
            
           </div><!--Fin del card-footer-->
@@ -172,6 +173,15 @@
           confirmButtonColor="#3085d6"
           [focusConfirm]="true"
         >
+        </swal>
+        <swal
+          #msgCompletarConsulta
+          title="Error!"
+          text="Primero debe proporcionar los datos necesarios de Consulta"
+          icon="error"
+          confirmButtonText= "Ok"
+          confirmButtonColor= "#3085d6"
+          [focusConfirm]="true">
         </swal>
   
         <!-- Sweet alerts -->

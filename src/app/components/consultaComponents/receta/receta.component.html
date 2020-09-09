@@ -23,7 +23,18 @@
                                 #medicamento="ngModel"
                                 [(ngModel)]="recetaItem.medicamento"
                                 ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                                required
+                                [ngClass]="{
+                                    'is-invalid':
+                                    !medicamento.valid && medicamento.touched
+                                }"
                                 >
+                                <small
+                                class="text-danger"
+                                *ngIf="!medicamento.valid && medicamento.touched"
+                                >
+                                Campo requerido
+                                </small>
                         </div>
                     </div>
                 </div><!-- Fin del primer row -->
@@ -37,6 +48,11 @@
                                 class="form-control"
                                 #presentacion="ngModel"
                                 [(ngModel)]="recetaItem.presentacion"
+                                required
+                                [ngClass]="{
+                                    'is-invalid':
+                                    !presentacion.valid && presentacion.touched
+                                }"
                                 >
                                 <option value="Tableta" selected>Tableta</option>
                                 <option value="Capsula">Capsula</option>
@@ -44,6 +60,13 @@
                                 <option value="Solución bebible">Solución bebible</option>
                                 
                                 </select>
+                                
+                                <small
+                                class="text-danger"
+                                *ngIf="!presentacion.valid && presentacion.touched"
+                                >
+                                Campo requerido
+                                </small>
                                 
                             </div>
                         </div>
@@ -60,7 +83,19 @@
                                     placeholder="Digite concentración"
                                     #concentracion="ngModel"
                                     [(ngModel)]="recetaItem.concentracion"
-                                    autocomplete="off">
+                                    autocomplete="off"
+                                    required
+                                [ngClass]="{
+                                    'is-invalid':
+                                    !concentracion.valid && concentracion.touched
+                                }"
+                                >
+                                <small
+                                class="text-danger"
+                                *ngIf="!concentracion.valid && concentracion.touched"
+                                >
+                                Campo requerido
+                                </small>
                             </div>   
                         </div> 
                     </div>
@@ -73,12 +108,25 @@
                                 class="form-control"
                                 #medida="ngModel"
                                 [(ngModel)]="recetaItem.medida"
+                                required
+                                [ngClass]="{
+                                    'is-invalid':
+                                    !medida.valid && medida.touched
+                                }"
                                 >
+                                
                                 <option value="mg" selected>mg</option>
                                 <option value="ml">ml</option>
                                 
                                 </select>
-                                
+
+                                <small
+                                class="text-danger"
+                                *ngIf="!medida.valid && medida.touched"
+                                >
+                                Campo requerido
+                                </small>
+
                             </div>
                         </div>
                     </div>
@@ -96,7 +144,21 @@
                                 max="15"
                                 value="1"
                                 #cantidad="ngModel"
-                                [(ngModel)]="recetaItem.cantidad">
+                                [(ngModel)]="recetaItem.cantidad"
+                                required
+                                [ngClass]="{
+                                    'is-invalid':
+                                    !cantidad.valid && cantidad.touched
+                                }"
+                                >
+                                
+                                <small
+                                class="text-danger"
+                                *ngIf="!cantidad.valid && cantidad.touched"
+                                >
+                                Campo requerido
+                                </small>
+
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -115,7 +177,19 @@
                                     max="15"
                                     value="2"
                                     #frecuencia="ngModel"
-                                    [(ngModel)]="recetaItem.frecuencia">
+                                    [(ngModel)]="recetaItem.frecuencia"
+                                    required
+                                    [ngClass]="{
+                                        'is-invalid':
+                                        !frecuencia.valid && frecuencia.touched
+                                    }"
+                                    >
+                                    <small
+                                    class="text-danger"
+                                    *ngIf="!frecuencia.valid && frecuencia.touched"
+                                    >
+                                    Campo requerido
+                                    </small>
                                 </div>
                             </div>
                     </div>
@@ -128,11 +202,24 @@
                                 class="form-control"
                                 #tiempo="ngModel"
                                 [(ngModel)]="recetaItem.tiempo"
+                                required
+                                [ngClass]="{
+                                    'is-invalid':
+                                    !tiempo.valid && tiempo.touched
+                                }"
                                 >
+                               
                                 <option value="Hora/s" selected>Hora/s</option>
                                 <option value="Minuto/s">Minutos</option>
                                 </select>
-                                
+                                 
+                                <small
+                                class="text-danger"
+                                *ngIf="!tiempo.valid && tiempo.touched"
+                                >
+                                Campo requerido
+                                </small>
+
                             </div>
                         </div>
                     </div>
@@ -176,7 +263,8 @@
                         <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
                         <br>
                         <button type="submit"
-                                class="btn btn-primary">
+                                class="btn btn-primary"
+                                [disabled]="recetaForm.invalid">
                             Agregar
                         </button>
                     </div>
@@ -256,7 +344,8 @@
             <!-- /.card-body -->
             <div class="card-footer clearfix">
              
-              <button class="btn btn-primary float-left"
+              <button [disabled]="items.length === 0"
+                      class="btn btn-primary float-left"
                       (click)="confirmar()">
                     <i class="fas fa-check"></i> Adjuntar receta
               </button>
@@ -271,6 +360,21 @@
     </div> <!-- Fin del div que contiene la tabla de receta -->
 
 </div>
+<!-- Sweet alerts -->
+              <!-- Sweet Confirm -->
+              <swal
+                #confirmarSwal
+                title="¿Adjuntar los datos de receta?"
+                text="¿Desea proceder con el registro de estos datos?"
+                icon="question"
+                [showCancelButton]="true"
+                confirmButtonText= "Si!"
+                cancelButtonText= "No!"
+                confirmButtonColor= "#3085d6"
+                cancelButtonColor= "#bbbbbb"
+                [focusCancel]="true"
+                >
+              </swal>
 
 
 
