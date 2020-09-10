@@ -120,7 +120,7 @@ export class ConsultaComponent implements OnInit, OnDestroy {
       this.progress = 50;
       //console.log(consulta);
       this._consultaService.create(this.consulta).subscribe(
-        (response) => {
+        response => {
           this.progress = 100;
           //console.log(this.consulta=response.consulta);
           if (response.status == "success") {
@@ -137,7 +137,7 @@ export class ConsultaComponent implements OnInit, OnDestroy {
             this.errorSwal.fire();
           }
         },
-        (error) => {
+        error => {
           console.log("error");
           console.log(error);
           this.loadingBarService.complete();
