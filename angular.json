@@ -30,14 +30,21 @@
               "src/assets/dist/css/adminlte.css",
               "node_modules/datatables.net-dt/css/jquery.dataTables.css"
             ],
-            "scripts": [
+            "scripts": [      
+              "src/assets/build/js/ControlSidebar.js",
               "src/assets/dist/js/adminlte.js",
-              "src/assets/dist/js/adminlte.js.map",
               "src/assets/dist/js/adminlte.min.js",
-              "src/assets/dist/js/adminlte.min.js.map",
               "src/assets/dist/js/demo.js",
               "src/assets/plugins/jquery/jquery.js",
               "src/assets/plugins/jquery/jquery.min.js",
+              "src/assets/build/js/CardRefresh.js",
+              "src/assets/build/js/CardWidget.js",
+              "src/assets/build/js/Dropdown.js",
+              "src/assets/build/js/Layout.js",
+              "src/assets/build/js/PushMenu.js",
+              "src/assets/build/js/SiteSearch.js",
+              "src/assets/build/js/TodoList.js",
+              "src/assets/build/js/Treeview.js",
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
               "node_modules/crypto-js/crypto-js.js"
