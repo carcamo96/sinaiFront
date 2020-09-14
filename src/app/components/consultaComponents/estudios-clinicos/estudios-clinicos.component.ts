@@ -7,8 +7,85 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EstudiosClinicosComponent implements OnInit {
 
+  //Para paginacion de ngx-pagination
+  p: number = 1;
+
   //Arreglo de objetos del catálogo de estudios clinicos temporal, porque los estudios es un mantenimiento a parte
   estudiosClinicos = [
+    {
+      nombre: "QUÍMICA CLÍNICA",
+      estudios : [
+        "Gluscosa", 
+        "Glucosa 2H Post-Pandrial", 
+        "Glucosa Tolerancia horas",
+        "Test de O'Sullivan",
+        "Hemoglobina Glicosilada A1C",
+        "Colesterol",
+        "Triglicéridos",
+        "Ácido Úrico",
+        "Creatinina",
+        "Nitrogeno Ureico",
+        "Colesterol HDL",
+        "Colesterol LDL",
+        "Proteinas Totales relación A/G",
+        "Albumina",
+        "TGO",
+        "TGP",
+        "Bilirrubinas",
+        "Globulina",
+        "Lipasa",
+        "(CPK) Creatin Fosfoquinasa",
+        "(CPK). MB Creatin Fosfoquinasa",
+        "LDH (Deshidrogenasa Láctica)",
+        "Hierro Serico",
+        "Hierro Capacidad de Fijación",
+        "Transferrina",
+        "Ferritina"
+      ]
+    },
+    {
+      nombre: "PERFIL RUTINARIO",
+      estudios : [
+        "Hemograma", 
+        "Glucosa", 
+        "Colesterol",
+        "Triglicéridos",
+        "Ácido Úrico",
+        "Creatinina",
+        "Ex. General de Orina",
+        "Ex. General de Heses"
+      ]
+    },
+    {
+      nombre: "PERFIL RUTINARIO N° 2",
+      estudios : [
+        "Hemograma", 
+        "Glucosa", 
+        "Colesterol",
+        "Triglicéridos",
+        "Ácido Úrico",
+        "Creatinina",
+        "Nitrogeno Ureico",
+        "TGO",
+        "TGP",
+        "Ex. General de Orina",
+        "Ex. General de Heses"
+      ]
+    },
+    {
+      nombre: "PERFIL PRENATAL",
+      estudios : [
+        "Hemograma", 
+        "Glucosa", 
+        "Tipeo Sanguineo",
+        "VDHL",
+        "Examen General de Orina",
+        "Urocultivo",
+        "Toxoplasma IgG",
+        "HIV",
+        "TGP"
+      ]
+    },
     {
       nombre: "HEMATOLOGÍA",
       estudios : [
@@ -73,6 +150,16 @@ export class EstudiosClinicosComponent implements OnInit {
         "Hormona del Crecimiento",
         "Cortisol_am_pm",
         "Progesterona"
+      ]
+    },
+    {
+      nombre: "UROANÁLISIS",
+      estudios : [
+        "Examen General de Orina", 
+        "Prueba de Embarazo en Orina", 
+        "Microalbuminuria",
+        "Proteina en Orina 24 horas",
+        "Depuración de creatinina 24 horas"
       ]
     }
 

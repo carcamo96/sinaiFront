@@ -37,6 +37,9 @@ import { TelefonoFormat } from './pipes/telefonoFormat.pipe';
 //Para formatear la hora exacta en que se realizo un registro en el servidor
 import { FechaRegistroFormat } from './pipes/fechaRegistroFormat.pipe';
 
+//Para generar un codigo simple de los estudios medicos
+import { SubstrEstudio } from './pipes/substrEstudio.pipe';
+
 //Para usar ngx-smart-modal
 import { NgxSmartModalModule } from 'ngx-smart-modal';
 
@@ -48,6 +51,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Import ng-circle-progress
 import { NgCircleProgressModule } from 'ng-circle-progress';
+
+//Import de ngx-pagination
+import {NgxPaginationModule} from 'ngx-pagination';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -106,6 +112,7 @@ const ngWizardConfig: NgWizardConfig = {
     FechaFormat,
     TelefonoFormat,
     FechaRegistroFormat,
+    SubstrEstudio,
     CalculadorComponent,
     LoginComponent,
     UsuarioComponent,
@@ -150,7 +157,8 @@ const ngWizardConfig: NgWizardConfig = {
       "showBackground": false,
       "clockwise": false,
       "startFromZero": false
-    })
+    }),
+    NgxPaginationModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

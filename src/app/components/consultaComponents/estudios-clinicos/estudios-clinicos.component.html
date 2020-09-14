@@ -4,20 +4,36 @@
         <div class="col-md-6">
           <h5>Catálogo de estudios de laboratorio</h5>
         </div>
-
-        <div class="class-md-6 float-right">
-          <button class="btn btn-primary">
-            <i class="fas fa-check"></i> Adjuntar
-          </button>
-
-        </div>
-
-       
     </div><!--Fin del primer row-->
     <br>
     <div class="row">
+      <div class="col-md-12">
 
-        <div class="col-md-3" *ngFor="let estudio of estudiosClinicos">
+        <div class="class-md-3 float-left">
+          <button class="btn btn-primary">
+          <i class="fas fa-check"></i> Adjuntar
+          </button>
+        </div>
+        <div class="class-md-3 float-left pl-1">
+          <button class="btn btn-secondary">
+          <i class="fas fa-print"></i> Imprimir
+          </button>
+        </div>
+
+        <pagination-controls  class="float-right"
+                              (pageChange)="p = $event"
+                              screenReaderPaginationLabel="Paginación"
+                              previousLabel="Anterior"
+                              nextLabel="Siguiente"
+                              responsive="true">
+        </pagination-controls>
+
+      </div>
+    </div><!--Fin del segundo row-->
+    <div class="row">
+
+        <!-- Cards de estudios clinicos -->
+        <div class="col-md-3" *ngFor="let estudio of estudiosClinicos | paginate: { itemsPerPage: 4, currentPage: p }">
             <div class="card card-outline card-primary">
               <div class="card-header">
                 <h3 class="card-title">{{ estudio.nombre }}</h3>
@@ -27,17 +43,17 @@
               <div class="card-body float-left">
 
                 <div class="icheck-primary d-inline">
-                    <input type="checkbox" id="HemaTodo">
-                    <label for="HemaTodo">
+                    <input type="checkbox" id="{{estudio.nombre | substrEstudio:'Todo' }}">
+                    <label for="{{estudio.nombre | substrEstudio:'Todo'}}">
                      Todo
                     </label>
                 </div>
 
                 <ul>
-                    <li class="pb-1" *ngFor="let est of estudio.estudios">
+                    <li class="pb-1" *ngFor="let est of estudio.estudios; let i = index">
                         <div class="icheck-primary d-inline">
-                            <input type="checkbox" id="Hema1">
-                            <label for="Hema1">
+                            <input type="checkbox" id="{{estudio.nombre | substrEstudio:'index'}}">
+                            <label for="{{estudio.nombre | substrEstudio:'index'}}">
                              {{est}}
                             </label>
                           </div>
@@ -49,52 +65,8 @@
             </div>
             <!-- /.card -->
         </div>
-
-        <div class="col-md-3">
-            <div class="card card-outline card-primary">
-              <div class="card-header">
-                <h3 class="card-title">ELECTROLITOS</h3>
-
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                The body of the card
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </div>
-
-        <div class="col-md-3">
-            <div class="card card-outline card-primary">
-              <div class="card-header">
-                <h3 class="card-title">BACTEREOLOGÍA</h3>
-
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                The body of the card
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </div>
-
-        <div class="col-md-3">
-            <div class="card card-outline card-primary">
-              <div class="card-header">
-                <h3 class="card-title">ENDOCRINOLOGÍA</h3>
-
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                The body of the card
-              </div>
-              <!-- /.card-body -->
-            </div>
-            <!-- /.card -->
-        </div>
-
+        <!-- Cards de estudios clinicos -->
+    
     </div><!--Fin del segundo row-->
 
     
