@@ -6,11 +6,12 @@
         </div>
     </div><!--Fin del primer row-->
     <br>
+  <form role="form" #estudiosForm="ngForm">
     <div class="row">
       <div class="col-md-12">
 
         <div class="class-md-3 float-left">
-          <button class="btn btn-primary">
+          <button type="submit" class="btn btn-primary">
           <i class="fas fa-check"></i> Adjuntar
           </button>
         </div>
@@ -32,44 +33,45 @@
     </div><!--Fin del segundo row-->
     <div class="row">
 
-        <!-- Cards de estudios clinicos -->
-        <div class="col-md-3" *ngFor="let estudio of estudiosClinicos | paginate: { itemsPerPage: 4, currentPage: p }">
-            <div class="card card-outline card-primary">
-              <div class="card-header">
-                <h3 class="card-title">{{ estudio.nombre }}</h3>
+      <!-- Cards de estudios clinicos -->
+      <div class="col-md-3" *ngFor="let estudio of estudiosClinicos | paginate: { itemsPerPage: 4, currentPage: p } ; let j = index">
+          <div class="card card-outline card-primary">
+            <div class="card-header">
+              <h3 class="card-title">{{ estudio.nombre }}</h3>
 
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body float-left">
-
-                <div class="icheck-primary d-inline">
-                    <input type="checkbox" id="{{estudio.nombre | substrEstudio:'Todo' }}">
-                    <label for="{{estudio.nombre | substrEstudio:'Todo'}}">
-                     Todo
-                    </label>
-                </div>
-
-                <ul>
-                    <li class="pb-1" *ngFor="let est of estudio.estudios; let i = index">
-                        <div class="icheck-primary d-inline">
-                            <input type="checkbox" id="{{estudio.nombre | substrEstudio:'index'}}">
-                            <label for="{{estudio.nombre | substrEstudio:'index'}}">
-                             {{est}}
-                            </label>
-                          </div>
-                    </li>
-                    
-                </ul>
-              </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
-        </div>
-        <!-- Cards de estudios clinicos -->
-    
+            <!-- /.card-header -->
+            <div class="card-body float-left">
+
+              <div class="icheck-primary d-inline">
+                  <input type="checkbox" id="{{estudio.nombre | substrEstudio:'Todo': j }}">
+                  <label for="{{estudio.nombre | substrEstudio:'Todo': j}}">
+                   Todo
+                  </label>
+              </div>
+
+              <ul>
+                  <li class="pb-1" *ngFor="let est of estudio.estudios; let i = index">
+                      <div class="icheck-primary d-inline">
+                          <input type="checkbox" id="{{estudio.nombre | substrEstudio:j:i}}"
+                                 >
+                          <label for="{{estudio.nombre | substrEstudio:j:i}}">
+                           {{est}}
+                          </label>
+                        </div>
+                  </li>
+                  
+              </ul>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+      </div>
+      <!-- Cards de estudios clinicos -->
+      
     </div><!--Fin del segundo row-->
 
     
-
+  </form>
 
 </div><!--  Div principal de 12 columnas -->

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-estudios-clinicos',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./estudios-clinicos.component.css']
 })
 export class EstudiosClinicosComponent implements OnInit {
+
+  @ViewChild('estudiosForm') private formulario: NgForm;//Variable para manejar el formulario
 
   //Para paginacion de ngx-pagination
   p: number = 1;
@@ -171,5 +174,6 @@ export class EstudiosClinicosComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
 
 }

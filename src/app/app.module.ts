@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import { routing, appRoutingProviders } from './app.routing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+//Reactive module es otra manera de manejar los formularios, ver documentación
+import { ReactiveFormsModule } from '@angular/forms';
+
 //importaciones para usar las alertas toastr
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
@@ -127,6 +130,7 @@ const ngWizardConfig: NgWizardConfig = {
     BrowserModule,
     routing,
     FormsModule,
+    ReactiveFormsModule, //Agregando manualmente este modulo
     HttpClientModule,
     BrowserAnimationsModule, // Se requiere el modulo de animaciones de angular
     ToastrModule.forRoot(), //  agregando ToastrModule
@@ -138,7 +142,7 @@ const ngWizardConfig: NgWizardConfig = {
     SweetAlert2Module.forRoot(), // inicializando las swett alerts
     NgxSmartModalModule.forRoot(), // inicializando Ngx-smart-modal
     NgWizardModule.forRoot(ngWizardConfig), //inicializando el ngx-wizard
-    NgbModule,
+    NgbModule, // Importancion de NgBootstrap
     NgCircleProgressModule.forRoot({
       "radius": 60,
       "space": -10,
@@ -157,8 +161,8 @@ const ngWizardConfig: NgWizardConfig = {
       "showBackground": false,
       "clockwise": false,
       "startFromZero": false
-    }),
-    NgxPaginationModule
+    }), //Barra de progreso en forma de circulo
+    NgxPaginationModule, //Paginación para el catalogo de estudios medicos
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
