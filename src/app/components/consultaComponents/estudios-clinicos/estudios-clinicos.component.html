@@ -6,12 +6,11 @@
         </div>
     </div><!--Fin del primer row-->
     <br>
-  <form role="form" #estudiosForm="ngForm">
     <div class="row">
       <div class="col-md-12">
 
         <div class="class-md-3 float-left">
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" class="btn btn-primary" (click)="OnSubmit()">
           <i class="fas fa-check"></i> Adjuntar
           </button>
         </div>
@@ -22,8 +21,7 @@
         </div>
 
         <pagination-controls  class="float-right"
-                              (pageChange)="p = $event"
-                              screenReaderPaginationLabel="Paginación"
+                              (pageChange)="pageChanged($event)"
                               previousLabel="Anterior"
                               nextLabel="Siguiente"
                               responsive="true">
@@ -43,25 +41,27 @@
             <!-- /.card-header -->
             <div class="card-body float-left">
 
-              <div class="icheck-primary d-inline">
-                  <input type="checkbox" id="{{estudio.nombre | substrEstudio:'Todo': j }}">
-                  <label for="{{estudio.nombre | substrEstudio:'Todo': j}}">
-                   Todo
-                  </label>
-              </div>
-
-              <ul>
-                  <li class="pb-1" *ngFor="let est of estudio.estudios; let i = index">
-                      <div class="icheck-primary d-inline">
-                          <input type="checkbox" id="{{estudio.nombre | substrEstudio:j:i}}"
-                                 >
-                          <label for="{{estudio.nombre | substrEstudio:j:i}}">
-                           {{est}}
-                          </label>
-                        </div>
-                  </li>
+                  <div class="icheck-primary d-inline">
+                      <input type="checkbox" id="{{estudio.nombre | substrEstudio:estudio.id: j }}"
+                             [checked]="estudio.todos" (change)="todos($event, estudio.id)">
+                      <label for="{{estudio.nombre | substrEstudio:estudio.id: j}}">
+                       Todo
+                      </label>
+                  </div>
+    
+                  <ul>
+                      <li class="pb-1" *ngFor="let ex of estudio.examenes; let i = index">
+                          <div class="icheck-primary d-inline">
+                              <input type="checkbox" id="{{ex.nombre | substrEstudio:estudio.id:i}}"
+                                     [checked]="ex.seleccionado" (change)="examenSingular($event, estudio.id, i)">
+                              <label for="{{ex.nombre | substrEstudio:estudio.id:i}}">
+                               {{ex.nombre}}
+                              </label>
+                            </div>
+                      </li>
+                      
+                  </ul>
                   
-              </ul>
             </div>
             <!-- /.card-body -->
           </div>
@@ -70,8 +70,5 @@
       <!-- Cards de estudios clinicos -->
       
     </div><!--Fin del segundo row-->
-
-    
-  </form>
 
 </div><!--  Div principal de 12 columnas -->
