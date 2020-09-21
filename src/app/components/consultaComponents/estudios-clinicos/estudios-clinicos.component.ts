@@ -1,4 +1,6 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { EstudiosSeleccionados } from 'src/app/models/estudiosSeleccionado';
 
 @Component({
   selector: 'app-estudios-clinicos',
@@ -7,6 +9,13 @@ import { Component, OnInit} from '@angular/core';
 })
 export class EstudiosClinicosComponent implements OnInit {
 
+  //Para las sweetAlerts
+  @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
+  //Para propagar el evento de confirmación de  la receta
+  @Output() estudiosMedicos = new EventEmitter();
+
+  @Input() ayuda: boolean; //Para manejar la ayuda de los formularios
+  
   //Para paginacion de ngx-pagination
   p: number = 1;
 
@@ -184,6 +193,7 @@ export class EstudiosClinicosComponent implements OnInit {
   ];
 
   estudiosSeleccionados = [];
+  datosClinicos = '';
 
 
   constructor() {
@@ -195,8 +205,32 @@ export class EstudiosClinicosComponent implements OnInit {
   }
 
 
-  OnSubmit(){
-     console.log(this.estudiosSeleccionados); 
+  confirmar(){
+    this.confirmarSwal.fire();//lanzando la alerta
+
+    //Esperando por confirmación
+    this.confirmarSwal.confirm.subscribe(res => {
+
+      //Si se confirma
+      if(res){
+        //continua el proceso de adjuntar los datos de receta
+        this.adjuntarEstudios();
+      }
+    });
+  }
+
+  adjuntarEstudios(){
+      if(this.estudiosSeleccionados.length != 0){
+        //Empaquetando en un solo objeto
+        let estudiosClinicos = new EstudiosSeleccionados(
+          this.estudiosSeleccionados,
+          this.datosClinicos
+        ); 
+  
+        //Propagando el evento hacia el padre para adjuntar al objeto de consulta
+        this.estudiosMedicos.emit(estudiosClinicos);
+
+      }
   }
 
   //Para manejar cuando seleccionan todos los examenes de un estudio

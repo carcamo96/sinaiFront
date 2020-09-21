@@ -1,4 +1,5 @@
 import { Receta } from './receta';
+import { EstudiosSeleccionados } from './estudiosSeleccionado';
 export class Consulta{
     constructor(
         public paciente?: string,
@@ -15,11 +16,15 @@ export class Consulta{
         public freCardia?: string,
         public indiceMC?: string,
         public diagnostico?:string,
-        public receta?: Receta
+        public receta?: Receta,
+        public estudios?: EstudiosSeleccionados 
     ){}
  
     public setReceta(recetaMedica : Receta) {
         this.receta = recetaMedica;
+    }
+    public setEstudios(estudios : EstudiosSeleccionados){
+        this.estudios = estudios;
     }
     
 }

@@ -32,8 +32,9 @@ export class ConsultaComponent implements OnInit, OnDestroy {
 
   public nomPaciente: string; //Para mostrar el nombre completo del paciente
   public edad: number;  //Para guardar el calculo de la edad en base a su edad de nacimiento
+  public genero: string;//Para colocar el genero en toda su palabra
+  public edadAnios: string;//Para concatenar edad + "Años"
   public ayuda = false; //Para manejar la ayuda
-  genEdad = '';// Para mostrar la edad - genero
 
   public paciente: Paciente; //Objeto que mapea los datos del paciente para manejarlos con POO
   public idpa: string; //Maneja el id del paciente que se ha cargado
@@ -92,6 +93,9 @@ export class ConsultaComponent implements OnInit, OnDestroy {
       //Se activa el boton de guardar consulta
       this.adjuntado = true;
 
+      //Se activa la alerta
+      this.showInfo('Se han adjuntado datos de consulta!','Consulta médica');
+
   }
 
   addRecetaMedica(recetaMedica){
@@ -99,15 +103,24 @@ export class ConsultaComponent implements OnInit, OnDestroy {
     //Solo si ya se obtuvieron datos de consulta, se podrá adjuntar una receta
       if(this.adjuntado){
         this.consulta.setReceta(recetaMedica);
-        console.log('Receta recibida: ', this.consulta);
+        //Se activa la alerta
+         this.showInfo('Se ha adjuntado una receta médica!','Receta médica');
+        //console.log('Receta recibida: ', this.consulta);
       }else{
         //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
         this.adjuntarReceta.fire();
       }
   }
 
-  addEstudiosDelaboratorio(){
+  addEstudiosDelaboratorio(estudiosMedicos){
 
+    if(this.adjuntado){
+      this.consulta.setEstudios(estudiosMedicos);
+      //Se activa la alerta
+      this.showInfo('Se han adjuntado estudios de laboratorio!','Estudios de laboratorio');
+    }else{
+        //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
+    }
   }
 
   
@@ -160,15 +173,16 @@ export class ConsultaComponent implements OnInit, OnDestroy {
           //console.log('Paciente: ',response);
           this.eventsSubject.next(response); // propagando el evento al componente hijo
           this.paciente = response.paciente;
+          console.log(this.paciente);
           this.edad = this.obtenerEdad(
             new Date(),
             new Date(this.paciente.fechaNac)
           );
-          
+          this.edadAnios = this.edad + " Años";
           if(this.paciente.gen === 'M'){
-            this.genEdad = this.edad + " años - MASCULINO";
+              this.genero = "MASCULINO";
           }else{
-            this.genEdad = this.edad + " años - FEMENINO";
+            this.genero = "FEMENINO"
           }
           this.nomPaciente = this.paciente.nombre + " " + this.paciente.apellidos;
           this.loadingBarService.complete();
@@ -181,25 +195,7 @@ export class ConsultaComponent implements OnInit, OnDestroy {
     });
   }
 
- 
-  /*cal(event) {
-    var pesoP = event;
 
-    this.indice = pesoP;
-  }
-
-  cal2(event) {
-    var tallaP = event;
-    var pes = +this.indice;
-    let indice;
-    if (tallaP != null || this.consulta.talla != null) {
-      indice = pes / Math.pow(tallaP, 2);
-      this.indice = "" + indice;
-    } else {
-      this.indice = "" + 0;
-    }
-  }
-  */
  
 
   inicializarFechaConsulP(fechaConsulP) {
@@ -251,17 +247,9 @@ export class ConsultaComponent implements OnInit, OnDestroy {
     this.spinnStatus = true;
   }
 
-  // Alerta de exito
-  showSuccess(mensaje: string, titulo: string) {
-    this.toastr.success(mensaje, titulo);
-  }
-
-
-  showError(mensaje: string, titulo: string) {
-    this.toastr.error(mensaje, titulo, {
-      progressBar: true,
-      progressAnimation: "decreasing",
-    });
+  // Alerta cuando se adjunten datos de consulta
+  showInfo(mensaje: string, titulo: string) {
+    this.toastr.info(mensaje, titulo);
   }
 
   

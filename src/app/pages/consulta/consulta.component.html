@@ -42,13 +42,27 @@
                 </div><!--Fin de col-md-4-->
                 <div class="col-md-2">
                   <div class="form-group">
-                    <label for="genEdad">Edad-Genero: </label>
+                    <label for="genEdad">Edad: </label>
                     <div class="input-group">
                       <input
                       type="text"
                       class="form-control"
-                      name="genEdad"
-                      value="{{ genEdad }}"
+                      name="edad"
+                      value="{{ edadAnios }}"
+                      disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="genEdad">Género: </label>
+                    <div class="input-group">
+                      <input
+                      type="text"
+                      class="form-control"
+                      name="genero"
+                      value="{{ genero }}"
                       disabled
                   
                       />
@@ -121,7 +135,10 @@
                   </app-receta>             
               </div>
               <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
-                  <app-estudios-clinicos></app-estudios-clinicos>
+                  <app-estudios-clinicos [ayuda]="ayuda"
+                                         (estudiosMedicos)="addEstudiosDelaboratorio($event)">
+
+                  </app-estudios-clinicos>
               </div>
               
             </div><!--Tabs content-->

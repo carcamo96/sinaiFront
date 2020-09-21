@@ -133,7 +133,9 @@ const ngWizardConfig: NgWizardConfig = {
     ReactiveFormsModule, //Agregando manualmente este modulo
     HttpClientModule,
     BrowserAnimationsModule, // Se requiere el modulo de animaciones de angular
-    ToastrModule.forRoot(), //  agregando ToastrModule
+    ToastrModule.forRoot({
+      preventDuplicates: true
+    }), //  agregando ToastrModule
     NgxMaskModule.forRoot(maskConfig), //Agregando el modulo de ngx-mask
     NgxPatternModule, // Agregando el modulo de ngx-patter
     NgPipesModule, // Modulo de Pipes
