@@ -10,8 +10,11 @@
       <div class="col-md-12">
 
         <div class="class-md-3 float-left">
-          <button type="submit" class="btn btn-primary" (click)="confirmar()">
-          <i class="fas fa-check"></i> Adjuntar
+          <button type="submit" 
+                  class="btn btn-primary" 
+                  (click)="confirmar()" 
+                  [disabled]="estudiosSeleccionados.length === 0">
+            <i class="fas fa-check"></i> Adjuntar
           </button>
         </div>
         <div class="class-md-3 float-left pl-1">
@@ -106,8 +109,11 @@
       <div class="col-md-12">
 
         <div class="class-md-3 float-left">
-          <button type="submit" class="btn btn-primary" (click)="confirmar()">
-          <i class="fas fa-check"></i> Adjuntar
+          <button type="submit" 
+                  class="btn btn-primary" 
+                  (click)="confirmar()"
+                  [disabled]="estudiosSeleccionados.length === 0">
+            <i class="fas fa-check"></i> Adjuntar
           </button>
         </div>
         <div class="class-md-3 float-left pl-1">

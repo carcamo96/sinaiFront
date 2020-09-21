@@ -1,6 +1,6 @@
 
   <app-page-header
-    [titulo]="'Realizar consulta'"
+    [titulo]="'Consulta'"
     [icono]="'fas fa-notes-medical'"
     [breadcrumbs]="breads"
   >
@@ -193,9 +193,9 @@
         </swal>
         <swal
           #msgCompletarConsulta
-          title="Error!"
-          text="Primero debe proporcionar los datos necesarios de Consulta"
-          icon="error"
+          title="No se ha completado el formulario de consulta!"
+          text="Primero debe proporcionar los datos necesarios de consulta"
+          icon="warning"
           confirmButtonText= "Ok"
           confirmButtonColor= "#3085d6"
           [focusConfirm]="true">

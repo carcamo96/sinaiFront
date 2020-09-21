@@ -20,7 +20,7 @@ import { Subject } from 'rxjs';
 export class ConsultaComponent implements OnInit, OnDestroy {
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
-  @ViewChild("msgCompletarConsulta") private adjuntarReceta: SwalComponent;
+  @ViewChild("msgCompletarConsulta") private adjuntarDatos: SwalComponent;
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [{ titulo: "Home", link: "/admin" }, {titulo: "Expedientes", link: "/admin/expedientes"}];
@@ -108,7 +108,7 @@ export class ConsultaComponent implements OnInit, OnDestroy {
         //console.log('Receta recibida: ', this.consulta);
       }else{
         //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
-        this.adjuntarReceta.fire();
+        this.adjuntarDatos.fire();
       }
   }
 
@@ -120,6 +120,7 @@ export class ConsultaComponent implements OnInit, OnDestroy {
       this.showInfo('Se han adjuntado estudios de laboratorio!','Estudios de laboratorio');
     }else{
         //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
+        this.adjuntarDatos.fire();
     }
   }
 
