@@ -100,7 +100,6 @@ export class FormularioPacienteComponent implements OnInit {
             this.loadingBarService.complete();
             this.status = 'success';
             this.idResponse = response.paciente._id;
-            //console.log("Respuesta de insercion: "+response.paciente._id);
             this.redireccionSwal.fire();
 
           }else{

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { NgForm } from "@angular/forms";
 //Importando la clase para manejar las alertas toastr para angular
 import { ToastrService } from "ngx-toastr";
@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
   styleUrls: ["./consulta.component.css"],
   providers: [ConsultaService, PacienteService],
 })
-export class ConsultaComponent implements OnInit, OnDestroy {
+export class ConsultaComponent implements OnInit {
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
   @ViewChild("msgCompletarConsulta") private adjuntarDatos: SwalComponent;
@@ -34,6 +34,8 @@ export class ConsultaComponent implements OnInit, OnDestroy {
   public edad: number;  //Para guardar el calculo de la edad en base a su edad de nacimiento
   public genero: string;//Para colocar el genero en toda su palabra
   public edadAnios: string;//Para concatenar edad + "Años"
+  public numeroExpediente: string; //Para mostrar el numero de expediente
+
   public ayuda = false; //Para manejar la ayuda
 
   public paciente: Paciente; //Objeto que mapea los datos del paciente para manejarlos con POO
@@ -66,10 +68,7 @@ export class ConsultaComponent implements OnInit, OnDestroy {
     //console.log(this.consulta.fechaConsul);
   }
 
-  ngOnDestroy(){
-    //Asignando un objeto vacio para manejar la consulta al terminar de usar la vista
-    this.consulta = new Consulta();
-  }
+
 
   //Aqui se reciben los datos de consulta del componente hijo (datos-consulta)
   addDatosConsulta(datosConsulta){
@@ -126,40 +125,9 @@ export class ConsultaComponent implements OnInit, OnDestroy {
 
   
   onSubmit() {
-    this.loadingBarService.start();
-    this.progress = 30;
+    
+    console.log(this.consulta);
 
-    if (this.consulta != null) {
-   
-      this.progress = 50;
-      //console.log(consulta);
-      this._consultaService.create(this.consulta).subscribe(
-        response => {
-          this.progress = 100;
-          //console.log(this.consulta=response.consulta);
-          if (response.status == "success") {
-            this.loadingBarService.complete();
-            this.status = "success";
-            this.consulta = response.consulta;
-
-            //Alert
-            this.redireccionSwal.fire();
-          } else {
-            this.loadingBarService.complete();
-            console.log("else");
-            this.status = "error";
-            this.errorSwal.fire();
-          }
-        },
-        error => {
-          console.log("error");
-          console.log(error);
-          this.loadingBarService.complete();
-          this.status = "error";
-          this.errorSwal.fire();
-        }
-      );
-    }
     //f.resetForm();
     //this.limpiarCampos();
   }
@@ -173,8 +141,22 @@ export class ConsultaComponent implements OnInit, OnDestroy {
         (response) => {
           //console.log('Paciente: ',response);
           this.eventsSubject.next(response); // propagando el evento al componente hijo
-          this.paciente = response.paciente;
-          console.log(this.paciente);
+          this.paciente = new Paciente(
+            response.paciente.nombre,
+            response.paciente.apellidos,
+            response.paciente.fechaNac,
+            response.paciente.gen,
+            response.paciente.telefono,
+            response.paciente.encargado,
+            response.paciente.parentesco,
+            response.paciente.faContacto,
+            response.paciente.telFaContacto,
+            response.paciente.direccion,
+            response.paciente.otrosDatos,
+            response.paciente.codigo,
+            response.paciente._id
+          );
+       
           this.edad = this.obtenerEdad(
             new Date(),
             new Date(this.paciente.fechaNac)
@@ -186,6 +168,7 @@ export class ConsultaComponent implements OnInit, OnDestroy {
             this.genero = "FEMENINO"
           }
           this.nomPaciente = this.paciente.nombre + " " + this.paciente.apellidos;
+          this.numeroExpediente = this.paciente.codigo;
           this.loadingBarService.complete();
         },
         (error) => {

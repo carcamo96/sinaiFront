@@ -75,7 +75,7 @@
                             </thead>
                             <tbody>
                               <tr *ngFor="let paciente of pacientes; let i = index">
-                                <td>{{ i + 1 }}</td>
+                                <td>{{ paciente.codigo }}</td>
                                 <td>{{paciente.nombre}}</td>
                                 <td>{{paciente.apellidos}}</td>
                                 <td>{{paciente.telefono | telFormat }}</td>

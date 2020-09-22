@@ -12,7 +12,8 @@ export class Paciente{
         public telFaContacto: string,
         public direccion: string,
         public otrosDatos: string,
-        public id?: string,
+        public codigo?: string,
+        public _id?: string,
 
     ){}
     

@@ -2,7 +2,7 @@ import { Receta } from './receta';
 import { EstudiosSeleccionados } from './estudiosSeleccionado';
 export class Consulta{
     constructor(
-        public paciente?: string,
+        public pacienteId: string,
         public motivo?: string,
         public tiemSintoma?: string,
         public fechaConsul?: Date,
@@ -16,8 +16,8 @@ export class Consulta{
         public freCardia?: string,
         public indiceMC?: string,
         public diagnostico?:string,
-        public receta?: Receta,
-        public estudios?: EstudiosSeleccionados 
+        public receta: Receta = new Receta(),
+        public estudios: EstudiosSeleccionados = new EstudiosSeleccionados()
     ){}
  
     public setReceta(recetaMedica : Receta) {
