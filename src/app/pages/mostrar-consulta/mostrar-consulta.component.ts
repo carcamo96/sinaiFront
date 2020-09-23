@@ -89,7 +89,7 @@ public breads: any[] = [
 
   onSubmit(f: NgForm){
     
-    this.loadingBarService.start();
+    /*this.loadingBarService.start();
     if(f.valid)
     { 
       let consulta = new Consulta(
@@ -135,10 +135,7 @@ public breads: any[] = [
                 this.loadingBarService.complete();
                 this.disabledDefault = true;
             
-          /*}else{
-            this.status = 'error';
-            this.errorNoValidSwal.fire();
-          }*/
+          
         },
         error => {
             console.log(error);
@@ -151,7 +148,7 @@ public breads: any[] = [
       );
    }else{
     this.errorNoValidSwal.fire();
-  }
+  }*/
   }
 
   inicializarFechaConsul(fechaConParam) {

@@ -21,6 +21,7 @@ export class ConsultaComponent implements OnInit {
   @ViewChild("redireccionSwal") private redireccionSwal: SwalComponent;
   @ViewChild("errorSwal") private errorSwal: SwalComponent;
   @ViewChild("msgCompletarConsulta") private adjuntarDatos: SwalComponent;
+  @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
 
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
   public breads: any[] = [{ titulo: "Home", link: "/admin" }, {titulo: "Expedientes", link: "/admin/expedientes"}];
@@ -72,6 +73,14 @@ export class ConsultaComponent implements OnInit {
 
   //Aqui se reciben los datos de consulta del componente hijo (datos-consulta)
   addDatosConsulta(datosConsulta){
+      var signosVitales = {
+        peso: datosConsulta.peso,
+        talla: datosConsulta.talla,
+        temperatura: datosConsulta.temperatura,
+        presionArterial: datosConsulta.presionArt,
+        frecuenciaCardiaca: datosConsulta.freCardia,
+        indiceMC: datosConsulta.indiceMC
+      };
       this.consulta = new Consulta(
         datosConsulta.paciente,
         datosConsulta.motivo,
@@ -80,12 +89,7 @@ export class ConsultaComponent implements OnInit {
         datosConsulta.historia,
         datosConsulta.antePatol,
         datosConsulta.alergias,
-        datosConsulta.peso,
-        datosConsulta.talla,
-        datosConsulta.temperatura,
-        datosConsulta.presionArt,
-        datosConsulta.freCardia,
-        datosConsulta.indiceMC,
+        signosVitales,
         datosConsulta.diagnostico
       );
 
@@ -127,6 +131,40 @@ export class ConsultaComponent implements OnInit {
   onSubmit() {
     
     console.log(this.consulta);
+    /*this.loadingBarService.start();
+    this.progress = 30;
+
+    if (this.consulta != null) {
+   
+      this.progress = 50;
+      
+      this._consultaService.create(this.consulta).subscribe(
+        response => {
+          this.progress = 100;
+          //console.log(this.consulta=response.consulta);
+          if (response.status == "success") {
+            this.loadingBarService.complete();
+            this.status = "success";
+            this.consulta = response.consulta;
+
+            //Alert
+            this.redireccionSwal.fire();
+          } else {
+            this.loadingBarService.complete();
+            console.log("else");
+            this.status = "error";
+            this.errorSwal.fire();
+          }
+        },
+        error => {
+          console.log("error");
+          console.log(error);
+          this.loadingBarService.complete();
+          this.status = "error";
+          this.errorSwal.fire();
+        }
+      );
+    }*/
 
     //f.resetForm();
     //this.limpiarCampos();
@@ -221,6 +259,20 @@ export class ConsultaComponent implements OnInit {
     return edad;
   } // fin del metodo de calculo de edad
 
+  //Para confirmar la consulta medica
+  confirmar(){
+    this.confirmarSwal.fire();//lanzando la alerta
+
+      //Esperando por confirmación
+      this.confirmarSwal.confirm.subscribe(res => {
+
+        //Si se confirma
+        if(res){
+          //continua el proceso de registrar la consulta
+          this.onSubmit();
+        }
+      });
+  }
 
   redireccionar() {
     this._router.navigate(["/expedientes/"]);

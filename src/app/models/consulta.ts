@@ -9,12 +9,7 @@ export class Consulta{
         public historia?: string,
         public antePatol?: string,
         public alergias?: string,
-        public peso?: string,
-        public talla?: string,
-        public temperatura?: string,
-        public presionArt?: string,
-        public freCardia?: string,
-        public indiceMC?: string,
+        public signosVitales?: any,
         public diagnostico?:string,
         public receta: Receta = new Receta(),
         public estudios: EstudiosSeleccionados = new EstudiosSeleccionados()

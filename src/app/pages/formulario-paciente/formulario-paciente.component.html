@@ -550,7 +550,7 @@
                       name="direccion"
                       #direccion="ngModel"
                       [(ngModel)]="paciente.direccion"
-                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                      ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                       required
                       [ngClass]="{
                         'is-invalid': !direccion.valid && direccion.touched
@@ -597,7 +597,7 @@
                       name="otrosDatos"
                       #otrosDatos="ngModel"
                       [(ngModel)]="paciente.otrosDatos"
-                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                      ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                       popoverClass="text-dark"
                       [ngbPopover]="popDatosAdContent"
                       [popoverTitle]="popDatosAdTitulo"

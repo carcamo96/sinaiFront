@@ -66,6 +66,18 @@ export class RecetaComponent implements OnInit {
     this.items.splice(index, 1);
   }
 
+  cambio(event){
+      let palabra: string = event;
+      let palabras = palabra.split(' ');
+      let clave = palabras[0];
+
+      if(clave === 'Solución'){
+        this.recetaItem.medida = 'ml';
+      }else{
+        this.recetaItem.medida = 'mg';
+      }
+  }
+
   confirmar(){
     this.confirmarSwal.fire();//lanzando la alerta
 
