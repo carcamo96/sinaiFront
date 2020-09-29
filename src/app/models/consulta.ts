@@ -10,7 +10,7 @@ export class Consulta{
         public antePatol?: string,
         public alergias?: string,
         public signosVitales?: any,
-        public diagnostico?:string,
+        public diagnostico:any = {},
         public receta: Receta = new Receta(),
         public estudios: EstudiosSeleccionados = new EstudiosSeleccionados()
     ){}

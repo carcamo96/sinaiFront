@@ -81,10 +81,13 @@ export class ConsultaComponent implements OnInit {
         frecuenciaCardiaca: datosConsulta.freCardia,
         indiceMC: datosConsulta.indiceMC
       };
+
+      var tiempoSintomas = datosConsulta.tiemSintomas.tiempo+" "+datosConsulta.tiemSintomas.lapso;
+      
       this.consulta = new Consulta(
         datosConsulta.paciente,
         datosConsulta.motivo,
-        datosConsulta.tiemSintoma,
+        tiempoSintomas,
         datosConsulta.fechaConsul,
         datosConsulta.historia,
         datosConsulta.antePatol,

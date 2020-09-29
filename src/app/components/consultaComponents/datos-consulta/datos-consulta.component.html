@@ -47,7 +47,7 @@
                     value="A"
                     id="radioPrimary1"
                     name="r1"
-                    [checked]="motivo"
+                    [checked]="motivoCon"
                     (change)="motivoChange($event)"
                   />
                   <label for="radioPrimary1">
@@ -74,11 +74,11 @@
           </div>
 
         </div>
-      </div>
+      </div><!--Fin del segundo row-->
 
       <div class="row">
 
-        <div class="col-md-4" *ngIf="motivo">
+        <div class="col-md-4" *ngIf="motivoCon">
           <label for="motivo">Motivo:</label>
           <div class="input-group">
             <input
@@ -118,7 +118,7 @@
                 <i class="fas fa-info-circle fa-lg"></i>
               </p>
             </ng-template>
-          </div>
+          </div><!--Fin del input-group -->
           <small
               class="text-danger"
               *ngIf="!motivo.valid && motivo.touched"
@@ -127,16 +127,16 @@
             </small>
         </div>
 
-        <div class="col-md-4" *ngIf="!motivo">
+        <div class="col-md-4" *ngIf="!motivoCon">
           <label for="motivo">Motivo:</label>
           <div class="input-group">
               <select
               name="comunes"
-              class="form-control">
-              <option value='' selected>Seleccione un motivo común</option>
-              <option value=''>Fiebre</option>
-              <option value=''>Mareos</option>
-              <option value=''>Estreñimiento</option>
+              class="form-control"
+              #motivoSelect>
+              <option value='Fiebre' [selected]="'true'">Fiebre</option>
+              <option value='Mareos'>Mareos</option>
+              <option value='Estreñimiento'>Estreñimiento</option>
               </select>
               
           </div>
@@ -153,18 +153,34 @@
                      min="1"
                      max="30"
                      value="7"
-                     >  
+                     step="1"
+                     required
+                     #duracion="ngModel"
+                     [(ngModel)]="consulta.tiemSintomas.tiempo"
+                     ngxPattern="^[1-9]+[0-9]*$"
+                     [ngClass]="{
+                      'is-invalid': !duracion.valid && duracion.touched
+                      }">
+                     <small
+                            class="text-danger"
+                            *ngIf="!duracion.valid && duracion.touched"
+                          >
+                            Campo requerido
+                     </small>  
           </div>
         </div>
-        <div class="col-md-1">
+        <div class="col-md-2">
             <div class="form-group">
                 <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
                 <div class="input-group mb-3">
                     <select
                     name="lapso"
                     class="form-control"
+                    #lapso="ngModel"
+                    [(ngModel)]="consulta.tiemSintomas.lapso"
                     >
-                    <option value='Dia/s' selected>Dia/s</option>
+                    <option value='Hora/s' selected>Hora/s</option>
+                    <option value='Dia/s'>Dia/s</option>
                     <option value='Mes/es'>Mes/es</option>
                     <option value='Año/s'>Año/s</option>
                     </select>
@@ -173,7 +189,9 @@
             </div>
         </div>
 
-      </div><br>
+      </div><!--Fin del tercer row-->
+      
+      <br>
 
       <div class="row">
         <div class="col-md-12">
@@ -188,7 +206,7 @@
               name="historia"
               #historia="ngModel"
               [(ngModel)]="consulta.historia"
-              ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+              ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
               required
               [ngClass]="{
                 'is-invalid': !historia.valid && historia.touched
@@ -223,7 +241,7 @@
           </div>
         </div>
       </div>
-      <!-- Fin del segundo row -->
+      <!-- Fin del cuarto row -->
 
       <div class="row">
         <div class="col-md-12">
@@ -241,7 +259,7 @@
               name="antePatol"
               #antePatol="ngModel"
               [(ngModel)]="consulta.antePatol"
-              ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+              ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
               required
               [ngClass]="{
                 'is-invalid': !antePatol.valid && antePatol.touched
@@ -277,7 +295,7 @@
           </div>
         </div>
       </div>
-      <!-- Fin del sexto row -->
+      <!-- Fin del quinto row -->
       <fieldset class="border p-2">
         <legend class="w-auto">Signos vitales</legend>
 
@@ -614,7 +632,7 @@
           </div>
         </div>
         <!-- Fin del div signos vitales -->
-      </fieldset>
+      </fieldset> <!-- Fieldset de los signos vitales -->
       <br>
       <div class="row">
         <div class="col-md-12">
@@ -662,7 +680,7 @@
                   </ng-template>
           </div>
         </div>
-      </div>
+      </div><!-- Fin del sexto -->
 
       <br>
 
@@ -678,7 +696,7 @@
                     value="X"
                     id="radioPrimary3"
                     name="r"
-                    [checked]="diagnostico"
+                    [checked]="diag"
                     (change)="diagnosticoChange($event)"
                   />
                   <label for="radioPrimary3">
@@ -705,7 +723,7 @@
           </div>
 
         </div>
-      </div>
+      </div><!--Fin del septimo row-->
 
       <div class="row">
 
@@ -715,15 +733,14 @@
             <input
               type="text"
               class="form-control"
-              name="motivo"
+              name="diagnostico"
               placeholder="Diagnóstico..."
-              #motivo="ngModel"
-              [(ngModel)]="consulta.diagnostico"
+              #diagnostico="ngModel"
+              [(ngModel)]="consulta.diagnostico.diagEspecifico"
               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
               autocomplete="off"
-              required
               [ngClass]="{
-                'is-invalid': !motivo.valid && motivo.touched
+                'is-invalid': !diagnostico.valid && diagnostico.touched
               }"
               placement="top"
               popoverClass="text-dark"
@@ -752,9 +769,9 @@
           </div>
           <small
               class="text-danger"
-              *ngIf="!motivo.valid && motivo.touched"
+              *ngIf="!diagnostico.valid && diagnostico.touched"
             >
-              Campo requerido
+              Campo no válido
             </small>
         </div>
 
@@ -763,7 +780,8 @@
           <div class="input-group">
               <select
               name="comunes"
-              class="form-control">
+              class="form-control"
+              #diagnosticoSelect>
               <option value='' selected>Seleccione un diagnóstico común</option>
               <option value=''>Migraña</option>
               <option value=''>Embarazo</option>
@@ -775,7 +793,7 @@
           
         </div>
 
-      </div>
+      </div><!--Fin del octavo row-->
 
       <br>
 
@@ -789,10 +807,10 @@
               rows="3"
               placeholder="Detalles de Diagnóstico..."
               autocomplete="off"
-              name="diagnostico"
-              #diagnostico="ngModel"
-              [(ngModel)]="consulta.diagnostico"
-              ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+              name="diagnosticoDetail"
+              #diagnosticoDetail="ngModel"
+              [(ngModel)]="consulta.diagnostico.diagDetalles"
+              ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
             
               popoverClass="text-dark"
                   [autoClose]="true"
@@ -816,7 +834,7 @@
                   </ng-template>
           </div>
         </div>
-      </div>
+      </div><!-- Fin del noveno row -->
 
     </form>
 </div><!--Fin del card-body -->

@@ -21,7 +21,7 @@ export class DatosConsultaComponent implements OnInit {
   public consulta: any; //Objeto modelo de la consulta
   public edad: number; //Variable para guardar el calculo de la edad del paciente
   public paciente: Paciente; //Objeto de tipo paciente para cargarlo con sus datos
-  public motivo:boolean = true;//Para manejar los motivos de consulta
+  public motivoCon:boolean = true;//Para manejar los motivos de consulta
   public diag:boolean = true;//Para manejar la seleccion de diagnostico
 
   @Input() ayuda: boolean;// Para manejar la ayuda de los formularios
@@ -49,7 +49,10 @@ export class DatosConsultaComponent implements OnInit {
     this.consulta = {
       paciente: "",
       motivo: "",
-      tiemSintoma: "",
+      tiemSintomas: {
+        tiempo: "7",
+        lapso: "Hora/s"
+      },
       fechaConsul: "",
       historia: "",
       antePatol: "",
@@ -60,7 +63,10 @@ export class DatosConsultaComponent implements OnInit {
       presionArt: "",
       indiceMC: "",
       freCardia: "",
-      diagnostico: "",
+      diagnostico: {
+        diagEspecifico: "",
+        diagDetalles: ""
+      },
     };
 
     this.consulta.fechaConsul = this.inicializarFechaActual();
@@ -167,10 +173,10 @@ export class DatosConsultaComponent implements OnInit {
 
   motivoChange(event){
    if(event.target.value === "B"){
-      this.motivo = false;
+      this.motivoCon = false;
       //console.log("Entra B: ", this.motivo);
    }else{
-      this.motivo = true;
+      this.motivoCon = true;
       //console.log("Entra A: ", this.motivo);
    }
   }
@@ -184,5 +190,6 @@ export class DatosConsultaComponent implements OnInit {
       //console.log("Entra x: ", this.diag);
    }
   }
+
 
 }
