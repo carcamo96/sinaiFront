@@ -5,33 +5,82 @@
     #consultaForm="ngForm"
     >
 
-    <div class="row">
-        <div class="col-md-3">
-          <div class="form-group">
-            <label>Fecha de consulta:</label>
-            <div class="input-group date">
-              <div class="input-group-prepend">
-                <div class="input-group-text">
-                  <i class="fa fa-calendar"></i>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            <div class="form-group">
+              <label>Fecha de consulta:</label>
+              <div class="input-group date">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fa fa-calendar"></i>
+                  </div>
                 </div>
+                <input
+                  type="date"
+                  class="form-control"
+                  max="{{ fechaAux }}"
+                  value="{{ consulta.fechaConsul | fechaFormat }}"
+                  name="fechaConsul"
+                  #fechaConsul="ngModel"
+                  [(ngModel)]="consulta.fechaConsul"
+                  disabled
+                />
               </div>
-              <input
-                type="date"
-                class="form-control"
-                max="{{ fechaAux }}"
-                value="{{ consulta.fechaConsul | fechaFormat }}"
-                name="fechaConsul"
-                #fechaConsul="ngModel"
-                [(ngModel)]="consulta.fechaConsul"
-                disabled
-              />
             </div>
+
           </div>
         </div>
 
-        <div class="col-md-5">
-          <div class="form-group">
-            <label for="motivo">Motivo de consulta</label>
+      </div><!-- Fin del primer row -->
+      <br>
+
+      <div class="row">
+        <div class="col-md-12">
+          
+          <div class="row">
+            <div class="col-md-2">
+              <div class="form-group clearfix">
+                <div class="icheck-primary d-inline">
+                  <input
+                    type="radio"
+                    value="A"
+                    id="radioPrimary1"
+                    name="r1"
+                    [checked]="motivoCon"
+                    (change)="motivoChange($event)"
+                  />
+                  <label for="radioPrimary1">
+                    Escribe un motivo
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              <div class="icheck-primary d-inline">
+                <input
+                  type="radio"
+                  value="B"
+                  id="radioPrimary2"
+                  name="r1"
+                  (change)="motivoChange($event)"
+                />
+                <label for="radioPrimary2">
+                  Motivos comunes
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!--Fin del segundo row-->
+
+      <div class="row">
+
+        <div class="col-md-4" *ngIf="motivoCon">
+          <label for="motivo">Motivo:</label>
+          <div class="input-group">
             <input
               type="text"
               class="form-control"
@@ -40,8 +89,8 @@
               #motivo="ngModel"
               [(ngModel)]="consulta.motivo"
               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-              required
               autocomplete="off"
+              required
               [ngClass]="{
                 'is-invalid': !motivo.valid && motivo.touched
               }"
@@ -56,13 +105,10 @@
               (focus)="ayuda ? p1.open() : ''"
               (blur)="ayuda ? p1.close() : ''"
             />
-
-            <small
-              class="text-danger"
-              *ngIf="!motivo.valid && motivo.touched"
-            >
-              Campo requerido
-            </small>
+            <div class="input-group-append">
+              <button type="button" class="btn btn-primary"><i class="fas fa-plus"></i></button>
+            </div>
+          
             <ng-template #popMotivoContent
               >Digite el motivo por el cual pasa consulta el paciente</ng-template
             >
@@ -72,63 +118,85 @@
                 <i class="fas fa-info-circle fa-lg"></i>
               </p>
             </ng-template>
-          </div>
-        </div>
-
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="tiemSintoma"
-              >Tiempo de evolución de síntomas</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              name="tiemSintoma"
-              placeholder="Tiempo de evolución ..."
-              #tiemSintoma="ngModel"
-              [(ngModel)]="consulta.tiemSintoma"
-              required
-              autocomplete="off"
-              ngxPattern="[0-9]"
-              [ngClass]="{
-                'is-invalid': !tiemSintoma.valid && tiemSintoma.touched
-              }"
-              placement="top"
-              popoverClass="text-dark"
-              [autoClose]="true"
-              [ngbPopover]="popSintomaContent"
-              [popoverTitle]="popSintomaTitulo"
-              triggers="manual"
-              #p2="ngbPopover"
-              (click)="ayuda ? p2.open() : ''"
-              (focus)="ayuda ? p2.open() : ''"
-              (blur)="ayuda ? p2.close() : ''"
-            />
-
-            <small
+          </div><!--Fin del input-group -->
+          <small
               class="text-danger"
-              *ngIf="!tiemSintoma.valid && tiemSintoma.touched"
+              *ngIf="!motivo.valid && motivo.touched"
             >
               Campo requerido
             </small>
-            <ng-template #popSintomaContent
-              >Digite una cantidad en días del tiempo de evolución de los síntomas del paciente</ng-template
-            >
-            <ng-template #popSintomaTitulo>
-              <b>Tiempo de evolución de síntomas</b>
-              <p class="float-right">
-                <i class="fas fa-info-circle fa-lg"></i>
-              </p>
-            </ng-template>
+        </div>
+
+        <div class="col-md-4" *ngIf="!motivoCon">
+          <label for="motivo">Motivo:</label>
+          <div class="input-group">
+              <select
+              name="comunes"
+              class="form-control"
+              #motivoSelect>
+              <option value='Fiebre' [selected]="'true'">Fiebre</option>
+              <option value='Mareos'>Mareos</option>
+              <option value='Estreñimiento'>Estreñimiento</option>
+              </select>
+              
+          </div>
+          
+        </div>
+        
+        <div class="col-md-2">
+          <div class="form-group">
+              <label for="cantidad">Sintomas desde hace:</label>
+                  
+              <input type="number" 
+                     class="form-control"
+                     name="duracion"
+                     min="1"
+                     max="30"
+                     value="7"
+                     step="1"
+                     required
+                     #duracion="ngModel"
+                     [(ngModel)]="consulta.tiemSintomas.tiempo"
+                     ngxPattern="^[1-9]+[0-9]*$"
+                     [ngClass]="{
+                      'is-invalid': !duracion.valid && duracion.touched
+                      }">
+                     <small
+                            class="text-danger"
+                            *ngIf="!duracion.valid && duracion.touched"
+                          >
+                            Campo requerido
+                     </small>  
           </div>
         </div>
-      </div>
-      <!-- Fin del primer row -->
+        <div class="col-md-2">
+            <div class="form-group">
+                <label for="lapso"><i class="fas fa-alarm-clock"></i></label>
+                <div class="input-group mb-3">
+                    <select
+                    name="lapso"
+                    class="form-control"
+                    #lapso="ngModel"
+                    [(ngModel)]="consulta.tiemSintomas.lapso"
+                    >
+                    <option value='Hora/s' selected>Hora/s</option>
+                    <option value='Dia/s'>Dia/s</option>
+                    <option value='Mes/es'>Mes/es</option>
+                    <option value='Año/s'>Año/s</option>
+                    </select>
+                    
+                </div>
+            </div>
+        </div>
+
+      </div><!--Fin del tercer row-->
+      
+      <br>
 
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
-            <label>Historia de la enfermedad</label>
+            <label>Historia de la enfermedad:</label>
             <textarea
               id="historia"
               rows="3"
@@ -138,7 +206,7 @@
               name="historia"
               #historia="ngModel"
               [(ngModel)]="consulta.historia"
-              ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+              ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
               required
               [ngClass]="{
                 'is-invalid': !historia.valid && historia.touched
@@ -173,7 +241,7 @@
           </div>
         </div>
       </div>
-      <!-- Fin del segundo row -->
+      <!-- Fin del cuarto row -->
 
       <div class="row">
         <div class="col-md-12">
@@ -181,7 +249,7 @@
           <div class="form-group">
             <label
               >Antecedentes patológicos personales ó de enfermedades
-              crónicas</label
+              crónicas:</label
             >
             <textarea
               class="form-control"
@@ -191,7 +259,7 @@
               name="antePatol"
               #antePatol="ngModel"
               [(ngModel)]="consulta.antePatol"
-              ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+              ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
               required
               [ngClass]="{
                 'is-invalid': !antePatol.valid && antePatol.touched
@@ -227,7 +295,7 @@
           </div>
         </div>
       </div>
-      <!-- Fin del sexto row -->
+      <!-- Fin del quinto row -->
       <fieldset class="border p-2">
         <legend class="w-auto">Signos vitales</legend>
 
@@ -235,7 +303,7 @@
           <!--Div de signos vitales-->
           <div class="col-md-4">
             <div class="form-group">
-              <label>Peso</label>
+              <label>Peso:</label>
               <div class="input-group">
                 <input
                   type="text"
@@ -286,7 +354,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label>Talla</label>
+              <label>Talla:</label>
               <div class="input-group">
                 <input
                   type="text"
@@ -341,7 +409,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label>Índice de masa corporal</label>
+              <label>Índice de Masa Corporal:</label>
               <div class="input-group">
                 <input
                   type="number"
@@ -366,7 +434,7 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label>Temperatura</label>
+              <label>Temperatura:</label>
               <div class="input-group">
                 <input
                   type="text"
@@ -417,7 +485,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-group" *ngIf="!esMenor()">
-              <label>Presión arterial</label>
+              <label>Presión Arterial:</label>
               <div class="input-group">
                 <input
                   type="text"
@@ -464,7 +532,7 @@
                   </ng-template>
             </div>
             <div class="form-group" *ngIf="esMenor()">
-              <label>Presión arterial</label>
+              <label>Presión arterial:</label>
               <div class="input-group">
                 <input
                   type="text"
@@ -514,7 +582,7 @@
           </div>
           <div class="col-md-4">
             <div class="form-group">
-              <label>Frecuencia cardiáca</label>
+              <label>Frecuencia Cardiáca:</label>
               <div class="input-group">
                 <input
                   type="text"
@@ -564,13 +632,13 @@
           </div>
         </div>
         <!-- Fin del div signos vitales -->
-      </fieldset>
-
+      </fieldset> <!-- Fieldset de los signos vitales -->
+      <br>
       <div class="row">
         <div class="col-md-12">
           <!-- textarea -->
           <div class="form-group">
-            <label>Alergias</label>
+            <label>Alergias (*):</label>
             <textarea
               class="form-control"
               rows="3"
@@ -580,7 +648,6 @@
               #alergias="ngModel"
               [(ngModel)]="consulta.alergias"
               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-              required
               [ngClass]="{
                 'is-invalid': !alergias.valid && alergias.touched
               }"
@@ -613,21 +680,137 @@
                   </ng-template>
           </div>
         </div>
-      </div>
+      </div><!-- Fin del sexto -->
+
+      <br>
+
+      <div class="row">
+        <div class="col-md-12">
+          
+          <div class="row">
+            <div class="col-md-3">
+              <div class="form-group clearfix">
+                <div class="icheck-primary d-inline">
+                  <input
+                    type="radio"
+                    value="X"
+                    id="radioPrimary3"
+                    name="r"
+                    [checked]="diag"
+                    (change)="diagnosticoChange($event)"
+                  />
+                  <label for="radioPrimary3">
+                    Escribe un Diagnóstico
+                  </label>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-md-3">
+              <div class="icheck-primary d-inline">
+                <input
+                  type="radio"
+                  value="Y"
+                  id="radioPrimary4"
+                  name="r"
+                  (change)="diagnosticoChange($event)"
+                />
+                <label for="radioPrimary4">
+                  Diagnosticos comunes
+                </label>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div><!--Fin del septimo row-->
+
+      <div class="row">
+
+        <div class="col-md-4" *ngIf="diag">
+          <label for="motivo">Diagnóstico (*):</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              name="diagnostico"
+              placeholder="Diagnóstico..."
+              #diagnostico="ngModel"
+              [(ngModel)]="consulta.diagnostico.diagEspecifico"
+              ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+              autocomplete="off"
+              [ngClass]="{
+                'is-invalid': !diagnostico.valid && diagnostico.touched
+              }"
+              placement="top"
+              popoverClass="text-dark"
+              [autoClose]="true"
+              [ngbPopover]="popMotivoContent"
+              [popoverTitle]="popMotivoTitulo"
+              triggers="manual"
+              #p1="ngbPopover"
+              (click)="ayuda ? p1.open() : ''"
+              (focus)="ayuda ? p1.open() : ''"
+              (blur)="ayuda ? p1.close() : ''"
+            />
+            <div class="input-group-append">
+              <button type="button" class="btn btn-primary"><i class="fas fa-plus"></i></button>
+            </div>
+          
+            <ng-template #popMotivoContent
+              >Digite el motivo por el cual pasa consulta el paciente</ng-template
+            >
+            <ng-template #popMotivoTitulo>
+              <b>Motivo de la consulta</b>
+              <p class="float-right">
+                <i class="fas fa-info-circle fa-lg"></i>
+              </p>
+            </ng-template>
+          </div>
+          <small
+              class="text-danger"
+              *ngIf="!diagnostico.valid && diagnostico.touched"
+            >
+              Campo no válido
+            </small>
+        </div>
+
+        <div class="col-md-4" *ngIf="!diag">
+          <label for="motivo">Dianóstico:</label>
+          <div class="input-group">
+              <select
+              name="comunes"
+              class="form-control"
+              #diagnosticoSelect>
+              <option value='' selected>Seleccione un diagnóstico común</option>
+              <option value=''>Migraña</option>
+              <option value=''>Embarazo</option>
+              <option value=''>Infección respiratoria</option>
+              <option value=''>Gripe</option>
+              </select>
+              
+          </div>
+          
+        </div>
+
+      </div><!--Fin del octavo row-->
+
+      <br>
+
       <div class="row">
         <div class="col-md-12">
           <!-- textarea -->
           <div class="form-group">
-            <label>Diagnóstico (*)</label>
+            <label>Detalles de Diagnóstico (*):</label>
             <textarea
               class="form-control"
               rows="3"
-              placeholder="Diagnóstico"
+              placeholder="Detalles de Diagnóstico..."
               autocomplete="off"
-              name="diagnostico"
-              #diagnostico="ngModel"
-              [(ngModel)]="consulta.diagnostico"
-              ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+              name="diagnosticoDetail"
+              #diagnosticoDetail="ngModel"
+              [(ngModel)]="consulta.diagnostico.diagDetalles"
+              ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
             
               popoverClass="text-dark"
                   [autoClose]="true"
@@ -651,7 +834,7 @@
                   </ng-template>
           </div>
         </div>
-      </div>
+      </div><!-- Fin del noveno row -->
 
     </form>
 </div><!--Fin del card-body -->

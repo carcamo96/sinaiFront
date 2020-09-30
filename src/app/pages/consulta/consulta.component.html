@@ -1,6 +1,6 @@
 
   <app-page-header
-    [titulo]="'Realizar consulta'"
+    [titulo]="'Consulta'"
     [icono]="'fas fa-notes-medical'"
     [breadcrumbs]="breads"
   >
@@ -42,13 +42,27 @@
                 </div><!--Fin de col-md-4-->
                 <div class="col-md-2">
                   <div class="form-group">
-                    <label for="genEdad">Edad-Genero: </label>
+                    <label for="genEdad">Edad: </label>
                     <div class="input-group">
                       <input
                       type="text"
                       class="form-control"
-                      name="genEdad"
-                      value="{{ genEdad }}"
+                      name="edad"
+                      value="{{ edadAnios }}"
+                      disabled
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="genEdad">Género: </label>
+                    <div class="input-group">
+                      <input
+                      type="text"
+                      class="form-control"
+                      name="genero"
+                      value="{{ genero }}"
                       disabled
                   
                       />
@@ -63,7 +77,7 @@
                       type="text"
                       class="form-control"
                       name="numeroExp"
-                      value="XXXXXXXX-X"
+                      value="{{numeroExpediente}}"
                       disabled
                   
                       />
@@ -83,10 +97,14 @@
           <div class="card-header p-0 pt-1">
             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
               <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-one-historial-tab" data-toggle="pill" href="#custom-tabs-one-historial" role="tab" aria-controls="custom-tabs-one-historial" aria-selected="false">Historial clínico</a>
+                <a class="nav-link" id="custom-tabs-one-historial-tab" data-toggle="pill" href="#custom-tabs-one-historial" role="tab" aria-controls="custom-tabs-one-historial" aria-selected="false">
+                  Historial clínico
+                </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Consulta médica</a>
+                <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">
+                  Consulta médica <i *ngIf="!adjuntado" class="fas fa-check"></i>
+                </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Receta médica</a>
@@ -121,7 +139,10 @@
                   </app-receta>             
               </div>
               <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
-                  <app-estudios-clinicos></app-estudios-clinicos>
+                  <app-estudios-clinicos [ayuda]="ayuda"
+                                         (estudiosMedicos)="addEstudiosDelaboratorio($event)">
+
+                  </app-estudios-clinicos>
               </div>
               
             </div><!--Tabs content-->
@@ -129,10 +150,10 @@
           <div class="card-footer">
             <input
               type="submit"
-              value="Guardar consulta"
+              value="Terminar consulta"
               class="btn btn-primary"
               [disabled]="!adjuntado"
-              (click)="onSubmit()"
+              (click)="confirmar()"
             />
            
           </div><!--Fin del card-footer-->
@@ -176,12 +197,26 @@
         </swal>
         <swal
           #msgCompletarConsulta
-          title="Error!"
-          text="Primero debe proporcionar los datos necesarios de Consulta"
-          icon="error"
+          title="No se ha completado el formulario de consulta!"
+          text="Primero debe proporcionar los datos necesarios de consulta"
+          icon="warning"
           confirmButtonText= "Ok"
           confirmButtonColor= "#3085d6"
           [focusConfirm]="true">
+        </swal>
+        <!-- Sweet Confirm -->
+        <swal
+          #confirmarSwal
+          title="¿Terminar la consulta?"
+          text="¿Desea proceder con el registro de esta consulta?"
+          icon="question"
+          [showCancelButton]="true"
+          confirmButtonText= "Si!"
+          cancelButtonText= "No!"
+          confirmButtonColor= "#3085d6"
+          cancelButtonColor= "#bbbbbb"
+          [focusCancel]="true"
+          >
         </swal>
   
         <!-- Sweet alerts -->

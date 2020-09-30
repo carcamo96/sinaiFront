@@ -47,12 +47,13 @@
                                 name="presentacion"
                                 class="form-control"
                                 #presentacion="ngModel"
-                                [(ngModel)]="recetaItem.presentacion"
+                                [ngModel]="recetaItem.presentacion"
                                 required
                                 [ngClass]="{
                                     'is-invalid':
                                     !presentacion.valid && presentacion.touched
                                 }"
+                                (ngModelChange)="cambio($event)"
                                 >
                                 <option value="Tableta" selected>Tableta</option>
                                 <option value="Capsula">Capsula</option>
@@ -85,11 +86,12 @@
                                     [(ngModel)]="recetaItem.concentracion"
                                     autocomplete="off"
                                     required
-                                [ngClass]="{
-                                    'is-invalid':
-                                    !concentracion.valid && concentracion.touched
-                                }"
-                                >
+                                    ngxPattern="^\d+\.?\d{0,2}$"
+                                    [ngClass]="{
+                                        'is-invalid':
+                                        !concentracion.valid && concentracion.touched
+                                    }"
+                                    >
                                 <small
                                 class="text-danger"
                                 *ngIf="!concentracion.valid && concentracion.touched"
@@ -141,7 +143,7 @@
                                 class="form-control"
                                 name="cantidad"
                                 min="1"
-                                max="15"
+                                max=""
                                 value="1"
                                 #cantidad="ngModel"
                                 [(ngModel)]="recetaItem.cantidad"
@@ -174,7 +176,7 @@
                                     class="form-control"
                                     name="frecuencia"
                                     min="1"
-                                    max="15"
+                                    max=""
                                     value="2"
                                     #frecuencia="ngModel"
                                     [(ngModel)]="recetaItem.frecuencia"
@@ -227,19 +229,19 @@
                 </div><!-- Fin del cuarto row -->
                 <div class="row">
                     
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="cantidad">Durante:</label>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label for="cantidad">Durante:</label>
                                 
-                                <input type="number" 
-                                       class="form-control"
-                                       name="duracion"
-                                       min="1"
-                                       max="30"
-                                       value="7"
-                                       #duracion="ngModel"
-                                       [(ngModel)]="recetaItem.duracion">  
-                            </div>
+                            <input type="number" 
+                                   class="form-control"
+                                   name="duracion"
+                                   min="1"
+                                   max="30"
+                                   value="7"
+                                   #duracion="ngModel"
+                                   [(ngModel)]="recetaItem.duracion">  
+                        </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
@@ -332,7 +334,7 @@
                         placeholder="Detalles ..."
                         autocomplete="off"
                         name="detalles"
-                        ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                        ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                         #detalles="ngModel"
                         [(ngModel)]="detallesMedicos"
                       >
