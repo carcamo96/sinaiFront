@@ -308,19 +308,18 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Peso"
-                  (ngModelChange)="cal3()"
+                  placeholder="Peso..."
+                  (ngModelChange)="calcularIMC($event, 'peso')"
                   name="peso"
                   #peso="ngModel"
-                  [(ngModel)]="consulta.peso"
+                  [ngModel]="consulta.peso"
                   required
                   autocomplete="off"
                   [ngClass]="{
-                    'is-invalid': !peso.valid && peso.touched
+                    'is-invalid': (!peso.valid && peso.touched) || ((consulta.peso < 2.76 || consulta.peso > 200) && consulta.peso != '')
                   }"
-                  ngxPattern="[0-9.]+"
+                  ngxPattern="^\d+\.?\d{0,2}$"
                   placement="top"
-
                   popoverClass="text-dark"
                   [autoClose]="true"
                   [ngbPopover]="popPesoContent"
@@ -341,6 +340,12 @@
               >
                 Campo requerido
               </small>
+              <small
+                class="text-danger"
+                *ngIf="(consulta.peso < 2.76 || consulta.peso > 200) && consulta.peso != ''"
+              >
+                Valor incorrecto. Fuera del rango aceptado
+              </small>
               <ng-template #popPesoContent
               >Digite el peso del paciente en Kilogramos</ng-template
               >
@@ -360,17 +365,16 @@
                   type="text"
                   class="form-control"
                   placeholder="Talla"
-                  (ngModelChange)="cal3()"
-                  name="talla"
+                  (ngModelChange)="calcularIMC($event, 'talla')"
+                  name="talla" 
                   #talla="ngModel"
-                  [(ngModel)]="consulta.talla"
+                  [ngModel]="consulta.talla"
                   required
                   autocomplete="off"
                   [ngClass]="{
-                    'is-invalid': !talla.valid && talla.touched
+                    'is-invalid': (!talla.valid && talla.touched) || ((consulta.talla < 1.40 || consulta.talla > 2) && consulta.talla !='')
                   }"
-                  ngxPattern="[0-9.]+"
-
+                  ngxPattern="^\d+\.?\d{0,2}$"
                   popoverClass="text-dark"
                   [autoClose]="true"
                   [ngbPopover]="popTallaContent"
@@ -382,28 +386,29 @@
                   (blur)="ayuda ? p6.close() : ''"
                 />
                 <div class="input-group-prepend">
-                  <span class="input-group-text" *ngIf="talla.value < 1"
-                    >cm</span
-                  >
-                  <span class="input-group-text" *ngIf="talla.value >= 1"
-                    >m</span
-                  >
-                  <ng-template #popTallaContent
-                  >Digite la estatura del paciente</ng-template
-                  >
-                  <ng-template #popTallaTitulo>
-                    <b>Talla</b>
-                    <p class="float-right">
-                      <i class="fas fa-info-circle fa-lg"></i>
-                    </p>
-                  </ng-template>
+                  <span class="input-group-text">mt</span>
                 </div>
+                <ng-template #popTallaContent
+                >Digite la estatura del paciente</ng-template
+                >
+                <ng-template #popTallaTitulo>
+                  <b>Talla</b>
+                  <p class="float-right">
+                    <i class="fas fa-info-circle fa-lg"></i>
+                  </p>
+                </ng-template>
               </div>
               <small
                 class="text-danger"
                 *ngIf="!talla.valid && talla.touched"
               >
                 Campo requerido
+              </small>
+              <small
+                class="text-danger"
+                *ngIf="(consulta.talla < 1.40 || consulta.talla > 2) && consulta.talla !=''"
+              >
+                Valor incorrecto. Fuera del rango aceptado
               </small>
             </div>
           </div>
@@ -415,19 +420,45 @@
                   type="number"
                   class="form-control"
                   placeholder="Índice de masa corporal"
-                  value="{{ indice | number }}"
                   name="indiceMC"
                   #indiceMC="ngModel"
                   [(ngModel)]="consulta.indiceMC"
                   autocomplete="off"
                   ngxPattern="[0-9.]+"
-                  [ngClass]="{ 'is-invalid': indiceMC.touched }"
                   disabled
                 />
                 <div class="input-group-prepend">
                   <span class="input-group-text">IMC</span>
                 </div>
               </div>
+              <small
+                class="text-primary"
+                *ngIf="consulta.indiceMC != '' && consulta.indiceMC >= 18.5 && consulta.indiceMC <= 24.9">
+                <b>
+                  IMC Normal
+                </b>
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="consulta.indiceMC != '' && consulta.indiceMC < 18.5">
+                <b>
+                  Bajo peso
+                </b>
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="consulta.indiceMC != '' && consulta.indiceMC >= 25.0 && consulta.indiceMC <= 29.9">
+                <b>
+                  Sobrepeso
+                </b>
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="consulta.indiceMC != '' && consulta.indiceMC >= 30.0">
+                <b>
+                  Obesidad
+                </b>
+              </small>
             </div>
           </div>
         </div>
@@ -447,10 +478,9 @@
                   autocomplete="off"
                   [ngClass]="{
                     'is-invalid':
-                      !temperatura.valid && temperatura.touched
+                      (!temperatura.valid && temperatura.touched) || ((consulta.temperatura < 28 || consulta.temperatura >= 40) && consulta.temperatura != '')  
                   }"
-                  ngxPattern="[0-9.]+"
-
+                  ngxPattern="^\d+\.?\d{0,2}$"
                   popoverClass="text-dark"
                   [autoClose]="true"
                   [ngbPopover]="popTemperaturaContent"
@@ -470,6 +500,36 @@
                 *ngIf="!temperatura.valid && temperatura.touched"
               >
                 Campo requerido
+              </small>
+              <small
+                class="text-danger"
+                *ngIf="(consulta.temperatura < 28 || consulta.temperatura >= 40) && consulta.temperatura != ''"
+              >
+                Valor incorrecto. Fuera del rango aceptado
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="consulta.temperatura >= 28 && consulta.temperatura <= 36.5"
+              >
+                <b> 
+                  Baja temperatura. Rango [28° - 36.5°] C
+                </b>
+              </small>
+              <small
+                class="text-primary"
+                *ngIf="consulta.temperatura >= 37 && consulta.temperatura <= 37.9"
+              >
+                <b>
+                  Temperatura normal. Rango [37° - 37.9°] C
+                </b>
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="consulta.temperatura >= 38 && consulta.temperatura <= 40"
+              >
+                <b>
+                  Alta temperatura. Rango [38° - 40°] C
+                </b>
               </small>
 
               <ng-template #popTemperaturaContent
@@ -496,7 +556,7 @@
                   [(ngModel)]="consulta.presionArt"
                   required
                   autocomplete="off"
-                  ngxPattern="[0-9/]+"
+                  [specialCharacters]="[ '[' ,']' , '\\' ]" mask="0{2}\0{3}"
                   [ngClass]="{
                     'is-invalid': !presionArt.valid && presionArt.touched
                   }"

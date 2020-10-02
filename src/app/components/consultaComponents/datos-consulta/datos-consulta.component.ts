@@ -32,8 +32,6 @@ export class DatosConsultaComponent implements OnInit {
   //Para propagar el evento de adjuntar al componente padre que reunirá todos los datos
   @Output() datosConsulta = new EventEmitter();
 
-  //Para los calculos de signos vitales
-  public indice: string;
   
 
   //Para las sweetAlerts
@@ -159,15 +157,27 @@ export class DatosConsultaComponent implements OnInit {
   }
 
   //Calculos de los signos vitales
-  cal3() {
-    var pes = parseFloat(this.consulta.peso);
-    var tall = parseFloat(this.consulta.talla);
-    if (tall != 0 || tall != null || tall != Infinity) {
-      let indice = pes / Math.pow(tall, 2);
-      this.indice = "" + parseFloat("" + indice).toFixed(1);
-      this.consulta.indiceMC = this.indice;
-    } else {
-      //this.indice = '';
+  calcularIMC(event, campo) {
+
+    
+    if(event != ''){
+
+      if(campo === 'peso'){
+        this.consulta.peso = event;
+      }
+
+      if(campo === 'talla'){
+        this.consulta.talla = event;
+      }
+      
+      if ((this.consulta.talla != 0 && this.consulta.talla!= null && this.consulta.talla != '') &&
+          (this.consulta.peso != null && this.consulta.peso != '')) {
+        let indice = this.consulta.peso / (Math.pow(this.consulta.talla, 2));
+        let valor = "" + parseFloat("" + indice.toFixed(1));
+        this.consulta.indiceMC = valor;
+      }
+    }else{
+      this.consulta.indiceMC = '';
     }
   }
 
