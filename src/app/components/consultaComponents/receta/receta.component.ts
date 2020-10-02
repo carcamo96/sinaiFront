@@ -1,9 +1,13 @@
-import { Component, OnInit, Output, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, Input, ViewChild, ElementRef } from '@angular/core';
 import { RecetaItem } from '../../../models/recetaItem';
 import { NgForm } from '@angular/forms';
 import { Receta } from 'src/app/models/receta';
 import { EventEmitter } from '@angular/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { PdfMakeWrapper, Table, Columns, Txt, Img } from 'pdfmake-wrapper';
+import  * as PdfMake from 'pdfmake/build/pdfmake';
+import  * as pdfFonts from 'pdfmake/build/vfs_fonts';
+(<any>PdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
   selector: 'app-receta',
@@ -13,7 +17,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 export class RecetaComponent implements OnInit {
 
   @ViewChild('recetaForm') private formulario: NgForm;//Variable para manejar el formulario
-
+@ViewChild('tab') private tabRec: ElementRef;
   //Para las sweetAlerts
   @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
 
@@ -122,6 +126,35 @@ export class RecetaComponent implements OnInit {
   //Se dispara cuando se da click en el boton de adjuntar receta
   confirmarDatosReceta(){
     this.confirmarSwal.fire();
+  }
+
+  async imprimir(){
+    const pdf=new PdfMakeWrapper();
+    
+    pdf.add(new Columns([await new Img('assets/imgs/sinai_logo.jpg')
+            .width(200).height(100).build(), 
+            new Txt('LABORATORIO AMAYA LOPEZ \n Calle Dr. Adrian García, Barrio El Centro, \n San Esteban Catarina, San Vicente. \n TEL.: 2362-7541').alignment('center')
+            .italics().end]).width('auto').fontSize(16).end);
+            
+    pdf.add(new Text('Medicamentos recetados'));
+  
+    var tbl;
+  
+    pdf.add(new Table([
+    ['MEDICAMENTO','PRESENTACION','CONCENTRACION','CANTIDAD','FRECUENCIA','DURACION']])
+    .widths([90,90,100,60,80,80]).alignment('center').layout('noBorders').background('#4892f0').end);
+    this.items.forEach(rec => {
+     tbl= new Table([ 
+        [rec.medicamento, rec.presentacion, rec.concentracion, rec.cantidad, rec.frecuencia, rec.duracion]
+    ]).headerRows(1).widths([90,90,100,60,80,80]).alignment('center').layout('noBorders').end
+    
+    pdf.add(tbl);
+    });
+    
+   console.log(tbl);
+  
+    pdf.create().open();
+    
   }
 
 }

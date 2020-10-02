@@ -287,8 +287,8 @@
             <!-- /.card-header -->
             <div class="card-body p-0">
 
-                <div class="table-responsive">
-                        <table class="table m-0">
+                <div class="table-responsive" id="tabRec">
+                        <table class="table m-0" id="tab">
                         <thead>
                         <tr>
                             <th>Medicamento</th>
@@ -352,7 +352,7 @@
                     <i class="fas fa-check"></i> Adjuntar receta
               </button>
               <button class="btn btn-secondary ml-3 mr-0 float-right" >
-                  <i class="fas fa-print"></i> Imprimir
+                  <i class="fas fa-print" (click)="imprimir()"></i> Imprimir
               </button>
             </div>
             <!-- /.card-footer -->

@@ -58,6 +58,9 @@ import { NgCircleProgressModule } from 'ng-circle-progress';
 //Import de ngx-pagination
 import {NgxPaginationModule} from 'ngx-pagination';
 
+//Import de modulo para las gráficas
+import { ChartsModule } from 'ng2-charts';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -165,6 +168,7 @@ const ngWizardConfig: NgWizardConfig = {
       "startFromZero": false
     }), //Barra de progreso en forma de circulo
     NgxPaginationModule, //Paginación para el catalogo de estudios medicos
+    ChartsModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]
