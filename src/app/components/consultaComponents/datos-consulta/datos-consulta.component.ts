@@ -32,7 +32,8 @@ export class DatosConsultaComponent implements OnInit {
   //Para propagar el evento de adjuntar al componente padre que reunirá todos los datos
   @Output() datosConsulta = new EventEmitter();
 
-  
+  //VALIDACIONES
+  public presionPattern = { '0': { pattern: new RegExp(/[0-9]{2,3}/)} };
 
   //Para las sweetAlerts
   @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;

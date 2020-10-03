@@ -1,7 +1,7 @@
 export class EstudiosSeleccionados{
 
     constructor(
-        public estudios: any[] = [],
+        public estudioClinico: any[] = [],
         public datosClinicos: string = ""
     ){}
 

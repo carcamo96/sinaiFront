@@ -300,6 +300,147 @@
         <legend class="w-auto">Signos vitales</legend>
 
         <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Temperatura:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Temperatura"
+                  name="temperatura"
+                  #temperatura="ngModel"
+                  [(ngModel)]="consulta.temperatura"
+                  required
+                  autocomplete="off"
+                  [ngClass]="{
+                    'is-invalid':
+                      (!temperatura.valid && temperatura.touched) || ((consulta.temperatura < 28 || consulta.temperatura >= 40) && consulta.temperatura != '')  
+                  }"
+                  ngxPattern="^\d+\.?\d{0,2}$"
+                  popoverClass="text-dark"
+                  [autoClose]="true"
+                  [ngbPopover]="popTemperaturaContent"
+                  [popoverTitle]="popTemperaturaTitulo"
+                  triggers="manual"
+                  #p7="ngbPopover"
+                  (click)="ayuda ? p7.open() : ''"
+                  (focus)="ayuda ? p7.open() : ''"
+                  (blur)="ayuda ? p7.close() : ''"
+                />
+                <div class="input-group-prepend">
+                  <span class="input-group-text">°C</span>
+                </div>
+              </div>
+              <small
+                class="text-danger"
+                *ngIf="!temperatura.valid && temperatura.touched"
+              >
+                Campo requerido
+              </small>
+              <small
+                class="text-danger"
+                *ngIf="(consulta.temperatura < 28 || consulta.temperatura >= 40) && consulta.temperatura != ''"
+              >
+                Valor incorrecto. Fuera del rango aceptado
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="consulta.temperatura >= 28 && consulta.temperatura <= 36.5"
+              >
+                <b> 
+                  Baja temperatura. Rango [28° - 36.5°] C
+                </b>
+              </small>
+              <small
+                class="text-primary"
+                *ngIf="consulta.temperatura >= 37 && consulta.temperatura <= 37.9"
+              >
+                <b>
+                  Temperatura normal. Rango [37° - 37.9°] C
+                </b>
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="consulta.temperatura >= 38 && consulta.temperatura <= 40"
+              >
+                <b>
+                  Alta temperatura. Rango [38° - 40°] C
+                </b>
+              </small>
+
+              <ng-template #popTemperaturaContent
+                  >Digite la temperatura del paciente. Ej: 35</ng-template
+                  >
+                  <ng-template #popTemperaturaTitulo>
+                    <b>Temperatura</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Frecuencia Cardiáca:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Frecuencia cardiáca"
+                  name="freCardia"
+                  #freCardia="ngModel"
+                  [(ngModel)]="consulta.freCardia"
+                  required
+                  autocomplete="off"
+                  [ngClass]="{
+                    'is-invalid': !freCardia.valid && freCardia.touched
+                  }"
+                  ngxPattern="[0-9]+"
+
+                  popoverClass="text-dark"
+                  [autoClose]="true"
+                  [ngbPopover]="popFrecuenciaContent"
+                  [popoverTitle]="popFrecuenciaTitulo"
+                  triggers="manual"
+                  #p9="ngbPopover"
+                  (click)="ayuda ? p9.open() : ''"
+                  (focus)="ayuda ? p9.open() : ''"
+                  (blur)="ayuda ? p9.close() : ''"
+                />
+                <div class="input-group-prepend">
+                  <span class="input-group-text">FC</span>
+                </div>
+              </div>
+              <small
+                class="text-danger"
+                *ngIf="!freCardia.valid && freCardia.touched"
+              >
+                Campo requerido
+              </small>
+
+              <ng-template #popFrecuenciaContent
+                  >Digite la frecuencia cardiáca del paciente.</ng-template
+                  >
+                  <ng-template #popFrecuenciaTitulo>
+                    <b>Presión arterial</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="col-md-12">
+              <button class="btn btn-default float-right">
+                  <i class="fas fa-cog"></i>
+              </button>
+            </div>
+          </div>
+          
+        </div>
+        <div class="row">
           <!--Div de signos vitales-->
           <div class="col-md-4">
             <div class="form-group">
@@ -465,78 +606,96 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label>Temperatura:</label>
+              <label>Presión Diástolica:</label>
               <div class="input-group">
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Temperatura"
-                  name="temperatura"
-                  #temperatura="ngModel"
-                  [(ngModel)]="consulta.temperatura"
+                  placeholder="Presión arterial"
+                  name="presionArt"
+                  #presionArt="ngModel"
+                  [(ngModel)]="consulta.presionArt"
                   required
                   autocomplete="off"
+                  ngxPattern="^(\d{3}/\)(\d{2})$" 
                   [ngClass]="{
-                    'is-invalid':
-                      (!temperatura.valid && temperatura.touched) || ((consulta.temperatura < 28 || consulta.temperatura >= 40) && consulta.temperatura != '')  
+                    'is-invalid': !presionArt.valid && presionArt.touched
                   }"
-                  ngxPattern="^\d+\.?\d{0,2}$"
+
                   popoverClass="text-dark"
                   [autoClose]="true"
-                  [ngbPopover]="popTemperaturaContent"
-                  [popoverTitle]="popTemperaturaTitulo"
+                  [ngbPopover]="popPresionContent"
+                  [popoverTitle]="popPresionTitulo"
                   triggers="manual"
-                  #p7="ngbPopover"
-                  (click)="ayuda ? p7.open() : ''"
-                  (focus)="ayuda ? p7.open() : ''"
-                  (blur)="ayuda ? p7.close() : ''"
+                  #p8="ngbPopover"
+                  (click)="ayuda ? p8.open() : ''"
+                  (focus)="ayuda ? p8.open() : ''"
+                  (blur)="ayuda ? p8.close() : ''"
                 />
                 <div class="input-group-prepend">
-                  <span class="input-group-text">°C</span>
+                  <span class="input-group-text">PD</span>
                 </div>
               </div>
               <small
                 class="text-danger"
-                *ngIf="!temperatura.valid && temperatura.touched"
+                *ngIf="!presionArt.valid && presionArt.touched"
               >
                 Campo requerido
               </small>
+              <ng-template #popPresionContent
+                  >Digite la presión arterial del paciente. Ej: 120/80</ng-template
+                  >
+                  <ng-template #popPresionTitulo>
+                    <b>Presión arterial</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
+            </div> 
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Presión Sistolica:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Presión arterial"
+                  name="presionArt"
+                  #presionArt="ngModel"
+                  [(ngModel)]="consulta.presionArt"
+                  required
+                  autocomplete="off"
+                  ngxPattern="^(\d{3}/\)(\d{2})$" 
+                  [ngClass]="{
+                    'is-invalid': !presionArt.valid && presionArt.touched
+                  }"
+
+                  popoverClass="text-dark"
+                  [autoClose]="true"
+                  [ngbPopover]="popPresionContent"
+                  [popoverTitle]="popPresionTitulo"
+                  triggers="manual"
+                  #p8="ngbPopover"
+                  (click)="ayuda ? p8.open() : ''"
+                  (focus)="ayuda ? p8.open() : ''"
+                  (blur)="ayuda ? p8.close() : ''"
+                />
+                <div class="input-group-prepend">
+                  <span class="input-group-text">PS</span>
+                </div>
+              </div>
               <small
                 class="text-danger"
-                *ngIf="(consulta.temperatura < 28 || consulta.temperatura >= 40) && consulta.temperatura != ''"
+                *ngIf="!presionArt.valid && presionArt.touched"
               >
-                Valor incorrecto. Fuera del rango aceptado
+                Campo requerido
               </small>
-              <small
-                class="text-dark"
-                *ngIf="consulta.temperatura >= 28 && consulta.temperatura <= 36.5"
-              >
-                <b> 
-                  Baja temperatura. Rango [28° - 36.5°] C
-                </b>
-              </small>
-              <small
-                class="text-primary"
-                *ngIf="consulta.temperatura >= 37 && consulta.temperatura <= 37.9"
-              >
-                <b>
-                  Temperatura normal. Rango [37° - 37.9°] C
-                </b>
-              </small>
-              <small
-                class="text-dark"
-                *ngIf="consulta.temperatura >= 38 && consulta.temperatura <= 40"
-              >
-                <b>
-                  Alta temperatura. Rango [38° - 40°] C
-                </b>
-              </small>
-
-              <ng-template #popTemperaturaContent
-                  >Digite la temperatura del paciente. Ej: 35</ng-template
+              <ng-template #popPresionContent
+                  >Digite la presión arterial del paciente. Ej: 120/80</ng-template
                   >
-                  <ng-template #popTemperaturaTitulo>
-                    <b>Temperatura</b>
+                  <ng-template #popPresionTitulo>
+                    <b>Presión arterial</b>
                     <p class="float-right">
                       <i class="fas fa-info-circle fa-lg"></i>
                     </p>
@@ -556,7 +715,7 @@
                   [(ngModel)]="consulta.presionArt"
                   required
                   autocomplete="off"
-                  [specialCharacters]="[ '[' ,']' , '\\' ]" mask="0{2}\0{3}"
+                  ngxPattern="^(\d{3}/\)(\d{2})$" 
                   [ngClass]="{
                     'is-invalid': !presionArt.valid && presionArt.touched
                   }"
@@ -572,7 +731,7 @@
                   (blur)="ayuda ? p8.close() : ''"
                 />
                 <div class="input-group-prepend">
-                  <span class="input-group-text">PA</span>
+                  <span class="input-group-text">PD/PS</span>
                 </div>
               </div>
               <small
@@ -585,104 +744,6 @@
                   >Digite la presión arterial del paciente. Ej: 120/80</ng-template
                   >
                   <ng-template #popPresionTitulo>
-                    <b>Presión arterial</b>
-                    <p class="float-right">
-                      <i class="fas fa-info-circle fa-lg"></i>
-                    </p>
-                  </ng-template>
-            </div>
-            <div class="form-group" *ngIf="esMenor()">
-              <label>Presión arterial:</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Presión arterial"
-                  name="presionArt"
-                  #presionArt="ngModel"
-                  [(ngModel)]="consulta.presionArt"
-                  required
-                  autocomplete="off"
-                  ngxPattern="[0-9/]+"
-                  [ngClass]="{
-                    'is-invalid': !presionArt.valid && presionArt.touched
-                  }"
-                  disabled
-
-                  popoverClass="text-dark"
-                  [autoClose]="true"
-                  [ngbPopover]="popPresionContent"
-                  [popoverTitle]="popPresionTitulo"
-                  triggers="manual"
-                  #p8="ngbPopover"
-                  (click)="ayuda ? p8.open() : ''"
-                  (focus)="ayuda ? p8.open() : ''"
-                  (blur)="ayuda ? p8.close() : ''"
-                />
-                <div class="input-group-prepend">
-                  <span class="input-group-text">PA</span>
-                </div>
-              </div>
-              <small
-                class="text-danger"
-                *ngIf="!presionArt.valid && presionArt.touched"
-              >
-                Campo requerido
-              </small>
-              <ng-template #popPresionContent
-                  >Digite la presión arterial del paciente. Ej: 120/80</ng-template
-                  >
-                  <ng-template #popPresionTitulo>
-                    <b>Presión arterial</b>
-                    <p class="float-right">
-                      <i class="fas fa-info-circle fa-lg"></i>
-                    </p>
-                  </ng-template>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>Frecuencia Cardiáca:</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Frecuencia cardiáca"
-                  name="freCardia"
-                  #freCardia="ngModel"
-                  [(ngModel)]="consulta.freCardia"
-                  required
-                  autocomplete="off"
-                  [ngClass]="{
-                    'is-invalid': !freCardia.valid && freCardia.touched
-                  }"
-                  ngxPattern="[0-9]+"
-
-                  popoverClass="text-dark"
-                  [autoClose]="true"
-                  [ngbPopover]="popFrecuenciaContent"
-                  [popoverTitle]="popFrecuenciaTitulo"
-                  triggers="manual"
-                  #p9="ngbPopover"
-                  (click)="ayuda ? p9.open() : ''"
-                  (focus)="ayuda ? p9.open() : ''"
-                  (blur)="ayuda ? p9.close() : ''"
-                />
-                <div class="input-group-prepend">
-                  <span class="input-group-text">FC</span>
-                </div>
-              </div>
-              <small
-                class="text-danger"
-                *ngIf="!freCardia.valid && freCardia.touched"
-              >
-                Campo requerido
-              </small>
-
-              <ng-template #popFrecuenciaContent
-                  >Digite la frecuencia cardiáca del paciente.</ng-template
-                  >
-                  <ng-template #popFrecuenciaTitulo>
                     <b>Presión arterial</b>
                     <p class="float-right">
                       <i class="fas fa-info-circle fa-lg"></i>
