@@ -409,7 +409,7 @@
                   (blur)="ayuda ? p9.close() : ''"
                 />
                 <div class="input-group-prepend">
-                  <span class="input-group-text">FC</span>
+                  <span class="input-group-text">PPM</span>
                 </div>
               </div>
               <small
@@ -450,8 +450,8 @@
                   type="text"
                   class="form-control"
                   placeholder="Peso..."
-                  (ngModelChange)="calcularIMC($event, 'peso')"
                   name="peso"
+                  (ngModelChange)="calcularIMC($event, 'peso')"
                   #peso="ngModel"
                   [ngModel]="consulta.peso"
                   required
@@ -606,69 +606,22 @@
         <div class="row">
           <div class="col-md-4">
             <div class="form-group">
-              <label>Presión Diástolica:</label>
+              <label>Presión Sistólica:</label>
               <div class="input-group">
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Presión arterial"
-                  name="presionArt"
-                  #presionArt="ngModel"
-                  [(ngModel)]="consulta.presionArt"
+                  placeholder="Presión Sistólica"
+                  name="presionSis"
+                  #presionSis="ngModel"
+                  [ngModel]="consulta.presionSistolica"
+                  (ngModelChange)="calcularPresion($event, 'Sistolica')"
                   required
                   autocomplete="off"
-                  ngxPattern="^(\d{3}/\)(\d{2})$" 
+                  ngxPattern="^\d+\.?\d{0,2}$" 
                   [ngClass]="{
-                    'is-invalid': !presionArt.valid && presionArt.touched
-                  }"
-
-                  popoverClass="text-dark"
-                  [autoClose]="true"
-                  [ngbPopover]="popPresionContent"
-                  [popoverTitle]="popPresionTitulo"
-                  triggers="manual"
-                  #p8="ngbPopover"
-                  (click)="ayuda ? p8.open() : ''"
-                  (focus)="ayuda ? p8.open() : ''"
-                  (blur)="ayuda ? p8.close() : ''"
-                />
-                <div class="input-group-prepend">
-                  <span class="input-group-text">PD</span>
-                </div>
-              </div>
-              <small
-                class="text-danger"
-                *ngIf="!presionArt.valid && presionArt.touched"
-              >
-                Campo requerido
-              </small>
-              <ng-template #popPresionContent
-                  >Digite la presión arterial del paciente. Ej: 120/80</ng-template
-                  >
-                  <ng-template #popPresionTitulo>
-                    <b>Presión arterial</b>
-                    <p class="float-right">
-                      <i class="fas fa-info-circle fa-lg"></i>
-                    </p>
-                  </ng-template>
-            </div> 
-          </div>
-          <div class="col-md-4">
-            <div class="form-group">
-              <label>Presión Sistolica:</label>
-              <div class="input-group">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Presión arterial"
-                  name="presionArt"
-                  #presionArt="ngModel"
-                  [(ngModel)]="consulta.presionArt"
-                  required
-                  autocomplete="off"
-                  ngxPattern="^(\d{3}/\)(\d{2})$" 
-                  [ngClass]="{
-                    'is-invalid': !presionArt.valid && presionArt.touched
+                    'is-invalid': (!presionSis.valid && presionSis.touched) || 
+                    ((consulta.presionSistolica <= 90 || consulta.presionSistolica >=180) && consulta.presionSistolica !='')
                   }"
 
                   popoverClass="text-dark"
@@ -687,9 +640,16 @@
               </div>
               <small
                 class="text-danger"
-                *ngIf="!presionArt.valid && presionArt.touched"
+                *ngIf="!presionSis.valid && presionSis.touched"
               >
                 Campo requerido
+              </small>
+              <small
+                class="text-danger"
+                *ngIf="(consulta.presionSistolica <= 90 || consulta.presionSistolica >=180) && 
+                        consulta.presionSistolica !='' "
+              >
+                Valor incorrecto. Fuera del rango [90 - 180]
               </small>
               <ng-template #popPresionContent
                   >Digite la presión arterial del paciente. Ej: 120/80</ng-template
@@ -703,21 +663,24 @@
             </div>
           </div>
           <div class="col-md-4">
-            <div class="form-group" *ngIf="!esMenor()">
-              <label>Presión Arterial:</label>
+            <div class="form-group">
+              <label>Presión Diastólica:</label>
               <div class="input-group">
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Presión arterial"
-                  name="presionArt"
-                  #presionArt="ngModel"
-                  [(ngModel)]="consulta.presionArt"
+                  placeholder="Presión Diastólica"
+                  name="presionDias"
+                  #presionDias="ngModel"
+                  [ngModel]="consulta.presionDiastolica"
+                  (ngModelChange)="calcularPresion($event, 'Diastolica')"
                   required
                   autocomplete="off"
-                  ngxPattern="^(\d{3}/\)(\d{2})$" 
+                  ngxPattern="^\d+\.?\d{0,2}$"
                   [ngClass]="{
-                    'is-invalid': !presionArt.valid && presionArt.touched
+                    'is-invalid': (!presionDias.valid && presionDias.touched) ||
+                    ((consulta.presionDiastolica <= 60 || consulta.presionDiastolica >=120) && 
+                    consulta.presionDiastolica !='')
                   }"
 
                   popoverClass="text-dark"
@@ -731,14 +694,21 @@
                   (blur)="ayuda ? p8.close() : ''"
                 />
                 <div class="input-group-prepend">
-                  <span class="input-group-text">PD/PS</span>
+                  <span class="input-group-text">PD</span>
                 </div>
               </div>
               <small
                 class="text-danger"
-                *ngIf="!presionArt.valid && presionArt.touched"
+                *ngIf="!presionDias.valid && presionDias.touched"
               >
                 Campo requerido
+              </small>
+              <small
+                class="text-danger"
+                *ngIf="(consulta.presionDiastolica <= 60 || consulta.presionDiastolica >=120) && 
+                        consulta.presionDiastolica !='' "
+              >
+                Valor incorrecto. Fuera del rango [60 - 120]
               </small>
               <ng-template #popPresionContent
                   >Digite la presión arterial del paciente. Ej: 120/80</ng-template
@@ -749,6 +719,52 @@
                       <i class="fas fa-info-circle fa-lg"></i>
                     </p>
                   </ng-template>
+            </div> 
+          </div>
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Presión Arterial:</label>
+              <div class="input-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Presión arterial"
+                  name="presionArt"
+                  #presionArt="ngModel"
+                  [ngModel]="consulta.presionArt"
+                  required
+                  autocomplete="off"
+                  disabled
+                  
+                />
+                <div class="input-group-prepend">
+                  <span class="input-group-text">mm Hg</span>
+                </div>
+              </div>
+              <small
+                class="text-danger"
+                *ngIf="!presionArt.valid && presionArt.touched"
+              >
+                Campo requerido
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="pArterial != '' && pArterial === 'baja'"
+              >
+                <b>Presión baja</b>
+              </small>
+              <small
+                class="text-primary"
+                *ngIf="pArterial != '' && pArterial === 'normal'"
+              >
+                <b>Presión normal</b>
+              </small>
+              <small
+                class="text-dark"
+                *ngIf="pArterial != '' && pArterial === 'alta'"
+              >
+                <b>Presión alta</b>
+              </small>
             </div>
           </div>
         </div>

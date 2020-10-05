@@ -32,8 +32,11 @@ export class DatosConsultaComponent implements OnInit {
   //Para propagar el evento de adjuntar al componente padre que reunirá todos los datos
   @Output() datosConsulta = new EventEmitter();
 
-  //VALIDACIONES
-  public presionPattern = { '0': { pattern: new RegExp(/[0-9]{2,3}/)} };
+  //Validación de presion anterial
+  public pSistolica = ''; 
+  public pDiastolica = '';
+  public pArterial = '';
+  
 
   //Para las sweetAlerts
   @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
@@ -59,6 +62,8 @@ export class DatosConsultaComponent implements OnInit {
       peso: "",
       talla: "",
       temperatura: "",
+      presionSistolica: "",
+      presionDiastolica: "",
       presionArt: "",
       indiceMC: "",
       freCardia: "",
@@ -176,10 +181,84 @@ export class DatosConsultaComponent implements OnInit {
         let indice = this.consulta.peso / (Math.pow(this.consulta.talla, 2));
         let valor = "" + parseFloat("" + indice.toFixed(1));
         this.consulta.indiceMC = valor;
+      }else{
+        this.consulta.indiceMC = '';
       }
     }else{
       this.consulta.indiceMC = '';
     }
+  }
+  calcularPresion(event, campo){
+
+    if(event != '' && event != 0 && event != null){
+
+      if(campo === 'Sistolica'){
+        this.consulta.presionSistolica = event;
+      }
+
+      if(campo === 'Diastolica'){
+        this.consulta.presionDiastolica = event;
+      }
+
+      //Antes de esta linea deberia de validarse los rangos 
+      if(this.consulta.presionSistolica != '' && this.consulta.presionSistolica != 0 &&
+         this.consulta.presionDiastolica != '' && this.consulta.presionDiastolica != 0){
+
+        this.consulta.presionArt = this.consulta.presionSistolica+' / '+this.consulta.presionDiastolica;
+        this.etiquetaPresionArt();
+      }else{
+        this.consulta.presionArt= '';  
+        this.pArterial = '';
+      }
+
+    }else{
+      if(campo === 'Sistolica'){
+        this.consulta.presionSistolica = '';
+      }
+      if(campo === 'Diastolica'){
+        this.consulta.presionDiastolica = '';
+      }
+      this.consulta.presionArt= '';
+      this.pArterial = '';
+    }
+
+  }
+
+  etiquetaPresionArt(){
+
+    //Para sistolica
+    if(this.consulta.presionSistolica <= 90){
+        this.pSistolica = 'baja';
+    }
+    if(this.consulta.presionSistolica >= 91 && this.consulta.presionSistolica <= 119){
+      this.pSistolica = 'normal';
+    }
+    if(this.consulta.presionSistolica >= 120 && this.consulta.presionSistolica >= 180){
+      this.pSistolica = 'elevada';
+    }
+
+    //Para diastolica
+    if(this.consulta.presionDiastolica <= 60 ){
+      this.pDiastolica = 'baja';
+    }
+    if(this.consulta.presionDiastolica >= 61 && this.consulta.presionDiastolica <= 79){
+      this.pDiastolica = 'normal';
+    }
+    if(this.consulta.presionDiastolica >= 80 && this.consulta.presionDiastolica <= 120){
+      this.pDiastolica = 'alta';
+    }
+
+    //Presion arterial 
+    if(this.pSistolica === 'baja' || this.pDiastolica === 'baja'){
+        this.pArterial = 'baja';
+    }
+    if(this.pSistolica === 'alta' || this.pDiastolica === 'alta'){
+      this.pArterial = 'alta';
+    }
+    if(this.pSistolica === 'normal' && this.pDiastolica === 'normal'){
+      this.pArterial = 'normal';
+    }
+
   }
 
   motivoChange(event){
