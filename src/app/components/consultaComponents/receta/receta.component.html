@@ -74,7 +74,7 @@
                     </div>
                 </div><!-- Fin del segundo row -->
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="medicamento">Concentración:</label>
@@ -101,7 +101,7 @@
                             </div>   
                         </div> 
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="medida">Medida:</label>
                             <div class="input-group mb-3">
@@ -163,6 +163,32 @@
 
                         </div>
                     </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="medidaDosis"><i class="fas fa-alarm-clock"></i></label>
+                            <div class="input-group mb-3">
+                                <input
+                                name="medidaDosis"
+                                class="form-control"
+                                required
+                                #medidaDosis="ngModel"
+                                [(ngModel)]="recetaItem.medidaDosis"
+                                [ngClass]="{
+                                    'is-invalid':
+                                    !medidaDosis.valid && medidaDosis.touched
+                                }"
+                                >
+                                 
+                                <small
+                                class="text-danger"
+                                *ngIf="!medidaDosis.valid && medidaDosis.touched"
+                                >
+                                Campo requerido
+                                </small>
+
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-5">
                             <div class="form-group">
                                 <label for="cantidad">Frecuencia:</label>
@@ -195,7 +221,7 @@
                                 </div>
                             </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-7">
                         <div class="form-group">
                             <label for="tiempo"><i class="fas fa-alarm-clock"></i></label>
                             <div class="input-group mb-3">
