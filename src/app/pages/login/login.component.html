@@ -1,107 +1,136 @@
-<div class="hold-transition login-page" style="background-color: white;">
-  <div class="login-box">
-    <div>
-      <img
-        src="assets/imgs/sinai_logo.jpg"
-        class="img-fluid"
-        alt="logo Mount Sinaí"
-      />
-    </div>
-    <!-- /.login-logo -->
-    <div class="card">
-      <div class="card-body login-card-body">
-        <p class="login-box-msg">Ingresa tus claves para iniciar sesión</p>
+<div class="container-fluid contenedorPrincipal" style="background:#79d7dd;">
+  
+  <div class="cardPadre">
+    <div class="card shadow">
+      <div class="card-body">
+  
+          <div class="col-md-12">
+              <div class="row">
 
-        <form 
-          role="form"
-          #loginForm="ngForm"
-          (ngSubmit)="logear()"  
-        >
-          <small
-              class="text-danger"
-              *ngIf="!user.valid && user.touched" 
-          >
-            Campo requerido
-          </small>
-          <div class="input-group mb-3">
-            <input 
-              type="text" 
-              class="form-control" 
-              placeholder="Usuario" 
-              autofocus 
-              name="user"
-              #user="ngModel"
-              [(ngModel)]="usuario.usuario"
-              required
-              autocomplete="off"
-              [ngClass]="{
-                'is-invalid': 
-                 !user.valid && user.touched
-              }"
-            />
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-user"></span>
-              </div>
-            </div>
-          </div><!--Fin del input group-->
+                <div class="col-md-7 mycontent-left pr-4">
+                  <div>
+                    <img
+                      src="assets/imgs/sinai_logo.jpg"
+                      class="img-fluid"
+                      alt="logo Mount Sinaí"
+                    />
+                  </div>
+                  <div>
+                    <img
+                      src="assets/imgs/clinic.gif"
+                      class="img-fluid"
+                      alt="gif Mount Sinaí"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-5 pl-4">
+                  <br><br><br>
+                  <!-- /.login-logo -->
+                  <div class="text-center">
+                    <span style="color: #79d7dd;;">
+                      <i class="fas fa-user-circle fa-6x"></i>
+                    </span>
+                  </div><br>
+                  <!-- /.login-logo -->
+                  <p class="login-box-msg">Bienvenido! Ingresa tus claves para iniciar sesión</p>
           
-            <small
-              class="text-danger"
-              *ngIf="!pass.valid && pass.touched" 
-            >
-              Campo requerido
-            </small>
-          <div class="input-group mb-3">
-            <input
-              type="password"
-              class="form-control"
-              placeholder="Contraseña"
-              name="pass"
-              #pass="ngModel"
-              [(ngModel)]="usuario.password"
-              required
-              [ngClass]="{
-                'is-invalid': 
-                 !pass.valid && pass.touched
-              }"
-            />
-            <div class="input-group-append">
-              <div class="input-group-text">
-                <span class="fas fa-lock"></span>
-              </div>
-            </div>
-          </div><!--Fin del input group-->
+                  <form 
+                    role="form"
+                    #loginForm="ngForm"
+                    (ngSubmit)="logear()"  
+                  >
+                    <small
+                        class="text-danger"
+                        *ngIf="!user.valid && user.touched" 
+                    >
+                      Campo requerido
+                    </small>
+                    <div class="input-group mb-3">
+                      <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Usuario" 
+                        autofocus 
+                        name="user"
+                        #user="ngModel"
+                        [(ngModel)]="usuario.usuario"
+                        required
+                        autocomplete="off"
+                        [ngClass]="{
+                          'is-invalid': 
+                           !user.valid && user.touched
+                        }"
+                      />
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-user"></span>
+                        </div>
+                      </div>
+                    </div><!--Fin del input group-->
+                    
+                      <small
+                        class="text-danger"
+                        *ngIf="!pass.valid && pass.touched" 
+                      >
+                        Campo requerido
+                      </small>
+                    <div class="input-group mb-3">
+                      <input
+                        type="password"
+                        class="form-control"
+                        placeholder="Contraseña"
+                        name="pass"
+                        #pass="ngModel"
+                        [(ngModel)]="usuario.password"
+                        required
+                        [ngClass]="{
+                          'is-invalid': 
+                           !pass.valid && pass.touched
+                        }"
+                      />
+                      <div class="input-group-append">
+                        <div class="input-group-text">
+                          <span class="fas fa-lock"></span>
+                        </div>
+                      </div>
+                    </div><!--Fin del input group-->
+                    
+                    <br />
+                    <div class="row">
+                      <!-- /.col -->
+                      <div class="col-12">
+                        <button 
+                          type="submit" 
+                          class="btn btn-info btn-block"
+                          [disabled]="loginForm.invalid"
+                        >
+                          Iniciar sesión
+                        </button>
+                      </div>
+                      <!-- /.col -->
+                    </div>
+                  </form>
           
-          <br />
-          <div class="row">
-            <!-- /.col -->
-            <div class="col-12">
-              <button 
-                type="submit" 
-                class="btn btn-primary btn-block"
-                [disabled]="loginForm.invalid"
-              >
-                Iniciar sesión
-              </button>
-            </div>
-            <!-- /.col -->
+                  <div class="social-auth-links text-center mb-3">
+                    <hr />
+                  </div>
+                  <!-- /.social-auth-links -->
+          
+                  <p class="mb-1">
+                    <a href="#">¿Recuperar contraseña?</a>
+                  </p>
+                </div>
+              </div>
           </div>
-        </form>
-
-        <div class="social-auth-links text-center mb-3">
-          <hr />
-        </div>
-        <!-- /.social-auth-links -->
-
-        <p class="mb-1">
-          <a href="#">¿Recuperar contraseña?</a>
-        </p>
+  
+        
         
       </div>
       <!-- /.login-card-body -->
     </div>
-  </div>
-
   <!-- /.login-box -->
+
+  </div>
+      
+  
 </div>

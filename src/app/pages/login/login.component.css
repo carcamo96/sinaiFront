@@ -1,0 +1,16 @@
+
+.contenedorPrincipal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.cardPadre{
+   display: flex;
+   align-items: center;
+   width: 70%;
+   height: 75%;
+}
+.mycontent-left {
+    border-right: 1px dashed rgb(194, 193, 193);
+}
