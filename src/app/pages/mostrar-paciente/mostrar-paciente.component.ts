@@ -49,6 +49,8 @@ export class MostrarPacienteComponent implements OnInit {
       faContacto: '',
       telFaContacto: '',
       direccion: '',
+      departamento:'Departamento',
+      municipio:'Municipio',
       otrosDatos: ''
     }
 
@@ -72,6 +74,8 @@ export class MostrarPacienteComponent implements OnInit {
             faContacto: response.paciente.faContacto,
             telFaContacto: response.paciente.telFaContacto,
             direccion: response.paciente.direccion,
+            departamento: response.paciente.departamento,
+            municipio: response.paciente.municipio,
             otrosDatos: response.paciente.otrosDatos
           }
           //inicializando edad
@@ -108,6 +112,8 @@ export class MostrarPacienteComponent implements OnInit {
         this.paciente.faContacto,
         this.paciente.telFaContacto,
         this.paciente.direccion,
+        this.paciente.departamento,
+        this.paciente.municipio,
         this.paciente.otrosDatos
       );
 

@@ -60,6 +60,8 @@ export class FormularioPacienteComponent implements OnInit {
       faContacto: '',
       telFaContacto: '',
       direccion: '',
+      departamento:'Departamento',
+      municipio:'Municipio',
       otrosDatos: ''
     }
 
@@ -88,6 +90,8 @@ export class FormularioPacienteComponent implements OnInit {
         this.paciente.faContacto,
         this.paciente.telFaContacto,
         this.paciente.direccion,
+        this.paciente.departamento,
+        this.paciente.municipio,
         this.paciente.otrosDatos
       );
       this.progress = 50;

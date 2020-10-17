@@ -260,9 +260,40 @@
                     </div>
 
                   </div> <!-- Fin del quinto row -->
-
-                  <div class="row">
-
+                  <fieldset class="border p-2">
+                    <legend class="w-auto">Dirección</legend>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label>Departamento:</label>
+                        <div class="form-group">                      
+                          <select
+                          name="departamentoSelect"
+                          class="form-control"
+                          #departamentoSelect
+                          [ngModel]="paciente.departamento"
+                          [disabled]="disabledDefault"
+                          >
+                          <option value='Departamento' [selected]="'true'">Departamento</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <label>Municipio:</label>
+                        <div class="form-group">                      
+                                  <select
+                                  name="municipioSelect"
+                                  class="form-control"
+                                  #municipioSelect
+                                  [ngModel]="paciente.municipio"
+                                  [disabled]="disabledDefault"
+                                  >
+                                  <option value='Municipio' [selected]="'true'">Municipio</option>
+                                  </select>
+                        </div>
+                      </div>
+                    </div>
+                
+                    <div class="row">
                       <div class="col-md-12">
                           <!-- textarea -->
                           <div class="form-group">
@@ -279,7 +310,9 @@
                               </small>
                           </div>
                       </div>
-
+                    </div>
+                  </fieldset>
+                  <div class="row">
                       <div class="col-md-12">
                         <!-- textarea -->
                         <div class="form-group">
