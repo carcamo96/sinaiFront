@@ -58,6 +58,7 @@ export class DatosConsultaComponent implements OnInit {
       fechaConsul: "",
       historia: "",
       antePatol: "",
+      examenFisico: "",
       alergias: "",
       peso: "",
       talla: "",
@@ -67,6 +68,7 @@ export class DatosConsultaComponent implements OnInit {
       presionArt: "",
       indiceMC: "",
       freCardia: "",
+      freRespiratoria: "",
       diagnostico: {
         diagEspecifico: "",
         diagDetalles: ""
