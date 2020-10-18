@@ -919,25 +919,103 @@
 
       </div>
 
-      
+      <fieldset class="border p-2" *ngIf="genero === 'F'">
+        <legend class="w-auto">Cítologia</legend>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Fecha de realización (*):</label>
+              <div class="input-group date">
+                <div class="input-group-prepend">
+                  <div class="input-group-text">
+                    <i class="fas fa-calendar"></i>
+                  </div>
+                </div>
+                <input
+                  type="date"
+                  class="form-control"
+                  max=""
+                  name="fechaCit"
+                  popoverClass="text-dark"
+                  [ngbPopover]="popFechaNacContent"
+                  [popoverTitle]="popFechaNacTitulo"
+                  [autoClose]="true"
+                  triggers="manual"
+                  #p3="ngbPopover"
+                  (click)="ayuda ? p3.open() : ''"
+                  (focus)="ayuda ? p3.open() : ''"
+                  (blur)="ayuda ? p3.close() : ''"
+                />
+              </div>
+             
+              <ng-template #popFechaNacContent>
+                Digite la fecha de nacimiento del paciente <br />
+                ó tambien puede desplegar el calendario con el icono:
+                <p><i class="far fa-calendar fa-lg"></i></p
+              ></ng-template>
+
+              <ng-template #popFechaNacTitulo>
+                <b>Fecha de nacimiento</b>
+                <p class="float-right">
+                  <i class="fas fa-info-circle fa-lg"></i>
+                </p>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <!-- textarea -->
+            <div class="form-group">
+              <label>Observación (*):</label>
+              <textarea
+                class="form-control"
+                rows="3"
+                placeholder='Observación del estudio...'
+                autocomplete="off"
+                name="obCitologia"
+                ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                popoverClass="text-dark"
+                    [autoClose]="true"
+                    [ngbPopover]="popDiagnosticoContent"
+                    [popoverTitle]="popDiagnosticoTitulo"
+                    triggers="manual"
+                    #p11="ngbPopover"
+                    (click)="ayuda ? p11.open() : ''"
+                    (focus)="ayuda ? p11.open() : ''"
+                    (blur)="ayuda ? p11.close() : ''"
+                ></textarea>
+              <ng-template #popDiagnosticoContent
+                    >Escriba el diagnóstico para el paciente. Este campo es opcional</ng-template
+                    >
+                    <ng-template #popDiagnosticoTitulo>
+                      <b>Diagnóstico</b>
+                      <p class="float-right">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                      </p>
+                    </ng-template>
+            </div>
+          </div>
+        </div>
+        <!-- Fin del div de citologia -->
+      </fieldset> <!-- Fieldset de los signos vitales -->
+      <br *ngIf="genero === 'F'">
       <div class="row">
 
-        <div class="col-md-6">
-          <label for="motivo">Dianóstico:</label>
-          <div class="input-group">
-              <select
-              name="comunes"
-              class="form-control"
-              #diagnosticoSelect>
-              <option value='' selected>Seleccione un diagnóstico/s</option>
-              <option value=''>Migraña</option>
-              <option value=''>Embarazo</option>
-              <option value=''>Infección respiratoria</option>
-              <option value=''>Gripe</option>
-              </select>
-              
-          </div>
-          
+        <div class="col-md-12">
+          <label for="motivo">Opciones de diagnóstico:</label>
+          <ngx-select [multiple]="true"
+                      [items]="diagnosticos"
+                      name="diagnostico"
+                      #diagnostico
+                      [(ngModel)]="diagSeleccionados"
+                      [autoClearSearch]="true"
+                      placeholder="Seleccione uno ó más diagnósticos"
+                      noResultsFound = "No hay más opciones">
+
+          </ngx-select>
+        
         </div>
         
 
@@ -950,7 +1028,7 @@
 
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Diagnostico/s</h3>
+              <h3 class="card-title">Cuadro General de Diagnóstico/s</h3>
             </div>
             <!-- /.card-header -->
             <div class="card-body p-0">
@@ -959,18 +1037,16 @@
                   <tr>
                     <th style="width: 10px">#</th>
                     <th>Diagnóstico</th>
-                    <th style="width: 40px">Quitar</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>1.</td>
-                    <td>Cefalea Aguda Crónica</td>
-                    <td>
-                      <button class="btn btn-block btn-default">
-                          <i class="fas fa-backspace"></i>
-                      </button>
-                    </td>
+                  <tr *ngIf="diagSeleccionados.length == 0">
+                    <td></td>
+                    <td class="text-center"><p>No se han seleccionado diagnósticos</p></td>
+                  </tr>
+                  <tr *ngFor="let diag of diagSeleccionados; let i = index">
+                    <td>{{ i + 1 }}.</td>
+                    <td>{{ diag }}</td>
                   </tr>
                 </tbody>
               </table>

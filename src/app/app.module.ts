@@ -61,6 +61,9 @@ import {NgxPaginationModule} from 'ngx-pagination';
 //Import de modulo para las gráficas
 import { ChartsModule } from 'ng2-charts';
 
+//Import de modulo de select para usar comboboxs
+import { NgxSelectModule } from 'ngx-select-ex';
+
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -83,7 +86,6 @@ import { FormularioUsuarioComponent } from './pages/formulario-usuario/formulari
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { RecetaComponent } from './components/consultaComponents/receta/receta.component';
 import { DatosConsultaComponent } from './components/consultaComponents/datos-consulta/datos-consulta.component';
-import { EstudiosClinicosComponent } from './components/consultaComponents/estudios-clinicos/estudios-clinicos.component';
 
 
 
@@ -127,7 +129,6 @@ const ngWizardConfig: NgWizardConfig = {
     UsuariosComponent,
     RecetaComponent,
     DatosConsultaComponent,
-    EstudiosClinicosComponent
   ],
   imports: [
     BrowserModule,
@@ -168,7 +169,8 @@ const ngWizardConfig: NgWizardConfig = {
       "startFromZero": false
     }), //Barra de progreso en forma de circulo
     NgxPaginationModule, //Paginación para el catalogo de estudios medicos
-    ChartsModule
+    ChartsModule,
+    NgxSelectModule
   ],
   providers: [appRoutingProviders],
   bootstrap: [AppComponent]

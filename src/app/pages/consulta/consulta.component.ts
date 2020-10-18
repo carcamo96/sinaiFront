@@ -118,18 +118,6 @@ export class ConsultaComponent implements OnInit {
       }
   }
 
-  addEstudiosDelaboratorio(estudiosMedicos){
-
-    if(this.adjuntado){
-      this.consulta.setEstudios(estudiosMedicos);
-      //Se activa la alerta
-      this.showInfo('Se han adjuntado estudios de laboratorio!','Estudios de laboratorio');
-    }else{
-        //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
-        this.adjuntarDatos.fire();
-    }
-  }
-
   
   onSubmit() {
     
