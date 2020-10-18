@@ -57,8 +57,14 @@
                                 >
                                 <option value="Tableta" selected>Tableta</option>
                                 <option value="Capsula">Capsula</option>
-                                <option value="Solución inyectable">Solución inyectable</option>
-                                <option value="Solución bebible">Solución bebible</option>
+                                <option value="Solución inyectable">Inyectable muscular</option>
+                                <option value="Solución bebible">Inyectable endovenosa</option>
+                                <option value="Solución bebible">Inyectable subcutánea</option>
+                                <option value="Solución bebible">Jarabe</option>
+                                <option value="Solución bebible">Solución oral</option>
+                                <option value="Solución bebible">Suspención oral</option>
+                                <option value="Solución bebible">Polvo para dilución</option>
+                                <option value="Solución bebible">Microgránulos para dilución</option>
                                 
                                 </select>
                                 
@@ -74,7 +80,7 @@
                     </div>
                 </div><!-- Fin del segundo row -->
                 <div class="row">
-                    <div class="col-md-9">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <div class="form-group">
                                 <label for="medicamento">Concentración:</label>
@@ -101,7 +107,7 @@
                             </div>   
                         </div> 
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="medida">Medida:</label>
                             <div class="input-group mb-3">
@@ -119,6 +125,8 @@
                                 
                                 <option value="mg" selected>mg</option>
                                 <option value="ml">ml</option>
+                                <option value="mcg">mcg</option>
+                                <option value="%">%</option>
                                 
                                 </select>
 
@@ -163,6 +171,30 @@
 
                         </div>
                     </div>
+                    <div class="col-md-9">
+                        <div class="form-group">
+                            <label for="medidaDosis"><i class="fas fa-alarm-clock"></i>Dosis:</label>
+                            
+                                <input
+                                name="medidaDosis"
+                                class="form-control input-lg"
+                                required
+                                #medidaDosis="ngModel"
+                                [(ngModel)]="recetaItem.medidaDosis"
+                                [ngClass]="{
+                                    'is-invalid':
+                                    !medidaDosis.valid && medidaDosis.touched
+                                }"
+                                >
+                            
+                            <small
+                            class="text-danger"
+                            *ngIf="!medidaDosis.valid && medidaDosis.touched"
+                            >
+                            Campo requerido
+                            </small>
+                        </div>
+                    </div>
                     <div class="col-md-5">
                             <div class="form-group">
                                 <label for="cantidad">Frecuencia:</label>
@@ -195,7 +227,7 @@
                                 </div>
                             </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-7">
                         <div class="form-group">
                             <label for="tiempo"><i class="fas fa-alarm-clock"></i></label>
                             <div class="input-group mb-3">

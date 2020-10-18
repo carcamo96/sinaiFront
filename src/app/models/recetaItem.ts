@@ -5,6 +5,7 @@ export class RecetaItem{
         public concentracion: string,
         public cantidad: number,
         public frecuencia: string,
-        public duracion: string
+        public duracion: string,
+        public medidaDosis: string
     ){}
 }

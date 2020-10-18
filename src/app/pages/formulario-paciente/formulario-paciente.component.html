@@ -536,93 +536,128 @@
               </div>
               <!-- Fin del quinto row -->
 
-              <div class="row">
-                <div class="col-md-12">
-                  <!-- textarea -->
-                  <div class="form-group">
-                    <label>Dirección</label>
-                    <textarea
-                      id="direccion"
+              <fieldset class="border p-2">
+                <legend class="w-auto">Dirección</legend>
+              
+                <div class="row">
+                  <div class="col-md-6">
+                    <label>Departamento:</label>
+                    <div class="form-group">                      
+                      <select
+                      name="departamento"
                       class="form-control"
-                      rows="3"
-                      placeholder="Dirección ..."
-                      autocomplete="off"
-                      name="direccion"
-                      #direccion="ngModel"
-                      [(ngModel)]="paciente.direccion"
-                      ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                      required
-                      [ngClass]="{
-                        'is-invalid': !direccion.valid && direccion.touched
-                      }"
-                      popoverClass="text-dark"
-                      [ngbPopover]="popDirContent"
-                      [popoverTitle]="popDirTitulo"
-                      [autoClose]="true"
-                      triggers="manual"
-                      #p9="ngbPopover"
-                      (click)="ayuda ? p9.open() : ''"
-                      (focus)="ayuda ? p9.open() : ''"
-                      (blur)="ayuda ? p9.close() : ''"
-                    >
-                    </textarea>
-
-                    <small
-                      class="text-danger"
-                      *ngIf="!direccion.valid && direccion.touched"
-                    >
-                      Campo requerido
-                    </small>
-                    <ng-template #popDirContent>
-                      Digite una dirección del paciente como dato de contacto
-                    </ng-template>
-                    <ng-template #popDirTitulo>
-                      <b>Dirección</b>
-                      <p class="float-right">
-                        <i class="fas fa-info-circle fa-lg"></i>
-                      </p>
-                    </ng-template>
+                      #departamentoSelect
+                      [ngModel]="paciente.departamento"
+                      >
+                      <option value='Departamento' [selected]="'true'">Departamento</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Municipio:</label>
+                    <div class="form-group">                      
+                              <select
+                              name="municipio"
+                              class="form-control"
+                              #municipioSelect
+                              [ngModel]="paciente.municipio"
+                              >
+                              <option value='Municipio' [selected]="'true'">Municipio</option>
+                              </select>
+                    </div>
                   </div>
                 </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <!-- textarea -->
+                    <div class="form-group">
+                      <label>Dirección</label>
+                      <textarea
+                        id="direccion"
+                        class="form-control"
+                        rows="3"
+                        placeholder="Dirección ..."
+                        autocomplete="off"
+                        name="direccion"
+                        #direccion="ngModel"
+                        [(ngModel)]="paciente.direccion"
+                        ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                        required
+                        [ngClass]="{
+                          'is-invalid': !direccion.valid && direccion.touched
+                        }"
+                        popoverClass="text-dark"
+                        [ngbPopover]="popDirContent"
+                        [popoverTitle]="popDirTitulo"
+                        [autoClose]="true"
+                        triggers="manual"
+                        #p9="ngbPopover"
+                        (click)="ayuda ? p9.open() : ''"
+                        (focus)="ayuda ? p9.open() : ''"
+                        (blur)="ayuda ? p9.close() : ''"
+                      >
+                      </textarea>
 
-                <div class="col-md-12">
-                  <!-- textarea -->
-                  <div class="form-group">
-                    <label>Datos adicionales (*):</label>
-                    <textarea
-                      class="form-control"
-                      rows="3"
-                      placeholder="Otros datos ..."
-                      autocomplete="off"
-                      name="otrosDatos"
-                      #otrosDatos="ngModel"
-                      [(ngModel)]="paciente.otrosDatos"
-                      ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                      popoverClass="text-dark"
-                      [ngbPopover]="popDatosAdContent"
-                      [popoverTitle]="popDatosAdTitulo"
-                      [autoClose]="true"
-                      triggers="manual"
-                      #p10="ngbPopover"
-                      (click)="ayuda ? p10.open() : ''"
-                      (focus)="ayuda ? p10.open() : ''"
-                      (blur)="ayuda ? p10.close() : ''"
-                    >
-                    </textarea>
-
-                    <ng-template #popDatosAdContent>
-                      Puede digitar datos adicionales que sean relevantes. <br />
-                      El simbolo: <b>(*)</b> indica que es un campo opcional
-                    </ng-template>
-                    <ng-template #popDatosAdTitulo>
-                      <b>Datos adicionales</b>
-                      <p class="float-right">
-                        <i class="fas fa-info-circle fa-lg"></i>
-                      </p>
-                    </ng-template>
+                      <small
+                        class="text-danger"
+                        *ngIf="!direccion.valid && direccion.touched"
+                      >
+                        Campo requerido
+                      </small>
+                      <ng-template #popDirContent>
+                        Digite una dirección del paciente como dato de contacto
+                      </ng-template>
+                      <ng-template #popDirTitulo>
+                        <b>Dirección</b>
+                        <p class="float-right">
+                          <i class="fas fa-info-circle fa-lg"></i>
+                        </p>
+                      </ng-template>
+                    </div>
                   </div>
                 </div>
-              </div>
+                </fieldset>
+                <br>
+                <div class="row">
+                  <div class="col-md-12">
+                    <!-- textarea -->
+                    <div class="form-group">
+                      <label>Datos adicionales (*):</label>
+                      <textarea
+                        class="form-control"
+                        rows="3"
+                        placeholder="Otros datos ..."
+                        autocomplete="off"
+                        name="otrosDatos"
+                        #otrosDatos="ngModel"
+                        [(ngModel)]="paciente.otrosDatos"
+                        ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                        popoverClass="text-dark"
+                        [ngbPopover]="popDatosAdContent"
+                        [popoverTitle]="popDatosAdTitulo"
+                        [autoClose]="true"
+                        triggers="manual"
+                        #p10="ngbPopover"
+                        (click)="ayuda ? p10.open() : ''"
+                        (focus)="ayuda ? p10.open() : ''"
+                        (blur)="ayuda ? p10.close() : ''"
+                      >
+                      </textarea>
+
+                      <ng-template #popDatosAdContent>
+                        Puede digitar datos adicionales que sean relevantes. <br />
+                        El simbolo: <b>(*)</b> indica que es un campo opcional
+                      </ng-template>
+                      <ng-template #popDatosAdTitulo>
+                        <b>Datos adicionales</b>
+                        <p class="float-right">
+                          <i class="fas fa-info-circle fa-lg"></i>
+                        </p>
+                      </ng-template>
+                    </div>
+                  </div>
+                </div>
+              
               <!-- Fin del sexto row -->
 
               <div class="card-footer">

@@ -323,7 +323,7 @@
                   autocomplete="off"
                   [ngClass]="{
                     'is-invalid':
-                      (!temperatura.valid && temperatura.touched) || ((consulta.temperatura < 28 || consulta.temperatura >= 40) && consulta.temperatura != '')  
+                      !temperatura.valid && temperatura.touched   
                   }"
                   ngxPattern="^\d+\.?\d{0,2}$"
                   popoverClass="text-dark"
@@ -345,36 +345,6 @@
                 *ngIf="!temperatura.valid && temperatura.touched"
               >
                 Campo requerido
-              </small>
-              <small
-                class="text-danger"
-                *ngIf="(consulta.temperatura < 28 || consulta.temperatura >= 40) && consulta.temperatura != ''"
-              >
-                Valor incorrecto. Fuera del rango aceptado
-              </small>
-              <small
-                class="text-dark"
-                *ngIf="consulta.temperatura >= 28 && consulta.temperatura <= 36.5"
-              >
-                <b> 
-                  Baja temperatura. Rango [28° - 36.5°] C
-                </b>
-              </small>
-              <small
-                class="text-primary"
-                *ngIf="consulta.temperatura >= 37 && consulta.temperatura <= 37.9"
-              >
-                <b>
-                  Temperatura normal. Rango [37° - 37.9°] C
-                </b>
-              </small>
-              <small
-                class="text-dark"
-                *ngIf="consulta.temperatura >= 38 && consulta.temperatura <= 40"
-              >
-                <b>
-                  Alta temperatura. Rango [38° - 40°] C
-                </b>
               </small>
 
               <ng-template #popTemperaturaContent
@@ -405,7 +375,6 @@
                     'is-invalid': !freCardia.valid && freCardia.touched
                   }"
                   ngxPattern="[0-9]+"
-
                   popoverClass="text-dark"
                   [autoClose]="true"
                   [ngbPopover]="popFrecuenciaContent"
@@ -508,7 +477,7 @@
                   required
                   autocomplete="off"
                   [ngClass]="{
-                    'is-invalid': (!peso.valid && peso.touched) || ((consulta.peso < 2.76 || consulta.peso > 200) && consulta.peso != '')
+                    'is-invalid': !peso.valid && peso.touched
                   }"
                   ngxPattern="^\d+\.?\d{0,2}$"
                   placement="top"
@@ -532,12 +501,7 @@
               >
                 Campo requerido
               </small>
-              <small
-                class="text-danger"
-                *ngIf="(consulta.peso < 2.76 || consulta.peso > 200) && consulta.peso != ''"
-              >
-                Valor incorrecto. Fuera del rango aceptado
-              </small>
+
               <ng-template #popPesoContent
               >Digite el peso del paciente en Kilogramos</ng-template
               >
@@ -564,7 +528,7 @@
                   required
                   autocomplete="off"
                   [ngClass]="{
-                    'is-invalid': (!talla.valid && talla.touched) || ((consulta.talla < 1.40 || consulta.talla > 2) && consulta.talla !='')
+                    'is-invalid': !talla.valid && talla.touched
                   }"
                   ngxPattern="^\d+\.?\d{0,2}$"
                   popoverClass="text-dark"
@@ -595,12 +559,6 @@
                 *ngIf="!talla.valid && talla.touched"
               >
                 Campo requerido
-              </small>
-              <small
-                class="text-danger"
-                *ngIf="(consulta.talla < 1.40 || consulta.talla > 2) && consulta.talla !=''"
-              >
-                Valor incorrecto. Fuera del rango aceptado
               </small>
             </div>
           </div>
@@ -671,8 +629,7 @@
                   autocomplete="off"
                   ngxPattern="^\d+\.?\d{0,2}$" 
                   [ngClass]="{
-                    'is-invalid': (!presionSis.valid && presionSis.touched) || 
-                    ((consulta.presionSistolica <= 90 || consulta.presionSistolica >=180) && consulta.presionSistolica !='')
+                    'is-invalid': !presionSis.valid && presionSis.touched
                   }"
 
                   popoverClass="text-dark"
@@ -695,13 +652,7 @@
               >
                 Campo requerido
               </small>
-              <small
-                class="text-danger"
-                *ngIf="(consulta.presionSistolica <= 90 || consulta.presionSistolica >=180) && 
-                        consulta.presionSistolica !='' "
-              >
-                Valor incorrecto. Fuera del rango [90 - 180]
-              </small>
+  
               <ng-template #popPresionContent
                   >Digite la presión arterial del paciente. Ej: 120/80</ng-template
                   >
@@ -729,9 +680,7 @@
                   autocomplete="off"
                   ngxPattern="^\d+\.?\d{0,2}$"
                   [ngClass]="{
-                    'is-invalid': (!presionDias.valid && presionDias.touched) ||
-                    ((consulta.presionDiastolica <= 60 || consulta.presionDiastolica >=120) && 
-                    consulta.presionDiastolica !='')
+                    'is-invalid': !presionDias.valid && presionDias.touched
                   }"
 
                   popoverClass="text-dark"
@@ -753,13 +702,6 @@
                 *ngIf="!presionDias.valid && presionDias.touched"
               >
                 Campo requerido
-              </small>
-              <small
-                class="text-danger"
-                *ngIf="(consulta.presionDiastolica <= 60 || consulta.presionDiastolica >=120) && 
-                        consulta.presionDiastolica !='' "
-              >
-                Valor incorrecto. Fuera del rango [60 - 120]
               </small>
               <ng-template #popPresionContent
                   >Digite la presión arterial del paciente. Ej: 120/80</ng-template
@@ -798,24 +740,7 @@
               >
                 Campo requerido
               </small>
-              <small
-                class="text-dark"
-                *ngIf="pArterial != '' && pArterial === 'baja'"
-              >
-                <b>Presión baja</b>
-              </small>
-              <small
-                class="text-primary"
-                *ngIf="pArterial != '' && pArterial === 'normal'"
-              >
-                <b>Presión normal</b>
-              </small>
-              <small
-                class="text-dark"
-                *ngIf="pArterial != '' && pArterial === 'alta'"
-              >
-                <b>Presión alta</b>
-              </small>
+
             </div>
           </div>
         </div>

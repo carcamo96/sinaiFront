@@ -32,6 +32,7 @@ export class RecetaComponent implements OnInit {
     tiempo: 'Hora/s',
     duracion: 7,
     lapso: 'Dia/s',
+    medidaDosis: 'Cucharadas'
   }
 
   detallesMedicos = '';//Más detalles de la receta
@@ -58,7 +59,8 @@ export class RecetaComponent implements OnInit {
           this.recetaItem.concentracion + ' ' + this.recetaItem.medida,
           this.recetaItem.cantidad,
           'Cada ' + this.recetaItem.frecuencia + ' ' + this.recetaItem.tiempo,
-          ''+ this.recetaItem.duracion + ' ' + this.recetaItem.lapso
+          ''+ this.recetaItem.duracion + ' ' + this.recetaItem.lapso,
+          this.recetaItem.medidaDosis
       );
 
       this.items.push(recetaItem);
@@ -118,6 +120,7 @@ export class RecetaComponent implements OnInit {
       tiempo: 'Hora/s',
       duracion: 7,
       lapso: 'Dia/s',
+      medidaDosis: 'Cucharadas'
     }
 
     this.formulario.resetForm(this.recetaItem);
@@ -129,12 +132,12 @@ export class RecetaComponent implements OnInit {
   }
 
   async imprimir(){
-    const pdf=new PdfMakeWrapper();
+   /* const pdf=new PdfMakeWrapper();
     
     pdf.add(new Columns([await new Img('assets/imgs/sinai_logo.jpg')
             .width(200).height(100).build(), 
-            new Txt('LABORATORIO AMAYA LOPEZ \n Calle Dr. Adrian García, Barrio El Centro, \n San Esteban Catarina, San Vicente. \n TEL.: 2362-7541').alignment('center')
-            .italics().end]).width('auto').fontSize(16).end);
+            new Txt('LABORATORIO AMAYA LOPEZ \n Calle Dr. Adrian García, Barrio El Centro, \n San Esteban Catarina, San Vicente. \n TEL.: 2362-7541')
+            .alignment('center').end]).width('auto').fontSize(16).end);
             
     pdf.add(new Text('Medicamentos recetados'));
   
@@ -154,7 +157,7 @@ export class RecetaComponent implements OnInit {
    console.log(tbl);
   
     pdf.create().open();
-    
+    */
   }
 
 }
