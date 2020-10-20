@@ -106,7 +106,9 @@
               (blur)="ayuda ? p1.close() : ''"
             />
             <div class="input-group-append">
-              <button type="button" class="btn btn-info"><i class="fas fa-plus"></i></button>
+              <button type="button" class="btn btn-info" (click)="agregarMotivosComunes()">
+                <i class="fas fa-plus"></i>
+              </button>
             </div>
           
             <ng-template #popMotivoContent
@@ -133,10 +135,15 @@
               <select
               name="comunes"
               class="form-control"
-              #motivoSelect>
-              <option value='Fiebre' [selected]="'true'">Fiebre</option>
-              <option value='Mareos'>Mareos</option>
-              <option value='Estreñimiento'>Estreñimiento</option>
+              #motivoSelect
+              (change)="selectMotivoComun($event)">
+              <option value="" selected disabled hidden *ngIf="motivosComunes.length > 0; else noHayMotivos">Seleccione motivo común</option>
+              <ng-template #noHayMotivos>
+                <option value="" selected disabled hidden>No hay motivos comunes</option>
+              </ng-template>
+              <option *ngFor="let motivoComun of motivosComunes" value='{{motivoComun}}'>
+                {{ motivoComun | titlecase }}
+              </option>
               </select>
               
           </div>

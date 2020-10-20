@@ -35,4 +35,23 @@ export class ConsultaService{
 
         return this._http.put(this.url+'consulta/update/'+id, params, {headers: headers});;
     }
+
+    //Uso de localStorage para guardar los motivos de consulta comunes
+
+    addMotivos(key: string, data: string[]){
+        //El localStorage solo almacena string o numeros por eso se convierte a json
+        try {
+            localStorage.setItem(key, JSON.stringify(data));    
+        } catch (error) {
+            console.log("addMotivos", error); 
+        }
+    }
+
+    getMotivos(key: string){
+        try {
+            return JSON.parse(localStorage.getItem(key));
+        } catch (error) {
+            console.log("getMotivos: ", error);
+        }
+    }
 }

@@ -9,6 +9,7 @@ import { SwalComponent } from "@sweetalert2/ngx-sweetalert2";
 import { Observable } from 'rxjs';
 import { Paciente } from 'src/app/models/paciente';
 import { EventEmitter } from '@angular/core';
+import { ConsultaService } from '../../../services/consulta.service';
 
 @Component({
   selector: 'app-datos-consulta',
@@ -24,6 +25,8 @@ export class DatosConsultaComponent implements OnInit {
   public edad: number; //Variable para guardar el calculo de la edad del paciente
   public genero: string = '';//Variable para manejar mostrar los campos de citologia
   public motivoCon:boolean = true;//Para manejar los motivos de consulta
+  public motivosComunes: string[] = []; //Arreglo para manejar los motivos comunes en localStorage
+
 
   @Input() ayuda: boolean;// Para manejar la ayuda de los formularios
   //Para recibir el objeto paciente cargado desde el componente padre
@@ -50,7 +53,8 @@ export class DatosConsultaComponent implements OnInit {
 
 
   constructor(
-
+      private consultaService: ConsultaService,
+      private toastr: ToastrService
   ) {
     this.consulta = {
       paciente: "",
@@ -85,6 +89,7 @@ export class DatosConsultaComponent implements OnInit {
 
   ngOnInit(): void {
     this.cargarPaciente();
+    this.cargarMotivosComunes();
   }
 
   //Se dispara cuando se da click en el boton de adjuntar
@@ -123,6 +128,32 @@ export class DatosConsultaComponent implements OnInit {
     );
 
   }
+
+  selectMotivoComun(event){
+    this.consulta.motivo = event.target.value;
+  }
+
+  cargarMotivosComunes(){
+    let resultado = this.consultaService.getMotivos('motivos');
+    if(resultado != null){
+      this.motivosComunes = resultado;
+    }
+  }
+
+  agregarMotivosComunes(){
+    
+    if(this.consulta.motivo !== ''){
+      this.consulta.motivo = this.consulta.motivo.trim();
+        this.consulta.motivo = this.consulta.motivo.toLowerCase();
+        if(!this.motivosComunes.includes(this.consulta.motivo)){
+          this.motivosComunes.push(this.consulta.motivo);
+          this.consultaService.addMotivos('motivos',this.motivosComunes);
+          this.showInfo('Se agregó a lista de motivos comunes!','Motivos comunes');
+        }
+    }
+    
+  }
+
 
   obtenerEdad(fechaActual, fechaNac) {
     let diaActual = fechaActual.getDate();
@@ -270,11 +301,16 @@ export class DatosConsultaComponent implements OnInit {
   motivoChange(event){
    if(event.target.value === "B"){
       this.motivoCon = false;
+      this.cargarMotivosComunes();
       //console.log("Entra B: ", this.motivo);
    }else{
       this.motivoCon = true;
       //console.log("Entra A: ", this.motivo);
    }
+  }
+  // Alerta cuando se adjunten datos de consulta
+  showInfo(mensaje: string, titulo: string) {
+    this.toastr.info(mensaje, titulo);
   }
 
 
