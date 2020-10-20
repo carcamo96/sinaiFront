@@ -547,9 +547,24 @@
                       name="departamento"
                       class="form-control"
                       #departamentoSelect
-                      [ngModel]="paciente.departamento"
+                      [(ngModel)]="paciente.departamento"
+                      (ngModelChange)="cargarMunicipioSelect($event)"
                       >
-                      <option value='Departamento' [selected]="'true'">Departamento</option>
+                      <option value='DEPARTAMENTO' [selected]="true">DEPARTAMENTO</option>
+                      <option value='AHUACHAPÁN'>AHUACHAPÁN</option>
+                      <option value='CABAÑAS'>CABAÑAS</option>
+                      <option value='CHALATENANGO'>CHALATENANGO</option>
+                      <option value='CUSCATLÁN'>CUSCATLÁN</option>
+                      <option value='LA LIBERTAD'>LA LIBERTAD</option>
+                      <option value='LA PAZ'>LA PAZ</option>
+                      <option value='LA UNIÓN'>LA UNIÓN</option>
+                      <option value='MORAZÁN'>MORAZÁN</option>
+                      <option value='SAN MIGUEL'>SAN MIGUEL</option>
+                      <option value='SAN SALVADOR'>SAN SALVADOR</option>
+                      <option value='SAN VICENTE'>SAN VICENTE</option>
+                      <option value='SANTA ANA'>SANTA ANA</option>
+                      <option value='SONSONATE'>SONSONATE</option>
+                      <option value='USULUTÁN'>USULUTÁN</option>
                       </select>
                     </div>
                   </div>
@@ -560,9 +575,10 @@
                               name="municipio"
                               class="form-control"
                               #municipioSelect
-                              [ngModel]="paciente.municipio"
+                              [(ngModel)]="paciente.municipio"
                               >
-                              <option value='Municipio' [selected]="'true'">Municipio</option>
+                              <option value='MUNICIPIO' [selected]="true">MUNICIPIO</option>
+                              <option *ngFor="let muni of municipios" value='{{muni.MUNICIPIO}}' [selected]="true"><b>{{muni.MUNICIPIO}}</b></option>
                               </select>
                     </div>
                   </div>

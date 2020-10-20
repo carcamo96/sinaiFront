@@ -40,9 +40,12 @@ export class FormularioPacienteComponent implements OnInit {
   public status: string;
   private idResponse = '';
 
+  public municipios: any[] = [];
+
   progress = 0;
 
   public ayuda = false;//Para manejar los popovers
+  listaMunicipios: any[] = [];
 
   constructor(private toastr: ToastrService,
      private _pacienteService: PacienteService,
@@ -60,8 +63,8 @@ export class FormularioPacienteComponent implements OnInit {
       faContacto: '',
       telFaContacto: '',
       direccion: '',
-      departamento:'Departamento',
-      municipio:'Municipio',
+      departamento:'DEPARTAMENTO',
+      municipio:'MUNICIPIO',
       otrosDatos: ''
     }
 
@@ -240,5 +243,21 @@ export class FormularioPacienteComponent implements OnInit {
       this.ayuda = !this.ayuda;
   }
   
+  cargarMunicipioSelect(event){
+    var mun: string = event;
+    console.log(this.paciente.departamento);
+    this._pacienteService.getMunicipios(mun).subscribe(
+      res=>{
+          if (res.status == 'success') {
+            this.municipios = res.departamentos;
+          }
+      },
+      err=>{
+        
+            console.log('error al cargar municipios: '+err);
+      }
+    );
+    
+  }
 
 }
