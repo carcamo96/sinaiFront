@@ -46,11 +46,7 @@ export class ConsultaComponent implements OnInit {
 
   public adjuntado = false; //Bandera para saber si han adjuntado datos de consulta
 
-  //Averiguar para que sirven ???
-  public atl = Date.now();
-  public status: string;
-  public spinnStatus: boolean;
-  public indice: string;
+
 
   constructor(
     private toastr: ToastrService,
@@ -273,10 +269,6 @@ export class ConsultaComponent implements OnInit {
     this._router.navigate(["/expedientes/"]);
   }
 
-
-  spnChange() {
-    this.spinnStatus = true;
-  }
 
   // Alerta cuando se adjunten datos de consulta
   showInfo(mensaje: string, titulo: string) {
