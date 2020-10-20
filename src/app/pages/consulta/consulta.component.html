@@ -103,14 +103,11 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">
-                  Consulta médica <i *ngIf="!adjuntado" class="fas fa-check"></i>
+                  Consulta médica <i *ngIf="adjuntado" class="fas fa-check"></i>
                 </a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Receta médica</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false">Estudios de laboratorio</a>
               </li>
 
               <li class="ml-auto">
@@ -138,12 +135,7 @@
                               (recetaMedica)="addRecetaMedica($event)">
                   </app-receta>             
               </div>
-              <div class="tab-pane fade" id="custom-tabs-one-messages" role="tabpanel" aria-labelledby="custom-tabs-one-messages-tab">
-                  <app-estudios-clinicos [ayuda]="ayuda"
-                                         (estudiosMedicos)="addEstudiosDelaboratorio($event)">
-
-                  </app-estudios-clinicos>
-              </div>
+              
               
             </div><!--Tabs content-->
           </div><!-- /.fin del card  body-->

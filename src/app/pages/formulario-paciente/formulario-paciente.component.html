@@ -69,7 +69,7 @@
                     <label for="nombrePaciente">Nombre</label>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control capitalize"
                       name="nombrePaciente"
                       placeholder="Nombre del paciente"
                       autofocus
@@ -117,7 +117,7 @@
                     <label for="apellidosPaciente">Apellidos</label>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control capitalize"
                       name="apellidoPaciente"
                       placeholder="Apellidos del paciente"
                       autocomplete="off"
@@ -362,7 +362,7 @@
                     <label for="nombreEncargado">Nombre del padre o encargado</label>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control capitalize"
                       autocomplete="off"
                       placeholder="Padre o encargado"
                       name="nombreEncargado"
@@ -457,7 +457,7 @@
                     <label for="faContacto">Familiar de contacto (*):</label>
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control capitalize"
                       autocomplete="off"
                       placeholder="Familiar de contacto"
                       name="faContacto"
@@ -597,7 +597,7 @@
                         name="direccion"
                         #direccion="ngModel"
                         [(ngModel)]="paciente.direccion"
-                        ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                        ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                         required
                         [ngClass]="{
                           'is-invalid': !direccion.valid && direccion.touched
@@ -647,7 +647,7 @@
                         name="otrosDatos"
                         #otrosDatos="ngModel"
                         [(ngModel)]="paciente.otrosDatos"
-                        ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                        ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                         popoverClass="text-dark"
                         [ngbPopover]="popDatosAdContent"
                         [popoverTitle]="popDatosAdTitulo"

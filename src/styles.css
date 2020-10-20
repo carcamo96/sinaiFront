@@ -1,3 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~ngx-smart-modal/ngx-smart-modal";
 @import '~ng-wizard/themes/ng_wizard.min.css';
+/* Agrego esta clase para convertir en mayuscula la primera letra de cada palabra */
+.capitalize{
+    text-transform: capitalize;
+}

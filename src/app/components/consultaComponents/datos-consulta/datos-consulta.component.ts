@@ -17,12 +17,13 @@ import { EventEmitter } from '@angular/core';
 })
 export class DatosConsultaComponent implements OnInit {
 
-  public fechaAux;//Variable para manejar la fe cha actual
   public consulta: any; //Objeto modelo de la consulta
-  public edad: number; //Variable para guardar el calculo de la edad del paciente
   public paciente: Paciente; //Objeto de tipo paciente para cargarlo con sus datos
+
+  public fechaAux;//Variable para manejar la fe cha actual
+  public edad: number; //Variable para guardar el calculo de la edad del paciente
+  public genero: string = '';//Variable para manejar mostrar los campos de citologia
   public motivoCon:boolean = true;//Para manejar los motivos de consulta
-  public diag:boolean = true;//Para manejar la seleccion de diagnostico
 
   @Input() ayuda: boolean;// Para manejar la ayuda de los formularios
   //Para recibir el objeto paciente cargado desde el componente padre
@@ -36,7 +37,10 @@ export class DatosConsultaComponent implements OnInit {
   public pSistolica = ''; 
   public pDiastolica = '';
   public pArterial = '';
-  
+
+  //Arreglos para cargar y seleccionar los diagnosticos
+  public diagnosticos: string[] = ['Cefalea Crónica','Congestión Nasal','Gripe Común','Infección Estomacal'];
+  public diagSeleccionados: any[] = [];
 
   //Para las sweetAlerts
   @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
@@ -58,6 +62,7 @@ export class DatosConsultaComponent implements OnInit {
       fechaConsul: "",
       historia: "",
       antePatol: "",
+      examenFisico: "",
       alergias: "",
       peso: "",
       talla: "",
@@ -67,6 +72,7 @@ export class DatosConsultaComponent implements OnInit {
       presionArt: "",
       indiceMC: "",
       freCardia: "",
+      freRespiratoria: "",
       diagnostico: {
         diagEspecifico: "",
         diagDetalles: ""
@@ -108,7 +114,7 @@ export class DatosConsultaComponent implements OnInit {
         );
         //Guarda el id del paciente al que pertenece la consulta
         this.consulta.paciente = response.paciente._id;
-        //console.log(this.consulta.paciente);
+        this.genero = this.paciente.gen;
 
       },//Fin del response
       error =>{
@@ -271,15 +277,7 @@ export class DatosConsultaComponent implements OnInit {
    }
   }
 
-  diagnosticoChange(event){
-  if(event.target.value === "Y"){
-      this.diag = false;
-      //console.log("Entra Y: ", this.diag);
-   }else{
-      this.diag = true;
-      //console.log("Entra x: ", this.diag);
-   }
-  }
+
 
 
 }

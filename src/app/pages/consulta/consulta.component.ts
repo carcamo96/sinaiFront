@@ -35,7 +35,7 @@ export class ConsultaComponent implements OnInit {
   public edad: number;  //Para guardar el calculo de la edad en base a su edad de nacimiento
   public genero: string;//Para colocar el genero en toda su palabra
   public edadAnios: string;//Para concatenar edad + "Años"
-  public numeroExpediente: string; //Para mostrar el numero de expediente
+  public numeroExpediente: string = ''; //Para mostrar el numero de expediente
 
   public ayuda = false; //Para manejar la ayuda
 
@@ -118,18 +118,6 @@ export class ConsultaComponent implements OnInit {
       }
   }
 
-  addEstudiosDelaboratorio(estudiosMedicos){
-
-    if(this.adjuntado){
-      this.consulta.setEstudios(estudiosMedicos);
-      //Se activa la alerta
-      this.showInfo('Se han adjuntado estudios de laboratorio!','Estudios de laboratorio');
-    }else{
-        //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
-        this.adjuntarDatos.fire();
-    }
-  }
-
   
   onSubmit() {
     
@@ -182,6 +170,7 @@ export class ConsultaComponent implements OnInit {
         (response) => {
           //console.log('Paciente: ',response);
           this.eventsSubject.next(response); // propagando el evento al componente hijo
+          //Para mientras mandan del backend OJO <---------
           this.paciente = new Paciente(
             response.paciente.nombre,
             response.paciente.apellidos,
@@ -193,6 +182,8 @@ export class ConsultaComponent implements OnInit {
             response.paciente.faContacto,
             response.paciente.telFaContacto,
             response.paciente.direccion,
+            '',
+            '',
             response.paciente.otrosDatos,
             response.paciente.codigo,
             response.paciente._id
@@ -210,6 +201,7 @@ export class ConsultaComponent implements OnInit {
           }
           this.nomPaciente = this.paciente.nombre + " " + this.paciente.apellidos;
           this.numeroExpediente = this.paciente.codigo;
+          console.log(response);
           this.loadingBarService.complete();
         },
         (error) => {
