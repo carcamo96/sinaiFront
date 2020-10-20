@@ -31,6 +31,9 @@ export class MostrarPacienteComponent implements OnInit {
   //auxiliar del id
   private id = '';
 
+  //Cargar combobox de municipio
+  public municipios: any[] = [];
+
   constructor(
       private _pacienteService: PacienteService,
       private loadingBarService: LoadingBarService
@@ -49,8 +52,8 @@ export class MostrarPacienteComponent implements OnInit {
       faContacto: '',
       telFaContacto: '',
       direccion: '',
-      departamento:'Departamento',
-      municipio:'Municipio',
+      departamento:'',
+      municipio:'',
       otrosDatos: ''
     }
 
@@ -81,12 +84,26 @@ export class MostrarPacienteComponent implements OnInit {
           //inicializando edad
           this.edad = this.obtenerEdad(new Date() , new Date(response.paciente.fechaNac));
           this.loadingBarService.complete();
+          this.iniciarMunicipioSelect(response.paciente.departamento);
           
       },
       error=>{
           //console.log("Error del hijo: "+error);
           this.loadingBarService.complete();
           this.errorSwal.fire();
+      }
+    );
+  }
+  iniciarMunicipioSelect(mun) {
+    this._pacienteService.getMunicipios(mun).subscribe(
+      res=>{
+          if (res.status == 'success') {
+            this.municipios = res.departamentos;
+          }
+      },
+      err=>{
+        
+            console.log('error al cargar municipios: '+err);
       }
     );
   }
@@ -132,6 +149,8 @@ export class MostrarPacienteComponent implements OnInit {
                   faContacto: response.paciente.faContacto,
                   telFaContacto: response.paciente.telFaContacto,
                   direccion: response.paciente.direccion,
+                  departamento: response.paciente.departamento,
+                  municipio: response.paciente.municipio,
                   otrosDatos: response.paciente.otrosDatos
                 }
                 //inicializando edad
@@ -242,6 +261,23 @@ export class MostrarPacienteComponent implements OnInit {
 
   esMenor(){
     return this.edad >= 0 && this.edad < 18;
+  }
+
+  cargarMunicipioSelect(event){
+    var mun: string = event;
+    console.log(this.paciente.departamento);
+    this._pacienteService.getMunicipios(mun).subscribe(
+      res=>{
+          if (res.status == 'success') {
+            this.municipios = res.departamentos;
+          }
+      },
+      err=>{
+        
+            console.log('error al cargar municipios: '+err);
+      }
+    );
+    
   }
 
 

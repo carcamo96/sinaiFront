@@ -36,5 +36,8 @@ export class PacienteService{
 
         return this._http.put(this.url+'paciente/update/'+id, params, {headers: headers});
     }
+    getMunicipios(departamento):Observable<any>{
+        return this._http.get(this.url+'departamento/listar/'+departamento);
+    }
 
 }
