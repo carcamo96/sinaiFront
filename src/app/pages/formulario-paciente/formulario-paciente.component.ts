@@ -195,6 +195,8 @@ export class FormularioPacienteComponent implements OnInit {
       faContacto: '',
       telFaContacto: '',
       direccion: '',
+      departamento:'DEPARTAMENTO',
+      municipio:'MUNICIPIO',
       otrosDatos: ''
     }
     this.formulario.resetForm({r1: 'M'});
