@@ -33,8 +33,9 @@ export class ConsultaComponent implements OnInit {
 
   public nomPaciente: string; //Para mostrar el nombre completo del paciente
   public edad: number;  //Para guardar el calculo de la edad en base a su edad de nacimiento
+  public edadMeses: number; //Para guardar la edad en meses
   public genero: string;//Para colocar el genero en toda su palabra
-  public edadAnios: string;//Para concatenar edad + "Años"
+  public mostrarEdad: string;//Para mostrar edad + "Años"
   public numeroExpediente: string = ''; //Para mostrar el numero de expediente
 
   public ayuda = false; //Para manejar la ayuda
@@ -189,7 +190,13 @@ export class ConsultaComponent implements OnInit {
             new Date(),
             new Date(this.paciente.fechaNac)
           );
-          this.edadAnios = this.edad + " Años";
+
+          if(this.edad <= 0){
+              this.mostrarEdad = this.edadMeses + " Mes/es";
+          }else{
+
+            this.mostrarEdad = this.edad + " Año/s";
+          }
           if(this.paciente.gen === 'M'){
               this.genero = "MASCULINO";
           }else{
@@ -207,9 +214,6 @@ export class ConsultaComponent implements OnInit {
       );
     });
   }
-
-
- 
 
   inicializarFechaConsulP(fechaConsulP) {
     var fechaCon = new Date(fechaConsulP);
@@ -247,6 +251,11 @@ export class ConsultaComponent implements OnInit {
       edad--;
     }
 
+    if(edad <= 0){//Cambiando la edad a meses
+        let meses = mesActual - mesNac;
+        this.edadMeses = meses;
+    }
+
     return edad;
   } // fin del metodo de calculo de edad
 
@@ -263,6 +272,10 @@ export class ConsultaComponent implements OnInit {
           this.onSubmit();
         }
       });
+  }
+
+  activarPopovers(){
+    this.ayuda = !this.ayuda;
   }
 
   redireccionar() {

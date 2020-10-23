@@ -48,7 +48,7 @@
                       type="text"
                       class="form-control"
                       name="edad"
-                      value="{{ edadAnios }}"
+                      value="{{ mostrarEdad }}"
                       disabled
                       />
                     </div>
@@ -113,9 +113,30 @@
               <li class="ml-auto">
                 <!-- Aqui van los card tools -->
                 <div class="card-tools">
+                  <ng-template #popContent>
+                    <p *ngIf="ayuda == false">
+                      <b>Click! para activar </b>la información del formulario
+                    </p>
+                    <p *ngIf="ayuda == true">
+                      <b>Click! para desactivar </b>la información del formulario
+                    </p>
+                  </ng-template>
+                  <ng-template #popTitle>
+                    <b>Guía de uso</b>
+                    <p class="float-right">
+                      <i class="fas fa-info-circle fa-lg"></i>
+                    </p>
+                  </ng-template>
                   <button
                       type="button"
-                      class="btn btn-tool">
+                      class="btn btn-tool"
+                      placement="left"
+                      popoverClass="text-dark"
+                      [ngbPopover]="popContent"
+                      [popoverTitle]="popTitle"
+                      triggers="mouseenter:mouseleave"
+                      [ngClass]="{ 'text-light': ayuda }"
+                      (click)="activarPopovers()">
                          <i class="fas fa-info-circle fa-2x"></i>
                     </button>
                 </div>

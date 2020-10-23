@@ -32,7 +32,7 @@ export class RecetaComponent implements OnInit {
     tiempo: 'Hora/s',
     duracion: 7,
     lapso: 'Dia/s',
-    medidaDosis: 'Cucharadas'
+    medidaDosis: ''
   }
 
   detallesMedicos = '';//Más detalles de la receta
@@ -42,7 +42,7 @@ export class RecetaComponent implements OnInit {
   //Para propagar el evento de confirmación de  la receta
   @Output() recetaMedica = new EventEmitter();
 
-  @Input() ayuda: boolean; //Para manejar la ayuda de los formularios
+  @Input() ayuda: boolean = false; //Para manejar la ayuda de los formularios
 
   constructor() { }
 

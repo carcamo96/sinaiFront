@@ -28,6 +28,16 @@
                                     'is-invalid':
                                     !medicamento.valid && medicamento.touched
                                 }"
+                                placement="top"
+                                popoverClass="text-dark"
+                                [autoClose]="true"
+                                [ngbPopover]="popMedicamentoContent"
+                                [popoverTitle]="popMedicamentoTitulo"
+                                triggers="manual"
+                                #p1="ngbPopover"
+                                (click)="ayuda ? p1.open() : ''"
+                                (focus)="ayuda ? p1.open() : ''"
+                                (blur)="ayuda ? p1.close() : ''"
                                 >
                                 <small
                                 class="text-danger"
@@ -35,6 +45,15 @@
                                 >
                                 Campo requerido
                                 </small>
+                                <ng-template #popMedicamentoContent>
+                                    Digite el medicamento que se va a recetar.
+                                </ng-template>
+                                <ng-template #popMedicamentoTitulo>
+                                    <b>Medicamento</b>
+                                    <p class="float-right">
+                                      <i class="fas fa-info-circle fa-lg"></i>
+                                    </p>
+                                </ng-template>
                         </div>
                     </div>
                 </div><!-- Fin del primer row -->
@@ -54,17 +73,27 @@
                                     !presentacion.valid && presentacion.touched
                                 }"
                                 (ngModelChange)="cambio($event)"
+                                placement="top"
+                                popoverClass="text-dark"
+                                [autoClose]="true"
+                                [ngbPopover]="popPresentacionContent"
+                                [popoverTitle]="popPresentacionTitulo"
+                                triggers="manual"
+                                #p2="ngbPopover"
+                                (click)="ayuda ? p2.open() : ''"
+                                (focus)="ayuda ? p2.open() : ''"
+                                (blur)="ayuda ? p2.close() : ''"
                                 >
-                                <option value="Tableta" selected>Tableta</option>
-                                <option value="Capsula">Capsula</option>
-                                <option value="Solución inyectable">Inyectable muscular</option>
-                                <option value="Solución bebible">Inyectable endovenosa</option>
-                                <option value="Solución bebible">Inyectable subcutánea</option>
-                                <option value="Solución bebible">Jarabe</option>
-                                <option value="Solución bebible">Solución oral</option>
-                                <option value="Solución bebible">Suspención oral</option>
-                                <option value="Solución bebible">Polvo para dilución</option>
-                                <option value="Solución bebible">Microgránulos para dilución</option>
+                                    <option value="Tableta" selected>Tableta</option>
+                                    <option value="Capsula">Capsula</option>
+                                    <option value="Solución inyectable">Inyectable muscular</option>
+                                    <option value="Solución bebible">Inyectable endovenosa</option>
+                                    <option value="Solución bebible">Inyectable subcutánea</option>
+                                    <option value="Solución bebible">Jarabe</option>
+                                    <option value="Solución bebible">Solución oral</option>
+                                    <option value="Solución bebible">Suspención oral</option>
+                                    <option value="Solución bebible">Polvo para dilución</option>
+                                    <option value="Solución bebible">Microgránulos para dilución</option>
                                 
                                 </select>
                                 
@@ -74,7 +103,15 @@
                                 >
                                 Campo requerido
                                 </small>
-                                
+                                <ng-template #popPresentacionContent>
+                                    Seleccione la presentación del medicamento.
+                                </ng-template>
+                                <ng-template #popPresentacionTitulo>
+                                    <b>Presentación</b>
+                                    <p class="float-right">
+                                      <i class="fas fa-info-circle fa-lg"></i>
+                                    </p>
+                                </ng-template>
                             </div>
                         </div>
                     </div>
@@ -97,6 +134,16 @@
                                         'is-invalid':
                                         !concentracion.valid && concentracion.touched
                                     }"
+                                    placement="top"
+                                    popoverClass="text-dark"
+                                    [autoClose]="true"
+                                    [ngbPopover]="popConcentracionContent"
+                                    [popoverTitle]="popConcentracionTitulo"
+                                    triggers="manual"
+                                    #p3="ngbPopover"
+                                    (click)="ayuda ? p3.open() : ''"
+                                    (focus)="ayuda ? p3.open() : ''"
+                                    (blur)="ayuda ? p3.close() : ''"
                                     >
                                 <small
                                 class="text-danger"
@@ -104,6 +151,15 @@
                                 >
                                 Campo requerido
                                 </small>
+                                <ng-template #popConcentracionContent>
+                                    Digite la concentración del medicamento.
+                                </ng-template>
+                                <ng-template #popConcentracionTitulo>
+                                    <b>Concentración</b>
+                                    <p class="float-right">
+                                      <i class="fas fa-info-circle fa-lg"></i>
+                                    </p>
+                                </ng-template>
                             </div>   
                         </div> 
                     </div>
@@ -121,12 +177,22 @@
                                     'is-invalid':
                                     !medida.valid && medida.touched
                                 }"
+                                placement="top"
+                                popoverClass="text-dark"
+                                [autoClose]="true"
+                                [ngbPopover]="popMedidaContent"
+                                [popoverTitle]="popMedidaTitulo"
+                                triggers="manual"
+                                #p4="ngbPopover"
+                                (click)="ayuda ? p4.open() : ''"
+                                (focus)="ayuda ? p4.open() : ''"
+                                (blur)="ayuda ? p4.close() : ''"
                                 >
                                 
-                                <option value="mg" selected>mg</option>
-                                <option value="ml">ml</option>
-                                <option value="mcg">mcg</option>
-                                <option value="%">%</option>
+                                    <option value="mg" selected>mg</option>
+                                    <option value="ml">ml</option>
+                                    <option value="mcg">mcg</option>
+                                    <option value="%">%</option>
                                 
                                 </select>
 
@@ -136,6 +202,15 @@
                                 >
                                 Campo requerido
                                 </small>
+                                <ng-template #popMedidaContent>
+                                    Seleccione la medida de la concentración.
+                                </ng-template>
+                                <ng-template #popMedidaTitulo>
+                                    <b>Medida</b>
+                                    <p class="float-right">
+                                      <i class="fas fa-info-circle fa-lg"></i>
+                                    </p>
+                                </ng-template>
 
                             </div>
                         </div>
@@ -160,6 +235,16 @@
                                     'is-invalid':
                                     !cantidad.valid && cantidad.touched
                                 }"
+                                placement="top"
+                                popoverClass="text-dark"
+                                [autoClose]="true"
+                                [ngbPopover]="popCantidadContent"
+                                [popoverTitle]="popCantidadTitulo"
+                                triggers="manual"
+                                #p5="ngbPopover"
+                                (click)="ayuda ? p5.open() : ''"
+                                (focus)="ayuda ? p5.open() : ''"
+                                (blur)="ayuda ? p5.close() : ''"
                                 >
                                 
                                 <small
@@ -168,6 +253,15 @@
                                 >
                                 Campo requerido
                                 </small>
+                                <ng-template #popCantidadContent>
+                                    Digite ó seleccione la cantidad de medicamento.
+                                </ng-template>
+                                <ng-template #popCantidadTitulo>
+                                    <b>Cantidad</b>
+                                    <p class="float-right">
+                                      <i class="fas fa-info-circle fa-lg"></i>
+                                    </p>
+                                </ng-template>
 
                         </div>
                     </div>
@@ -177,6 +271,7 @@
                             
                                 <input
                                 name="medidaDosis"
+                                placeholder="Cucharadas, gotas, gotero, etc..."
                                 class="form-control input-lg"
                                 required
                                 #medidaDosis="ngModel"
@@ -185,6 +280,16 @@
                                     'is-invalid':
                                     !medidaDosis.valid && medidaDosis.touched
                                 }"
+                                placement="top"
+                                popoverClass="text-dark"
+                                [autoClose]="true"
+                                [ngbPopover]="popDosisContent"
+                                [popoverTitle]="popDosisTitulo"
+                                triggers="manual"
+                                #p6="ngbPopover"
+                                (click)="ayuda ? p6.open() : ''"
+                                (focus)="ayuda ? p6.open() : ''"
+                                (blur)="ayuda ? p6.close() : ''"
                                 >
                             
                             <small
@@ -193,6 +298,16 @@
                             >
                             Campo requerido
                             </small>
+                            <ng-template #popDosisContent>
+                                Digite la dosis del medicamento, por ejemplo: 
+                                Media tableta, una cucharada, una gota, etc...
+                            </ng-template>
+                            <ng-template #popDosisTitulo>
+                                <b>Dosis</b>
+                                <p class="float-right">
+                                  <i class="fas fa-info-circle fa-lg"></i>
+                                </p>
+                            </ng-template>
                         </div>
                     </div>
                     <div class="col-md-5">
@@ -217,6 +332,16 @@
                                         'is-invalid':
                                         !frecuencia.valid && frecuencia.touched
                                     }"
+                                    placement="top"
+                                    popoverClass="text-dark"
+                                    [autoClose]="true"
+                                    [ngbPopover]="popFreNumContent"
+                                    [popoverTitle]="popFreNumTitulo"
+                                    triggers="manual"
+                                    #p7="ngbPopover"
+                                    (click)="ayuda ? p7.open() : ''"
+                                    (focus)="ayuda ? p7.open() : ''"
+                                    (blur)="ayuda ? p7.close() : ''"
                                     >
                                     <small
                                     class="text-danger"
@@ -224,6 +349,16 @@
                                     >
                                     Campo requerido
                                     </small>
+                                    <ng-template #popFreNumContent>
+                                        Digite ó seleccione el número de frecuencia con la
+                                        cual tomar el medicamento.  
+                                    </ng-template>
+                                    <ng-template #popFreNumTitulo>
+                                        <b>Frecuencia</b>
+                                        <p class="float-right">
+                                          <i class="fas fa-info-circle fa-lg"></i>
+                                        </p>
+                                    </ng-template>
                                 </div>
                             </div>
                     </div>
@@ -241,10 +376,20 @@
                                     'is-invalid':
                                     !tiempo.valid && tiempo.touched
                                 }"
+                                placement="top"
+                                popoverClass="text-dark"
+                                [autoClose]="true"
+                                [ngbPopover]="popFreLapsoContent"
+                                [popoverTitle]="popFreLapsoTitulo"
+                                triggers="manual"
+                                #p8="ngbPopover"
+                                (click)="ayuda ? p8.open() : ''"
+                                (focus)="ayuda ? p8.open() : ''"
+                                (blur)="ayuda ? p8.close() : ''"
                                 >
                                
-                                <option value="Hora/s" selected>Hora/s</option>
-                                <option value="Minuto/s">Minutos</option>
+                                    <option value="Hora/s" selected>Hora/s</option>
+                                    <option value="Minuto/s">Minutos</option>
                                 </select>
                                  
                                 <small
@@ -253,6 +398,15 @@
                                 >
                                 Campo requerido
                                 </small>
+                                <ng-template #popFreLapsoContent>
+                                    Seleccione entre horas y minutos.  
+                                </ng-template>
+                                <ng-template #popFreLapsoTitulo>
+                                    <b>Frecuencia</b>
+                                    <p class="float-right">
+                                      <i class="fas fa-info-circle fa-lg"></i>
+                                    </p>
+                                </ng-template>
 
                             </div>
                         </div>
@@ -272,8 +426,28 @@
                                    max="30"
                                    value="7"
                                    #duracion="ngModel"
-                                   [(ngModel)]="recetaItem.duracion">  
+                                   [(ngModel)]="recetaItem.duracion"
+                                   placement="top"
+                                   popoverClass="text-dark"
+                                   [autoClose]="true"
+                                   [ngbPopover]="popDuranteContent"
+                                   [popoverTitle]="popDuranteTitulo"
+                                   triggers="manual"
+                                   #p9="ngbPopover"
+                                   (click)="ayuda ? p9.open() : ''"
+                                   (focus)="ayuda ? p9.open() : ''"
+                                   (blur)="ayuda ? p9.close() : ''">  
                         </div>
+                            <ng-template #popDuranteContent>
+                                Digite ó seleccione el número de tiempo 
+                                recetado para tomar el medicamento.  
+                            </ng-template>
+                            <ng-template #popDuranteTitulo>
+                                <b>Durante</b>
+                                <p class="float-right">
+                                <i class="fas fa-info-circle fa-lg"></i>
+                                </p>
+                            </ng-template>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
@@ -284,11 +458,30 @@
                                 class="form-control"
                                 #lapso="ngModel"
                                 [(ngModel)]="recetaItem.lapso"
+                                placement="top"
+                                popoverClass="text-dark"
+                                [autoClose]="true"
+                                [ngbPopover]="popDuranteLapsoContent"
+                                [popoverTitle]="popDuranteLapsoTitulo"
+                                triggers="manual"
+                                #p10="ngbPopover"
+                                (click)="ayuda ? p10.open() : ''"
+                                (focus)="ayuda ? p10.open() : ''"
+                                (blur)="ayuda ? p10.close() : ''"
                                 >
-                                <option value='Dia/s' selected>Dia/s</option>
-                                <option value='Mes/es'>Mes/es</option>
-                                <option value='Año/s'>Año/s</option>
+                                    <option value='Dia/s' selected>Dia/s</option>
+                                    <option value='Mes/es'>Mes/es</option>
+                                    <option value='Año/s'>Año/s</option>
                                 </select>
+                                <ng-template #popDuranteLapsoContent>
+                                    Seleccione entre dias, meses ó años.  
+                                </ng-template>
+                                <ng-template #popDuranteLapsoTitulo>
+                                    <b>Durante</b>
+                                    <p class="float-right">
+                                    <i class="fas fa-info-circle fa-lg"></i>
+                                    </p>
+                                </ng-template>
                                 
                             </div>
                         </div>
@@ -369,9 +562,28 @@
                         ngxPattern="^[a-zA-Z0-9\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                         #detalles="ngModel"
                         [(ngModel)]="detallesMedicos"
+                        placement="top"
+                        popoverClass="text-dark"
+                        [autoClose]="true"
+                        [ngbPopover]="popDetallesRecetaContent"
+                        [popoverTitle]="popDetallesRecetaTitulo"
+                        triggers="manual"
+                        #p11="ngbPopover"
+                        (click)="ayuda ? p11.open() : ''"
+                        (focus)="ayuda ? p11.open() : ''"
+                        (blur)="ayuda ? p11.close() : ''"
                       >
                       </textarea>
-  
+                      <ng-template #popDetallesRecetaContent>
+                        Puede digitar de manera opcional detalles adicionales para la
+                        receta medica. 
+                      </ng-template>
+                      <ng-template #popDetallesRecetaTitulo>
+                        <b>Detalles medicos (*)</b>
+                        <p class="float-right">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                        </p>
+                      </ng-template>
                     </div>
                 </div>
             </div>

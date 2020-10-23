@@ -28,7 +28,7 @@ export class DatosConsultaComponent implements OnInit {
   public motivosComunes: string[] = []; //Arreglo para manejar los motivos comunes en localStorage
 
 
-  @Input() ayuda: boolean;// Para manejar la ayuda de los formularios
+  @Input() ayuda: boolean = false;// Para manejar la ayuda de los formularios
   //Para recibir el objeto paciente cargado desde el componente padre
   private eventsSubscription: any;
   @Input() events: Observable<any>;
@@ -77,6 +77,8 @@ export class DatosConsultaComponent implements OnInit {
       indiceMC: "",
       freCardia: "",
       freRespiratoria: "",
+      perimetroCefalico: "",
+      circunferenciaAbdominal: "",
       diagnostico: {
         diagEspecifico: "",
         diagDetalles: ""
@@ -152,6 +154,10 @@ export class DatosConsultaComponent implements OnInit {
         }
     }
     
+  }
+
+  buscarDiagnostico(event){
+    console.log(event);
   }
 
 

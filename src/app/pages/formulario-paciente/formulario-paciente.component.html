@@ -210,8 +210,8 @@
                     <ng-template #popFechaNacContent>
                       Digite la fecha de nacimiento del paciente <br />
                       ó tambien puede desplegar el calendario con el icono:
-                      <p><i class="far fa-calendar fa-lg"></i></p
-                    ></ng-template>
+                      <p><i class="far fa-calendar fa-lg"></i></p>
+                    </ng-template>
 
                     <ng-template #popFechaNacTitulo>
                       <b>Fecha de nacimiento</b>
@@ -223,14 +223,14 @@
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="edad">Edad (Años)</label>
+                    <label for="edad">Edad {{ edad <= 0 && edadMeses >= 0 ? '(Mes/es)' : '(Año/s)'}}</label>
 
                     <input
                       type="text"
                       class="form-control"
                       disabled
                       placeholder="Edad"
-                      value="{{ edad }}"
+                      value="{{ edad <= 0 && edadMeses >= 0 ? edadMeses : edad }}"
                       name="edad"
                     />
                   </div>
