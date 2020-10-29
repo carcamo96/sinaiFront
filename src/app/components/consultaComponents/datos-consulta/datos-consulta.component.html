@@ -115,7 +115,7 @@
               Digite el motivo de la consulta médica.
               Si el motivo de consulta se considera común se puede
               agregar a la lista de motivos comunes clickeando el 
-              boton con el simbolo <i class="fas fa-plus"></i> para 
+              botón con el simbolo <i class="fas fa-plus"></i> para 
               evitar volver a digitar posteriormente.
             </ng-template>
             <ng-template #popMotivoTitulo>
@@ -561,7 +561,7 @@
                   (blur)="ayuda ? p10.close() : ''"
                 />
                 <div class="input-group-prepend">
-                  <span class="input-group-text">kg</span>
+                  <span class="input-group-text">Lb</span>
                 </div>
               </div>
               <small
@@ -1000,6 +1000,9 @@
                   class="form-control"
                   max=""
                   name="fechaCit"
+                  #fechaCit="ngModel"
+                  [ngModel]="consulta.citologia.fecha"
+                  (ngModelChange)="fechaCitologia($event)"
                   placement="top"
                   popoverClass="text-dark"
                   [autoClose]="true"
@@ -1039,6 +1042,8 @@
                 placeholder='Observación del estudio...'
                 autocomplete="off"
                 name="obCitologia"
+                #obCitologia="ngModel"
+                [(ngModel)]="consulta.citologia.observacion"
                 ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
                 placement="top"
                 popoverClass="text-dark"
@@ -1070,31 +1075,38 @@
       <div class="row">
 
         <div class="col-md-12">
-          <label for="motivo">Busqueda de diagnóstico:</label>
-          <ngx-select [multiple]="true"
-                      [items]="diagnosticos"
-                      name="diag"
-                      #diag="ngModel"
-                      [(ngModel)]="diagSeleccionados"
-                      [autoClearSearch]="false"
-                      placeholder="Realice una busqueda y seleccione el diagnóstico"
-                      noResultsFound = "No hay más opciones"
-                      (typed)="buscarDiagnostico($event)"
-                      required
-                      [ngClass]="{
-                        'is-invalid': !diag.valid && diag.touched
-                      }"
-                      placement="top"
-                      popoverClass="text-dark"
-                      [autoClose]="true"
-                      [ngbPopover]="popDiagContent"
-                      [popoverTitle]="popDiagTitulo"
-                      triggers="manual"
-                      #p20="ngbPopover"
-                      (click)="ayuda ? p20.open() : ''"
-                      (focus)="ayuda ? p20.open() : ''"
-                      (blur)="ayuda ? p20.close() : ''">
-              </ngx-select>
+          <label for="motivo">Agregue diagnóstico:</label>
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control"
+              name="diag"
+              placeholder="Escriba un diagnóstico"
+              #diag="ngModel"
+              [(ngModel)]="diagnostico"
+              ngxPattern="^[a-zA-Z\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+              autocomplete="off"
+              [required]="diagSeleccionados.length == 0"
+              [ngClass]="{
+                'is-invalid': !diag.valid && diag.touched
+              }"
+              placement="top"
+              popoverClass="text-dark"
+              [autoClose]="true"
+              [ngbPopover]="popDiagContent"
+              [popoverTitle]="popDiagTitulo"
+              triggers="manual"
+              #p20="ngbPopover"
+              (click)="ayuda ? p20.open() : ''"
+              (focus)="ayuda ? p20.open() : ''"
+              (blur)="ayuda ? p20.close() : ''"
+            />
+            <div class="input-group-append">
+              <button type="button" class="btn btn-info" (click)="agregarDiagnosticos()">
+                <i class="fas fa-plus"></i>
+              </button>
+            </div>
+          </div>
           <small
               class="text-danger"
               *ngIf="!diag.valid && diag.touched"
@@ -1102,11 +1114,12 @@
               Campo requerido
           </small>
           <ng-template #popDiagContent>
-            Digite un diagnóstico en base a CIE10 para realizar una busqueda.
-            Se pueden seleccionar uno ó más diagnosticos de la lista de resultados.
+            Digite un diagnóstico en este cuadro de texto y
+            clickeando el botón con el icono <i class="fas fa-plus"></i>
+             ó presionando la tecla ENTER se agregará al cuadro de diagnosticos.
           </ng-template>
           <ng-template #popDiagTitulo>
-            <b>Busqueda de diagnóstico</b>
+            <b>Agregue diagnóstico</b>
             <p class="float-right">
               <i class="fas fa-info-circle fa-lg"></i>
             </p>
@@ -1132,16 +1145,23 @@
                   <tr>
                     <th style="width: 10px">#</th>
                     <th>Diagnóstico</th>
+                    <th style="width: 40px">Descartar</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr *ngIf="diagSeleccionados.length == 0">
                     <td></td>
-                    <td class="text-center"><p>No se han seleccionado diagnósticos</p></td>
+                    <td class="text-center"><p>No se han agregado diagnósticos</p></td>
                   </tr>
                   <tr *ngFor="let diag of diagSeleccionados; let i = index">
                     <td>{{ i + 1 }}.</td>
                     <td>{{ diag }}</td>
+                    <td>
+                      <button class="btn btn-block btn-default"
+                              (click)="descartar(i)">
+                              <i class="fas fa-backspace"></i>
+                      </button>
+                    </td>
                   </tr>
                 </tbody>
               </table>

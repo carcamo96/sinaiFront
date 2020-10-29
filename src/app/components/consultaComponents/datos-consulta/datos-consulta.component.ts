@@ -10,6 +10,7 @@ import { Observable } from 'rxjs';
 import { Paciente } from 'src/app/models/paciente';
 import { EventEmitter } from '@angular/core';
 import { ConsultaService } from '../../../services/consulta.service';
+import { Diagnostico } from '../../../models/diagnostico';
 
 @Component({
   selector: 'app-datos-consulta',
@@ -21,9 +22,9 @@ export class DatosConsultaComponent implements OnInit {
   public consulta: any; //Objeto modelo de la consulta
   public paciente: Paciente; //Objeto de tipo paciente para cargarlo con sus datos
 
-  public fechaAux;//Variable para manejar la fe cha actual
+  public fechaAux;//Variable para manejar la fecha actual
   public edad: number; //Variable para guardar el calculo de la edad del paciente
-  public genero: string = '';//Variable para manejar mostrar los campos de citologia
+  public genero: string = '';//Variable para mostrar los campos de citologia
   public motivoCon:boolean = true;//Para manejar los motivos de consulta
   public motivosComunes: string[] = []; //Arreglo para manejar los motivos comunes en localStorage
 
@@ -42,8 +43,9 @@ export class DatosConsultaComponent implements OnInit {
   public pArterial = '';
 
   //Arreglos para cargar y seleccionar los diagnosticos
-  public diagnosticos: string[] = ['Cefalea Crónica','Congestión Nasal','Gripe Común','Infección Estomacal'];
-  public diagSeleccionados: any[] = [];
+  public diagnostico: string = '';
+  public diagSeleccionados: string[] = [];
+
 
   //Para las sweetAlerts
   @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
@@ -58,29 +60,33 @@ export class DatosConsultaComponent implements OnInit {
   ) {
     this.consulta = {
       paciente: "",
+      fechaConsul: "",
       motivo: "",
       tiemSintomas: {
         tiempo: "7",
         lapso: "Hora/s"
       },
-      fechaConsul: "",
       historia: "",
       antePatol: "",
-      examenFisico: "",
-      alergias: "",
+      temperatura: "",
+      freCardia: "",
+      freRespiratoria: "",
       peso: "",
       talla: "",
-      temperatura: "",
+      indiceMC: "",
       presionSistolica: "",
       presionDiastolica: "",
       presionArt: "",
-      indiceMC: "",
-      freCardia: "",
-      freRespiratoria: "",
       perimetroCefalico: "",
       circunferenciaAbdominal: "",
+      alergias: "",
+      examenFisico: "",
+      citologia: {
+        fecha: "",
+        observacion: ""
+      },
       diagnostico: {
-        diagEspecifico: "",
+        diagSeleccionados: this.diagSeleccionados,
         diagDetalles: ""
       },
     };
@@ -89,7 +95,7 @@ export class DatosConsultaComponent implements OnInit {
     this.fechaAux = this.inicializarFechaActual();
   }
 
-  ngOnInit(): void {
+  ngOnInit(){
     this.cargarPaciente();
     this.cargarMotivosComunes();
   }
@@ -131,10 +137,27 @@ export class DatosConsultaComponent implements OnInit {
 
   }
 
+  //Método para agregar uno ó mas diagnosticos a un arreglo
+  agregarDiagnosticos(){
+      
+    if(this.diagnostico !== '' && this.diagnostico != null){
+        this.diagnostico = this.diagnostico.trim();
+        this.diagSeleccionados.push(this.diagnostico);
+        this.diagnostico = '';
+    }
+  }
+
+  //Elimina ó descarta diagnosticos agregados del arreglo
+  descartar(index){
+    this.diagSeleccionados.splice(index, 1);
+  }
+
+  //Método para capturar el motivo del select de motivos comunes
   selectMotivoComun(event){
     this.consulta.motivo = event.target.value;
   }
 
+  //Método para cargar los motivos comunes en un arreglo y mostrarlos, son cargados desde LocalStorage
   cargarMotivosComunes(){
     let resultado = this.consultaService.getMotivos('motivos');
     if(resultado != null){
@@ -142,6 +165,7 @@ export class DatosConsultaComponent implements OnInit {
     }
   }
 
+  //Método para agregar motivos comunes a la lista del LocalStorage
   agregarMotivosComunes(){
     
     if(this.consulta.motivo !== ''){
@@ -155,11 +179,6 @@ export class DatosConsultaComponent implements OnInit {
     }
     
   }
-
-  buscarDiagnostico(event){
-    console.log(event);
-  }
-
 
   obtenerEdad(fechaActual, fechaNac) {
     let diaActual = fechaActual.getDate();
@@ -207,12 +226,11 @@ export class DatosConsultaComponent implements OnInit {
 
   //Calculos de los signos vitales
   calcularIMC(event, campo) {
-
-    
+  
     if(event != ''){
 
       if(campo === 'peso'){
-        this.consulta.peso = event;
+        this.consulta.peso = event;//Event viene el peso en libras, se guarda en libras
       }
 
       if(campo === 'talla'){
@@ -221,7 +239,8 @@ export class DatosConsultaComponent implements OnInit {
       
       if ((this.consulta.talla != 0 && this.consulta.talla!= null && this.consulta.talla != '') &&
           (this.consulta.peso != null && this.consulta.peso != '')) {
-        let indice = this.consulta.peso / (Math.pow(this.consulta.talla, 2));
+        let pesoKilos = this.consulta.peso / 2.2046;//Se calcula el peso en kilogramos para calcular el IMC
+        let indice = pesoKilos / (Math.pow(this.consulta.talla, 2));
         let valor = "" + parseFloat("" + indice.toFixed(1));
         this.consulta.indiceMC = valor;
       }else{
@@ -243,12 +262,11 @@ export class DatosConsultaComponent implements OnInit {
         this.consulta.presionDiastolica = event;
       }
 
-      //Antes de esta linea deberia de validarse los rangos 
       if(this.consulta.presionSistolica != '' && this.consulta.presionSistolica != 0 &&
          this.consulta.presionDiastolica != '' && this.consulta.presionDiastolica != 0){
 
         this.consulta.presionArt = this.consulta.presionSistolica+' / '+this.consulta.presionDiastolica;
-        this.etiquetaPresionArt();
+
       }else{
         this.consulta.presionArt= '';  
         this.pArterial = '';
@@ -267,43 +285,6 @@ export class DatosConsultaComponent implements OnInit {
 
   }
 
-  etiquetaPresionArt(){
-
-    //Para sistolica
-    if(this.consulta.presionSistolica <= 90){
-        this.pSistolica = 'baja';
-    }
-    if(this.consulta.presionSistolica >= 91 && this.consulta.presionSistolica <= 119){
-      this.pSistolica = 'normal';
-    }
-    if(this.consulta.presionSistolica >= 120 && this.consulta.presionSistolica >= 180){
-      this.pSistolica = 'elevada';
-    }
-
-    //Para diastolica
-    if(this.consulta.presionDiastolica <= 60 ){
-      this.pDiastolica = 'baja';
-    }
-    if(this.consulta.presionDiastolica >= 61 && this.consulta.presionDiastolica <= 79){
-      this.pDiastolica = 'normal';
-    }
-    if(this.consulta.presionDiastolica >= 80 && this.consulta.presionDiastolica <= 120){
-      this.pDiastolica = 'alta';
-    }
-
-    //Presion arterial 
-    if(this.pSistolica === 'baja' || this.pDiastolica === 'baja'){
-        this.pArterial = 'baja';
-    }
-    if(this.pSistolica === 'alta' || this.pDiastolica === 'alta'){
-      this.pArterial = 'alta';
-    }
-    if(this.pSistolica === 'normal' && this.pDiastolica === 'normal'){
-      this.pArterial = 'normal';
-    }
-
-  }
-
   motivoChange(event){
    if(event.target.value === "B"){
       this.motivoCon = false;
@@ -314,6 +295,12 @@ export class DatosConsultaComponent implements OnInit {
       //console.log("Entra A: ", this.motivo);
    }
   }
+
+  //Capturando la fecha de la citologia
+  fechaCitologia(event){
+    this.consulta.citologia.fecha = event;
+  }
+
   // Alerta cuando se adjunten datos de consulta
   showInfo(mensaje: string, titulo: string) {
     this.toastr.info(mensaje, titulo);

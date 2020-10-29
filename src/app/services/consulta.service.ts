@@ -3,10 +3,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Consulta } from '../models/consulta';
 import { Global } from './global';
+import { Diagnostico } from '../models/diagnostico';
+
 
 @Injectable()
 export class ConsultaService{
     public url: string;
+    public diags: Diagnostico[] = [];
     constructor(
         private _http: HttpClient
     ){
@@ -37,9 +40,8 @@ export class ConsultaService{
     }
 
     //Uso de localStorage para guardar los motivos de consulta comunes
-
     addMotivos(key: string, data: string[]){
-        //El localStorage solo almacena string o numeros por eso se convierte a json
+        //El localStorage solo almacena string o numeros por eso se convierte a json (menos pesado)
         try {
             localStorage.setItem(key, JSON.stringify(data));    
         } catch (error) {
@@ -54,4 +56,5 @@ export class ConsultaService{
             console.log("getMotivos: ", error);
         }
     }
+
 }

@@ -46,6 +46,8 @@ export class ConsultaComponent implements OnInit {
   progress = 0;//Usando para la loadingPorgressBar
 
   public adjuntado = false; //Bandera para saber si han adjuntado datos de consulta
+  public recetaAdjuntado = false; //Bandera para saber si han adjuntado una receta
+  public estudios = false; //Bandera para saber si se realizaran estudios de esta consulta
 
 
 
@@ -70,26 +72,46 @@ export class ConsultaComponent implements OnInit {
 
   //Aqui se reciben los datos de consulta del componente hijo (datos-consulta)
   addDatosConsulta(datosConsulta){
+
+    //Se colocan los signos vitales en un solo objeto
       var signosVitales = {
+        temperatura: datosConsulta.temperatura,
+        frecuenciaCardiaca: datosConsulta.freCardia,
+        frecuenciaRespiratoria: datosConsulta.freRespiratoria,
         peso: datosConsulta.peso,
         talla: datosConsulta.talla,
-        temperatura: datosConsulta.temperatura,
+        indiceMC: datosConsulta.indiceMC,
+        presionSistolica: datosConsulta.presionSistolica,
+        presionDiastolica: datosConsulta.presionDiastolica,
         presionArterial: datosConsulta.presionArt,
-        frecuenciaCardiaca: datosConsulta.freCardia,
-        indiceMC: datosConsulta.indiceMC
+        perimetroCefalico: datosConsulta.perimetroCefalico,
+        circunferenciaAbdominal: datosConsulta.circunferenciaAbdominal
       };
 
+      //Concatenando tiempo de sintomas
       var tiempoSintomas = datosConsulta.tiemSintomas.tiempo+" "+datosConsulta.tiemSintomas.lapso;
       
+      let edadAlaFecha = '';
+      //Calculando edad a la fecha
+      if(this.edad > 0){
+        edadAlaFecha = this.edad+" Año/s";
+      }else{
+        edadAlaFecha = this.edadMeses+" Mes/es"
+      }
+
+
       this.consulta = new Consulta(
         datosConsulta.paciente,
         datosConsulta.motivo,
         tiempoSintomas,
         datosConsulta.fechaConsul,
+        edadAlaFecha,
         datosConsulta.historia,
         datosConsulta.antePatol,
-        datosConsulta.alergias,
         signosVitales,
+        datosConsulta.alergias,
+        datosConsulta.examenFisico,
+        datosConsulta.citologia,
         datosConsulta.diagnostico
       );
 
@@ -106,20 +128,35 @@ export class ConsultaComponent implements OnInit {
     //Solo si ya se obtuvieron datos de consulta, se podrá adjuntar una receta
       if(this.adjuntado){
         this.consulta.setReceta(recetaMedica);
+        this.recetaAdjuntado = true;
         //Se activa la alerta
          this.showInfo('Se ha adjuntado una receta médica!','Receta médica');
-        //console.log('Receta recibida: ', this.consulta);
+         //console.log('Receta recibida: ', this.consulta);
       }else{
         //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
         this.adjuntarDatos.fire();
       }
   }
 
-  
+  //Para confirmar la consulta medica
+  confirmar(){
+    this.confirmarSwal.fire();//lanzando la alerta
+
+      //Esperando por confirmación
+      this.confirmarSwal.confirm.subscribe(res => {
+
+        //Si se confirma
+        if(res){
+          //continua el proceso de registrar la consulta
+          this.onSubmit();
+        }
+      });
+  }
+
   onSubmit() {
     
     console.log(this.consulta);
-    /*this.loadingBarService.start();
+    this.loadingBarService.start();
     this.progress = 30;
 
     if (this.consulta != null) {
@@ -132,7 +169,7 @@ export class ConsultaComponent implements OnInit {
           //console.log(this.consulta=response.consulta);
           if (response.status == "success") {
             this.loadingBarService.complete();
-            this.status = "success";
+            //this.status = "success";
             this.consulta = response.consulta;
 
             //Alert
@@ -140,7 +177,7 @@ export class ConsultaComponent implements OnInit {
           } else {
             this.loadingBarService.complete();
             console.log("else");
-            this.status = "error";
+            //this.status = "error";
             this.errorSwal.fire();
           }
         },
@@ -148,14 +185,12 @@ export class ConsultaComponent implements OnInit {
           console.log("error");
           console.log(error);
           this.loadingBarService.complete();
-          this.status = "error";
+          //this.status = "error";
           this.errorSwal.fire();
         }
       );
-    }*/
+    }
 
-    //f.resetForm();
-    //this.limpiarCampos();
   }
 
 
@@ -204,7 +239,7 @@ export class ConsultaComponent implements OnInit {
           }
           this.nomPaciente = this.paciente.nombre + " " + this.paciente.apellidos;
           this.numeroExpediente = this.paciente.codigo;
-          console.log(response);
+          //console.log(response);
           this.loadingBarService.complete();
         },
         (error) => {
@@ -259,20 +294,6 @@ export class ConsultaComponent implements OnInit {
     return edad;
   } // fin del metodo de calculo de edad
 
-  //Para confirmar la consulta medica
-  confirmar(){
-    this.confirmarSwal.fire();//lanzando la alerta
-
-      //Esperando por confirmación
-      this.confirmarSwal.confirm.subscribe(res => {
-
-        //Si se confirma
-        if(res){
-          //continua el proceso de registrar la consulta
-          this.onSubmit();
-        }
-      });
-  }
 
   activarPopovers(){
     this.ayuda = !this.ayuda;

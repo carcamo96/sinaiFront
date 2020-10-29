@@ -6,366 +6,353 @@
                        runInterval="100" progress="0">
     </ngx-loading-bar> 
 
-      <div class="col-md-12">
-
-          <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Datos personales</h3>
-                
+    <!-- form start -->
+    <div class="col-md-12">
+      
+      <form role="form" #pacienteForm="ngForm" (ngSubmit)="confirmarEdicion()">
+        <div class="card-body">
+  
+          <!--Seccion de opciones de edicion o impresión-->
+          <div class="row">
+              <div class="col-md-12 col-sm-12">
+                <div class="float-right">
+                  <div class="icheck-info d-inline">
+                    <input type="checkbox" id="checkboxPrimary1" [checked]="!disabledDefault"
+                            (change)="edicion()">
+                    <label for="checkboxPrimary1">
+                      Habilitar edición
+                    </label>
+                  </div>
+                </div>
               </div>
-              <!-- /.card-header -->
-
-              <!-- form start -->
-              <form role="form" #pacienteForm="ngForm" (ngSubmit)="confirmarEdicion()">
-                <div class="card-body">
-
-                  <!--Seccion de opciones de edicion o impresión-->
-                  <div class="row">
-                      <div class="col-md-12 col-sm-12">
-                        <div class="float-right">
+          </div>
+          <!--Seccion de opciones de edicion o impresión-->
+  
+          <div class="row">
+  
+              <div class="col-md-6">
+  
+                  <div class="form-group">
+                    <label for="nombrePaciente">Nombre</label>
+                    <input type="text" class="form-control" name="nombrePaciente"
+                           placeholder="Nombre del paciente"
+                           #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre"
+                           ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                           required autocomplete="off"
+                           [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched && pacienteForm.submitted}"
+                           [disabled]="disabledDefault">
+  
+                           <small class="text-danger" *ngIf="!nombrePaciente.valid && nombrePaciente.touched && pacienteForm.submitted">
+                             Campo requerido
+                           </small>
+                  </div>
+  
+              </div>
+  
+              <div class="col-md-6">
+                  
+                  <div class="form-group">
+                      <label for="apellidosPaciente">Apellidos</label>
+                      <input type="text" class="form-control" name="apellidoPaciente" 
+                             placeholder="Apellidos del paciente" autocomplete="off"
+                             #apellidoPaciente="ngModel" [(ngModel)]="paciente.apellidos"
+                             ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
+                             [ngClass]="{'is-invalid': !apellidoPaciente.valid && apellidoPaciente.touched && pacienteForm.submitted}"
+                             [disabled]="disabledDefault">
+  
+                      <small class="text-danger" *ngIf="!apellidoPaciente.valid && apellidoPaciente.touched && pacienteForm.submitted">
+                        Campo requerido
+                      </small>
+                  </div>
+  
+              </div>
+  
+          </div><!-- Fin del primer row -->
+  
+          <div class="row">
+            <div class="col-md-6">
+  
+                <div class="form-group">
+                  <label>Fecha de nacimiento:</label>
+                    <div class="input-group date">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                        <input type="date" class="form-control"  max="{{ fechaAux }}" 
+                               name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
+                               (ngModelChange)="cambioFecha($event)" required
+                               [ngClass]="{'is-invalid': (!fechaNac.valid && fechaNac.touched && pacienteForm.submitted) ||
+                                           (edad < 0 || edad > 120) }" [disabled]="disabledDefault">
+                    </div>
+                    <small class="text-danger" *ngIf="!fechaNac.valid && fechaNac.touched && pacienteForm.submitted">
+                      Campo requerido
+                    </small>
+                    <small class="text-danger" *ngIf="edad < 0">
+                      La edad no puede ser negativa
+                    </small>
+                    <small class="text-danger" *ngIf="edad > 120">
+                      La edad calculada es muy grande
+                    </small>
+                
+                    
+                </div>
+  
+            </div>
+            <div class="col-md-6">
+  
+                <div class="form-group">
+                  <label for="edad">Edad (Años)</label>
+    
+                  <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad }}"
+                         name="edad">
+                  
+                </div>
+                
+                  
+            </div>
+  
+          </div> <!-- Fin del segundo row -->
+  
+  
+          <div class="row">
+  
+                <div class="col-md-6">
+                    <div class="row">
+                        <label>Género: </label>
+                    </div>
+                    <div class="row">
+  
+                      <div class="col-md-2">
+                              
+                        <div class="form-group clearfix">
                           <div class="icheck-primary d-inline">
-                            <input type="checkbox" id="checkboxPrimary1" [checked]="!disabledDefault"
-                                    (change)="edicion()">
-                            <label for="checkboxPrimary1">
-                              Habilitar edición
+                            <input type="radio" value="M" id="radioPrimary1" name="r1" 
+                            #r1="ngModel" [(ngModel)]="paciente.gen" [disabled]="disabledDefault">
+                            <label for="radioPrimary1">
+                              Masculino
                             </label>
                           </div>
                         </div>
-                      </div>
-                  </div>
-                  <!--Seccion de opciones de edicion o impresión-->
-
-                  <div class="row">
-
-                      <div class="col-md-6">
-  
-                          <div class="form-group">
-                            <label for="nombrePaciente">Nombre</label>
-                            <input type="text" class="form-control" name="nombrePaciente"
-                                   placeholder="Nombre del paciente"
-                                   #nombrePaciente="ngModel" [(ngModel)]="paciente.nombre"
-                                   ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                   required autocomplete="off"
-                                   [ngClass]="{'is-invalid': !nombrePaciente.valid && nombrePaciente.touched && pacienteForm.submitted}"
-                                   [disabled]="disabledDefault">
-
-                                   <small class="text-danger" *ngIf="!nombrePaciente.valid && nombrePaciente.touched && pacienteForm.submitted">
-                                     Campo requerido
-                                   </small>
-                          </div>
   
                       </div>
-          
-                      <div class="col-md-6">
-                          
-                          <div class="form-group">
-                              <label for="apellidosPaciente">Apellidos</label>
-                              <input type="text" class="form-control" name="apellidoPaciente" 
-                                     placeholder="Apellidos del paciente" autocomplete="off"
-                                     #apellidoPaciente="ngModel" [(ngModel)]="paciente.apellidos"
-                                     ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
-                                     [ngClass]="{'is-invalid': !apellidoPaciente.valid && apellidoPaciente.touched && pacienteForm.submitted}"
-                                     [disabled]="disabledDefault">
-
-                              <small class="text-danger" *ngIf="!apellidoPaciente.valid && apellidoPaciente.touched && pacienteForm.submitted">
-                                Campo requerido
-                              </small>
-                          </div>
+                      <div class="col-md-2"></div>
+                      <div class="col-md-2">
+  
+                        <div class="icheck-primary d-inline">
+                          <input type="radio" value="F" id="radioPrimary2" name="r1"
+                          #r1="ngModel" [(ngModel)]="paciente.gen" [disabled]="disabledDefault">
+                          <label for="radioPrimary2">
+                            Femenino
+                          </label>
+                        </div>
   
                       </div>
-
-                  </div><!-- Fin del primer row -->
-
-                  <div class="row">
-                    <div class="col-md-6">
-
-                        <div class="form-group">
-                          <label>Fecha de nacimiento:</label>
-                            <div class="input-group date">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                </div>
-                                <input type="date" class="form-control"  max="{{ fechaAux }}" 
-                                       name="fechaNac" #fechaNac="ngModel" [ngModel]="paciente.fechaNac"
-                                       (ngModelChange)="cambioFecha($event)" required
-                                       [ngClass]="{'is-invalid': (!fechaNac.valid && fechaNac.touched && pacienteForm.submitted) ||
-                                                   (edad < 0 || edad > 120) }" [disabled]="disabledDefault">
-                            </div>
-                            <small class="text-danger" *ngIf="!fechaNac.valid && fechaNac.touched && pacienteForm.submitted">
-                              Campo requerido
-                            </small>
-                            <small class="text-danger" *ngIf="edad < 0">
-                              La edad no puede ser negativa
-                            </small>
-                            <small class="text-danger" *ngIf="edad > 120">
-                              La edad calculada es muy grande
-                            </small>
+                    </div>
+                </div>
+  
+  
+                <div class="col-md-6">
+                      <div class="form-group">
                         
-                            
-                        </div>
-
-                    </div>
-                    <div class="col-md-6">
-
-                        <div class="form-group">
-                          <label for="edad">Edad (Años)</label>
-            
-                          <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad }}"
-                                 name="edad">
-                          
-                        </div>
+                        <label *ngIf="edad >= 0 && edad < 18; else noEsMenor">Teléfono del encargado: </label>
+                        <ng-template #noEsMenor>
+                            <label>Teléfono:</label>
+                        </ng-template>
                         
-                          
-                    </div>
-
-                  </div> <!-- Fin del segundo row -->
-
-
-                  <div class="row">
-
-                        <div class="col-md-6">
-                            <div class="row">
-                                <label>Género: </label>
-                            </div>
-                            <div class="row">
-
-                              <div class="col-md-2">
-                                      
-                                <div class="form-group clearfix">
-                                  <div class="icheck-primary d-inline">
-                                    <input type="radio" value="M" id="radioPrimary1" name="r1" 
-                                    #r1="ngModel" [(ngModel)]="paciente.gen" [disabled]="disabledDefault">
-                                    <label for="radioPrimary1">
-                                      Masculino
-                                    </label>
-                                  </div>
-                                </div>
-        
-                              </div>
-                              <div class="col-md-2"></div>
-                              <div class="col-md-2">
-        
-                                <div class="icheck-primary d-inline">
-                                  <input type="radio" value="F" id="radioPrimary2" name="r1"
-                                  #r1="ngModel" [(ngModel)]="paciente.gen" [disabled]="disabledDefault">
-                                  <label for="radioPrimary2">
-                                    Femenino
-                                  </label>
-                                </div>
-        
-                              </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6">
-                              <div class="form-group">
-                                
-                                <label *ngIf="edad >= 0 && edad < 18; else noEsMenor">Teléfono del encargado: </label>
-                                <ng-template #noEsMenor>
-                                    <label>Teléfono:</label>
-                                </ng-template>
-                                
-                                <div class="input-group">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
-                                  </div>
-                                  <input type="text" class="form-control" placeholder="Teléfono" autocomplete="off"
-                                         name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono"
-                                         mask="9999-9999" required 
-                                         [ngClass]="{'is-invalid': !telefono.valid && telefono.touched && pacienteForm.submitted}"
-                                         [disabled]="disabledDefault">
-
-                                </div>
-                                <small class="text-danger" *ngIf="!telefono.valid && telefono.touched && pacienteForm.submitted">
-                                  Campo requerido
-                                </small>
-                                <!-- /.input group -->
-                              </div>
-                              
-                        </div>
-
-                  </div><!--  Fin del tercer row -->
-           
-
-                  <div class="row" *ngIf="edad < 18 && edad >=0 "> <!-- Aqui van los campos adicionales para un menor de edad -->
-
-                    <div class="col-md-6">
-
-                      <div class="form-group">
-                        <label for="nombreEncargado">Nombre del padre o encargado</label>
-                        <input type="text" class="form-control" autocomplete="off"
-                               placeholder="Padre o encargado" name="nombreEncargado"
-                               #nombreEncargado="ngModel" [(ngModel)]="paciente.encargado"
-                               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
-                               [ngClass]="{'is-invalid': !nombreEncargado.valid && nombreEncargado.touched && pacienteForm.submitted}"
-                               [required]="esMenor()" [disabled]="disabledDefault">
-                        
-                        <small class="text-danger" *ngIf="!nombreEncargado.valid && nombreEncargado.touched && pacienteForm.submitted">
-                              Campo requerido
-                        </small>
-                      </div>
-
-                    </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="parentesco">Parentesco</label>
-                        <input type="text" class="form-control" id="parentesco" 
-                               placeholder="Parentesco" name="parentesco" autocomplete="off"
-                               #parentesco="ngModel" [(ngModel)]="paciente.parentesco"
-                               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
-                               [ngClass]="{'is-invalid': !parentesco.valid && parentesco.touched && pacienteForm.submitted}"
-                               [required]="esMenor()" [disabled]="disabledDefault">
-
-                        <small class="text-danger" *ngIf="!parentesco.valid && parentesco.touched && pacienteForm.submitted">
-                          Campo requerido
-                        </small>
-                      </div>
-                    </div>
-
-                  </div> <!-- Fin del cuarto row -->
-
-
-                  <div class="row">
-
-                    <div class="col-md-6">
-
-                      <div class="form-group">
-                        <label for="faContacto">Familiar de contacto (*):</label>
-                        <input type="text" class="form-control" autocomplete="off"
-                               placeholder="Familiar de contacto" name="faContacto"
-                               #faContacto="ngModel" [(ngModel)]="paciente.faContacto"
-                               ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                               [disabled]="disabledDefault">
-                      </div>
-
-                    </div>
-                    <div class="col-md-6">
-
-                      <div class="form-group">
-                        <label>Teléfono del familiar de contacto (*):</label>
-      
                         <div class="input-group">
                           <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fas fa-phone"></i></span>
                           </div>
-                          <input type="text" class="form-control" name="telFaContacto" placeholder="Teléfono" autocomplete="off"
-                                 #telFaContacto="ngModel" [(ngModel)]="paciente.telFaContacto"
-                                 mask="9999-9999" [disabled]="disabledDefault">
+                          <input type="text" class="form-control" placeholder="Teléfono" autocomplete="off"
+                                 name="telefono" #telefono="ngModel" [(ngModel)]="paciente.telefono"
+                                 mask="9999-9999" required 
+                                 [ngClass]="{'is-invalid': !telefono.valid && telefono.touched && pacienteForm.submitted}"
+                                 [disabled]="disabledDefault">
+  
                         </div>
+                        <small class="text-danger" *ngIf="!telefono.valid && telefono.touched && pacienteForm.submitted">
+                          Campo requerido
+                        </small>
                         <!-- /.input group -->
                       </div>
-
-                    </div>
-
-                  </div> <!-- Fin del quinto row -->
-                  <fieldset class="border p-2">
-                    <legend class="w-auto">Dirección</legend>
-                    <div class="row">
-                      <div class="col-md-6">
-                        <label>Departamento:</label>
-                        <div class="form-group">                      
-                          <select
-                          name="departamentoSelect"
-                          class="form-control"
-                          #departamentoSelect
-                          [(ngModel)]="paciente.departamento"
-                          [disabled]="disabledDefault"
-                          (ngModelChange)="cargarMunicipioSelect($event)"
-                          >
-                          <option value='AHUACHAPÁN'>AHUACHAPÁN</option>
-                          <option value='CABAÑAS'>CABAÑAS</option>
-                          <option value='CHALATENANGO'>CHALATENANGO</option>
-                          <option value='CUSCATLÁN'>CUSCATLÁN</option>
-                          <option value='LA LIBERTAD'>LA LIBERTAD</option>
-                          <option value='LA PAZ'>LA PAZ</option>
-                          <option value='LA UNIÓN'>LA UNIÓN</option>
-                          <option value='MORAZÁN'>MORAZÁN</option>
-                          <option value='SAN MIGUEL'>SAN MIGUEL</option>
-                          <option value='SAN SALVADOR'>SAN SALVADOR</option>
-                          <option value='SAN VICENTE'>SAN VICENTE</option>
-                          <option value='SANTA ANA'>SANTA ANA</option>
-                          <option value='SONSONATE'>SONSONATE</option>
-                          <option value='USULUTÁN'>USULUTÁN</option>
-                              </select>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
-                        <label>Municipio:</label>
-                        <div class="form-group">                      
-                                  <select
-                                  name="municipioSelect"
-                                  class="form-control"
-                                  #municipioSelect
-                                  [(ngModel)]="paciente.municipio"
-                                  [disabled]="disabledDefault"
-                                  >
-                                  <option *ngFor="let muni of municipios" value='{{muni.MUNICIPIO}}'>{{muni.MUNICIPIO}}</option>
-                                  </select>
-                        </div>
-                      </div>
-                    </div>
-                
-                    <div class="row">
-                      <div class="col-md-12">
-                          <!-- textarea -->
-                          <div class="form-group">
-                              <label>Dirección</label>
-                              <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..." autocomplete="off"
-                                        name="direccion" #direccion="ngModel" [(ngModel)]="paciente.direccion"
-                                        ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
-                                        [ngClass]="{'is-invalid': !direccion.valid && direccion.touched && pacienteForm.submitted}"
-                                        [disabled]="disabledDefault">
-                              </textarea>
-
-                              <small class="text-danger" *ngIf="!direccion.valid && direccion.touched && pacienteForm.submitted">
-                                  Campo requerido
-                              </small>
-                          </div>
-                      </div>
-                    </div>
-                  </fieldset>
-                  <div class="row">
-                      <div class="col-md-12">
-                        <!-- textarea -->
-                        <div class="form-group">
-                            <label>Datos adicionales (*):</label>
-                            <textarea class="form-control" rows="3" placeholder="Otros datos ..." autocomplete="off"
-                                      name="otrosDatos" #otrosDatos="ngModel" [(ngModel)]="paciente.otrosDatos"
-                                      ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                                      [disabled]="disabledDefault">
-
-                            </textarea>
-                        </div>
-                      </div>
-
-                  </div><!-- Fin del sexto row -->
-                  
-
-                  <div class="card-footer">
-
-          
-
-                        <button type="button" id="crear" class="btn btn-primary" (click)="confirmarEdicion()"
-                                [disabled]="disabledDefault || pacienteForm.invalid || edad < 0 || edad > 120 || edad==undefined">
-                                Modificar expediente
-                        </button>
-                        
-                        
-                        <div class="float-right d-none d-sm-block">
-                          <b>Campos opcionales (*)</b> 
-                        </div>
-
-
-                  </div>
-                 
-
+                      
                 </div>
-                <!-- /.card-body -->
-              </form>
+  
+          </div><!--  Fin del tercer row -->
+   
+  
+          <div class="row" *ngIf="edad < 18 && edad >=0 "> <!-- Aqui van los campos adicionales para un menor de edad -->
+  
+            <div class="col-md-6">
+  
+              <div class="form-group">
+                <label for="nombreEncargado">Nombre del padre o encargado</label>
+                <input type="text" class="form-control" autocomplete="off"
+                       placeholder="Padre o encargado" name="nombreEncargado"
+                       #nombreEncargado="ngModel" [(ngModel)]="paciente.encargado"
+                       ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
+                       [ngClass]="{'is-invalid': !nombreEncargado.valid && nombreEncargado.touched && pacienteForm.submitted}"
+                       [required]="esMenor()" [disabled]="disabledDefault">
+                
+                <small class="text-danger" *ngIf="!nombreEncargado.valid && nombreEncargado.touched && pacienteForm.submitted">
+                      Campo requerido
+                </small>
+              </div>
+  
+            </div>
+  
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="parentesco">Parentesco</label>
+                <input type="text" class="form-control" id="parentesco" 
+                       placeholder="Parentesco" name="parentesco" autocomplete="off"
+                       #parentesco="ngModel" [(ngModel)]="paciente.parentesco"
+                       ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" 
+                       [ngClass]="{'is-invalid': !parentesco.valid && parentesco.touched && pacienteForm.submitted}"
+                       [required]="esMenor()" [disabled]="disabledDefault">
+  
+                <small class="text-danger" *ngIf="!parentesco.valid && parentesco.touched && pacienteForm.submitted">
+                  Campo requerido
+                </small>
+              </div>
+            </div>
+  
+          </div> <!-- Fin del cuarto row -->
+  
+  
+          <div class="row">
+  
+            <div class="col-md-6">
+  
+              <div class="form-group">
+                <label for="faContacto">Familiar de contacto (*):</label>
+                <input type="text" class="form-control" autocomplete="off"
+                       placeholder="Familiar de contacto" name="faContacto"
+                       #faContacto="ngModel" [(ngModel)]="paciente.faContacto"
+                       ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                       [disabled]="disabledDefault">
+              </div>
+  
+            </div>
+            <div class="col-md-6">
+  
+              <div class="form-group">
+                <label>Teléfono del familiar de contacto (*):</label>
+  
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                  </div>
+                  <input type="text" class="form-control" name="telFaContacto" placeholder="Teléfono" autocomplete="off"
+                         #telFaContacto="ngModel" [(ngModel)]="paciente.telFaContacto"
+                         mask="9999-9999" [disabled]="disabledDefault">
+                </div>
+                <!-- /.input group -->
+              </div>
+  
+            </div>
+  
+          </div> <!-- Fin del quinto row -->
+          <fieldset class="border p-2">
+            <legend class="w-auto">Dirección</legend>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Departamento:</label>
+                <div class="form-group">                      
+                  <select
+                  name="departamentoSelect"
+                  class="form-control"
+                  #departamentoSelect
+                  [(ngModel)]="paciente.departamento"
+                  [disabled]="disabledDefault"
+                  (ngModelChange)="cargarMunicipioSelect($event)"
+                  >
+                  <option value='AHUACHAPÁN'>AHUACHAPÁN</option>
+                  <option value='CABAÑAS'>CABAÑAS</option>
+                  <option value='CHALATENANGO'>CHALATENANGO</option>
+                  <option value='CUSCATLÁN'>CUSCATLÁN</option>
+                  <option value='LA LIBERTAD'>LA LIBERTAD</option>
+                  <option value='LA PAZ'>LA PAZ</option>
+                  <option value='LA UNIÓN'>LA UNIÓN</option>
+                  <option value='MORAZÁN'>MORAZÁN</option>
+                  <option value='SAN MIGUEL'>SAN MIGUEL</option>
+                  <option value='SAN SALVADOR'>SAN SALVADOR</option>
+                  <option value='SAN VICENTE'>SAN VICENTE</option>
+                  <option value='SANTA ANA'>SANTA ANA</option>
+                  <option value='SONSONATE'>SONSONATE</option>
+                  <option value='USULUTÁN'>USULUTÁN</option>
+                      </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <label>Municipio:</label>
+                <div class="form-group">                      
+                          <select
+                          name="municipioSelect"
+                          class="form-control"
+                          #municipioSelect
+                          [(ngModel)]="paciente.municipio"
+                          [disabled]="disabledDefault"
+                          >
+                          <option *ngFor="let muni of municipios" value='{{muni.MUNICIPIO}}'>{{muni.MUNICIPIO}}</option>
+                          </select>
+                </div>
+              </div>
+            </div>
+        
+            <div class="row">
+              <div class="col-md-12">
+                  <!-- textarea -->
+                  <div class="form-group">
+                      <label>Dirección</label>
+                      <textarea id="direccion" class="form-control" rows="3" placeholder="Dirección ..." autocomplete="off"
+                                name="direccion" #direccion="ngModel" [(ngModel)]="paciente.direccion"
+                                ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$" required
+                                [ngClass]="{'is-invalid': !direccion.valid && direccion.touched && pacienteForm.submitted}"
+                                [disabled]="disabledDefault">
+                      </textarea>
+  
+                      <small class="text-danger" *ngIf="!direccion.valid && direccion.touched && pacienteForm.submitted">
+                          Campo requerido
+                      </small>
+                  </div>
+              </div>
+            </div>
+          </fieldset>
+          <div class="row">
+              <div class="col-md-12">
+                <!-- textarea -->
+                <div class="form-group">
+                    <label>Datos adicionales (*):</label>
+                    <textarea class="form-control" rows="3" placeholder="Otros datos ..." autocomplete="off"
+                              name="otrosDatos" #otrosDatos="ngModel" [(ngModel)]="paciente.otrosDatos"
+                              ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
+                              [disabled]="disabledDefault">
+  
+                    </textarea>
+                </div>
+              </div>
+  
+          </div><!-- Fin del sexto row -->
+          <br>
+          <button type="button" id="crear" class="btn btn-info" (click)="confirmarEdicion()"
+                  [disabled]="disabledDefault || pacienteForm.invalid || edad < 0 || edad > 120 || edad==undefined">
+                  Modificar expediente
+          </button>
+          
+          
+          <div class="float-right d-none d-sm-block">
+            <b>Campos opcionales (*)</b> 
+          </div>       
+  
+        </div>
+        <!-- /.card-body -->
+      </form><!--Fin del form-->
+        
+    </div><!-- Fin del div de las doce columnas -->
 
-          </div><!-- Fin del card -->
+  </div><!-- /.container-fluid -->
+</section>
 
           <!-- Sweet alerts -->
               <!-- Sweet Confirm -->
@@ -412,8 +399,3 @@
               </swal>
 
               <!-- Sweet alerts -->
-
-      </div><!-- Fin del div de las doce columnas -->
-
-  </div><!-- /.container-fluid -->
-</section>
