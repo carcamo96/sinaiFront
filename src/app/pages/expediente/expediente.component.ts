@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, Input } from '@angular/core';
 import { Paciente } from '../../models/paciente';
 import { PacienteService } from '../../services/paciente.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,28 +13,23 @@ import { Subject } from 'rxjs';
   providers: [PacienteService, ConsultaService]
 })
 export class ExpedienteComponent implements OnInit {
-//Se le pasan los titulos y los links de las paginas que preseden esta pagina
-public breads: any[] = [
-  {titulo: 'Home', link: '/admin/home'},
-  {titulo: 'Expedientes', link: '/admin/expedientes'}
-];
+  //Se le pasan los titulos y los links de las paginas que preseden esta pagina
+  public breads: any[] = [
+    {titulo: 'Home', link: '/admin/home'},
+    {titulo: 'Expedientes', link: '/admin/expedientes'}
+  ];
 
   //Uso este objeto Subject para emitir el resultado del evento response al hijo 
   public eventsSubject: Subject<any> = new Subject<any>();
 
   public paciente: Paciente;
-  dtOptions: DataTables.Settings = {};
+  public expediente: string = '';
 
 constructor(
     private _pacienteService: PacienteService,
     private _route: ActivatedRoute
 ) { }
   ngOnInit(): void {
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 5,
-      processing: true
-    };
     this.pacienteCargar();
   }
 
@@ -45,19 +40,15 @@ constructor(
       this._pacienteService.getPaciente(id).subscribe(
         response => {
           this.eventsSubject.next(response); // propagando el evento al componente hijo
-          console.log(response);
+          this.expediente = response.paciente.codigo;//Asignando el codigo de expediente a una variable
+          
         },
         error => {
-          console.log("nadaaa "+error);
-          //this._router.navigate(['/home']);
+          //console.log(error);
         }
       );
     }); 
 
-  }
-
-  ngOnDestroy(): void {
-    //this.dtTrigger.unsubscribe();
   }
 
 }

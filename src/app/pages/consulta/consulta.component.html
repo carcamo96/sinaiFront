@@ -9,13 +9,17 @@
   <!-- Contenedor de página -->
   <section class="content">
     <div class="container-fluid">
-      <ngx-loading-bar
-        color="#339942"
-        height="2"
-        animationTime="0.8"
-      ></ngx-loading-bar>
+      <ngx-loading-bar color="#007bff" height="2" animationTime="2000" 
+                       runInterval="100" progress="0">
+      </ngx-loading-bar>
   
       <div class="col-md-12">
+
+        <p *ngIf="progressData < 100">Cargando ...</p>
+        <p *ngIf="progressData < 100">
+          <ngb-progressbar [showValue]="true" type="info" [value]="progressData" [max]="100"></ngb-progressbar>
+        </p>
+
         <div class="card card-outline card-info">
           <div class="card-header">
             <h3 class="card-title">Datos del paciente</h3>
@@ -152,7 +156,7 @@
             <div class="tab-content" id="custom-tabs-one-tabContent">
               
               <div class="tab-pane fade" id="custom-tabs-one-historial" role="tabpanel" aria-labelledby="custom-tabs-one-historial-tab">
-                Aqui irá el historico de consultas
+                 <app-historial [events]="eventsSubject.asObservable()"></app-historial>
               </div>
               <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
                   <app-datos-consulta [ayuda]="ayuda" 

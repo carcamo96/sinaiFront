@@ -44,6 +44,7 @@ export class ConsultaComponent implements OnInit {
   public idpa: string; //Maneja el id del paciente que se ha cargado
   
   progress = 0;//Usando para la loadingPorgressBar
+  progressData = 10; //Usando para la ngb-progressbar
 
   public adjuntado = false; //Bandera para saber si han adjuntado datos de consulta
   public recetaAdjuntado = false; //Bandera para saber si han adjuntado una receta
@@ -155,7 +156,7 @@ export class ConsultaComponent implements OnInit {
 
   onSubmit() {
     
-    console.log(this.consulta);
+    //console.log(this.consulta);
     this.loadingBarService.start();
     this.progress = 30;
 
@@ -197,50 +198,54 @@ export class ConsultaComponent implements OnInit {
   cargarPaciente() {
     this._route.params.subscribe((params) => {
       this.idpa = params["id"];
-
+      this.progressData = 30;//Avanza 30% la barra de progreso
       this._pacienteService.getPaciente(this.idpa).subscribe(
         (response) => {
           //console.log('Paciente: ',response);
           this.eventsSubject.next(response); // propagando el evento al componente hijo
-          //Para mientras mandan del backend OJO <---------
-          this.paciente = new Paciente(
-            response.paciente.nombre,
-            response.paciente.apellidos,
-            response.paciente.fechaNac,
-            response.paciente.gen,
-            response.paciente.telefono,
-            response.paciente.encargado,
-            response.paciente.parentesco,
-            response.paciente.faContacto,
-            response.paciente.telFaContacto,
-            response.paciente.direccion,
-            '',
-            '',
-            response.paciente.otrosDatos,
-            response.paciente.codigo,
-            response.paciente._id
-          );
-       
-          this.edad = this.obtenerEdad(
-            new Date(),
-            new Date(this.paciente.fechaNac)
-          );
-
-          if(this.edad <= 0){
-              this.mostrarEdad = this.edadMeses + " Mes/es";
-          }else{
-
-            this.mostrarEdad = this.edad + " Año/s";
-          }
-          if(this.paciente.gen === 'M'){
-              this.genero = "MASCULINO";
-          }else{
-            this.genero = "FEMENINO"
-          }
-          this.nomPaciente = this.paciente.nombre + " " + this.paciente.apellidos;
-          this.numeroExpediente = this.paciente.codigo;
-          //console.log(response);
-          this.loadingBarService.complete();
+          this.progressData = 70; //Avanza 70% la barra de progreso
+          setTimeout(() => { //Para simular carga de datos
+            //Para mientras mandan del backend OJO <---------
+            this.paciente = new Paciente(
+              response.paciente.nombre,
+              response.paciente.apellidos,
+              response.paciente.fechaNac,
+              response.paciente.gen,
+              response.paciente.telefono,
+              response.paciente.encargado,
+              response.paciente.parentesco,
+              response.paciente.faContacto,
+              response.paciente.telFaContacto,
+              response.paciente.direccion,
+              '',
+              '',
+              response.paciente.otrosDatos,
+              response.paciente.codigo,
+              response.paciente._id
+            );
+         
+            this.edad = this.obtenerEdad(
+              new Date(),
+              new Date(this.paciente.fechaNac)
+            );
+  
+            if(this.edad <= 0){
+                this.mostrarEdad = this.edadMeses + " Mes/es";
+            }else{
+  
+              this.mostrarEdad = this.edad + " Año/s";
+            }
+            if(this.paciente.gen === 'M'){
+                this.genero = "MASCULINO";
+            }else{
+              this.genero = "FEMENINO"
+            }
+            this.nomPaciente = this.paciente.nombre + " " + this.paciente.apellidos;
+            this.numeroExpediente = this.paciente.codigo;
+            //console.log(response);
+            this.loadingBarService.complete();
+            this.progressData = 100; //Avanza 100% la barra de progreso se completa
+          }, 2000); //Fin del setTimeOut
         },
         (error) => {
           console.log("nadaaa " + error);

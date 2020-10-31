@@ -86,6 +86,7 @@ import { FormularioUsuarioComponent } from './pages/formulario-usuario/formulari
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 import { RecetaComponent } from './components/consultaComponents/receta/receta.component';
 import { DatosConsultaComponent } from './components/consultaComponents/datos-consulta/datos-consulta.component';
+import { HistorialComponent } from './components/consultaComponents/historial/historial.component';
 
 
 
@@ -129,6 +130,7 @@ const ngWizardConfig: NgWizardConfig = {
     UsuariosComponent,
     RecetaComponent,
     DatosConsultaComponent,
+    HistorialComponent,
   ],
   imports: [
     BrowserModule,
