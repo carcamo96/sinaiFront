@@ -12,7 +12,8 @@ export class Consulta{
         public signosVitales?: any,
         public alergias?: string,
         public examenFisico?: string,
-        public citoglogia: any = {},
+        public fechaCitoglogia?: string,
+        public observacionCitologia?: string,
         public diagnostico:any = {},
         public receta: Receta = new Receta()
     ){}

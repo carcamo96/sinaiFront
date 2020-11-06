@@ -81,10 +81,8 @@ export class DatosConsultaComponent implements OnInit {
       circunferenciaAbdominal: "",
       alergias: "",
       examenFisico: "",
-      citologia: {
-        fecha: "",
-        observacion: ""
-      },
+      fechaCitologia: "",
+      observacionCitologia: "",
       diagnostico: {
         diagSeleccionados: this.diagSeleccionados,
         diagDetalles: ""
@@ -298,7 +296,7 @@ export class DatosConsultaComponent implements OnInit {
 
   //Capturando la fecha de la citologia
   fechaCitologia(event){
-    this.consulta.citologia.fecha = event;
+    this.consulta.fechaCitologia = event;
   }
 
   // Alerta cuando se adjunten datos de consulta
