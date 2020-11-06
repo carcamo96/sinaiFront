@@ -26,9 +26,18 @@ export class CalcularEdad implements PipeTransform{
         if((mesNac == mesActual) && (diaActual < diaNac)){
             edad--;
         } 
+
+        let dato = edad+" Año/s";
+
+        if(edad <= 0 ){
+            let meses = mesActual - mesNac;
+            if(meses >= 0){
+                dato = meses + " Mes/es";
+            }
+        }
         
         
-        return edad+" Años";
+        return dato;
     }
 
 }

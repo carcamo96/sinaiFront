@@ -35,6 +35,7 @@ export class FormularioPacienteComponent implements OnInit {
 
   public paciente: any;//variable auxiliar que se manejara como ngModel
   public edad: number; //variable auxiliar para mostrar la edad
+  public edadMeses: number = 0; //Variable auxiliar para mostrar los meses de edad
   public fechaAux = ''; //para definir la fecha actual para el datePicker
 
   public status: string;
@@ -173,6 +174,11 @@ export class FormularioPacienteComponent implements OnInit {
       }
       if((mesNac == mesActual) && (diaActual < diaNac)){
           edad--;
+      }
+
+      if(edad <= 0 ){
+          let meses = mesActual - mesNac;
+          this.edadMeses = meses; 
       }
 
       this.edad = edad;
