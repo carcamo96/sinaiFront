@@ -73,21 +73,6 @@ export class ConsultaComponent implements OnInit {
   //Aqui se reciben los datos de consulta del componente hijo (datos-consulta)
   addDatosConsulta(datosConsulta){
 
-    //Se colocan los signos vitales en un solo objeto
-      var signosVitales = {
-        temperatura: datosConsulta.temperatura,
-        frecuenciaCardiaca: datosConsulta.freCardia,
-        frecuenciaRespiratoria: datosConsulta.freRespiratoria,
-        peso: datosConsulta.peso,
-        talla: datosConsulta.talla,
-        indiceMC: datosConsulta.indiceMC,
-        presionSistolica: datosConsulta.presionSistolica,
-        presionDiastolica: datosConsulta.presionDiastolica,
-        presionArterial: datosConsulta.presionArt,
-        perimetroCefalico: datosConsulta.perimetroCefalico,
-        circunferenciaAbdominal: datosConsulta.circunferenciaAbdominal
-      };
-
       //Concatenando tiempo de sintomas
       var tiempoSintomas = datosConsulta.tiemSintomas.tiempo+" "+datosConsulta.tiemSintomas.lapso;
       
