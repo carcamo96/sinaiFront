@@ -155,9 +155,11 @@ export class ConsultaComponent implements OnInit {
   }
 
   onSubmit() {
+
+    this.redireccionSwal.fire();
     
     //console.log(this.consulta);
-    this.loadingBarService.start();
+    /*this.loadingBarService.start();
     this.progress = 30;
 
     if (this.consulta != null) {
@@ -190,7 +192,7 @@ export class ConsultaComponent implements OnInit {
           this.errorSwal.fire();
         }
       );
-    }
+    } */
 
   }
 

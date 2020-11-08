@@ -21,7 +21,8 @@ export class MostrarPacienteComponent implements OnInit {
   public disabledDefault = true;
 
   public paciente: any; // objeto auxiliar
-  public edad: number; //variable auxiliar para mostrar la edad
+  public edad: number = 0; //variable auxiliar para mostrar la edad
+  public edadMeses: number = 0;//Variable auxiliar para mostrar la edad en meses
   public fechaAux = ''; //para definir la fecha actual para el datePicker
 
   //@Input() public objeto: any; //recibiendo el objeto paciente
@@ -253,6 +254,12 @@ export class MostrarPacienteComponent implements OnInit {
     }
     if((mesNac == mesActual) && (diaActual < diaNac)){
         edad--;
+    }
+
+    //Calculando la edad en meses si la edad en años es 0
+    if(edad <= 0 ){
+      let meses = mesActual - mesNac;
+      this.edadMeses = meses; 
     }
 
     return edad;

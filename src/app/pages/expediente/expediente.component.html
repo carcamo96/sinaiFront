@@ -6,11 +6,22 @@
                     [breadcrumbs]="breads">
     
     </app-page-header>
+
+    <ngx-loading-bar color="#007bff" height="2" animationTime="2000" 
+                     runInterval="100" progress="0">
+    </ngx-loading-bar>
     
     
     <!-- Contenedor de página -->
     <section class="content">
     <div class="container-fluid">
+
+    <p *ngIf="progressData < 100">Cargando ...</p>
+        <p *ngIf="progressData < 100">
+        <ngb-progressbar [showValue]="true" type="info" [value]="progressData" [max]="100"></ngb-progressbar>
+    </p>
+
+
     <div class="row">
         <div class="col-12">
           <h4>Historial de datos del paciente. N° de expediente {{ expediente }}</h4>
@@ -26,7 +37,7 @@
                   <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Datos personales</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Consultas</a>
+                  <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Consultas realizadas</a>
                 </li>
               </ul>
             </div>

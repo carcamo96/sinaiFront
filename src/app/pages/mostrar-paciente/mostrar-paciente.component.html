@@ -101,9 +101,9 @@
             <div class="col-md-6">
   
                 <div class="form-group">
-                  <label for="edad">Edad (Años)</label>
+                  <label for="edad">Edad {{ edad <=0 && edadMeses >= 0 ? '(Mes/es)': '(Año/s)' }}</label>
     
-                  <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad }}"
+                  <input type="text" class="form-control" disabled placeholder="Edad" value="{{ edad <= 0 && edadMeses >= 0 ? edadMeses : edad }}"
                          name="edad">
                   
                 </div>
