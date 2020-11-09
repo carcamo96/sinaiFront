@@ -106,7 +106,8 @@ export class ConsultaComponent implements OnInit {
         datosConsulta.circunferenciaAbdominal,
         datosConsulta.alergias,
         datosConsulta.examenFisico,
-        datosConsulta.citologia,
+        datosConsulta.fechaCitologia,
+        datosConsulta.observacionCitologia,        
         datosConsulta.diagnostico
       );
 
