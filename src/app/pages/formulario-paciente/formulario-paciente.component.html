@@ -549,24 +549,44 @@
                       #departamentoSelect
                       [(ngModel)]="paciente.departamento"
                       (ngModelChange)="cargarMunicipioSelect($event)"
+                      required
+                      popoverClass="text-dark"
+                      [ngbPopover]="popDeptoContent"
+                      [popoverTitle]="popDeptoTitulo"
+                      [autoClose]="true"
+                      triggers="manual"
+                      #p11="ngbPopover"
+                      (click)="ayuda ? p11.open() : ''"
+                      (focus)="ayuda ? p11.open() : ''"
+                      (blur)="ayuda ? p11.close() : ''"
                       >
-                      <option value='DEPARTAMENTO' [selected]="true">DEPARTAMENTO</option>
-                      <option value='AHUACHAPÁN'>AHUACHAPÁN</option>
-                      <option value='CABAÑAS'>CABAÑAS</option>
-                      <option value='CHALATENANGO'>CHALATENANGO</option>
-                      <option value='CUSCATLÁN'>CUSCATLÁN</option>
-                      <option value='LA LIBERTAD'>LA LIBERTAD</option>
-                      <option value='LA PAZ'>LA PAZ</option>
-                      <option value='LA UNIÓN'>LA UNIÓN</option>
-                      <option value='MORAZÁN'>MORAZÁN</option>
-                      <option value='SAN MIGUEL'>SAN MIGUEL</option>
-                      <option value='SAN SALVADOR'>SAN SALVADOR</option>
-                      <option value='SAN VICENTE'>SAN VICENTE</option>
-                      <option value='SANTA ANA'>SANTA ANA</option>
-                      <option value='SONSONATE'>SONSONATE</option>
-                      <option value='USULUTÁN'>USULUTÁN</option>
+                        <option value='DEPARTAMENTO' selected disabled hidden>SELECCIONE DEPARTAMENTO</option>
+                        <option value='AHUACHAPÁN'>AHUACHAPÁN</option>
+                        <option value='CABAÑAS'>CABAÑAS</option>
+                        <option value='CHALATENANGO'>CHALATENANGO</option>
+                        <option value='CUSCATLÁN'>CUSCATLÁN</option>
+                        <option value='LA LIBERTAD'>LA LIBERTAD</option>
+                        <option value='LA PAZ'>LA PAZ</option>
+                        <option value='LA UNIÓN'>LA UNIÓN</option>
+                        <option value='MORAZÁN'>MORAZÁN</option>
+                        <option value='SAN MIGUEL'>SAN MIGUEL</option>
+                        <option value='SAN SALVADOR'>SAN SALVADOR</option>
+                        <option value='SAN VICENTE'>SAN VICENTE</option>
+                        <option value='SANTA ANA'>SANTA ANA</option>
+                        <option value='SONSONATE'>SONSONATE</option>
+                        <option value='USULUTÁN'>USULUTÁN</option>
                       </select>
                     </div>
+                    <ng-template #popDeptoContent>
+                      Seleccione el departamento al que pertenece el paciente 
+                      para poder cargar la lista de municipios.
+                    </ng-template>
+                    <ng-template #popDeptoTitulo>
+                      <b>Departamento</b>
+                      <p class="float-right">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                      </p>
+                    </ng-template>
                   </div>
                   <div class="col-md-6">
                     <label>Municipio:</label>
@@ -576,18 +596,37 @@
                               class="form-control"
                               #municipioSelect
                               [(ngModel)]="paciente.municipio"
+                              required
+                              popoverClass="text-dark"
+                              [ngbPopover]="popMuniContent"
+                              [popoverTitle]="popMuniTitulo"
+                              [autoClose]="true"
+                              triggers="manual"
+                              #p12="ngbPopover"
+                              (click)="ayuda ? p12.open() : ''"
+                              (focus)="ayuda ? p12.open() : ''"
+                              (blur)="ayuda ? p12.close() : ''"
                               >
-                              <option value='MUNICIPIO' [selected]="true">MUNICIPIO</option>
-                              <option *ngFor="let muni of municipios" value='{{muni.MUNICIPIO}}' [selected]="true"><b>{{muni.MUNICIPIO}}</b></option>
+                                <option value='MUNICIPIO' selected disabled hidden>SELECCIONE MUNICIPIO</option>
+                                <option *ngFor="let muni of municipios" value='{{muni.MUNICIPIO}}' [selected]="true"><b>{{muni.MUNICIPIO}}</b></option>
                               </select>
                     </div>
+                    <ng-template #popMuniContent>
+                      Seleccione un municipio al que pertenece el paciente.
+                    </ng-template>
+                    <ng-template #popMuniTitulo>
+                      <b>Municipio</b>
+                      <p class="float-right">
+                        <i class="fas fa-info-circle fa-lg"></i>
+                      </p>
+                    </ng-template>
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-md-12">
                     <!-- textarea -->
                     <div class="form-group">
-                      <label>Dirección</label>
+                      <label>Dirección (*):</label>
                       <textarea
                         id="direccion"
                         class="form-control"
@@ -598,7 +637,6 @@
                         #direccion="ngModel"
                         [(ngModel)]="paciente.direccion"
                         ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
-                        required
                         [ngClass]="{
                           'is-invalid': !direccion.valid && direccion.touched
                         }"
@@ -613,18 +651,11 @@
                         (blur)="ayuda ? p9.close() : ''"
                       >
                       </textarea>
-
-                      <small
-                        class="text-danger"
-                        *ngIf="!direccion.valid && direccion.touched"
-                      >
-                        Campo requerido
-                      </small>
                       <ng-template #popDirContent>
-                        Digite una dirección del paciente como dato de contacto
+                        Puede digitar de manera opcional una dirección especifica del paciente como dato de contacto.
                       </ng-template>
                       <ng-template #popDirTitulo>
-                        <b>Dirección</b>
+                        <b>Dirección (*)</b>
                         <p class="float-right">
                           <i class="fas fa-info-circle fa-lg"></i>
                         </p>

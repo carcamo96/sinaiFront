@@ -45,12 +45,12 @@
                   <input
                     type="radio"
                     value="A"
-                    id="radioPrimary1"
+                    id="radioPrimary3"
                     name="r1"
                     [checked]="motivoCon"
                     (change)="motivoChange($event)"
                   />
-                  <label for="radioPrimary1">
+                  <label for="radioPrimary3">
                     Escribe un motivo
                   </label>
                 </div>
@@ -62,11 +62,11 @@
                 <input
                   type="radio"
                   value="B"
-                  id="radioPrimary2"
+                  id="radioPrimary4"
                   name="r1"
                   (change)="motivoChange($event)"
                 />
-                <label for="radioPrimary2">
+                <label for="radioPrimary4">
                   Motivos comunes
                 </label>
               </div>
@@ -1217,7 +1217,7 @@
 <div class="card-footer">
     <button class="btn btn-info float-left"
             (click)="confirmarDatosConsulta()"
-            [disabled]="consultaForm.invalid">
+            [disabled]="consultaForm.invalid && !(motivosComunes.length == 0)">
             <i class="fas fa-check"></i> Adjuntar
     </button>
     <input

@@ -130,6 +130,7 @@ export class FormularioPacienteComponent implements OnInit {
     }
 
       //f.resetForm({r1: 'M' }); //importante!!! resetea y se le pasa un json con los nuevo valores por defecto
+      //name: 'valor'
       this.limpiarCampos(); //limpia los campos del objeto auxiliar
 
   }
@@ -205,7 +206,11 @@ export class FormularioPacienteComponent implements OnInit {
       municipio:'MUNICIPIO',
       otrosDatos: ''
     }
-    this.formulario.resetForm({r1: 'M'});
+    this.formulario.resetForm({
+                               r1: 'M', 
+                               departamento: 'DEPARTAMENTO',
+                               municipio: 'MUNICIPIO'
+                              });
     this.edad = undefined;
   }
 
