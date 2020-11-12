@@ -594,7 +594,7 @@
              
               <button [disabled]="items.length === 0"
                       class="btn btn-info float-left"
-                      (click)="confirmar()">
+                      (click)="confirmarSwal.fire()">
                     <i class="fas fa-check"></i> Adjuntar receta
               </button>
               <button class="btn btn-secondary ml-3 mr-0 float-right" >
@@ -621,6 +621,7 @@
                 confirmButtonColor= "#3085d6"
                 cancelButtonColor= "#bbbbbb"
                 [focusCancel]="true"
+                (confirm)="confirmar()"
                 >
               </swal>
 

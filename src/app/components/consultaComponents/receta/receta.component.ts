@@ -85,17 +85,10 @@ export class RecetaComponent implements OnInit {
   }
 
   confirmar(){
-    this.confirmarSwal.fire();//lanzando la alerta
-
-      //Esperando por confirmación
-      this.confirmarSwal.confirm.subscribe(res => {
-
-        //Si se confirma
-        if(res){
+    
           //continua el proceso de adjuntar los datos de receta
           this.adjuntarReceta();
-        }
-      });
+        
   }
 
   adjuntarReceta(){
