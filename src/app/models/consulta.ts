@@ -22,7 +22,7 @@ export class Consulta{
         public circunferenciaAbdominal?: string,
         public alergias?: string,
         public examenFisico?: string,
-        public fechaCitoglogia?: string,
+        public fechaCitologia?: string,
         public observacionCitologia?: string,
         public diagnostico:any = {},
         public receta: Receta = new Receta()
