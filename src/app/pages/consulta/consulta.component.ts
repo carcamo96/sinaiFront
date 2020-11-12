@@ -137,25 +137,14 @@ export class ConsultaComponent implements OnInit {
 
   //Para confirmar la consulta medica
   confirmar(){
-    this.confirmarSwal.fire();//lanzando la alerta
-
-      //Esperando por confirmación
-      this.confirmarSwal.confirm.subscribe(res => {
-
-        //Si se confirma
-        if(res){
-          //continua el proceso de registrar la consulta
-          this.onSubmit();
-        }
-      });
+    
+      this.onSubmit();
   }
 
   onSubmit() {
 
-    this.redireccionSwal.fire();
-    
-    //console.log(this.consulta);
-    /*this.loadingBarService.start();
+   
+    this.loadingBarService.start();
     this.progress = 30;
 
     if (this.consulta != null) {
@@ -165,7 +154,7 @@ export class ConsultaComponent implements OnInit {
       this._consultaService.create(this.consulta).subscribe(
         response => {
           this.progress = 100;
-          //console.log(this.consulta=response.consulta);
+          console.log(response);
           if (response.status == "success") {
             this.loadingBarService.complete();
             //this.status = "success";
@@ -188,7 +177,7 @@ export class ConsultaComponent implements OnInit {
           this.errorSwal.fire();
         }
       );
-    } */
+    }
 
   }
 
