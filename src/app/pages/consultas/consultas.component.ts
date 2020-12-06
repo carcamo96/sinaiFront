@@ -41,7 +41,7 @@ export class ConsultasComponent implements OnInit, OnDestroy {
         this._consultaService.getConsultas(response.paciente._id).subscribe(
           response => {
             this.consultas = response.consultas;
-            console.log(response.consultas);
+            console.log(response);
             this.dtTrigger.next();
           },
           error => {

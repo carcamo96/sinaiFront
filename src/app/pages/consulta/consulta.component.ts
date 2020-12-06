@@ -150,6 +150,8 @@ export class ConsultaComponent implements OnInit {
     if (this.consulta != null) {
    
       this.progress = 50;
+
+      //console.log(this.consulta);
       
       this._consultaService.create(this.consulta).subscribe(
         response => {
