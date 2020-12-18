@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-md-4">
         <button class="btn btn-info" data-toggle="modal" data-target="#modal-receta">
-            <i class="fas fa-edit"></i> Agregar medicamento
+            <i class="fas fa-edit"></i> Recetar medicamento
         </button>
     </div>
 </div>
@@ -116,7 +116,7 @@
     </div> <!-- Fin del div que contiene la tabla de receta -->
 
 
-    <!-- Este es un modal que muestra una calculadora -->
+    <!-- Este es un modal que muestra el formulario de receta médica -->
 <div class="modal fade" id="modal-receta">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -126,7 +126,7 @@
             <div class=""><!--Agarra todo el ancho del modal-->
 
                 <div class="row">
-                    <p class="card-title">Agrega medicamento</p>
+                    <p class="card-title pl-3">Recetar medicamento</p>
                 </div>
                 <form role="form"
                       #recetaForm="ngForm"
@@ -140,7 +140,7 @@
                                     <input type="text" 
                                         class="form-control input-lg"
                                         name="medicamento" 
-                                        placeholder="Digite un medicamento"
+                                        placeholder="Digite el nombre del medicamento"
                                         autofocus
                                         autocomplete="off"
                                         #medicamento="ngModel"
@@ -615,7 +615,7 @@
                                 <button type="submit"
                                         class="btn btn-info"
                                         [disabled]="recetaForm.invalid">
-                                    Agregar
+                                    Recetar
                                 </button>
                             </div>
                         </div><!--Fin del quinto row-->

@@ -117,6 +117,7 @@ export class ConsultaComponent implements OnInit {
 
       //Se activa la alerta
       this.showInfo('Se han adjuntado datos de consulta!','Consulta médica');
+      console.log(this.consulta.pacienteId);
 
   }
 
@@ -151,7 +152,7 @@ export class ConsultaComponent implements OnInit {
    
       this.progress = 50;
 
-      //console.log(this.consulta);
+      console.log(this.consulta);
       
       this._consultaService.create(this.consulta).subscribe(
         response => {
