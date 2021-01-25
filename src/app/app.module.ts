@@ -84,6 +84,7 @@ import { DatosConsultaComponent } from './moduloConsulta/consulta/components/dat
 import { HistorialComponent } from './moduloConsulta/consulta/components/historial/historial.component';
 
 import { AppRoutingModule } from './app-routing.module';
+//import { BarChartComponent } from './gráficos/consulta/bar-chart/bar-chart.component';
 
 //Configuracion inicial de las mascaras ngx-mask
 const maskConfig: Partial<IConfig> = {
@@ -116,6 +117,7 @@ const ngWizardConfig: NgWizardConfig = {
     RecetaComponent,
     DatosConsultaComponent,
     HistorialComponent,
+    //BarChartComponent
   ],
   imports: [
     BrowserModule,
