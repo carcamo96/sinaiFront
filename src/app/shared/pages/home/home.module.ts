@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { GeneralComponentsModule } from '../../components/general-components.module';
 
 import { Routes, RouterModule } from '@angular/router';
+import { ChartsModule } from 'ng2-charts';
+import { BarChartComponent } from '../../../gráficos/consulta/bar-chart/bar-chart.component';
 
 const routes: Routes = [
   {
@@ -15,12 +17,13 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent,BarChartComponent],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule.forChild(routes),
     GeneralComponentsModule,
+    ChartsModule
   ]
 })
 export class HomeModule { }

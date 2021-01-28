@@ -31,6 +31,7 @@ import { FormularioUsuarioComponent } from './pages/formulario-usuario/formulari
 import { UsuariosComponent } from './pages/usuarios/usuarios.component';
 
 import { AppRoutingModule } from './app-routing.module';
+//import { BarChartComponent } from './gráficos/consulta/bar-chart/bar-chart.component';
 
 //Modulos propios
 import { GeneralComponentsModule } from './shared/components/general-components.module';
@@ -43,7 +44,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     UsuarioComponent,
     FormularioUsuarioComponent,
     UsuariosComponent,
-
   ],
   imports: [
     BrowserModule,//SOLO SE IMPORTA UNA VEZ AQUI EN ROOT MODULE

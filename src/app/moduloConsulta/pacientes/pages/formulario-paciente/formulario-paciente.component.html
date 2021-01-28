@@ -608,7 +608,7 @@
                               (blur)="ayuda ? p12.close() : ''"
                               >
                                 <option value='MUNICIPIO' selected disabled hidden>SELECCIONE MUNICIPIO</option>
-                                <option *ngFor="let muni of municipios" value='{{muni.MUNICIPIO}}' [selected]="true"><b>{{muni.MUNICIPIO}}</b></option>
+                                <option *ngFor="let muni of municipios" value='{{muni.MUNICIPIO}}'><b>{{muni.MUNICIPIO}}</b></option>
                               </select>
                     </div>
                     <ng-template #popMuniContent>

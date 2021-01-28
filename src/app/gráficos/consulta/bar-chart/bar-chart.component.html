@@ -1,22 +1,21 @@
-<button (click)="ngxSmartModalService.getModal('myModal').open()" class="btn btn-success">Open myModal</button>
+<!--<button (click)="ngxSmartModalService.getModal('myModal').open()" class="btn btn-success">Open myModal</button>
 
 
 <ngx-smart-modal #myModal identifier="myModal">
     <h1>Title</h1>
     <p>Some stuff...</p>
-    <!--<div *ngIf="myModal.hasData()">
+    <div *ngIf="myModal.hasData()">
         <pre>{{ myModal.getData() | json }}</pre>
     </div>-->
     <div class="chart-wrapper">
-        <canvas baseChart 
-        [datasets]="barChartData"
-        [labels]="barChartLabels"
-        [colors]="barChartColors"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [legend]="barChartLegend"
-        [chartType]="barChartType">
-      </canvas>
-    </div>
-    <button (click)="myModal.close()" class="btn btn-danger">Close</button>
-  </ngx-smart-modal>
+      <canvas baseChart 
+      [data]="pieChartData" 
+      [labels]="pieChartLabels" 
+      [chartType]="pieChartType"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+      [legend]="pieChartLegend">
+    </canvas>
+  </div>
+   <!-- <button (click)="myModal.close()" class="btn btn-danger">Close</button>
+  </ngx-smart-modal>-->
