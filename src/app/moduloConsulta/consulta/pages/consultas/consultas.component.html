@@ -1,0 +1,126 @@
+
+
+  <table datatable [dtOptions]="dtOptions"
+  [dtTrigger]="dtTrigger" class="row-border hover table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Motivo</th>
+            <th>Peso</th>
+            <th>Talla</th>
+            <th>Temperatura</th>
+            <th>Presión arterial</th>
+            <th>Historia</th>
+            <th>Antecedentes</th>
+            <th>Fecha</th>
+            <th>Diágnostico</th>
+            <td>Abrir</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let consulta of consultas">
+          <td>{{consulta.motivo}}</td>
+            <td>{{consulta.peso}} kg</td>
+            <td>{{consulta.talla}} m</td>
+            <td>{{consulta.temperatura}} °C</td>
+            <td>{{consulta.presionArt}} PA</td>
+            <td>{{consulta.historia}}</td>
+            <td>{{consulta.antePatol}}</td>
+            <td>{{consulta.fechaConsul | fechaFormat}}</td>
+            <td>{{consulta.diagnostico}}</td>
+            <td>
+              <button type="button" class="btn btn-block btn-default">
+                <a routerLink="['/admin/consulta/', consulta._id,id]" style="color: gray;">
+
+                  <i class="fas fa-folder"></i>
+                </a>
+              </button>
+            </td>
+        </tr>
+        
+      </tbody>
+  </table>
+
+  <!-- Ngx-smart-modals -->
+
+<!-- Modal de informativo de ayuda del formulario  -->
+<ngx-smart-modal
+#infoModal
+identifier="infoModal"
+customClass="modal-dialog modal-lg"
+>
+<h3><i class="fas fa-info-circle fa-sm"></i>
+  Infomación de la tabla 
+</h3>
+
+  <div class="col-md-12">
+    <div class="card card-primary card-outline card-tabs">
+      <div class="card-header p-0 pt-1 border-bottom-0">
+        <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill" href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home" aria-selected="true">Especificaciones</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill" href="#custom-tabs-three-profile" role="tab" aria-controls="custom-tabs-three-profile" aria-selected="false">Generalidades</a>
+          </li>
+          
+        </ul>
+      </div>
+      <div class="card-body">
+        <div class="tab-content" id="custom-tabs-three-tabContent">
+          <div class="tab-pane fade show active" id="custom-tabs-three-home" role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
+            
+            <ul>
+              <li>
+                En esta tabla se muestran todos los registros de la información de cada consulta realizada 
+                al paciente seleccionado de la tabla anterior.
+               </li>
+               <li>
+                 En cada registro se muestran los datos más generales de la consulta.
+               </li>
+               <li>
+                 Cada registro en la columna <b>Abrir</b> poseé un boton con el icono: <i class="fas fa-folder fa-lg"></i>
+                 el cual abre un formulario con los datos más detallados para cada consulta.
+               </li>
+             </ul>
+          </div>
+          <div class="tab-pane fade" id="custom-tabs-three-profile" role="tabpanel" aria-labelledby="custom-tabs-three-profile-tab">
+             
+            <ul>
+              <li>
+                  <b>Paginación: </b>La cantidad de registros mostrada en la tabla se encuentra segmentada en páginas,
+                  cada página de la tabla muestra 10 registros por defecto. En la esquina inferior derecha se muestra
+                  un menú de paginación para navegar facilmente entre las páginas de la tabla. 
+              </li>
+              <li>
+                <b>Mostrar cierto número de registros:</b> En el apartado de la esquina superior izquierda de la tabla
+                se elije el número de registros a mostrar en cada página de la tabla.
+              </li>
+              <li>
+                <b>Busqueda de registros en la tabla:</b> En el apartado de la esquina superior derecha de la tabla se 
+                muestra un campo de busqueda, este permite filtrar los registros que muestra la tabla, el filtro funciona
+                de tal manera que se puede buscar ingresando cualquier dato asociado al registro ó registros que se desean ver.
+                En este caso por ejemplo: Por motivo de consulta, peso, talla, temperatura, presión arterial, historia de la 
+                enfermedad, antecedentes, fecha de la consulta y diagnóstico.
+              </li>
+              <li>
+                <b>Ordenamiento:</b> Los registros mostrados se pueden ordenar por cualquiera de los datos mostrados en sus columnas
+                para facilitar aun más la busqueda de registros, funciona por cada página, según sean los datos mostrados
+                los registros se pueden ordenar de manera ascendente ó descendente clickeando el simbolo de flecha al lado del título
+                de cada columna, sí los datos mostrados en la columna son números se ordenan de menor a mayor y viceversa, sí los datos 
+                que muestra la columna son letras se ordenan alfabéticamente ascendente ó desecentemente. 
+              </li>
+            </ul>
+
+          </div>
+          
+        </div>
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+
+
+<button class="btn btn-primary" (click)="infoModal.close()">Ok!</button>
+</ngx-smart-modal>
+<!-- Modal de informativo de ayuda del formulario  -->
+<!-- Ngx-smart-modals -->
