@@ -17,8 +17,7 @@ export class HomeComponent implements OnInit {
   public datos: any[] = [];
 
   public pieChartColors:Array<any> = [{
-    backgroundColor: ["green", "blue", "#0459b4"],
-    borderColor: ["#0459b4", "#04b58d"]
+    backgroundColor: ["#2ECC71", "#FF0066", "#0459b4"]
     }];
 
   public pieChartOptions: ChartOptions = {

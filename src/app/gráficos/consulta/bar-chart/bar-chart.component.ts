@@ -12,24 +12,6 @@ import { PacienteService } from '../../../moduloConsulta/pacientes/services/paci
 })
 export class BarChartComponent implements OnInit, AfterViewInit {
 
-  barChartOptions: ChartOptions = {
-    responsive: true,
-  };
-  barChartLabels: Label[] = ['Apple', 'Banana', 'Kiwifruit', 'Blueberry', 'Orange', 'Grapes'];
-  barChartType: ChartType = 'bar';
-  barChartLegend = true;
-  barChartPlugins = [];
-
-  barChartData: ChartDataSets[] = [
-    { data: [45, 37, 60, 70, 46, 33], label: 'Best Fruits' }
-  ];
-
-  barChartColors: Color[] = [
-    {
-      backgroundColor: ["#0459b4", "#04b58d", "#04b407", "#b40485", "#b4042d", "#b48b04"]
-    },
-  ];
-
   public pieChartOptions: ChartOptions = {
     responsive: true,
   };
@@ -38,6 +20,9 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [];
+  public pieChartColors:Array<any> = [{
+    backgroundColor: ["#0099CC", "#DAF7A6", "#0459b4"]
+    }];
 
   public pieChartLabels: Label[] = [
     'Mayores de 18', 'Menores de 18'
