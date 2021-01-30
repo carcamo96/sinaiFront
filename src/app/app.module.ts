@@ -43,7 +43,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppComponent,
     UsuarioComponent,
     FormularioUsuarioComponent,
-    UsuariosComponent,
+    UsuariosComponent
   ],
   imports: [
     BrowserModule,//SOLO SE IMPORTA UNA VEZ AQUI EN ROOT MODULE

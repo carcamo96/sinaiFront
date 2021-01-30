@@ -8,6 +8,7 @@ import { GeneralComponentsModule } from '../../components/general-components.mod
 import { Routes, RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from '../../../gráficos/consulta/bar-chart/bar-chart.component';
+import { BarPacientesDeparComponent } from '../../../gráficos/pacientes/bar-pacientes-depar.component';
 
 const routes: Routes = [
   {
@@ -17,7 +18,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HomeComponent,BarChartComponent],
+  declarations: [HomeComponent,BarChartComponent,BarPacientesDeparComponent],
   imports: [
     CommonModule,
     FormsModule,
