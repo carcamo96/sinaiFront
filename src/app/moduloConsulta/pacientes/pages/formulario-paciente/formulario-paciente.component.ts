@@ -113,7 +113,7 @@ export class FormularioPacienteComponent implements OnInit {
           }else{
             this.loadingBarService.complete();
             this.status = 'error';
-            console.log("Respuesta de insercion err:"+response.message);
+            console.log("Respuesta de insercion err:"+response.status);
             //this.showError("No se ha podido registrar", "Expediente no registrado");
             this.errorSwal.fire();
           }

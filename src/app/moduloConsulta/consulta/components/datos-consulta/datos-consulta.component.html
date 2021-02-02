@@ -4,7 +4,12 @@
     role="form"
     #consultaForm="ngForm"
     >
-
+    
+      <div class="row" *ngIf="alert">
+        <div class="col-md-12">
+          <ngb-alert type="info" background-color="#afd1d4" >Los datos de consulta fueron adjuntados</ngb-alert>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <div class="col-md-3">

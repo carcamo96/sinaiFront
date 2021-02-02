@@ -30,6 +30,7 @@ export class DatosConsultaComponent implements OnInit {
 
 
   @Input() ayuda: boolean = false;// Para manejar la ayuda de los formularios
+  public alert = false;
   //Para recibir el objeto paciente cargado desde el componente padre
   private eventsSubscription: any;
   @Input() events: Observable<any>;
@@ -109,6 +110,7 @@ export class DatosConsultaComponent implements OnInit {
       if (f.valid) {
         //Propagando el objeto consulta al padre
         this.datosConsulta.emit(this.consulta);
+        this.alert = true;
       }
   }
 

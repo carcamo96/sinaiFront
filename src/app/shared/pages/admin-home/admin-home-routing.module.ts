@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminHomeComponent } from './admin-home.component';
+import { ExpedienteModule } from '../../../moduloConsulta/pacientes/pages/expediente/expediente.module';
 
 
 const routes: Routes = [
@@ -29,6 +30,10 @@ const routes: Routes = [
       {
         path: 'consulta/:id',
         loadChildren: () => import('../../../moduloConsulta/consulta/pages/consulta/consulta.module').then(m => m.ConsultaModule)
+      },
+      {
+        path: 'expedientes/expediente/:id',
+        loadChildren: () => import('../../../moduloConsulta/pacientes/pages/expediente/expediente.module').then(m => m.ExpedienteModule)
       }
 
     ]
