@@ -15,6 +15,10 @@ export class ConsultaService{
         this.url = Global.url;
     }
 
+    getAllConsultas():Observable<any>{
+        return this._http.get(this.url+'consulta/listar');
+    }
+
     getConsultas(pacienteId):Observable<any>{
         return this._http.get(this.url+'consulta/search/'+pacienteId);
     }
