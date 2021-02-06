@@ -4,36 +4,34 @@
   [dtTrigger]="dtTrigger" class="row-border hover table table-bordered table-striped">
       <thead>
         <tr>
-          <th>Motivo</th>
-            <th>Peso</th>
-            <th>Talla</th>
-            <th>Temperatura</th>
-            <th>Presión arterial</th>
-            <th>Historia</th>
-            <th>Antecedentes</th>
+            <th>#</th>
+            <th>Motivo de consulta</th>
             <th>Fecha</th>
-            <th>Diágnostico</th>
-            <td>Abrir</td>
+            <th>Ver</th>
+            <th>Estudios</th>
+            <th>Ultima modificación</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let consulta of consultas">
-          <td>{{consulta.motivo}}</td>
-            <td>{{consulta.peso}} kg</td>
-            <td>{{consulta.talla}} m</td>
-            <td>{{consulta.temperatura}} °C</td>
-            <td>{{consulta.presionArt}} PA</td>
-            <td>{{consulta.historia}}</td>
-            <td>{{consulta.antePatol}}</td>
-            <td>{{consulta.fechaConsul | fechaFormat}}</td>
-            <td>{{consulta.diagnostico}}</td>
+        <tr>
+            <td>1</td>
+            <td>Diarrea</td>
+            <td>12/01/2021</td>
             <td>
               <button type="button" class="btn btn-block btn-default">
                 <a routerLink="['/admin/consulta/', consulta._id,id]" style="color: gray;">
 
-                  <i class="fas fa-folder"></i>
+                  <i class="fas fa-eye"></i>
                 </a>
               </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-block btn-default">
+                <i class="fas fa-flask"></i>
+              </button>
+            </td>
+            <td>
+              14/01/2021 - 02:30:56
             </td>
         </tr>
         
