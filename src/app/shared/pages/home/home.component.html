@@ -35,7 +35,7 @@
             </div>
 
             <div class="card-body">
-              <app-bar-chart [mediciones]="datos"></app-bar-chart>
+              <app-bar-chart [mediciones]="pacientes"></app-bar-chart>
             </div>
           </div>
         </div>
@@ -50,8 +50,24 @@
             </div>
             <div class="card-body">
               <app-bar-pacientes-depar
-                [generarGrafico]="datos"
+                [generarGrafico]="pacientes"
               ></app-bar-pacientes-depar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="chart-wrapper">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title">Consultas registradas del año actual</h3>
+            </div>
+            <div class="card-body">
+              <app-bar-pacientes-actual-year
+                [generarGrafico]="consultas"
+              ></app-bar-pacientes-actual-year>
             </div>
           </div>
         </div>

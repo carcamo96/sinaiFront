@@ -8,7 +8,8 @@ import { GeneralComponentsModule } from '../../components/general-components.mod
 import { Routes, RouterModule } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { BarChartComponent } from '../../../gráficos/consulta/bar-chart/bar-chart.component';
-import { BarPacientesDeparComponent } from '../../../gráficos/pacientes/bar-pacientes-depar.component';
+import { BarPacientesDeparComponent } from '../../../gráficos/pacientes/bar-pacientes-depar/bar-pacientes-depar.component';
+import { BarPacientesActualYearComponent } from '../../../gráficos/consulta/bar-consultas-actual-year/bar-pacientes-actual-year.component';
 
 const routes: Routes = [
   {
@@ -18,7 +19,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [HomeComponent,BarChartComponent,BarPacientesDeparComponent],
+  declarations: [
+    HomeComponent,
+    BarChartComponent,
+    BarPacientesDeparComponent,
+    BarPacientesActualYearComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,

@@ -12,16 +12,12 @@ export class BarPacientesDeparComponent implements OnInit {
   
   totalPacientes = 0;
   
-  barChartOptions: ChartOptions = {
-       
-  };
+  barChartOptions: ChartOptions = {};
   barChartLabels: Label[] = [];
   barChartType: ChartType = 'bar';
   barChartLegend = true;
   barChartPlugins = [];
-  barChartData: ChartDataSets[] = [
-    //{ data: [], label: 'Best Fruits' }
-  ];
+  barChartData: ChartDataSets[] = [];
 
   barChartColors: Color[] = [
     {
