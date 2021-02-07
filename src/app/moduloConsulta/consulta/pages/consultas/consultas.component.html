@@ -7,31 +7,34 @@
             <th>#</th>
             <th>Motivo de consulta</th>
             <th>Fecha</th>
-            <th>Ver</th>
-            <th>Estudios</th>
             <th>Ultima modificación</th>
+            <th>Ver Consulta</th>
+            <th>Receta médica</th>
+            <th>Estudios</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-            <td>1</td>
-            <td>Diarrea</td>
-            <td>12/01/2021</td>
+        <tr *ngFor="let consulta of consultas let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ consulta.motivo }}</td>
+            <td>{{ consulta.fechaConsul | fechaFormat}}</td>
+            <td>
+              {{ consulta.fechaMod }}
+            </td>
             <td>
               <button type="button" class="btn btn-block btn-default">
-                <a routerLink="['/admin/consulta/', consulta._id,id]" style="color: gray;">
-
-                  <i class="fas fa-eye"></i>
-                </a>
+                <i class="fas fa-eye"></i>
+              </button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-block btn-default">
+                <i class="fas fa-prescription-bottle-alt"></i>
               </button>
             </td>
             <td>
               <button type="button" class="btn btn-block btn-default">
                 <i class="fas fa-flask"></i>
               </button>
-            </td>
-            <td>
-              14/01/2021 - 02:30:56
             </td>
         </tr>
         

@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { Receta } from 'src/app/models/receta';
 import { EventEmitter } from '@angular/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+
 import { PdfMakeWrapper, Table, Columns, Txt, Img } from 'pdfmake-wrapper';
 import  * as PdfMake from 'pdfmake/build/pdfmake';
 import  * as pdfFonts from 'pdfmake/build/vfs_fonts';
@@ -16,10 +17,10 @@ import  * as pdfFonts from 'pdfmake/build/vfs_fonts';
 })
 export class RecetaComponent implements OnInit {
 
-  @ViewChild('recetaForm') private formulario: NgForm;//Variable para manejar el formulario
+@ViewChild('recetaForm') private formulario: NgForm;//Variable para manejar el formulario
 @ViewChild('tab') private tabRec: ElementRef;
-  //Para las sweetAlerts
-  @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
+//Para las sweetAlerts
+@ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
 
   //Objeto que ayuda a manejar los datos del formulario
   recetaItem = {
@@ -85,10 +86,8 @@ export class RecetaComponent implements OnInit {
   }
 
   confirmar(){
-    
-          //continua el proceso de adjuntar los datos de receta
-          this.adjuntarReceta();
-        
+    //continua el proceso de adjuntar los datos de receta
+    this.adjuntarReceta();     
   }
 
   adjuntarReceta(){
@@ -125,11 +124,11 @@ export class RecetaComponent implements OnInit {
   }
 
   async imprimir(){
-   /* const pdf=new PdfMakeWrapper();
+    const pdf=new PdfMakeWrapper();
     
     pdf.add(new Columns([await new Img('assets/imgs/sinai_logo.jpg')
             .width(200).height(100).build(), 
-            new Txt('LABORATORIO AMAYA LOPEZ \n Calle Dr. Adrian García, Barrio El Centro, \n San Esteban Catarina, San Vicente. \n TEL.: 2362-7541')
+            new Txt('\n\n Dr. José Daniel Amaya y \n Dra. Regina González de Amaya')
             .alignment('center').end]).width('auto').fontSize(16).end);
             
     pdf.add(new Text('Medicamentos recetados'));
@@ -147,10 +146,10 @@ export class RecetaComponent implements OnInit {
     pdf.add(tbl);
     });
     
-   console.log(tbl);
+   
   
     pdf.create().open();
-    */
+    
   }
 
 }
