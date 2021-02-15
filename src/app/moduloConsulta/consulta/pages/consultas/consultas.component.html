@@ -22,7 +22,7 @@
               {{ consulta.fechaMod }}
             </td>
             <td>
-              <button type="button" class="btn btn-block btn-default">
+              <button type="button" (click)="abrir(consulta._id)" class="btn btn-block btn-default">
                 <i class="fas fa-eye"></i>
               </button>
             </td>
@@ -123,5 +123,5 @@ customClass="modal-dialog modal-lg"
 
 <button class="btn btn-primary" (click)="infoModal.close()">Ok!</button>
 </ngx-smart-modal>
-<!-- Modal de informativo de ayuda del formulario  -->
+<!-- Modal de informativo de uda del formulario  -->
 <!-- Ngx-smart-modals -->
