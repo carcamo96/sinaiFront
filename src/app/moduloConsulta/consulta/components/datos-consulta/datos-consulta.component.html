@@ -7,7 +7,7 @@
     
       <div class="row" *ngIf="alert">
         <div class="col-md-12">
-          <ngb-alert type="info" background-color="#afd1d4" >Los datos de consulta fueron adjuntados</ngb-alert>
+          <ngb-alert type="info" (click)="alert = false" class="alert" >Se han adjuntado los datos de consulta</ngb-alert>
         </div>
       </div>
       <div class="row">

@@ -6,21 +6,6 @@ import { FormsModule } from '@angular/forms';
 //Reactive module es otra manera de manejar los formularios, ver documentación
 import { ReactiveFormsModule } from '@angular/forms';
 
-//Registrando pipe personalizada para calcular edad relativa
-import { CalcularEdad } from './shared/pipes/calcularEdad.pipe';
-
-//Formatear fechas en vistas de tablas
-import { FechaFormat } from './shared/pipes/fechaFormat.pipe';
-
-//Para formatear el telefono 
-import { TelefonoFormat } from './shared/pipes/telefonoFormat.pipe';
-
-//Para formatear la hora exacta en que se realizo un registro en el servidor
-import { FechaRegistroFormat } from './shared/pipes/fechaRegistroFormat.pipe';
-
-//Para generar un codigo simple de los estudios medicos
-import { SubstrEstudio } from './shared/pipes/substrEstudio.pipe';
-
 //importacion del modulo que comparte para toda la aplicación
 import { SharedModule } from './shared/shared.module';
 
@@ -38,12 +23,13 @@ import { GeneralComponentsModule } from './shared/components/general-components.
 import { PipesModule } from './shared/pipes/pipes.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     UsuarioComponent,
     FormularioUsuarioComponent,
-    UsuariosComponent
+    UsuariosComponent,
   ],
   imports: [
     BrowserModule,//SOLO SE IMPORTA UNA VEZ AQUI EN ROOT MODULE

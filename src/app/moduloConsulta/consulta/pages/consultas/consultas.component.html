@@ -27,7 +27,9 @@
               </button>
             </td>
             <td>
-              <button type="button" class="btn btn-block btn-default">
+              <button type="button" 
+                      class="btn btn-block btn-default"
+                      (click)="ngxSmartModalService.getModal('recetaModal').open()">
                 <i class="fas fa-prescription-bottle-alt"></i>
               </button>
             </td>
@@ -124,4 +126,21 @@ customClass="modal-dialog modal-lg"
 <button class="btn btn-primary" (click)="infoModal.close()">Ok!</button>
 </ngx-smart-modal>
 <!-- Modal de informativo de ayuda del formulario  -->
+
+<!--Modal para mostrar la receta-->
+
+<ngx-smart-modal
+  #recetaModal
+  identifier="recetaModal"
+  customClass="modal-dialog modal-lg" 
+>
+  <div class="col-md-12">
+    Hola mundo
+  </div>
+
+  <button class="btn btn-info" (click)="recetaModal.close()">Close</button>
+</ngx-smart-modal>
+
+<!--Modal para mostrar la receta-->
+
 <!-- Ngx-smart-modals -->

@@ -8,6 +8,7 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import { PdfMakeWrapper, Table, Columns, Txt, Img } from 'pdfmake-wrapper';
 import  * as PdfMake from 'pdfmake/build/pdfmake';
 import  * as pdfFonts from 'pdfmake/build/vfs_fonts';
+import { NgbAlert } from '@ng-bootstrap/ng-bootstrap';
 (<any>PdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -22,6 +23,8 @@ export class RecetaComponent implements OnInit {
 //Para las sweetAlerts
 @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
 
+
+
   //Objeto que ayuda a manejar los datos del formulario
   recetaItem = {
     medicamento: '',
@@ -35,6 +38,8 @@ export class RecetaComponent implements OnInit {
     lapso: 'Dia/s',
     medidaDosis: ''
   }
+
+  public alert = false;
 
   detallesMedicos = '';//Más detalles de la receta
 
@@ -99,6 +104,7 @@ export class RecetaComponent implements OnInit {
       
       //Propagando el objeto Receta al componente Padre
       this.recetaMedica.emit(recetaFull);
+      this.alert = true;
   }
 
   limpiarCampos(){
@@ -122,6 +128,7 @@ export class RecetaComponent implements OnInit {
   confirmarDatosReceta(){
     this.confirmarSwal.fire();
   }
+
 
   async imprimir(){
     const pdf=new PdfMakeWrapper();
