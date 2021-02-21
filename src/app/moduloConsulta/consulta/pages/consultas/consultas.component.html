@@ -4,39 +4,29 @@
   [dtTrigger]="dtTrigger" class="row-border hover table table-bordered table-striped">
       <thead>
         <tr>
-            <th>#</th>
-            <th>Motivo de consulta</th>
             <th>Fecha</th>
-            <th>Ultima modificación</th>
+            <th>Motivo de consulta</th>
+            <th>Médico</th>
             <th>Ver Consulta</th>
-            <th>Receta médica</th>
-            <th>Estudios</th>
+            <th>Ultima modificación</th>
+            <th>Usuario</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let consulta of consultas let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ consulta.motivo }}</td>
             <td>{{ consulta.fechaConsul | fechaFormat}}</td>
+            <td>{{ consulta.motivo | uppercase }}</td>
+            <td></td>
             <td>
-              {{ consulta.fechaMod }}
-            </td>
-            <td>
-              <button type="button" class="btn btn-block btn-default">
+              <button type="button" (click)="abrir(consulta._id)" class="btn btn-block btn-default">
                 <i class="fas fa-eye"></i>
               </button>
             </td>
             <td>
-              <button type="button" 
-                      class="btn btn-block btn-default"
-                      (click)="ngxSmartModalService.getModal('recetaModal').open()">
-                <i class="fas fa-prescription-bottle-alt"></i>
-              </button>
+              {{ consulta.fechaMod }}
             </td>
             <td>
-              <button type="button" class="btn btn-block btn-default">
-                <i class="fas fa-flask"></i>
-              </button>
+              
             </td>
         </tr>
         
@@ -125,22 +115,5 @@ customClass="modal-dialog modal-lg"
 
 <button class="btn btn-primary" (click)="infoModal.close()">Ok!</button>
 </ngx-smart-modal>
-<!-- Modal de informativo de ayuda del formulario  -->
-
-<!--Modal para mostrar la receta-->
-
-<ngx-smart-modal
-  #recetaModal
-  identifier="recetaModal"
-  customClass="modal-dialog modal-lg" 
->
-  <div class="col-md-12">
-    Hola mundo
-  </div>
-
-  <button class="btn btn-info" (click)="recetaModal.close()">Close</button>
-</ngx-smart-modal>
-
-<!--Modal para mostrar la receta-->
-
+<!-- Modal de informativo de uda del formulario  -->
 <!-- Ngx-smart-modals -->

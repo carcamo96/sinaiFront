@@ -30,6 +30,9 @@ export class DatosConsultaComponent implements OnInit {
 
 
   @Input() ayuda: boolean = false;// Para manejar la ayuda de los formularios
+  @Input() motivoDel: boolean = false;//Para manejar el descarte de motivos de consulta
+
+  public deRutina = false;
   public alert = false;
   //Para recibir el objeto paciente cargado desde el componente padre
   private eventsSubscription: any;
@@ -37,6 +40,8 @@ export class DatosConsultaComponent implements OnInit {
 
   //Para propagar el evento de adjuntar al componente padre que reunirá todos los datos
   @Output() datosConsulta = new EventEmitter();
+  //Para propagar el evento de agregar un motivo comun de consulta
+  @Output() motivoAgregado = new EventEmitter();
 
   //Validación de presion anterial
   public pSistolica = ''; 
@@ -155,6 +160,13 @@ export class DatosConsultaComponent implements OnInit {
   //Método para capturar el motivo del select de motivos comunes
   selectMotivoComun(event){
     this.consulta.motivo = event.target.value;
+    let aux = this.consulta.motivo;
+    aux = aux.toLowerCase();
+    if(aux == 'chequeo de rutina'){
+        this.deRutina = true;
+    }else{
+        this.deRutina = false;
+    }
   }
 
   //Método para cargar los motivos comunes en un arreglo y mostrarlos, son cargados desde LocalStorage
@@ -175,6 +187,7 @@ export class DatosConsultaComponent implements OnInit {
           this.motivosComunes.push(this.consulta.motivo);
           this.consultaService.addMotivos('motivos',this.motivosComunes);
           this.showInfo('Se agregó a lista de motivos comunes!','Motivos comunes');
+          this.motivoAgregado.emit(true);//Emitiendo el evento de agregar un motivo
         }
     }
     

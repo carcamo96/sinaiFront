@@ -160,12 +160,13 @@
               (click)="ayuda ? p2.open() : ''"
               (focus)="ayuda ? p2.open() : ''"
               (blur)="ayuda ? p2.close() : ''">
-                  <option value="" selected disabled hidden *ngIf="motivosComunes.length > 0; else noHayMotivos">Seleccione motivo común</option>
-                  <ng-template #noHayMotivos>
+                  <option value="" selected disabled hidden>Seleccione motivo común</option>
+                  <option value="Chequeo de rutina">CHEQUEO DE RUTINA</option>
+                  <!--<ng-template #noHayMotivos>
                     <option value="" selected disabled hidden>No hay motivos comunes</option>
-                  </ng-template>
+                  </ng-template>-->
                   <option *ngFor="let motivoComun of motivosComunes" value='{{motivoComun}}'>
-                    {{ motivoComun | titlecase }}
+                    {{ motivoComun | uppercase }}
                   </option>
               </select>
               
@@ -201,6 +202,7 @@
                      value="7"
                      step="1"
                      required
+                     [disabled]="deRutina"
                      #duracion="ngModel"
                      [(ngModel)]="consulta.tiemSintomas.tiempo"
                      ngxPattern="^[1-9]+[0-9]*$"
@@ -243,6 +245,7 @@
                     class="form-control"
                     #lapso="ngModel"
                     [(ngModel)]="consulta.tiemSintomas.lapso"
+                    [disabled]="deRutina"
                     placement="top"
                     popoverClass="text-dark"
                     [autoClose]="true"
@@ -287,6 +290,7 @@
               placeholder="Historia de la enfermedad"
               autocomplete="off"
               name="historia"
+              [disabled]="deRutina"
               #historia="ngModel"
               [(ngModel)]="consulta.historia"
               ngxPattern="^[a-zA-Z0-9\s\,\;\.\/\(\)\{\}\[\]\#\%\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
@@ -391,7 +395,6 @@
                   name="temperatura"
                   #temperatura="ngModel"
                   [(ngModel)]="consulta.temperatura"
-                  required
                   autocomplete="off"
                   [ngClass]="{
                     'is-invalid':
@@ -442,7 +445,6 @@
                   name="freCardia"
                   #freCardia="ngModel"
                   [(ngModel)]="consulta.freCardia"
-                  required
                   autocomplete="off"
                   [ngClass]="{
                     'is-invalid': !freCardia.valid && freCardia.touched
@@ -493,7 +495,6 @@
                   name="freResp"
                   #freResp="ngModel"
                   [(ngModel)]="consulta.freRespiratoria"
-                  required
                   autocomplete="off"
                   [ngClass]="{
                     'is-invalid': !freResp.valid && freResp.touched
@@ -794,7 +795,6 @@
                   class="form-control"
                   placeholder="Perímetro Cefálico"
                   name="periCefalico"
-                  required
                   #periCefalico="ngModel"
                   [(ngModel)]="consulta.perimetroCefalico"
                   autocomplete="off"
@@ -844,7 +844,6 @@
                   class="form-control"
                   placeholder="Circunferencia Abdominal"
                   name="cirAbdominal"
-                  required
                   #cirAbdominal="ngModel"
                   [(ngModel)]="consulta.circunferenciaAbdominal"
                   autocomplete="off"

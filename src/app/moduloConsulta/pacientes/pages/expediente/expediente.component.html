@@ -23,8 +23,9 @@
 
 
     <div class="row">
-        <div class="col-12">
-          <h4>Historial de datos del paciente. N° de expediente {{ expediente }}</h4>
+        <div class="col-md-12 container">
+          <h4 class="float-left">Historial de datos del paciente</h4>
+          <h4 class="float-right" *ngIf="expediente"> <b> N° de expediente {{ expediente }}</b></h4>
         </div>
     </div>
       <!-- ./row -->

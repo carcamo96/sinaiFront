@@ -39,6 +39,7 @@ export class ConsultaComponent implements OnInit {
   public numeroExpediente: string = ''; //Para mostrar el numero de expediente
 
   public ayuda = false; //Para manejar la ayuda
+  public motivoDel = false; //Para manejar el descarte de motivos comunes de la lista
 
   public paciente: Paciente; //Objeto que mapea los datos del paciente para manejarlos con POO
   public idpa: string; //Maneja el id del paciente que se ha cargado
@@ -49,7 +50,7 @@ export class ConsultaComponent implements OnInit {
   public adjuntado = false; //Bandera para saber si han adjuntado datos de consulta
   public recetaAdjuntado = false; //Bandera para saber si han adjuntado una receta
   public estudios = false; //Bandera para saber si se realizaran estudios de esta consulta
-
+  public motivos:string[] = []; //Carga la lista de motivos comunes desde locaStorage
 
 
   constructor(
@@ -66,6 +67,7 @@ export class ConsultaComponent implements OnInit {
   ngOnInit() {
     this.loadingBarService.start();
     this.cargarPaciente();
+    this.cargarMotivosComunes();
     //console.log(this.consulta.fechaConsul);
   }
 
@@ -134,6 +136,10 @@ export class ConsultaComponent implements OnInit {
         //Mensaje de alert que mencione al usuario que primero debe brindar datos de consulta
         this.adjuntarDatos.fire();
       }
+  }
+  //Este metodo recibe el evento del hijo al agregar un motivo de consulta a lista
+  addMotivoConsulta(event){
+    this.cargarMotivosComunes();//vuelve a cargar la lista del storage
   }
 
   //Para confirmar la consulta medica
@@ -298,10 +304,21 @@ export class ConsultaComponent implements OnInit {
     this._router.navigate(["/expedientes/"]);
   }
 
-
   // Alerta cuando se adjunten datos de consulta
   showInfo(mensaje: string, titulo: string) {
     this.toastr.info(mensaje, titulo);
+  }
+
+  cargarMotivosComunes(){
+      let resultado = this._consultaService.getMotivos('motivos');
+      if(resultado!= null){
+        this.motivos = resultado;
+      }
+  }
+  descartarMotivosComunes(index){
+    this.motivos.splice(index, 1);
+    this._consultaService.addMotivos('motivos', this.motivos);
+    this.motivoDel = true;//Para que el hijo(datos consulta) reconosca que se ha eliminado de lista de motivos comunes
   }
 
   

@@ -5,14 +5,12 @@ import { GeneralComponentsModule } from '../../../../shared/components/general-c
 import { SharedModule } from '../../../../shared/shared.module';
 import { PipesModule } from '../../../../shared/pipes/pipes.module';
 import { FormsModule } from '@angular/forms';
-import { ModalRecetaComponent } from '../../components/modal-receta/modal-receta.component';
 
 
 
 @NgModule({
   declarations: [
     ConsultasComponent,
-    ModalRecetaComponent
   ],
   imports: [
     CommonModule,
@@ -22,8 +20,7 @@ import { ModalRecetaComponent } from '../../components/modal-receta/modal-receta
     PipesModule
   ],
   exports: [
-    ConsultasComponent, 
-    ModalRecetaComponent
+    ConsultasComponent
   ]
 })
 export class ConsultasModule { }

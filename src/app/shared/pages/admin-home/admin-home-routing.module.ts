@@ -34,6 +34,10 @@ const routes: Routes = [
       {
         path: 'expedientes/expediente/:id',
         loadChildren: () => import('../../../moduloConsulta/pacientes/pages/expediente/expediente.module').then(m => m.ExpedienteModule)
+      },
+      {
+        path: 'consulta/ver/:id',
+        loadChildren: () => import('../../../moduloConsulta/consulta/pages/mostrar-consulta/mostrar-consulta.module').then(m => m.MostrarConsultaModule)
       }
 
     ]
