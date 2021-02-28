@@ -17,10 +17,12 @@ import { Observable } from 'rxjs';
   providers: [ConsultaService, PacienteService]
 })
 export class MostrarConsultaComponent implements OnInit {
-
+public consulta: any;
   //Se le pasan los titulos y los links de las paginas que preseden esta pagina
 public breads: any[] = [
-  {titulo: 'Home', link: '/admin/home'}
+  {titulo: 'Home', link: '/admin/home'},
+  {titulo: "Expedientes", link: "/admin/expedientes"},
+  {titulo: 'Expediente', link: '/admin/expedientes/expediente'}
 ];
 
   @ViewChild('confirmarSwal') private confirmarSwal: SwalComponent;
@@ -28,7 +30,7 @@ public breads: any[] = [
   @ViewChild('successSwal') private successSwal: SwalComponent;
   @ViewChild('errorNoValidSwal') private errorNoValidSwal: SwalComponent;
 
-  public consulta: any;
+  
   public idpa: string;
   public status: string;
   public paciente: any;
@@ -67,7 +69,6 @@ public breads: any[] = [
       private toastr: ToastrService,
       private _route: ActivatedRoute
   ) {
-    //this.cargarConsulta();
     this.consulta = {
       paciente: "",
       fechaConsul: "",
@@ -116,12 +117,15 @@ public breads: any[] = [
         response => {
           if (response.consulta) {
             this.cargarPaciente(response.consulta.pacienteId);
-            console.log(this.i);
+            this.cargarDiagnosticos(response.consulta._id);
             this.consulta = {
               paciente: response.consulta.pacienteId,
               motivo: response.consulta.motivo,
               fechaConsul: this.inicializarFechaConsul(response.consulta.fechaConsul),
-              tiemSintoma: response.consulta.tiemSintoma,
+              tiemSintomas:{
+                tiempo: response.consulta.tiemSintoma.split(' ')[0],
+                lapso: response.consulta.tiemSintoma.split(' ')[1]
+              },
               historia: response.consulta.historia,
               antePatol: response.consulta.antePatol,
               alergias: response.consulta.alergias,
@@ -138,7 +142,10 @@ public breads: any[] = [
               examenFisico:response.consulta.examenFisico,
               fechaCitologia:response.consulta.fechaCitologia,
               observacionCitologia:response.consulta.observacionCitologia,
-              diagnostico: response.consulta.diagnostico
+              diagnostico:{
+                diagSeleccionados: this.diagSeleccionados,
+        diagDetalles: ""
+              } 
              }
             console.log(this.consulta);
           }
@@ -281,6 +288,17 @@ public breads: any[] = [
         this.diagSeleccionados.push(this.diagnostico);
         this.diagnostico = '';
     }
+  }
+
+  cargarDiagnosticos(consultaId){
+    this._consultaService.getDiagnosticos(consultaId).subscribe(
+      response => {
+        if (response.status == 'success') {
+          this.diagSeleccionados = response.consultas;
+          console.log(this.diagSeleccionados, response);
+        }
+      }
+    );
   }
 
   //Elimina ó descarta diagnosticos agregados del arreglo

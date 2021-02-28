@@ -5,7 +5,7 @@
 
 </app-page-header>
 
-<div class="card-body">
+<div class="card-body" *ngIf="consulta">
 
   <form
   role="form"
@@ -96,9 +96,10 @@
           <input
             type="text"
             class="form-control capitalize"
+            value="{{consulta.motivo}}"
             name="motivo"
             placeholder="Motivo de consulta"
-            #motivo="ngModel"
+            #motivo="ngModel"            
             [(ngModel)]="consulta.motivo"
             ngxPattern="^[a-zA-Z\s\zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ\u00E0-\u00FC\u00d1\u00f1]+$"
             autocomplete="off"

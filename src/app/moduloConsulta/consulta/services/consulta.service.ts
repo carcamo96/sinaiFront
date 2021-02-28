@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Global } from '../../../services/global';
 import { Diagnostico } from '../../../models/diagnostico';
 
@@ -9,6 +9,8 @@ import { Diagnostico } from '../../../models/diagnostico';
 export class ConsultaService{
     public url: string;
     public diags: Diagnostico[] = [];
+    private subJ =new BehaviorSubject<any>("");
+    public sub$=this.subJ.asObservable();
     constructor(
         private _http: HttpClient
     ){
@@ -25,6 +27,10 @@ export class ConsultaService{
 
     getConsulta(consultaId):Observable<any>{
         return this._http.get(this.url+'consulta/obtener/'+consultaId);
+    }
+
+    getDiagnosticos(consultaId):Observable<any>{
+        return this._http.get(this.url+'consulta/searchDiagnostico/'+consultaId);
     }
 
     create(consulta):Observable<any>{

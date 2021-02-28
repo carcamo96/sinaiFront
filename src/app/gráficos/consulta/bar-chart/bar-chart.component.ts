@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
-import { NgxSmartModalService } from 'ngx-smart-modal';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Color, Label, monkeyPatchChartJsLegend, monkeyPatchChartJsTooltip, SingleDataSet } from 'ng2-charts';
 import { PacienteService } from '../../../moduloConsulta/pacientes/services/paciente.service';
@@ -52,9 +51,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
       this.pieChartData = [mayores, menores];
   }  
 
-  constructor(
-    public ngxSmartModalService: NgxSmartModalService
-  ) { 
+  constructor() { 
     monkeyPatchChartJsTooltip();
     monkeyPatchChartJsLegend();
   }
@@ -63,17 +60,7 @@ export class BarChartComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    
-    const obj: Object = {
-      prop1: 'test',
-      prop2: true,
-      prop3: [{a: 'a', b: 'b'}, {c: 'c', d: 'd'}],
-      prop4: 327652175423
-    };
-
-    this.ngxSmartModalService.setModalData(obj, 'myModal');
+   
   }
   obtenerEdad(fechaActual, fechaNac) {
     let diaActual = fechaActual.getDate();
